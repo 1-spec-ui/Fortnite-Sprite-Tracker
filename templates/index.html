@@ -16,7 +16,6 @@
       min-height: 100vh;
     }
 
-    /* Animated background */
     body::before {
       content: '';
       position: fixed;
@@ -32,44 +31,32 @@
     .container {
       position: relative;
       z-index: 1;
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 24px 16px;
     }
 
-    /* Header */
-    header {
-      text-align: center;
-      margin-bottom: 32px;
-    }
+    header { text-align: center; margin-bottom: 28px; }
     header h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: clamp(1.4rem, 4vw, 2.4rem);
+      font-size: clamp(1.3rem, 4vw, 2.2rem);
       color: #00c3ff;
       text-shadow: 0 0 20px rgba(0,195,255,0.6), 0 0 40px rgba(0,195,255,0.3);
       letter-spacing: 2px;
       margin-bottom: 6px;
     }
-    header p {
-      color: #7a90b5;
-      font-size: 1rem;
-      letter-spacing: 1px;
-    }
+    header p { color: #7a90b5; font-size: 1rem; letter-spacing: 1px; }
 
-    /* Stats bar */
+    /* Stats */
     .stats-bar {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 28px;
+      display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px;
     }
     .stat-pill {
       background: rgba(0,195,255,0.08);
       border: 1px solid rgba(0,195,255,0.2);
       border-radius: 999px;
-      padding: 6px 18px;
-      font-size: 0.9rem;
+      padding: 5px 16px;
+      font-size: 0.88rem;
       color: #a0c4e0;
     }
     .stat-pill span { color: #00c3ff; font-weight: 700; }
@@ -80,39 +67,31 @@
       border: 1px solid rgba(0,195,255,0.18);
       border-radius: 12px;
       backdrop-filter: blur(8px);
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       overflow: hidden;
     }
     .panel-header {
       background: linear-gradient(90deg, rgba(0,195,255,0.12), rgba(138,43,226,0.10));
       border-bottom: 1px solid rgba(0,195,255,0.15);
-      padding: 14px 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      padding: 13px 20px;
+      display: flex; align-items: center; gap: 10px;
     }
     .panel-header h2 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 0.95rem;
-      color: #00c3ff;
-      letter-spacing: 1px;
+      font-size: 0.9rem; color: #00c3ff; letter-spacing: 1px;
     }
     .panel-body { padding: 20px; }
 
-    /* Form grid */
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 14px;
-    }
-    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    /* Form */
+    .form-row { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 160px; }
+    .form-group.wide { flex: 2; min-width: 260px; }
     .form-group label {
-      font-size: 0.78rem;
-      color: #7a90b5;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      font-size: 0.73rem; color: #7a90b5;
+      letter-spacing: 1.2px; text-transform: uppercase;
     }
-    .form-group input, .form-group select {
+    .form-group select,
+    .form-group input[type="number"] {
       background: rgba(0,195,255,0.05);
       border: 1px solid rgba(0,195,255,0.2);
       border-radius: 6px;
@@ -122,98 +101,139 @@
       font-size: 1rem;
       outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
     }
-    .form-group input:focus, .form-group select:focus {
+    .form-group select:focus,
+    .form-group input:focus {
       border-color: #00c3ff;
       box-shadow: 0 0 0 3px rgba(0,195,255,0.12);
     }
     .form-group select option { background: #0d1b2e; }
+    select:disabled { opacity: 0.45; cursor: not-allowed; }
 
-    /* Toggle switches */
-    .toggle-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 9px 0;
+    /* Ability card */
+    #abilityCard {
+      display: none;
+      background: rgba(0,195,255,0.04);
+      border: 1px solid rgba(0,195,255,0.15);
+      border-radius: 8px;
+      padding: 11px 14px;
+      margin-bottom: 14px;
+      font-size: 0.9rem;
+      color: #a0c8e8;
+      line-height: 1.5;
     }
+    #abilityCard strong { color: #00c3ff; font-size: 0.78rem; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+
+    /* Variant perk */
+    #variantPerk {
+      display: none;
+      font-size: 0.82rem;
+      color: #9070d0;
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    /* Level bar */
+    .level-selector { display: flex; gap: 8px; align-items: center; padding-top: 2px; }
+    .level-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 2px solid rgba(0,195,255,0.25);
+      background: rgba(0,195,255,0.05);
+      color: #7a90b5;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .level-btn:hover { border-color: #00c3ff; color: #00c3ff; }
+    .level-btn.active {
+      background: linear-gradient(135deg, #00c3ff, #0070d0);
+      border-color: #00c3ff;
+      color: #fff;
+      box-shadow: 0 0 10px rgba(0,195,255,0.4);
+    }
+    .level-btn.mastered-btn.active {
+      background: linear-gradient(135deg, #ffd700, #ff8c00);
+      border-color: #ffd700;
+      box-shadow: 0 0 12px rgba(255,215,0,0.5);
+    }
+    .mastered-badge {
+      display: none;
+      font-size: 0.78rem;
+      color: #ffd700;
+      letter-spacing: 0.5px;
+      margin-left: 4px;
+    }
+
+    /* Cost display */
+    #costDisplay {
+      background: rgba(255,215,0,0.07);
+      border: 1px solid rgba(255,215,0,0.2);
+      border-radius: 6px;
+      padding: 9px 14px;
+      color: #ffd700;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+      min-height: 40px;
+      display: flex; align-items: center;
+    }
+    #costDisplay.empty { color: #4a5a78; font-weight: 500; font-size: 0.9rem; }
+
+    /* Summoned toggle */
+    .toggle-row { display: flex; align-items: center; gap: 10px; padding-top: 6px; }
     .toggle-label { font-size: 0.95rem; color: #c0d0e8; }
-    .toggle {
-      position: relative;
-      width: 46px;
-      height: 24px;
-      flex-shrink: 0;
-    }
+    .toggle { position: relative; width: 46px; height: 24px; flex-shrink: 0; }
     .toggle input { opacity: 0; width: 0; height: 0; }
     .toggle-slider {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background: rgba(255,255,255,0.1);
-      border-radius: 24px;
-      cursor: pointer;
+      border-radius: 24px; cursor: pointer;
       border: 1px solid rgba(255,255,255,0.15);
       transition: 0.25s;
     }
     .toggle-slider::after {
-      content: '';
-      position: absolute;
+      content: ''; position: absolute;
       width: 18px; height: 18px;
       left: 3px; top: 2px;
-      background: #7a90b5;
-      border-radius: 50%;
-      transition: 0.25s;
+      background: #7a90b5; border-radius: 50%; transition: 0.25s;
     }
-    .toggle input:checked + .toggle-slider { background: rgba(0,195,255,0.3); border-color: #00c3ff; }
-    .toggle input:checked + .toggle-slider::after { transform: translateX(22px); background: #00c3ff; }
+    .toggle input:checked + .toggle-slider { background: rgba(0,195,80,0.3); border-color: #00c85a; }
+    .toggle input:checked + .toggle-slider::after { transform: translateX(22px); background: #00c85a; }
 
     /* Buttons */
     .btn {
-      border: none;
-      border-radius: 7px;
-      padding: 10px 22px;
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      cursor: pointer;
-      transition: all 0.2s;
+      border: none; border-radius: 7px; padding: 10px 22px;
+      font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 700;
+      letter-spacing: 1px; cursor: pointer; transition: all 0.2s;
     }
     .btn-primary {
       background: linear-gradient(135deg, #00c3ff, #007bff);
-      color: #fff;
-      box-shadow: 0 4px 18px rgba(0,195,255,0.25);
+      color: #fff; box-shadow: 0 4px 18px rgba(0,195,255,0.25);
     }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,195,255,0.4); }
-    .btn-primary:active { transform: translateY(0); }
-    .btn-danger {
-      background: rgba(255,60,80,0.12);
-      color: #ff4d60;
-      border: 1px solid rgba(255,60,80,0.3);
-    }
+    .btn-danger { background: rgba(255,60,80,0.12); color: #ff4d60; border: 1px solid rgba(255,60,80,0.3); }
     .btn-danger:hover { background: rgba(255,60,80,0.22); }
     .btn-sm { padding: 5px 12px; font-size: 0.85rem; }
-
-    .form-actions {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-top: 16px;
+    .btn-ghost {
+      background: transparent; border: 1px solid rgba(255,255,255,0.15);
+      color: #7a90b5; padding: 9px 20px; border-radius: 7px;
+      font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
     }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.3); color: #c0d0e8; }
+    .form-actions { display: flex; align-items: center; gap: 14px; margin-top: 4px; }
 
     /* Toast */
     #toast {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      z-index: 999;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: all 0.3s;
-      pointer-events: none;
-      max-width: 320px;
+      position: fixed; bottom: 24px; right: 24px;
+      padding: 12px 20px; border-radius: 8px; font-weight: 600; font-size: 0.95rem;
+      z-index: 999; opacity: 0; transform: translateY(10px); transition: all 0.3s;
+      pointer-events: none; max-width: 340px;
     }
     #toast.show { opacity: 1; transform: translateY(0); }
     #toast.success { background: rgba(0,195,80,0.15); border: 1px solid rgba(0,195,80,0.4); color: #00c85a; }
@@ -221,156 +241,90 @@
 
     /* Table */
     .table-wrap { overflow-x: auto; }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.97rem;
-    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
     thead th {
-      text-align: left;
-      padding: 11px 14px;
-      font-size: 0.75rem;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: #5a7090;
-      border-bottom: 1px solid rgba(0,195,255,0.12);
-      white-space: nowrap;
+      text-align: left; padding: 11px 14px;
+      font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase;
+      color: #5a7090; border-bottom: 1px solid rgba(0,195,255,0.12); white-space: nowrap;
     }
-    tbody tr {
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-      transition: background 0.15s;
-    }
+    tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.15s; }
     tbody tr:hover { background: rgba(0,195,255,0.04); }
-    tbody td { padding: 12px 14px; vertical-align: middle; }
+    tbody td { padding: 11px 14px; vertical-align: middle; }
 
-    .sprite-name { font-weight: 700; color: #d0e8ff; }
-    .variant-tag {
-      display: inline-block;
-      background: rgba(138,43,226,0.15);
-      border: 1px solid rgba(138,43,226,0.3);
-      border-radius: 4px;
-      padding: 2px 8px;
-      font-size: 0.82rem;
-      color: #c090ff;
+    .sprite-name { font-weight: 700; color: #d0e8ff; font-size: 1rem; }
+
+    /* Rarity badges */
+    .rarity { display: inline-block; border-radius: 4px; padding: 2px 8px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.5px; }
+    .rarity-Rare      { background: rgba(0,120,255,0.15);  border: 1px solid rgba(0,120,255,0.35);  color: #4db8ff; }
+    .rarity-Epic      { background: rgba(160,0,240,0.15);  border: 1px solid rgba(160,0,240,0.35);  color: #d070ff; }
+    .rarity-Legendary { background: rgba(255,140,0,0.15);  border: 1px solid rgba(255,140,0,0.35);  color: #ffa040; }
+    .rarity-Mythic    { background: rgba(255,215,0,0.12);  border: 1px solid rgba(255,215,0,0.35);  color: #ffd700; }
+
+    /* Variant chips */
+    .variant-chip { display: inline-block; border-radius: 4px; padding: 2px 9px; font-size: 0.82rem; font-weight: 600; }
+    .variant-Normal { background: rgba(180,200,230,0.10); border: 1px solid rgba(180,200,230,0.22); color: #b0c8e8; }
+    .variant-Gold   { background: rgba(255,215,0,0.12);   border: 1px solid rgba(255,215,0,0.3);   color: #ffd700; }
+    .variant-Gummy  { background: rgba(255,100,180,0.12); border: 1px solid rgba(255,100,180,0.3); color: #ff80c0; }
+    .variant-Galaxy { background: rgba(120,60,240,0.14);  border: 1px solid rgba(120,60,240,0.3);  color: #b090ff; }
+
+    /* Level pips */
+    .level-pips { display: flex; gap: 4px; align-items: center; }
+    .pip {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
     }
+    .pip.filled { background: #00c3ff; border-color: #00c3ff; box-shadow: 0 0 4px rgba(0,195,255,0.5); }
+    .pip.mastered { background: #ffd700; border-color: #ffd700; box-shadow: 0 0 6px rgba(255,215,0,0.6); }
+
     .cost-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      background: rgba(255,215,0,0.08);
-      border: 1px solid rgba(255,215,0,0.2);
-      border-radius: 4px;
-      padding: 3px 10px;
-      color: #ffd700;
-      font-weight: 600;
-      font-size: 0.88rem;
-      white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(255,215,0,0.08); border: 1px solid rgba(255,215,0,0.2);
+      border-radius: 4px; padding: 3px 10px; color: #ffd700; font-weight: 600; font-size: 0.88rem; white-space: nowrap;
     }
-    .cost-active {
-      background: rgba(0,195,80,0.08);
-      border-color: rgba(0,195,80,0.2);
-      color: #00c85a;
-    }
+    .cost-active { background: rgba(0,195,80,0.08); border-color: rgba(0,195,80,0.2); color: #00c85a; }
 
     .status-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      border-radius: 6px;
-      padding: 4px 10px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 6px;
+      border-radius: 6px; padding: 4px 10px; font-size: 0.83rem; font-weight: 600; white-space: nowrap;
     }
     .status-mastered-locked { background: rgba(100,100,150,0.15); border: 1px solid rgba(100,100,200,0.25); color: #a0a8d0; }
-    .status-crown           { background: rgba(255,215,0,0.1);  border: 1px solid rgba(255,215,0,0.3);  color: #ffd700; }
-    .status-mastered        { background: rgba(255,180,0,0.1);  border: 1px solid rgba(255,180,0,0.25); color: #ffb400; }
-    .status-dead            { background: rgba(255,60,80,0.10); border: 1px solid rgba(255,60,80,0.25); color: #ff6070; }
-    .status-active          { background: rgba(0,195,80,0.10);  border: 1px solid rgba(0,195,80,0.25);  color: #00c85a; }
+    .status-crown           { background: rgba(255,215,0,0.10);   border: 1px solid rgba(255,215,0,0.3);   color: #ffd700; }
+    .status-mastered        { background: rgba(255,180,0,0.10);   border: 1px solid rgba(255,180,0,0.25);  color: #ffb400; }
+    .status-dead            { background: rgba(255,60,80,0.10);   border: 1px solid rgba(255,60,80,0.25);  color: #ff6070; }
+    .status-active          { background: rgba(0,195,80,0.10);    border: 1px solid rgba(0,195,80,0.25);   color: #00c85a; }
 
-    .level-chip {
-      display: inline-block;
-      width: 28px; height: 28px;
-      line-height: 28px;
-      text-align: center;
-      border-radius: 50%;
-      background: rgba(0,195,255,0.1);
-      border: 1px solid rgba(0,195,255,0.25);
-      color: #00c3ff;
-      font-weight: 700;
-      font-size: 0.85rem;
-    }
-
-    /* Empty state */
-    .empty-state {
-      text-align: center;
-      padding: 48px 20px;
-      color: #4a5a78;
-    }
+    .empty-state { text-align: center; padding: 48px 20px; color: #4a5a78; }
     .empty-state .empty-icon { font-size: 3rem; margin-bottom: 12px; }
     .empty-state p { font-size: 1.05rem; }
-
-    /* Loading */
     .loading { text-align: center; padding: 32px; color: #4a5a78; font-size: 1rem; }
 
-    /* Edit modal overlay */
+    /* Modal */
     .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      z-index: 100;
-      align-items: center;
-      justify-content: center;
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.72); z-index: 100; align-items: center; justify-content: center;
     }
     .modal-overlay.open { display: flex; }
     .modal {
-      background: #0d1b30;
-      border: 1px solid rgba(0,195,255,0.25);
-      border-radius: 14px;
-      padding: 28px;
-      width: min(520px, 95vw);
-      max-height: 90vh;
-      overflow-y: auto;
+      background: #0d1b30; border: 1px solid rgba(0,195,255,0.25);
+      border-radius: 14px; padding: 28px; width: min(500px, 95vw);
     }
-    .modal h3 {
-      font-family: 'Orbitron', sans-serif;
-      color: #00c3ff;
-      font-size: 1rem;
-      margin-bottom: 18px;
-      letter-spacing: 1px;
-    }
+    .modal h3 { font-family: 'Orbitron', sans-serif; color: #00c3ff; font-size: 0.95rem; margin-bottom: 14px; letter-spacing: 1px; }
     .modal-actions { display: flex; gap: 10px; margin-top: 18px; justify-content: flex-end; }
-    .btn-ghost {
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.15);
-      color: #7a90b5;
-      padding: 9px 20px;
-      border-radius: 7px;
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .btn-ghost:hover { border-color: rgba(255,255,255,0.3); color: #c0d0e8; }
 
     @media (max-width: 600px) {
-      .form-grid { grid-template-columns: 1fr 1fr; }
+      .form-group { min-width: 140px; }
     }
   </style>
 </head>
 <body>
 <div class="container">
 
-  <!-- Header -->
   <header>
     <h1>🎮 FORTNITE SPRITE TRACKER</h1>
     <p>Track your entire sprite collection in one place</p>
   </header>
 
-  <!-- Stats Bar -->
-  <div class="stats-bar" id="statsBar">
+  <div class="stats-bar">
     <div class="stat-pill">Total: <span id="statTotal">0</span></div>
     <div class="stat-pill">Mastered: <span id="statMastered">0</span></div>
     <div class="stat-pill">Summoned: <span id="statSummoned">0</span></div>
@@ -384,32 +338,43 @@
       <h2 id="formTitle">ADD / UPDATE SPRITE</h2>
     </div>
     <div class="panel-body">
-      <div class="form-grid">
-        <div class="form-group" style="grid-column: span 2">
+
+      <!-- Row 1: Sprite + Variant -->
+      <div class="form-row">
+        <div class="form-group wide">
           <label>Sprite Name</label>
-          <input id="fName" type="text" placeholder="e.g. Cube Queen" />
-        </div>
-        <div class="form-group" style="grid-column: span 2">
-          <label>Variant / Style</label>
-          <input id="fVariant" type="text" placeholder="e.g. Golden" />
+          <select id="fName" onchange="onSpriteChange()">
+            <option value="">— Select a Sprite —</option>
+          </select>
         </div>
         <div class="form-group">
-          <label>Current Level</label>
-          <input id="fLevel" type="number" min="1" max="10" placeholder="1–10" />
+          <label>Variant</label>
+          <select id="fVariant" disabled onchange="onVariantChange()">
+            <option value="">— Pick sprite first —</option>
+            <option value="Normal">Normal</option>
+            <option value="Gold">🟡 Gold</option>
+            <option value="Gummy">🩷 Gummy</option>
+            <option value="Galaxy">🌌 Galaxy</option>
+          </select>
+          <span id="variantPerk"></span>
+        </div>
+      </div>
+
+      <!-- Ability card -->
+      <div id="abilityCard">
+        <strong>Base Ability</strong>
+        <span id="abilityText"></span>
+      </div>
+
+      <!-- Row 2: Level + Cost + Summoned -->
+      <div class="form-row" style="align-items: flex-start">
+        <div class="form-group">
+          <label>Level <span id="masteredBadge" class="mastered-badge">👑 MASTERED</span></label>
+          <div class="level-selector" id="levelSelector"></div>
         </div>
         <div class="form-group">
           <label>Summon Cost (Dust)</label>
-          <input id="fCost" type="number" min="0" placeholder="e.g. 200" />
-        </div>
-        <div class="form-group">
-          <label>Mastered?</label>
-          <div class="toggle-row">
-            <label class="toggle">
-              <input type="checkbox" id="fMastered" />
-              <span class="toggle-slider"></span>
-            </label>
-            <span class="toggle-label" id="masteredLabel">No</span>
-          </div>
+          <div id="costDisplay" class="empty">Select sprite &amp; variant</div>
         </div>
         <div class="form-group">
           <label>Currently Summoned?</label>
@@ -422,6 +387,7 @@
           </div>
         </div>
       </div>
+
       <div class="form-actions">
         <button class="btn btn-primary" onclick="submitSprite()">💾 SAVE SPRITE</button>
         <button class="btn btn-ghost" id="clearBtn" onclick="clearForm()" style="display:none">✕ CLEAR</button>
@@ -430,20 +396,20 @@
     </div>
   </div>
 
-  <!-- Dashboard Table -->
+  <!-- Dashboard -->
   <div class="panel">
     <div class="panel-header">
       <span>📊</span>
       <h2>SPRITE DASHBOARD</h2>
     </div>
-    <div class="panel-body" style="padding: 0">
+    <div class="panel-body" style="padding:0">
       <div id="tableContainer" class="loading">Loading sprites…</div>
     </div>
   </div>
 
 </div>
 
-<!-- Delete Confirm Modal -->
+<!-- Delete Modal -->
 <div class="modal-overlay" id="deleteModal">
   <div class="modal">
     <h3>⚠️ CONFIRM REMOVAL</h3>
@@ -461,140 +427,157 @@
 <div id="toast"></div>
 
 <script>
-  let spritesToDelete = null;
+  // ── State ──────────────────────────────────────────────────────────────
+  let DIRECTORY = {};
+  let VARIANT_PERKS = {};
+  let selectedLevel = 1;
+  let spriteToDelete = null;
+  let editingName = null;
 
-  // Toggle labels
-  document.getElementById('fMastered').addEventListener('change', function() {
-    document.getElementById('masteredLabel').textContent = this.checked ? 'Yes' : 'No';
-  });
-  document.getElementById('fSummoned').addEventListener('change', function() {
+  // ── Boot ───────────────────────────────────────────────────────────────
+  async function boot() {
+    const res = await fetch('/api/directory');
+    const data = await res.json();
+    DIRECTORY = data.sprites;
+    VARIANT_PERKS = data.variant_perks;
+    populateSpriteDropdown();
+    buildLevelSelector();
+    loadSprites();
+  }
+
+  function populateSpriteDropdown() {
+    const sel = document.getElementById('fName');
+    // Group by rarity
+    const order = ['Rare', 'Epic', 'Legendary', 'Mythic'];
+    const groups = {};
+    for (const [name, info] of Object.entries(DIRECTORY)) {
+      if (!groups[info.rarity]) groups[info.rarity] = [];
+      groups[info.rarity].push(name);
+    }
+    for (const rarity of order) {
+      if (!groups[rarity]) continue;
+      const og = document.createElement('optgroup');
+      og.label = `── ${rarity.toUpperCase()} ──`;
+      for (const name of groups[rarity]) {
+        const opt = document.createElement('option');
+        opt.value = name;
+        opt.textContent = name;
+        og.appendChild(opt);
+      }
+      sel.appendChild(og);
+    }
+  }
+
+  function buildLevelSelector() {
+    const container = document.getElementById('levelSelector');
+    container.innerHTML = '';
+    for (let i = 1; i <= 5; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'level-btn' + (i === 5 ? ' mastered-btn' : '');
+      btn.textContent = i === 5 ? '👑' : i;
+      btn.title = i === 5 ? 'Level 5 — Mastered' : `Level ${i}`;
+      btn.onclick = () => setLevel(i);
+      btn.id = `lvl${i}`;
+      container.appendChild(btn);
+    }
+    setLevel(1);
+  }
+
+  function setLevel(n) {
+    selectedLevel = n;
+    for (let i = 1; i <= 5; i++) {
+      const btn = document.getElementById(`lvl${i}`);
+      btn.classList.toggle('active', i <= n);
+    }
+    const badge = document.getElementById('masteredBadge');
+    badge.style.display = n === 5 ? 'inline' : 'none';
+  }
+
+  // ── Form interactions ──────────────────────────────────────────────────
+  function onSpriteChange() {
+    const name = document.getElementById('fName').value;
+    const variantSel = document.getElementById('fVariant');
+    const abilityCard = document.getElementById('abilityCard');
+
+    if (!name) {
+      variantSel.disabled = true;
+      variantSel.value = '';
+      abilityCard.style.display = 'none';
+      updateCostDisplay(null);
+      return;
+    }
+
+    variantSel.disabled = false;
+    // Reset variant to first real option
+    variantSel.value = '';
+    document.getElementById('variantPerk').style.display = 'none';
+
+    // Show ability
+    document.getElementById('abilityText').textContent = DIRECTORY[name].ability;
+    abilityCard.style.display = 'block';
+
+    updateCostDisplay(null);
+  }
+
+  function onVariantChange() {
+    const variant = document.getElementById('fVariant').value;
+    const perkEl = document.getElementById('variantPerk');
+
+    if (variant && VARIANT_PERKS[variant]) {
+      perkEl.textContent = '✦ ' + VARIANT_PERKS[variant];
+      perkEl.style.display = 'block';
+    } else {
+      perkEl.style.display = 'none';
+    }
+
+    const name = document.getElementById('fName').value;
+    if (name && variant && DIRECTORY[name]) {
+      updateCostDisplay(DIRECTORY[name].costs[variant]);
+    } else {
+      updateCostDisplay(null);
+    }
+  }
+
+  function updateCostDisplay(cost) {
+    const el = document.getElementById('costDisplay');
+    if (cost === null || cost === undefined) {
+      el.textContent = 'Select sprite & variant';
+      el.className = 'empty';
+    } else {
+      el.textContent = `💨 ${cost.toLocaleString()} Dust`;
+      el.className = '';
+    }
+    el._cost = cost;
+  }
+
+  document.getElementById('fSummoned').addEventListener('change', function () {
     document.getElementById('summonedLabel').textContent = this.checked ? 'Yes' : 'No';
   });
 
-  function showToast(msg, type='success') {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.className = `show ${type}`;
-    setTimeout(() => { t.className = ''; }, 3200);
-  }
-
-  function clearForm() {
-    ['fName','fVariant','fLevel','fCost'].forEach(id => document.getElementById(id).value = '');
-    document.getElementById('fMastered').checked = false;
-    document.getElementById('fSummoned').checked = false;
-    document.getElementById('masteredLabel').textContent = 'No';
-    document.getElementById('summonedLabel').textContent = 'No';
-    document.getElementById('formMsg').style.display = 'none';
-    document.getElementById('formTitle').textContent = 'ADD / UPDATE SPRITE';
-    document.getElementById('clearBtn').style.display = 'none';
-  }
-
-  function fillEditForm(sprite) {
-    document.getElementById('fName').value = sprite.name;
-    document.getElementById('fVariant').value = sprite.variant;
-    document.getElementById('fLevel').value = sprite.level;
-    document.getElementById('fCost').value = sprite.summon_cost;
-    document.getElementById('fMastered').checked = sprite.mastered;
-    document.getElementById('fSummoned').checked = sprite.summoned;
-    document.getElementById('masteredLabel').textContent = sprite.mastered ? 'Yes' : 'No';
-    document.getElementById('summonedLabel').textContent = sprite.summoned ? 'Yes' : 'No';
-    document.getElementById('formTitle').textContent = `EDITING: ${sprite.name.toUpperCase()}`;
-    document.getElementById('clearBtn').style.display = 'inline-block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  async function loadSprites() {
-    const container = document.getElementById('tableContainer');
-    try {
-      const res = await fetch('/api/sprites');
-      const data = await res.json();
-      const sprites = data.sprites;
-
-      // Update stats
-      document.getElementById('statTotal').textContent = sprites.length;
-      document.getElementById('statMastered').textContent = sprites.filter(s => s.mastered).length;
-      document.getElementById('statSummoned').textContent = sprites.filter(s => s.summoned).length;
-      document.getElementById('statUnsummoned').textContent = sprites.filter(s => !s.summoned).length;
-
-      if (sprites.length === 0) {
-        container.innerHTML = `
-          <div class="empty-state">
-            <div class="empty-icon">📭</div>
-            <p>Your sprite tracker is empty. Add your first sprite above!</p>
-          </div>`;
-        return;
-      }
-
-      let rows = sprites.map(s => `
-        <tr>
-          <td><span class="sprite-name">${escHtml(s.name)}</span></td>
-          <td><span class="variant-tag">${escHtml(s.variant)}</span></td>
-          <td><span class="level-chip">${s.level}</span></td>
-          <td>
-            <span class="cost-badge ${s.summoned ? 'cost-active' : ''}">
-              ${s.summoned ? '✅' : '💨'} ${escHtml(s.cost_display)}
-            </span>
-          </td>
-          <td>
-            <span class="status-badge ${s.status.class}">
-              ${s.status.icon} ${escHtml(s.status.text)}
-            </span>
-          </td>
-          <td style="white-space:nowrap">
-            <button class="btn btn-sm" style="background:rgba(0,195,255,0.1);border:1px solid rgba(0,195,255,0.25);color:#00c3ff;border-radius:6px;cursor:pointer;font-family:Rajdhani,sans-serif;font-weight:700;margin-right:6px"
-              onclick='fillEditForm(${JSON.stringify(s)})'>✏️ Edit</button>
-            <button class="btn btn-danger btn-sm" onclick="openDeleteModal('${escAttr(s.name)}')">🗑️ Del</button>
-          </td>
-        </tr>`).join('');
-
-      container.innerHTML = `
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Sprite Name</th>
-                <th>Variant</th>
-                <th>Level</th>
-                <th>Cost / Status</th>
-                <th>Status Indicator</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>${rows}</tbody>
-          </table>
-        </div>`;
-    } catch(e) {
-      container.innerHTML = `<div class="empty-state"><p style="color:#ff4d60">Failed to load sprites. Please refresh.</p></div>`;
-    }
-  }
-
+  // ── Submit ─────────────────────────────────────────────────────────────
   async function submitSprite() {
-    const name = document.getElementById('fName').value.trim();
-    const variant = document.getElementById('fVariant').value.trim();
-    const level = document.getElementById('fLevel').value;
-    const cost = document.getElementById('fCost').value;
-    const mastered = document.getElementById('fMastered').checked;
+    const name    = document.getElementById('fName').value;
+    const variant = document.getElementById('fVariant').value;
     const summoned = document.getElementById('fSummoned').checked;
-    const msg = document.getElementById('formMsg');
+    const msg     = document.getElementById('formMsg');
+    const costEl  = document.getElementById('costDisplay');
 
-    if (!name || !variant || level === '' || cost === '') {
-      msg.textContent = '⚠️ All fields are required.';
-      msg.style.display = 'inline';
-      return;
+    if (!name || !variant) {
+      msg.textContent = '⚠️ Please select a sprite and a variant.';
+      msg.style.display = 'inline'; return;
     }
     msg.style.display = 'none';
+
+    const summon_cost = costEl._cost ?? DIRECTORY[name]?.costs[variant];
 
     try {
       const res = await fetch('/api/sprites', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, variant, level: parseInt(level), mastered, summoned, summon_cost: parseInt(cost) })
+        body: JSON.stringify({ name, variant, level: selectedLevel, summoned, summon_cost })
       });
       const data = await res.json();
-      if (!res.ok) {
-        showToast(data.error || 'Error saving sprite.', 'error');
-        return;
-      }
+      if (!res.ok) { showToast(data.error || 'Error saving.', 'error'); return; }
       showToast(`✔️ ${data.message}`, 'success');
       clearForm();
       loadSprites();
@@ -603,43 +586,129 @@
     }
   }
 
+  function clearForm() {
+    document.getElementById('fName').value = '';
+    document.getElementById('fVariant').value = '';
+    document.getElementById('fVariant').disabled = true;
+    document.getElementById('fSummoned').checked = false;
+    document.getElementById('summonedLabel').textContent = 'No';
+    document.getElementById('abilityCard').style.display = 'none';
+    document.getElementById('variantPerk').style.display = 'none';
+    document.getElementById('formMsg').style.display = 'none';
+    document.getElementById('formTitle').textContent = 'ADD / UPDATE SPRITE';
+    document.getElementById('clearBtn').style.display = 'none';
+    updateCostDisplay(null);
+    setLevel(1);
+    editingName = null;
+  }
+
+  function fillEditForm(sprite) {
+    document.getElementById('fName').value = sprite.name;
+    onSpriteChange();
+    document.getElementById('fVariant').value = sprite.variant;
+    onVariantChange();
+    document.getElementById('fSummoned').checked = sprite.summoned;
+    document.getElementById('summonedLabel').textContent = sprite.summoned ? 'Yes' : 'No';
+    setLevel(sprite.level);
+    document.getElementById('formTitle').textContent = `EDITING: ${sprite.name.toUpperCase()}`;
+    document.getElementById('clearBtn').style.display = 'inline-block';
+    editingName = sprite.name;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── Load dashboard ─────────────────────────────────────────────────────
+  async function loadSprites() {
+    const container = document.getElementById('tableContainer');
+    try {
+      const res = await fetch('/api/sprites');
+      const data = await res.json();
+      const sprites = data.sprites;
+
+      document.getElementById('statTotal').textContent     = sprites.length;
+      document.getElementById('statMastered').textContent  = sprites.filter(s => s.mastered).length;
+      document.getElementById('statSummoned').textContent  = sprites.filter(s => s.summoned).length;
+      document.getElementById('statUnsummoned').textContent = sprites.filter(s => !s.summoned).length;
+
+      if (sprites.length === 0) {
+        container.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><p>Your sprite tracker is empty. Add your first sprite above!</p></div>`;
+        return;
+      }
+
+      const rows = sprites.map(s => {
+        const pips = [1,2,3,4,5].map(i => {
+          let cls = 'pip';
+          if (i <= s.level) cls += s.mastered ? ' mastered' : ' filled';
+          return `<span class="${cls}"></span>`;
+        }).join('');
+
+        return `<tr>
+          <td>
+            <div class="sprite-name">${escHtml(s.name)}</div>
+            <div style="font-size:0.78rem; color:#4a6080; margin-top:2px">${escHtml(s.ability)}</div>
+          </td>
+          <td><span class="rarity rarity-${escHtml(s.rarity)}">${escHtml(s.rarity)}</span></td>
+          <td><span class="variant-chip variant-${escHtml(s.variant)}">${escHtml(s.variant)}</span></td>
+          <td><div class="level-pips">${pips}</div></td>
+          <td><span class="cost-badge ${s.summoned ? 'cost-active' : ''}">${s.summoned ? '✅' : '💨'} ${escHtml(s.cost_display)}</span></td>
+          <td><span class="status-badge ${s.status.class}">${s.status.icon} ${escHtml(s.status.text)}</span></td>
+          <td style="white-space:nowrap">
+            <button style="background:rgba(0,195,255,0.1);border:1px solid rgba(0,195,255,0.25);color:#00c3ff;border-radius:6px;cursor:pointer;font-family:Rajdhani,sans-serif;font-weight:700;padding:5px 12px;font-size:0.85rem;margin-right:6px"
+              onclick='fillEditForm(${JSON.stringify(s)})'>✏️ Edit</button>
+            <button class="btn btn-danger btn-sm" onclick="openDeleteModal('${escAttr(s.name)}')">🗑️ Del</button>
+          </td>
+        </tr>`;
+      }).join('');
+
+      container.innerHTML = `<div class="table-wrap"><table>
+        <thead><tr>
+          <th>Sprite</th><th>Rarity</th><th>Variant</th>
+          <th>Level</th><th>Cost</th><th>Status</th><th>Actions</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>`;
+    } catch(e) {
+      container.innerHTML = `<div class="empty-state"><p style="color:#ff4d60">Failed to load sprites. Please refresh.</p></div>`;
+    }
+  }
+
+  // ── Delete ─────────────────────────────────────────────────────────────
   function openDeleteModal(name) {
-    spritesToDelete = name;
+    spriteToDelete = name;
     document.getElementById('deleteSpriteName').textContent = name;
     document.getElementById('deleteModal').classList.add('open');
   }
   function closeDeleteModal() {
-    spritesToDelete = null;
+    spriteToDelete = null;
     document.getElementById('deleteModal').classList.remove('open');
   }
   async function confirmDelete() {
-    if (!spritesToDelete) return;
+    if (!spriteToDelete) return;
+    const name = spriteToDelete;
     closeDeleteModal();
     try {
-      const res = await fetch(`/api/sprites/${encodeURIComponent(spritesToDelete)}`, { method: 'DELETE' });
+      const res = await fetch(`/api/sprites/${encodeURIComponent(name)}`, { method: 'DELETE' });
       const data = await res.json();
       if (!res.ok) { showToast(data.error, 'error'); return; }
       showToast(`❌ ${data.message}`, 'success');
       loadSprites();
-    } catch(e) {
-      showToast('Network error.', 'error');
-    }
+    } catch(e) { showToast('Network error.', 'error'); }
   }
-
-  // Close modal clicking overlay
-  document.getElementById('deleteModal').addEventListener('click', function(e) {
-    if (e.target === this) closeDeleteModal();
+  document.getElementById('deleteModal').addEventListener('click', e => {
+    if (e.target === document.getElementById('deleteModal')) closeDeleteModal();
   });
 
+  // ── Helpers ────────────────────────────────────────────────────────────
+  function showToast(msg, type='success') {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.className = `show ${type}`;
+    setTimeout(() => { t.className = ''; }, 3200);
+  }
   function escHtml(str) {
     return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
-  function escAttr(str) {
-    return String(str).replace(/'/g, "\\'");
-  }
+  function escAttr(str) { return String(str).replace(/'/g, "\\'"); }
 
-  // Initial load
-  loadSprites();
+  boot();
 </script>
 </body>
 </html>

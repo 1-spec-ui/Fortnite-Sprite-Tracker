@@ -1,0 +1,118 @@
+content = """================================================================================
+FORTNITE SPRITE DIRECTORY: DUST REQUIREMENTS, VARIANTS, AND ABILITIES (REVISED)
+================================================================================
+
+This document contains a comprehensive breakdown of all Sprites available,
+their baseline rarities, Sprite Dust costs across all variants, baseline abilities,
+and special variant bonuses.
+
+--------------------------------------------------------------------------------
+1. GLOBAL VARIANT BONUSES & ABILITIES
+--------------------------------------------------------------------------------
+While each Sprite possesses a unique base ability, upgrading or summoning specific
+variants grants additional, stacking passive perks during a match:
+
+* BASE VERSION:
+  - Perk: Grants the core standard baseline ability of that specific Sprite.
+
+* GOLD VARIANT:
+  - Perk: Grants 3x Sprite XP for every elimination secured during a match.
+
+* GUMMY VARIANT:
+  - Perk: Grants +20% extra Sprite Dust whenever successfully extracted.
+
+* GALAXY VARIANT:
+  - Perk: Grants +30% more ammunition when opening ammo crates and looting.
+
+
+--------------------------------------------------------------------------------
+2. COMPREHENSIVE SPRITE MASTER LIST
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+[RARE SPRITES] -> Base Cost: 100 Dust | Gold/Gummy: 4,000 Dust | Galaxy: 15,000 Dust
+--------------------------------------------------------------------------------
+
+* WATER SPRITE
+  - Base Ability: Replenishes shield while in water for you and your nearby Squad.
+  - Costs: Base (100) | Gold (4,000) | Gummy (4,000) | Galaxy (15,000)
+
+* EARTH SPRITE
+  - Base Ability: Gives a chance to find additional rare items when opening chests.
+  - Costs: Base (100) | Gold (4,000) | Gummy (4,000) | Galaxy (15,000)
+
+* FIRE SPRITE
+  - Base Ability: Creates a fiery burst when you deal enough damage to an enemy.
+  - Costs: Base (100) | Gold (4,000) | Gummy (4,000) | Galaxy (15,000)
+
+* FISHY SPRITE
+  - Base Ability: Increases swimming speed and gives a movement boost after taking damage.
+  - Costs: Base (100) | Gold (4,000) | Gummy (4,000) | Galaxy (15,000)
+
+
+--------------------------------------------------------------------------------
+[EPIC SPRITES] -> Base Cost: 3,000 Dust | Gold/Gummy: 6,000 Dust | Galaxy: 15,000 Dust
+--------------------------------------------------------------------------------
+
+* DUCK SPRITE
+  - Base Ability: Emoting or Jamming on the battlefield slowly replenishes your shields.
+  - Costs: Base (3,000) | Gold (6,000) | Gummy (6,000) | Galaxy (15,000)
+
+* GHOST SPRITE
+  - Base Ability: Grants a temporary active cloak duration immediately upon reloading.
+  - Costs: Base (3,000) | Gold (6,000) | Gummy (6,000) | Galaxy (15,000)
+
+* DEMON SPRITE
+  - Base Ability: Siphons a portion of health and shields when you eliminate an opponent.
+  - Costs: Base (3,000) | Gold (6,000) | Gummy (6,000) | Galaxy (15,000)
+
+* KING SPRITE
+  - Base Ability: Your Harvesting Tool Pickaxe deals significantly more swing damage.
+  - Costs: Base (3,000) | Gold (6,000) | Gummy (6,000) | Galaxy (15,000)
+
+* AURA SPRITE
+  - Base Ability: Gain a Shock Rock consumable charge when you deal enough enemy damage.
+  - Costs: Base (3,000) | Gold (6,000) | Gummy (6,000) | Galaxy (15,000)
+
+* STRIKER SPRITE
+  - Base Ability: Gain a functional speed Overdrive buff whenever you Mantle or Hurdle.
+  - Costs: Base (3,000) | Gold (6,000) | Gummy (6,000) | Galaxy (15,000)
+
+
+--------------------------------------------------------------------------------
+[LEGENDARY SPRITES] -> Base Cost: 5,000 Dust | Gold/Gummy: 10,000 Dust | Galaxy: 15,000 Dust
+--------------------------------------------------------------------------------
+
+* PUNK SPRITE
+  - Base Ability: Grants high-tier combat wildcard advantages and passive status traits.
+  - Costs: Base (5,000) | Gold (10,000) | Gummy (10,000) | Galaxy (15,000)
+
+* DREAM SPRITE
+  - Base Ability: Grants a random item at each level, exploding with legendary loot at Max Level.
+  - Costs: Base (5,000) | Gold (10,000) | Gummy (10,000) | Galaxy (15,000)
+
+* BOSS SPRITE
+  - Base Ability: Increases maximum health and shield limits. Dropped by defeating roaming map bosses.
+  - Costs: Base (5,000) | Gold (10,000) | Gummy (10,000) | Galaxy (15,000)
+
+* GRIM REAPER SPRITE
+  - Base Ability: Extremely rare chest drop providing lethal execution and scouting advantages.
+  - Costs: Base (5,000) | Gold (10,000) | Gummy (10,000) | Galaxy (15,000)
+
+
+--------------------------------------------------------------------------------
+[MYTHIC SPRITES] -> Base Cost: 7,500 Dust | Gold/Gummy: 15,000 Dust | Galaxy: 15,000 Dust
+--------------------------------------------------------------------------------
+
+* ZERO POINT SPRITE
+  - Base Ability: Deploy a defensive Shield Bubble Jr. protecting you automatically as you heal.
+  - Costs: Base (7,500) | Gold (15,000) | Gummy (15,000) | Galaxy (15,000)
+
+================================================================================
+END OF DIRECTORY
+================================================================================
+"""
+
+with open("fortnite_sprite_directory.txt", "w", encoding="utf-8") as file:
+    file.write(content)
+print("File successfully updated with the correct Zero Point variant costs!")
