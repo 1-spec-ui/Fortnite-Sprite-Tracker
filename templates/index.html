@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fortnite Sprite Tracker</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Orbitron:wght@700;900&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: #0a0e1a;
+      color: #e0e8ff;
+      min-height: 100vh;
+    }
+
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(0,195,255,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(138,43,226,0.10) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(255,215,0,0.04) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 16px;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.4rem, 4vw, 2.4rem);
+      color: #00c3ff;
+      text-shadow: 0 0 20px rgba(0,195,255,0.6), 0 0 40px rgba(0,195,255,0.3);
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+    }
+    header p {
+      color: #7a90b5;
+      font-size: 1rem;
+      letter-spacing: 1px;
+    }
+
+    /* Stats bar */
+    .stats-bar {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .stat-pill {
+      background: rgba(0,195,255,0.08);
+      border: 1px solid rgba(0,195,255,0.2);
+      border-radius: 999px;
+      padding: 6px 18px;
+      font-size: 0.9rem;
+      color: #a0c4e0;
+    }
+    .stat-pill span { color: #00c3ff; font-weight: 700; }
+
+    /* Panel */
+    .panel {
+      background: rgba(10, 20, 40, 0.85);
+      border: 1px solid rgba(0,195,255,0.18);
+      border-radius: 12px;
+      backdrop-filter: blur(8px);
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+    .panel-header {
+      background: linear-gradient(90deg, rgba(0,195,255,0.12), rgba(138,43,226,0.10));
+      border-bottom: 1px solid rgba(0,195,255,0.15);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .panel-header h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.95rem;
+      color: #00c3ff;
+      letter-spacing: 1px;
+    }
+    .panel-body { padding: 20px; }
+
+    /* Form grid */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label {
+      font-size: 0.78rem;
+      color: #7a90b5;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .form-group input, .form-group select {
+      background: rgba(0,195,255,0.05);
+      border: 1px solid rgba(0,195,255,0.2);
+      border-radius: 6px;
+      padding: 9px 12px;
+      color: #e0e8ff;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-group input:focus, .form-group select:focus {
+      border-color: #00c3ff;
+      box-shadow: 0 0 0 3px rgba(0,195,255,0.12);
+    }
+    .form-group select option { background: #0d1b2e; }
+
+    /* Toggle switches */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 0;
+    }
+    .toggle-label { font-size: 0.95rem; color: #c0d0e8; }
+    .toggle {
+      position: relative;
+      width: 46px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.1);
+      border-radius: 24px;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.15);
+      transition: 0.25s;
+    }
+    .toggle-slider::after {
+      content: '';
+      position: absolute;
+      width: 18px; height: 18px;
+      left: 3px; top: 2px;
+      background: #7a90b5;
+      border-radius: 50%;
+      transition: 0.25s;
+    }
+    .toggle input:checked + .toggle-slider { background: rgba(0,195,255,0.3); border-color: #00c3ff; }
+    .toggle input:checked + .toggle-slider::after { transform: translateX(22px); background: #00c3ff; }
+
+    /* Buttons */
+    .btn {
+      border: none;
+      border-radius: 7px;
+      padding: 10px 22px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #00c3ff, #007bff);
+      color: #fff;
+      box-shadow: 0 4px 18px rgba(0,195,255,0.25);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,195,255,0.4); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-danger {
+      background: rgba(255,60,80,0.12);
+      color: #ff4d60;
+      border: 1px solid rgba(255,60,80,0.3);
+    }
+    .btn-danger:hover { background: rgba(255,60,80,0.22); }
+    .btn-sm { padding: 5px 12px; font-size: 0.85rem; }
+
+    .form-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    /* Toast */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      z-index: 999;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s;
+      pointer-events: none;
+      max-width: 320px;
+    }
+    #toast.show { opacity: 1; transform: translateY(0); }
+    #toast.success { background: rgba(0,195,80,0.15); border: 1px solid rgba(0,195,80,0.4); color: #00c85a; }
+    #toast.error   { background: rgba(255,60,80,0.15); border: 1px solid rgba(255,60,80,0.4); color: #ff4d60; }
+
+    /* Table */
+    .table-wrap { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.97rem;
+    }
+    thead th {
+      text-align: left;
+      padding: 11px 14px;
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #5a7090;
+      border-bottom: 1px solid rgba(0,195,255,0.12);
+      white-space: nowrap;
+    }
+    tbody tr {
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: background 0.15s;
+    }
+    tbody tr:hover { background: rgba(0,195,255,0.04); }
+    tbody td { padding: 12px 14px; vertical-align: middle; }
+
+    .sprite-name { font-weight: 700; color: #d0e8ff; }
+    .variant-tag {
+      display: inline-block;
+      background: rgba(138,43,226,0.15);
+      border: 1px solid rgba(138,43,226,0.3);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 0.82rem;
+      color: #c090ff;
+    }
+    .cost-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,215,0,0.08);
+      border: 1px solid rgba(255,215,0,0.2);
+      border-radius: 4px;
+      padding: 3px 10px;
+      color: #ffd700;
+      font-weight: 600;
+      font-size: 0.88rem;
+      white-space: nowrap;
+    }
+    .cost-active {
+      background: rgba(0,195,80,0.08);
+      border-color: rgba(0,195,80,0.2);
+      color: #00c85a;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .status-mastered-locked { background: rgba(100,100,150,0.15); border: 1px solid rgba(100,100,200,0.25); color: #a0a8d0; }
+    .status-crown           { background: rgba(255,215,0,0.1);  border: 1px solid rgba(255,215,0,0.3);  color: #ffd700; }
+    .status-mastered        { background: rgba(255,180,0,0.1);  border: 1px solid rgba(255,180,0,0.25); color: #ffb400; }
+    .status-dead            { background: rgba(255,60,80,0.10); border: 1px solid rgba(255,60,80,0.25); color: #ff6070; }
+    .status-active          { background: rgba(0,195,80,0.10);  border: 1px solid rgba(0,195,80,0.25);  color: #00c85a; }
+
+    .level-chip {
+      display: inline-block;
+      width: 28px; height: 28px;
+      line-height: 28px;
+      text-align: center;
+      border-radius: 50%;
+      background: rgba(0,195,255,0.1);
+      border: 1px solid rgba(0,195,255,0.25);
+      color: #00c3ff;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 48px 20px;
+      color: #4a5a78;
+    }
+    .empty-state .empty-icon { font-size: 3rem; margin-bottom: 12px; }
+    .empty-state p { font-size: 1.05rem; }
+
+    /* Loading */
+    .loading { text-align: center; padding: 32px; color: #4a5a78; font-size: 1rem; }
+
+    /* Edit modal overlay */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: #0d1b30;
+      border: 1px solid rgba(0,195,255,0.25);
+      border-radius: 14px;
+      padding: 28px;
+      width: min(520px, 95vw);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal h3 {
+      font-family: 'Orbitron', sans-serif;
+      color: #00c3ff;
+      font-size: 1rem;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+    }
+    .modal-actions { display: flex; gap: 10px; margin-top: 18px; justify-content: flex-end; }
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #7a90b5;
+      padding: 9px 20px;
+      border-radius: 7px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.3); color: #c0d0e8; }
+
+    @media (max-width: 600px) {
+      .form-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <header>
+    <h1>🎮 FORTNITE SPRITE TRACKER</h1>
+    <p>Track your entire sprite collection in one place</p>
+  </header>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar" id="statsBar">
+    <div class="stat-pill">Total: <span id="statTotal">0</span></div>
+    <div class="stat-pill">Mastered: <span id="statMastered">0</span></div>
+    <div class="stat-pill">Summoned: <span id="statSummoned">0</span></div>
+    <div class="stat-pill">Not Summoned: <span id="statUnsummoned">0</span></div>
+  </div>
+
+  <!-- Add / Edit Form -->
+  <div class="panel">
+    <div class="panel-header">
+      <span>➕</span>
+      <h2 id="formTitle">ADD / UPDATE SPRITE</h2>
+    </div>
+    <div class="panel-body">
+      <div class="form-grid">
+        <div class="form-group" style="grid-column: span 2">
+          <label>Sprite Name</label>
+          <input id="fName" type="text" placeholder="e.g. Cube Queen" />
+        </div>
+        <div class="form-group" style="grid-column: span 2">
+          <label>Variant / Style</label>
+          <input id="fVariant" type="text" placeholder="e.g. Golden" />
+        </div>
+        <div class="form-group">
+          <label>Current Level</label>
+          <input id="fLevel" type="number" min="1" max="10" placeholder="1–10" />
+        </div>
+        <div class="form-group">
+          <label>Summon Cost (Dust)</label>
+          <input id="fCost" type="number" min="0" placeholder="e.g. 200" />
+        </div>
+        <div class="form-group">
+          <label>Mastered?</label>
+          <div class="toggle-row">
+            <label class="toggle">
+              <input type="checkbox" id="fMastered" />
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="toggle-label" id="masteredLabel">No</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Currently Summoned?</label>
+          <div class="toggle-row">
+            <label class="toggle">
+              <input type="checkbox" id="fSummoned" />
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="toggle-label" id="summonedLabel">No</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" onclick="submitSprite()">💾 SAVE SPRITE</button>
+        <button class="btn btn-ghost" id="clearBtn" onclick="clearForm()" style="display:none">✕ CLEAR</button>
+        <span id="formMsg" style="font-size:0.9rem; color:#ff4d60; display:none"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Table -->
+  <div class="panel">
+    <div class="panel-header">
+      <span>📊</span>
+      <h2>SPRITE DASHBOARD</h2>
+    </div>
+    <div class="panel-body" style="padding: 0">
+      <div id="tableContainer" class="loading">Loading sprites…</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Delete Confirm Modal -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal">
+    <h3>⚠️ CONFIRM REMOVAL</h3>
+    <p style="color:#c0d0e8; font-size:1rem; margin-bottom:6px;">
+      Remove <strong id="deleteSpriteName" style="color:#ff6070"></strong> from your tracker?
+    </p>
+    <p style="color:#5a7090; font-size:0.88rem;">This cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeDeleteModal()">Cancel</button>
+      <button class="btn btn-danger" onclick="confirmDelete()">Remove</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+  let spritesToDelete = null;
+
+  // Toggle labels
+  document.getElementById('fMastered').addEventListener('change', function() {
+    document.getElementById('masteredLabel').textContent = this.checked ? 'Yes' : 'No';
+  });
+  document.getElementById('fSummoned').addEventListener('change', function() {
+    document.getElementById('summonedLabel').textContent = this.checked ? 'Yes' : 'No';
+  });
+
+  function showToast(msg, type='success') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = `show ${type}`;
+    setTimeout(() => { t.className = ''; }, 3200);
+  }
+
+  function clearForm() {
+    ['fName','fVariant','fLevel','fCost'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('fMastered').checked = false;
+    document.getElementById('fSummoned').checked = false;
+    document.getElementById('masteredLabel').textContent = 'No';
+    document.getElementById('summonedLabel').textContent = 'No';
+    document.getElementById('formMsg').style.display = 'none';
+    document.getElementById('formTitle').textContent = 'ADD / UPDATE SPRITE';
+    document.getElementById('clearBtn').style.display = 'none';
+  }
+
+  function fillEditForm(sprite) {
+    document.getElementById('fName').value = sprite.name;
+    document.getElementById('fVariant').value = sprite.variant;
+    document.getElementById('fLevel').value = sprite.level;
+    document.getElementById('fCost').value = sprite.summon_cost;
+    document.getElementById('fMastered').checked = sprite.mastered;
+    document.getElementById('fSummoned').checked = sprite.summoned;
+    document.getElementById('masteredLabel').textContent = sprite.mastered ? 'Yes' : 'No';
+    document.getElementById('summonedLabel').textContent = sprite.summoned ? 'Yes' : 'No';
+    document.getElementById('formTitle').textContent = `EDITING: ${sprite.name.toUpperCase()}`;
+    document.getElementById('clearBtn').style.display = 'inline-block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  async function loadSprites() {
+    const container = document.getElementById('tableContainer');
+    try {
+      const res = await fetch('/api/sprites');
+      const data = await res.json();
+      const sprites = data.sprites;
+
+      // Update stats
+      document.getElementById('statTotal').textContent = sprites.length;
+      document.getElementById('statMastered').textContent = sprites.filter(s => s.mastered).length;
+      document.getElementById('statSummoned').textContent = sprites.filter(s => s.summoned).length;
+      document.getElementById('statUnsummoned').textContent = sprites.filter(s => !s.summoned).length;
+
+      if (sprites.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">📭</div>
+            <p>Your sprite tracker is empty. Add your first sprite above!</p>
+          </div>`;
+        return;
+      }
+
+      let rows = sprites.map(s => `
+        <tr>
+          <td><span class="sprite-name">${escHtml(s.name)}</span></td>
+          <td><span class="variant-tag">${escHtml(s.variant)}</span></td>
+          <td><span class="level-chip">${s.level}</span></td>
+          <td>
+            <span class="cost-badge ${s.summoned ? 'cost-active' : ''}">
+              ${s.summoned ? '✅' : '💨'} ${escHtml(s.cost_display)}
+            </span>
+          </td>
+          <td>
+            <span class="status-badge ${s.status.class}">
+              ${s.status.icon} ${escHtml(s.status.text)}
+            </span>
+          </td>
+          <td style="white-space:nowrap">
+            <button class="btn btn-sm" style="background:rgba(0,195,255,0.1);border:1px solid rgba(0,195,255,0.25);color:#00c3ff;border-radius:6px;cursor:pointer;font-family:Rajdhani,sans-serif;font-weight:700;margin-right:6px"
+              onclick='fillEditForm(${JSON.stringify(s)})'>✏️ Edit</button>
+            <button class="btn btn-danger btn-sm" onclick="openDeleteModal('${escAttr(s.name)}')">🗑️ Del</button>
+          </td>
+        </tr>`).join('');
+
+      container.innerHTML = `
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Sprite Name</th>
+                <th>Variant</th>
+                <th>Level</th>
+                <th>Cost / Status</th>
+                <th>Status Indicator</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>`;
+    } catch(e) {
+      container.innerHTML = `<div class="empty-state"><p style="color:#ff4d60">Failed to load sprites. Please refresh.</p></div>`;
+    }
+  }
+
+  async function submitSprite() {
+    const name = document.getElementById('fName').value.trim();
+    const variant = document.getElementById('fVariant').value.trim();
+    const level = document.getElementById('fLevel').value;
+    const cost = document.getElementById('fCost').value;
+    const mastered = document.getElementById('fMastered').checked;
+    const summoned = document.getElementById('fSummoned').checked;
+    const msg = document.getElementById('formMsg');
+
+    if (!name || !variant || level === '' || cost === '') {
+      msg.textContent = '⚠️ All fields are required.';
+      msg.style.display = 'inline';
+      return;
+    }
+    msg.style.display = 'none';
+
+    try {
+      const res = await fetch('/api/sprites', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, variant, level: parseInt(level), mastered, summoned, summon_cost: parseInt(cost) })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        showToast(data.error || 'Error saving sprite.', 'error');
+        return;
+      }
+      showToast(`✔️ ${data.message}`, 'success');
+      clearForm();
+      loadSprites();
+    } catch(e) {
+      showToast('Network error. Please try again.', 'error');
+    }
+  }
+
+  function openDeleteModal(name) {
+    spritesToDelete = name;
+    document.getElementById('deleteSpriteName').textContent = name;
+    document.getElementById('deleteModal').classList.add('open');
+  }
+  function closeDeleteModal() {
+    spritesToDelete = null;
+    document.getElementById('deleteModal').classList.remove('open');
+  }
+  async function confirmDelete() {
+    if (!spritesToDelete) return;
+    closeDeleteModal();
+    try {
+      const res = await fetch(`/api/sprites/${encodeURIComponent(spritesToDelete)}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (!res.ok) { showToast(data.error, 'error'); return; }
+      showToast(`❌ ${data.message}`, 'success');
+      loadSprites();
+    } catch(e) {
+      showToast('Network error.', 'error');
+    }
+  }
+
+  // Close modal clicking overlay
+  document.getElementById('deleteModal').addEventListener('click', function(e) {
+    if (e.target === this) closeDeleteModal();
+  });
+
+  function escHtml(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function escAttr(str) {
+    return String(str).replace(/'/g, "\\'");
+  }
+
+  // Initial load
+  loadSprites();
+</script>
+</body>
+</html>

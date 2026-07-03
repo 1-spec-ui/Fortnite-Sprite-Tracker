@@ -1,0 +1,131 @@
+import json
+import os
+
+class FortniteSpriteTracker:
+    def __init__(self, filename="fortnite_sprites.json"):
+        self.filename = filename
+        self.collection = self.load_data()
+
+    def load_data(self):
+        """Loads the collection from a file, or creates an empty dictionary if it doesn't exist."""
+        if os.path.exists(self.filename):
+            try:
+                with open(self.filename, "r") as file:
+                    return json.load(file)
+            except json.JSONDecodeError:
+                return {}
+        return {}
+
+    def save_data(self):
+        """Saves the current collection to a JSON file."""
+        with open(self.filename, "w") as file:
+            json.dump(self.collection, file, indent=4)
+
+    def add_or_update_sprite(self, name, variant, level, mastered, summoned, summon_cost):
+        """Adds a new sprite or updates an existing one."""
+        self.collection[name] = {
+            "variant": variant,
+            "level": int(level),
+            "mastered": bool(mastered),
+            "summoned": bool(summoned),
+            "summon_cost": int(summon_cost)
+        }
+        self.save_data()
+        print(f"✔️ Successfully saved tracking data for '{name}'!")
+
+    def delete_sprite(self, name):
+        """Removes a sprite from the tracker."""
+        if name in self.collection:
+            del self.collection[name]
+            self.save_data()
+            print(f"❌ Removed '{name}' from the tracker.")
+        else:
+            print(f"⚠️ Sprite '{name}' not found.")
+
+    def get_status_indicator(self, sprite_data):
+        """Determines the specific smart status indicator based on requirements."""
+        mastered = sprite_data["mastered"]
+        summoned = sprite_data["summoned"]
+        level = sprite_data["level"]
+
+        if mastered and not summoned:
+            return "🔒 Mastered & Not Summoned"
+        elif mastered and level >= 5:
+            return f"👑 Mastered & Max Level ({level})"
+        elif mastered:
+            return f"⭐ Mastered & Level {level}"
+        elif not summoned:
+            return "💀 Not Summoned"
+        else:
+            return f"🏃 Summoned (Level {level})"
+
+    def display_dashboard(self):
+        """Prints the entire tracking system in a clean, organized table structure."""
+        if not self.collection:
+            print("\n📭 Your sprite tracker is currently empty.")
+            return
+
+        print("\n" + "="*85)
+        print("🎮 FORTNITE SPRITE COLLECTION TRACKER")
+        print("="*85)
+        print(f"{'Sprite Name':<18} | {'Variant':<15} | {'Cost (Dust)':<12} | {'Status Indicator':<30}")
+        print("-"*85)
+
+        for name, data in self.collection.items():
+            status = self.get_status_indicator(data)
+            # Display summon cost if it is currently not summoned
+            cost_display = f"{data['summon_cost']} Dust" if not data["summoned"] else "Active (0)"
+            print(f"{name:<18} | {data['variant']:<15} | {cost_display:<12} | {status:<30}")
+            
+        print("="*85 + "\n")
+
+# --- Interactive System Menu ---
+def main():
+    tracker = FortniteSpriteTracker()
+    
+    while True:
+        print("--- MAIN MENU ---")
+        print("1. View Sprite Dashboard")
+        print("2. Add / Update a Sprite")
+        print("3. Delete a Sprite")
+        print("4. Exit")
+        
+        choice = input("Select an option (1-4): ").strip()
+        
+        if choice == "1":
+            tracker.display_dashboard()
+        elif choice == "2":
+            print("\n--- Enter Sprite Details ---")
+            name = input("Sprite Name: ").strip()
+            variant = input("Variant/Style Name: ").strip()
+            level = input("Current Level: ").strip()
+            
+            mastered_input = input("Is it Mastered? (y/n): ").strip().lower()
+            mastered = mastered_input == 'y'
+            
+            summoned_input = input("Is it currently Summoned? (y/n): ").strip().lower()
+            summoned = summoned_input == 'y'
+            
+            summon_cost = input("Cost to summon (Sprite Dust amount): ").strip()
+            
+            # Basic validation fallback for numbers
+            try:
+                level = int(level)
+                summon_cost = int(summon_cost)
+            except ValueError:
+                print("⚠️ Level and Summon Cost must be numbers. Please try again.\n")
+                continue
+                
+            tracker.add_or_update_sprite(name, variant, level, mastered, summoned, summon_cost)
+            
+        elif choice == "3":
+            name = input("Enter the name of the sprite to remove: ").strip()
+            tracker.delete_sprite(name)
+        elif choice == "4":
+            print("Goodbye! Happy hunting!")
+            break
+        else:
+            print("⚠️ Invalid choice. Please pick a number from 1 to 4.\n")
+
+if __name__ == "__main__":
+    main()
