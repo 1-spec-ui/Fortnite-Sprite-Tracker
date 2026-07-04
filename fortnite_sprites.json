@@ -1,9 +1,4 @@
 {
-    "Earth Sprite||Normal": {
-        "level": 5,
-        "summoned": true,
-        "summon_cost": 100
-    },
     "Earth Sprite||Gold": {
         "level": 5,
         "summoned": true,
@@ -16,7 +11,24 @@
     },
     "Earth Sprite||Gummy": {
         "level": 5,
-        "summoned": true,
+        "mastered": true,
+        "summoned": false,
         "summon_cost": 4000
+    },
+    "Earth Sprite||Normal": {
+        "level": 5,
+        "mastered": true,
+        "summoned": true,
+        "summon_cost": 2000
+    },
+    "Burnt Peanut Sprite||Normal": {
+        "level": 5,
+        "summoned": true,
+        "summon_cost": 7500
+    },
+    "Grim Reaper Sprite||Normal": {
+        "level": 1,
+        "summoned": true,
+        "summon_cost": 7500
     }
 }

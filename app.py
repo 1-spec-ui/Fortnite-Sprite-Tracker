@@ -5,7 +5,6 @@ import os
 app = Flask(__name__)
 DATA_FILE = "fortnite_sprites.json"
 
-# Variants ordered for display (Burnt Peanut only has Normal)
 VARIANTS = ["Normal", "Gold", "Gummy", "Galaxy"]
 
 VARIANT_PERKS = {
@@ -15,7 +14,6 @@ VARIANT_PERKS = {
     "Galaxy": "+30% more ammunition when opening ammo crates and looting.",
 }
 
-# Level 5 = Mastered. Each sprite has level descriptions (1-5).
 SPRITE_DIRECTORY = {
     # ── RARE ──────────────────────────────────────────────────────────────
     "Water Sprite": {
@@ -27,7 +25,7 @@ SPRITE_DIRECTORY = {
             2: "Faster shield regen in water; small shield regen extended to nearby allies.",
             3: "Shield regen rate increased significantly; squad regen radius expanded.",
             4: "Full squad receives rapid shield regen while in water.",
-            5: "Maximum shield regen for entire squad; triggers instantly on water entry. (Mastered)",
+            5: "Maximum shield regen for entire squad; triggers instantly on water entry.",
         }
     },
     "Earth Sprite": {
@@ -39,7 +37,7 @@ SPRITE_DIRECTORY = {
             2: "Improved chance; bonus item quality increased to uncommon.",
             3: "Rare item chance significantly increased; broader item pool.",
             4: "High chance of extra rare item; occasional epic bonus item.",
-            5: "Guaranteed extra rare item per chest; chance for epic or legendary bonus. (Mastered)",
+            5: "Guaranteed extra rare item per chest; chance for epic or legendary bonus.",
         }
     },
     "Fire Sprite": {
@@ -48,10 +46,10 @@ SPRITE_DIRECTORY = {
         "costs": {"Normal": 2000, "Gold": 4000, "Gummy": 4000, "Galaxy": 15000},
         "levels": {
             1: "Small fiery burst triggers after dealing 200 damage to an enemy.",
-            2: "Larger burst, damage threshold reduced to 175.",
+            2: "Larger burst; damage threshold reduced to 175.",
             3: "Burst deals bonus area damage; threshold reduced to 150.",
             4: "Burst deals significant area damage; threshold reduced to 125.",
-            5: "Maximum burst damage; triggers after only 100 damage dealt. (Mastered)",
+            5: "Maximum burst damage; triggers after only 100 damage dealt.",
         }
     },
     "Fishy Sprite": {
@@ -63,7 +61,7 @@ SPRITE_DIRECTORY = {
             2: "Faster swimming; improved post-damage movement boost duration.",
             3: "Significant swim speed increase; strong extended movement buff.",
             4: "Near-maximum swim speed; long-duration post-damage movement buff.",
-            5: "Maximum swim speed and extended post-damage movement overdrive. (Mastered)",
+            5: "Maximum swim speed and extended post-damage movement overdrive.",
         }
     },
 
@@ -73,11 +71,11 @@ SPRITE_DIRECTORY = {
         "ability": "Emoting or Jamming on the battlefield slowly replenishes your shields.",
         "costs": {"Normal": 3000, "Gold": 6000, "Gummy": 6000, "Galaxy": 15000},
         "levels": {
-            1: "Slowly restores 5 shield per second while emoting or jamming.",
+            1: "Restores 5 shield per second while emoting or jamming.",
             2: "Restores 10 shield/s; emote duration required reduced.",
             3: "Restores 15 shield/s; bonus applies to nearby squad members.",
             4: "Restores 20 shield/s; squad regen radius increased.",
-            5: "Restores 25 shield/s for you and your full squad while emoting. (Mastered)",
+            5: "Restores 25 shield/s for you and your full squad while emoting.",
         }
     },
     "Ghost Sprite": {
@@ -89,7 +87,7 @@ SPRITE_DIRECTORY = {
             2: "Cloak duration extended to 2 seconds.",
             3: "Cloak lasts 3 seconds; movement speed slightly increased while cloaked.",
             4: "Cloak lasts 4 seconds; full movement speed while cloaked.",
-            5: "Maximum 5-second cloak with full speed; near-invisible while active. (Mastered)",
+            5: "Maximum 5-second cloak with full speed; near-invisible while active.",
         }
     },
     "Demon Sprite": {
@@ -101,7 +99,7 @@ SPRITE_DIRECTORY = {
             2: "Siphon 20 HP/shield from each elimination.",
             3: "Siphon 30 HP/shield from each elimination.",
             4: "Siphon 40 HP/shield from each elimination.",
-            5: "Siphon 50 HP/shield from each elimination; excess converts to overshield. (Mastered)",
+            5: "Siphon 50 HP/shield per elimination; excess converts to overshield.",
         }
     },
     "King Sprite": {
@@ -113,7 +111,7 @@ SPRITE_DIRECTORY = {
             2: "Pickaxe deals +20% more damage per swing.",
             3: "Pickaxe deals +35% more damage; structures harvested faster.",
             4: "Pickaxe deals +50% more damage; one-shots low-HP structures.",
-            5: "Maximum pickaxe damage; instant harvest on weakened materials. (Mastered)",
+            5: "Maximum pickaxe damage; instant harvest on weakened materials.",
         }
     },
     "Aura Sprite": {
@@ -125,7 +123,7 @@ SPRITE_DIRECTORY = {
             2: "Charge earned at 400 damage; can hold up to 2 charges.",
             3: "Charge earned at 300 damage; faster recharge between procs.",
             4: "Charge earned at 200 damage; can hold up to 3 charges.",
-            5: "Charge earned at 150 damage; maximum 4 charges stored. (Mastered)",
+            5: "Charge earned at 150 damage; maximum 4 charges stored.",
         }
     },
     "Striker Sprite": {
@@ -137,21 +135,21 @@ SPRITE_DIRECTORY = {
             2: "Speed boost lasts 2 seconds; slightly faster sprint.",
             3: "Speed boost lasts 3 seconds; significantly faster sprint.",
             4: "Speed boost lasts 4 seconds; chains on consecutive Mantles.",
-            5: "Maximum speed overdrive lasting 5 seconds; stacks on repeated movement. (Mastered)",
+            5: "Maximum speed overdrive lasting 5 seconds; stacks on repeated movement.",
         }
     },
 
     # ── LEGENDARY ─────────────────────────────────────────────────────────
     "Punk Sprite": {
         "rarity": "Legendary",
-        "ability": "Randomly grants one of several powerful combat perks at the start of each match.",
+        "ability": "Has no effect below Level 5. At Level 5 (Mastered): Grants infinite ammunition for the entire match.",
         "costs": {"Normal": 5000, "Gold": 10000, "Gummy": 10000, "Galaxy": 15000},
         "levels": {
-            1: "Grants one minor random combat perk at match start (e.g. reload speed, extra ammo).",
-            2: "Grants one moderate combat perk; small passive bonus active all match.",
-            3: "Grants two random combat perks; moderate passive stat boosts.",
-            4: "Grants two strong combat perks; strong passive buffs persist all match.",
-            5: "Grants three powerful random perks and maximum passive combat traits. (Mastered)",
+            1: "No active effect at this level.",
+            2: "No active effect at this level.",
+            3: "No active effect at this level.",
+            4: "No active effect at this level.",
+            5: "Grants infinite ammunition for the entire match.",
         }
     },
     "Dream Sprite": {
@@ -160,10 +158,10 @@ SPRITE_DIRECTORY = {
         "costs": {"Normal": 5000, "Gold": 10000, "Gummy": 10000, "Galaxy": 15000},
         "levels": {
             1: "Grants 1 random common item at match start.",
-            2: "Grants 1 random uncommon item.",
-            3: "Grants 1 random rare item.",
-            4: "Grants 1 random epic item.",
-            5: "Grants 1 legendary item and a chance for a bonus exotic or mythic item. (Mastered)",
+            2: "Grants 1 random uncommon item at match start.",
+            3: "Grants 1 random rare item at match start.",
+            4: "Grants 1 random epic item at match start.",
+            5: "Grants 1 legendary item and a chance for a bonus exotic or mythic item.",
         }
     },
     "Boss Sprite": {
@@ -175,7 +173,7 @@ SPRITE_DIRECTORY = {
             2: "Increases max health and shields by +50 each.",
             3: "Increases max health and shields by +75 each.",
             4: "Increases max health and shields by +100 each.",
-            5: "Increases max health and shields by +150 each; enhanced passive regen. (Mastered)",
+            5: "Increases max health and shields by +150 each; enhanced passive regen.",
         }
     },
 
@@ -185,11 +183,11 @@ SPRITE_DIRECTORY = {
         "ability": "Instantly executes downed enemies in range and reveals nearby opponents after each elimination.",
         "costs": {"Normal": 7500, "Gold": 15000, "Gummy": 15000, "Galaxy": 15000},
         "levels": {
-            1: "Executes downed enemies within 5m; briefly reveals killer instinct (nearby enemies) for 2s.",
-            2: "Execution range extends to 8m; enemy reveal lasts 3s.",
-            3: "Execution range extends to 12m; enemy reveal lasts 4s with location pulse.",
+            1: "Executes downed enemies within 5m; reveals nearby enemies for 2 seconds.",
+            2: "Execution range extends to 8m; enemy reveal lasts 3 seconds.",
+            3: "Execution range extends to 12m; reveal lasts 4 seconds with location pulse.",
             4: "Execution range extends to 16m; extended reveal with directional ping.",
-            5: "Maximum execution range; persistent enemy reveal for 6s after each elimination. (Mastered)",
+            5: "Maximum execution range; persistent enemy reveal for 6 seconds after each elimination.",
         }
     },
     "Zero Point Sprite": {
@@ -201,32 +199,35 @@ SPRITE_DIRECTORY = {
             2: "Slightly larger bubble; duration extended to 8 seconds.",
             3: "Medium bubble; lasts 10 seconds; auto-deploys on low health.",
             4: "Large bubble; lasts 12 seconds; faster auto-deploy trigger.",
-            5: "Maximum bubble size; permanent auto-deploy; absorbs significantly more damage. (Mastered)",
+            5: "Maximum bubble size; permanent auto-deploy; absorbs significantly more damage.",
         }
     },
     "Burnt Peanut Sprite": {
         "rarity": "Mythic",
         "ability": "Passively increases all fire damage dealt and triggers a scorching explosion on each elimination.",
-        "costs": {"Normal": 7500},   # No Gold/Gummy/Galaxy variants
+        "costs": {"Normal": 7500},
         "levels": {
             1: "Fire damage increased by +10%; small scorching explosion on elimination.",
             2: "Fire damage increased by +20%; explosion radius grows.",
             3: "Fire damage increased by +30%; explosions deal bonus damage to nearby enemies.",
             4: "Fire damage increased by +40%; large area scorching explosion on elimination.",
-            5: "Maximum +50% fire damage; massive explosion; brief fire immunity after eliminations. (Mastered)",
+            5: "Maximum +50% fire damage; massive explosion; brief fire immunity after eliminations.",
         }
     },
 }
 
 TERMINAL_SERVICES = [
-    {"name": "Locate Sprites Map Marker", "cost": 100,   "limit": None,          "category": "Utility"},
-    {"name": "20,000 Battle Pass XP",      "cost": 1000,  "limit": "Once per day","category": "XP"},
-    {"name": "Portable Extractor",         "cost": 2000,  "limit": "Once per day","category": "Utility"},
-    {"name": "Weapon Upgrade: Common → Uncommon",   "cost": 250,  "limit": None, "category": "Weapon"},
-    {"name": "Weapon Upgrade: Uncommon → Rare",     "cost": 500,  "limit": None, "category": "Weapon"},
-    {"name": "Weapon Upgrade: Rare → Epic",         "cost": 1000, "limit": None, "category": "Weapon"},
-    {"name": "Weapon Upgrade: Epic → Legendary",    "cost": 2000, "limit": None, "category": "Weapon"},
+    {"name": "Locate Sprites Map Marker",         "cost": 100,   "limit": None,           "category": "Utility"},
+    {"name": "20,000 Battle Pass XP",              "cost": 1000,  "limit": "Once per day", "category": "XP"},
+    {"name": "Portable Extractor",                 "cost": 2000,  "limit": "Once per day", "category": "Utility"},
+    {"name": "Weapon Upgrade: Common → Uncommon",  "cost": 250,   "limit": None,           "category": "Weapon"},
+    {"name": "Weapon Upgrade: Uncommon → Rare",    "cost": 500,   "limit": None,           "category": "Weapon"},
+    {"name": "Weapon Upgrade: Rare → Epic",        "cost": 1000,  "limit": None,           "category": "Weapon"},
+    {"name": "Weapon Upgrade: Epic → Legendary",   "cost": 2000,  "limit": None,           "category": "Weapon"},
 ]
+
+# Pre-compute total available variants across all sprites
+TOTAL_VARIANTS = sum(len(info["costs"]) for info in SPRITE_DIRECTORY.values())
 
 
 def make_key(sprite_name, variant):
@@ -248,8 +249,8 @@ def save_data(collection):
         json.dump(collection, f, indent=4)
 
 
-def get_status(level, summoned):
-    mastered = level == 5
+def get_status(level, mastered, summoned):
+    """Status reflects mastered (separate field) and summoned state."""
     if mastered and not summoned:
         return {"icon": "🔒", "text": "Mastered & Not Summoned", "cls": "status-mastered-locked"}
     elif mastered and summoned:
@@ -268,10 +269,11 @@ def index():
 @app.route("/api/directory")
 def get_directory():
     return jsonify({
-        "sprites":        SPRITE_DIRECTORY,
-        "variants":       VARIANTS,
-        "variant_perks":  VARIANT_PERKS,
-        "terminal":       TERMINAL_SERVICES,
+        "sprites":       SPRITE_DIRECTORY,
+        "variants":      VARIANTS,
+        "variant_perks": VARIANT_PERKS,
+        "terminal":      TERMINAL_SERVICES,
+        "total_variants": TOTAL_VARIANTS,
     })
 
 
@@ -285,13 +287,15 @@ def get_collection():
         for variant in VARIANTS:
             if variant not in available_variants:
                 continue
-            key   = make_key(sprite_name, variant)
-            entry = collection.get(key)
-            owned   = entry is not None
-            level   = entry["level"] if owned else 0
+            key    = make_key(sprite_name, variant)
+            entry  = collection.get(key)
+            owned  = entry is not None
+            level  = entry["level"] if owned else 0
+            # mastered: stored separately; level 5 always forces mastered=True
+            mastered = (entry.get("mastered", False) or level == 5) if owned else False
             summoned = entry.get("summoned", False) if owned else False
-            cost    = info["costs"][variant]
-            status  = get_status(level, summoned) if owned else None
+            cost   = info["costs"][variant]
+            status = get_status(level, mastered, summoned) if owned else None
             rows.append({
                 "key":      key,
                 "name":     sprite_name,
@@ -302,24 +306,25 @@ def get_collection():
                 "cost":     cost,
                 "owned":    owned,
                 "level":    level,
+                "mastered": mastered,
                 "summoned": summoned,
-                "mastered": level == 5,
                 "status":   status,
             })
+
     rows.sort(key=lambda r: (
         rarity_order.index(r["rarity"]),
         r["name"],
         (VARIANTS.index(r["variant"]) if r["variant"] in VARIANTS else 99)
     ))
 
-    owned_rows     = [r for r in rows if r["owned"]]
-    collection_worth = sum(r["cost"] for r in owned_rows)
+    owned_rows = [r for r in rows if r["owned"]]
     stats = {
         "total":            len(owned_rows),
         "mastered":         sum(1 for r in owned_rows if r["mastered"]),
         "summoned":         sum(1 for r in owned_rows if r["summoned"]),
         "unsummoned":       sum(1 for r in owned_rows if not r["summoned"]),
-        "collection_worth": collection_worth,
+        "collection_worth": sum(r["cost"] for r in owned_rows),
+        "total_variants":   TOTAL_VARIANTS,
     }
     return jsonify({"rows": rows, "stats": stats})
 
@@ -329,6 +334,8 @@ def upsert_entry(key):
     body     = request.get_json()
     level    = body.get("level", 1)
     summoned = body.get("summoned", False)
+    mastered_in = body.get("mastered", False)
+
     try:
         level = int(level)
     except (TypeError, ValueError):
@@ -345,9 +352,17 @@ def upsert_entry(key):
     if variant not in SPRITE_DIRECTORY[sprite_name]["costs"]:
         return jsonify({"error": f"Variant '{variant}' not available for '{sprite_name}'."}), 400
 
+    # Level 5 always forces mastered
+    mastered = bool(mastered_in) or (level == 5)
+
     cost = SPRITE_DIRECTORY[sprite_name]["costs"][variant]
     collection = load_data()
-    collection[key] = {"level": level, "summoned": bool(summoned), "summon_cost": cost}
+    collection[key] = {
+        "level":      level,
+        "mastered":   mastered,
+        "summoned":   bool(summoned),
+        "summon_cost": cost,
+    }
     save_data(collection)
     return jsonify({"ok": True})
 
