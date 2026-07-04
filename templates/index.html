@@ -291,6 +291,46 @@
     .afford-note.can    { background:rgba(0,195,80,0.08);  border:1px solid rgba(0,195,80,0.2);  color:#00a850; }
     .afford-note.cannot { background:rgba(255,60,80,0.08); border:1px solid rgba(255,60,80,0.2); color:#cc4050; }
 
+    /* ── Extraction Dust Calculator ── */
+    .ec-controls { display:flex; flex-wrap:wrap; gap:8px; align-items:flex-end; margin-bottom:16px; }
+    .ec-field { display:flex; flex-direction:column; gap:4px; }
+    .ec-field label { font-size:0.7rem; color:#3a6080; letter-spacing:0.6px; font-weight:700; }
+    .ec-select {
+      background:rgba(5,16,30,0.9); border:1px solid rgba(0,195,255,0.18); border-radius:6px;
+      color:#a0c8e0; font-size:0.85rem; padding:7px 10px; cursor:pointer; outline:none;
+      min-width:150px;
+    }
+    .ec-select:focus { border-color:rgba(0,195,255,0.45); }
+    .ec-add-btn {
+      background:rgba(0,195,255,0.10); border:1px solid rgba(0,195,255,0.28); border-radius:6px;
+      color:#00c3ff; font-size:0.84rem; font-weight:700; padding:7px 18px; cursor:pointer;
+      transition:all 0.15s; align-self:flex-end;
+    }
+    .ec-add-btn:hover { background:rgba(0,195,255,0.20); border-color:rgba(0,195,255,0.5); }
+    .ec-table { width:100%; border-collapse:collapse; font-size:0.83rem; }
+    .ec-table th {
+      font-family:'Orbitron',sans-serif; font-size:0.62rem; color:#3a6080; letter-spacing:1px;
+      padding:7px 10px; text-align:left; border-bottom:1px solid rgba(0,195,255,0.15);
+    }
+    .ec-table th:not(:first-child) { text-align:right; }
+    .ec-table td { padding:7px 10px; border-bottom:1px solid rgba(255,255,255,0.03); color:#8ab0c8; vertical-align:middle; }
+    .ec-table td:not(:first-child) { text-align:right; }
+    .ec-table tr:last-child td { border-bottom:none; }
+    .ec-table tr:hover td { background:rgba(0,195,255,0.025); }
+    .ec-base  { color:#a0c0d8; font-weight:700; }
+    .ec-gummy { color:#20c070; font-weight:700; }
+    .ec-rm { background:none; border:1px solid rgba(255,60,80,0.2); border-radius:4px; color:#804050; cursor:pointer; padding:2px 7px; font-size:0.78rem; transition:all 0.15s; }
+    .ec-rm:hover { background:rgba(255,60,80,0.1); color:#ff5060; border-color:rgba(255,60,80,0.4); }
+    .ec-totals { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:14px; padding-top:14px; border-top:1px solid rgba(0,195,255,0.15); }
+    .ec-total-box { background:rgba(5,16,30,0.7); border-radius:7px; padding:12px 14px; text-align:center; }
+    .ec-total-box.gummy { border:1px solid rgba(0,195,100,0.25); }
+    .ec-total-box.base  { border:1px solid rgba(0,120,195,0.2); }
+    .ec-total-lbl { font-family:'Orbitron',sans-serif; font-size:0.62rem; color:#3a7090; letter-spacing:1px; display:block; margin-bottom:4px; }
+    .ec-total-val { font-family:'Orbitron',sans-serif; font-size:1.1rem; }
+    .ec-total-val.base-v  { color:#00c3ff; }
+    .ec-total-val.gummy-v { color:#20c070; }
+    .ec-empty { color:#304050; font-size:0.85rem; padding:16px 0; text-align:center; }
+
     /* ── Toast ── */
     #toast { position:fixed; bottom:22px; right:22px; padding:10px 18px; border-radius:7px; font-weight:600; font-size:0.92rem; z-index:999; opacity:0; transform:translateY(8px); transition:all 0.25s; pointer-events:none; max-width:320px; }
     #toast.show { opacity:1; transform:translateY(0); }
@@ -422,6 +462,50 @@
       </div>
     </div>
 
+    <!-- ── Standalone Extraction Dust Calculator ── -->
+    <div class="calc-card" style="margin-top:16px">
+      <h3>🧮 EXTRACTION DUST CALCULATOR</h3>
+      <p style="font-size:0.8rem;color:#2a4050;margin-bottom:14px;line-height:1.5">
+        Build a custom extraction list — pick any sprite, variant, and level to compare base yield vs. yield with a Gummy Sprite in your loadout.
+      </p>
+
+      <!-- Input controls -->
+      <div class="ec-controls">
+        <div class="ec-field">
+          <label>SPRITE</label>
+          <select id="ecSprite" class="ec-select" onchange="onEcSpriteChange()"></select>
+        </div>
+        <div class="ec-field">
+          <label>VARIANT</label>
+          <select id="ecVariant" class="ec-select"></select>
+        </div>
+        <div class="ec-field">
+          <label>LEVEL</label>
+          <select id="ecLevel" class="ec-select" style="min-width:80px"></select>
+        </div>
+        <button class="ec-add-btn" onclick="addEcEntry()">+ Add Sprite</button>
+        <button class="ec-add-btn" onclick="clearEcEntries()" style="background:rgba(255,60,80,0.07);border-color:rgba(255,60,80,0.2);color:#cc4050;margin-left:auto">✕ Clear All</button>
+      </div>
+
+      <!-- Entry table -->
+      <div id="ecTableWrap">
+        <div class="ec-empty">No sprites added yet. Use the controls above to build your extraction list.</div>
+      </div>
+
+      <!-- Totals -->
+      <div class="ec-totals" id="ecTotals" style="display:none">
+        <div class="ec-total-box base">
+          <span class="ec-total-lbl">TOTAL — NO GUMMY</span>
+          <span class="ec-total-val base-v" id="ecTotalBase">0 Dust</span>
+        </div>
+        <div class="ec-total-box gummy">
+          <span class="ec-total-lbl">TOTAL — WITH GUMMY (+20%)</span>
+          <span class="ec-total-val gummy-v" id="ecTotalGummy">0 Dust</span>
+          <div style="font-size:0.72rem;color:#1a6040;margin-top:3px" id="ecTotalDiff"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- Extraction planner — full width -->
     <div class="calc-card" style="margin-top:16px">
       <h3>📤 EXTRACTION DUST YIELD PLANNER</h3>
@@ -449,6 +533,8 @@
 let allRows      = [];
 let TERMINAL     = [];
 let VPERKS       = {};
+let SPRITE_DIR   = {};   // sprites dict from /api/directory
+let calcEntries  = [];   // [{spriteName, variant, rarity, level, maxLevel, cost}]
 let TOTAL_VARS   = 61;
 let filterMode   = 'all';
 let rarityFilter = null;
@@ -499,6 +585,7 @@ async function boot() {
 
   TERMINAL        = dir.terminal;
   VPERKS          = dir.variant_perks;
+  SPRITE_DIR      = dir.sprites || {};
   TOTAL_VARS      = dir.total_variants || 61;
   if (dir.extraction_base) EXTRACTION_BASE = dir.extraction_base;
   allRows         = col.rows;
@@ -506,6 +593,7 @@ async function boot() {
   updateStats(col.stats);
   render();
   renderTerminal();
+  populateEcSprite();
   renderCalculator();
 }
 
@@ -1063,8 +1151,111 @@ function renderCalculator() {
 }
 
 /* ════════════════════════════════════════════════════════════
-   Helpers
+   Extraction Dust Calculator (standalone)
 ════════════════════════════════════════════════════════════ */
+function populateEcSprite() {
+  const sel = document.getElementById('ecSprite');
+  if (!sel) return;
+  const names = Object.keys(SPRITE_DIR).sort();
+  sel.innerHTML = names.map(n => `<option value="${esc(n)}">${esc(n)}</option>`).join('');
+  onEcSpriteChange();
+}
+
+function onEcSpriteChange() {
+  const spriteName = document.getElementById('ecSprite')?.value;
+  const sprite     = SPRITE_DIR[spriteName];
+  if (!sprite) return;
+
+  // Populate variants
+  const varSel  = document.getElementById('ecVariant');
+  const variants = Object.keys(sprite.costs || {}).sort();
+  varSel.innerHTML = variants.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join('');
+
+  // Populate levels 1..max_level
+  const lvlSel  = document.getElementById('ecLevel');
+  const maxLvl  = sprite.max_level || 5;
+  let lh = '';
+  for (let i = 1; i <= maxLvl; i++) lh += `<option value="${i}">${i}</option>`;
+  lvlSel.innerHTML = lh;
+  // Default to max level
+  lvlSel.value = String(maxLvl);
+}
+
+function addEcEntry() {
+  const spriteName = document.getElementById('ecSprite')?.value;
+  const variant    = document.getElementById('ecVariant')?.value;
+  const level      = parseInt(document.getElementById('ecLevel')?.value || '1');
+  const sprite     = SPRITE_DIR[spriteName];
+  if (!sprite || !variant) return;
+
+  const rarity   = sprite.rarity;
+  const maxLevel = sprite.max_level || 5;
+  const cost     = (sprite.costs || {})[variant] || 0;
+
+  calcEntries.push({ spriteName, variant, rarity, level, maxLevel, cost });
+  renderEcEntries();
+}
+
+function removeEcEntry(idx) {
+  calcEntries.splice(idx, 1);
+  renderEcEntries();
+}
+
+function clearEcEntries() {
+  calcEntries = [];
+  renderEcEntries();
+}
+
+function renderEcEntries() {
+  const wrap  = document.getElementById('ecTableWrap');
+  const tots  = document.getElementById('ecTotals');
+  if (!wrap) return;
+
+  if (!calcEntries.length) {
+    wrap.innerHTML = '<div class="ec-empty">No sprites added yet. Use the controls above to build your extraction list.</div>';
+    if (tots) tots.style.display = 'none';
+    return;
+  }
+
+  let totalBase = 0, totalGummy = 0;
+  let rows = '';
+  calcEntries.forEach((e, i) => {
+    const base     = (EXTRACTION_BASE[e.rarity] || {})[e.level] || 0;
+    const withGum  = Math.round(base * 1.20);
+    totalBase  += base;
+    totalGummy += withGum;
+    const icon = RARITY_ICONS[e.rarity] || '';
+    rows += `<tr>
+      <td><b style="color:#c0daf0">${esc(e.spriteName)}</b>
+          <span style="font-size:0.78rem;color:#4a7090;margin-left:6px">${icon} ${esc(e.variant)}</span></td>
+      <td><span style="color:#3a7898;font-family:'Orbitron',sans-serif;font-size:0.78rem">Lv ${e.level}</span></td>
+      <td class="ec-base">${base.toLocaleString()} Dust</td>
+      <td class="ec-gummy">${withGum.toLocaleString()} Dust
+          <span style="font-size:0.72rem;color:#1a7040">(+${(withGum-base).toLocaleString()})</span></td>
+      <td><button class="ec-rm" onclick="removeEcEntry(${i})">✕</button></td>
+    </tr>`;
+  });
+
+  wrap.innerHTML = `<table class="ec-table">
+    <thead><tr>
+      <th>SPRITE / VARIANT</th>
+      <th>LEVEL</th>
+      <th>BASE YIELD</th>
+      <th>WITH GUMMY (+20%)</th>
+      <th></th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+
+  if (tots) {
+    tots.style.display = 'grid';
+    const diff = totalGummy - totalBase;
+    document.getElementById('ecTotalBase').textContent  = totalBase.toLocaleString()  + ' Dust';
+    document.getElementById('ecTotalGummy').textContent = totalGummy.toLocaleString() + ' Dust';
+    document.getElementById('ecTotalDiff').textContent  = `+${diff.toLocaleString()} Dust extra with Gummy`;
+  }
+}
+
 function showToast(msg, type='ok') {
   const t = document.getElementById('toast');
   t.textContent = msg; t.className = `show ${type}`;
