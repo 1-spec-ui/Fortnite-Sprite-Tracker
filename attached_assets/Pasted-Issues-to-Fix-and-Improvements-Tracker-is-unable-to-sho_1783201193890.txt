@@ -1,0 +1,81 @@
+Issues to Fix and Improvements:
+Tracker is unable to show if sprite is mastered but is a different level. Sprites can be “mastered” but can also be at a level below 5. Level 5 sprites are mastered sprites.
+Tracker does not show proper sprite dust costs.
+Tracker does not show how each sprite’s ability upgrades with each level up.
+Tracker does not show what variant abilities perform.
+Punk and Grim sprite have incorrect descriptions.
+Grim sprite is a mythic but is in the legendary category.
+The mythic “Burnt Peanut” sprite is missing and does not have any variants.
+Tracker does not show what is able to be purchased at terminals.
+Tracker can also show the players’ own accumulated sprite dust.
+Tracker can include a  calculator that shows how much all sprites are worth to replace and how much it would cost to purchase services at the terminals. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sprite Dust Costs:
+All base rare tier sprites cost 2,000 dust.
+All rare tier sprite variants cost 4,000 dust.
+All base epic tier sprites cost ~3,000~ dust.
+All epic tier sprite variants cost 6,000 dust.
+All base legendary tier sprites cost ~5,000~ dust. 
+All legendary variants cost 10,000 dust.
+All base mythic tier sprites cost ~7,500~ dust.
+All mythic tier sprite variants cost 15,000 dust.
+
+The presumed pattern is that sprite dust costs for variants is twice the amount of the base sprite. The ~ indicates costs that are assumed based on this pattern.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sprite Dust Services Terminal Costs:
+You can also spend your currency at Sprite Dust Services terminals located at Extraction Sites across the map for various upgrades and perks:
+Locate Sprites Map Marker: 100 Sprite Dust
+20,000 Battle Pass XP: 1,000 Sprite Dust (Limit: Once per day)
+Portable Extractor: 2,000 Sprite Dust (Limit: Once per day)
+Weapon Rarity Upgrades: Costs scale by tier: 
+Common to Uncommon: 250 Sprite Dust
+Uncommon to Rare: 500 Sprite Dust
+Rare to Epic: 1,000 Sprite Dust
+Epic to Legendary: 2,000 Sprite Dust
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
