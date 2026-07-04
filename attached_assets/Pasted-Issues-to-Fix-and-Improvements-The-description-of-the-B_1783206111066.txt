@@ -1,0 +1,78 @@
+Issues to Fix and Improvements:
+The description of the Burnt Peanut sprite is incorrect.
+Add a calculator for how much sprite dust is earned from extracting sprites.
+
+The Burnt Peanut Sprite acts as a loot-amplifier in Fortnite. When equipped, it grants you a 20% to 60% chance to generate bonus, high-tier loot upon eliminating an opponent. At its maximum level, it also adds a 10% chance to drop Mythic items. 
+
+How the Loot Chance Scales
+The Burnt Peanut Sprite's bonus loot probability scales progressively as it levels up: [1, 2, 3]
+Level 1 (Base): 20% chance for extra loot.
+Level 2: 30% chance.
+Level 3: 40% chance.
+Level 4: 50% chance.
+Level 5 (Max): 60% chance for extra loot + a 10% chance for the bonus loot to be Mythic. [1, 2]
+Add a built-in "Extraction Dust Yield Calculator" feature to the main dashboard. The app should automatically calculate how much Sprite Dust the player receives upon a successful extraction, using the following logic parameters:
+
+1. BASE EXTRACTION VALUE BY RARITY & LEVEL:
+   The base amount of Sprite Dust awarded scales relative to the Sprite's core Rarity and its current Level at the time of extraction:
+   * Rare Tier: Level 1 = 200 Dust | Level 2 = 300 Dust | Level 3 = 450 Dust | Level 4 = 600 Dust | Level 5 (Mastered) = 1,000 Dust
+   * Epic Tier: Level 1 = 500 Dust | Level 2 = 750 Dust | Level 3 = 1,000 Dust | Level 4 = 1,500 Dust | Level 5 (Mastered) = 2,500 Dust
+   * Legendary Tier: Level 1 = 1,000 Dust | Level 2 = 1,500 Dust | Level 3 = 2,250 Dust | Level 4 = 3,500 Dust | Level 5 (Mastered) = 5,000 Dust
+   * Mythic Tier: Level 1 = 2,000 Dust | Level 2 = 3,000 Dust | Level 3 = 4,500 Dust | Level 4 = 6,000 Dust | Level 5 (Mastered) = 8,000 Dust
+
+2. VARIANT MULTIPLIERS & BONUSES:
+   Apply additional modifications based on the selected structural Variant:
+   * Base / Gold / Galaxy Variants: Yield the normal standard baseline dust amount calculated above.
+   * Gummy Variant: Gives a flat +20% extra extraction bonus. (Formula: Final Yield = Base Extraction Value * 1.20)
+
+3. DISPLAY REQUIREMENT:
+   On the tracking page or in an extraction planning widget, dynamically display a value labeled "Estimated Extraction Yield:" that updates automatically whenever the user changes a Sprite's Level, Rarity, or Variant type.
+
+REVISE the Extraction Dust Yield Calculator logic with this specific rule regarding the Gummy Variant:
+
+1. GUMMY AS A LOADOUT BUFF (NOT A SELF-MULTIPLIER):
+   - The +20% extra extraction bonus does NOT apply to the Gummy Sprite itself when it is extracted. 
+   - Instead, the +20% bonus applies globally to ALL OTHER Sprites currently being extracted, provided that a "Gummy" variant Sprite is actively set to "Summoned" (Equipped) in the player's current loadout.
+
+2. UPDATED CALCULATOR ALGORITHM:
+   - Check if any Sprite in the collection has Variant = "Gummy" AND Summoned = True.
+   - If a Gummy Sprite is active in the loadout:
+     * Apply a global 1.20x multiplier to the dust yield of every individual entry being planned for extraction.
+     * The Gummy Sprite itself (if extracted) only yields its standard base rarity/level dust value without the 1.20x multiplier.
+   - If no Gummy Sprite is active in the loadout, all extractions use the standard baseline values.
+
+
+
+
+
+
+
+
+
+
+
+Base Rarity Rewards (Level 1 vs. Max Level 5)
+
+While Epic Games has not published a strict public spreadsheet for every individual tier,
+community data shows that payouts scale primarily with the Sprite's level rather than just
+its color. Maxing out a Sprite's level before extraction is the key to massive
+payouts: 
+
+. Level 1 (Any Rarity): 500 Sprite Dust
+
+. Level 5 / Mastered (Rare): 2,200 Sprite Dust
+
+. Level 5 / Mastered (Epic/Legendary): Scales up to 3,850 Sprite
+Dust Reddit . r/FortNiteBR +1
+
+Variant Payout Modifiers
+
+When you extract a special variant of a Sprite, a passive multiplier or flat bonus alters your
+final Sprite Dust payout:
+
+· Base Variant: No extra multiplier.
+
+. Gummy Variant: Grants a 10% bonus to all Sprite Dust earned upon extraction (some early community reports note up to 20%). For example, a standard 500 dust extraction
+becomes 550 to 600 Sprite Dust
+
+. Gold / Galaxy / Gummy Variants: These yield the standard base rarity dust payouts upon extraction. 

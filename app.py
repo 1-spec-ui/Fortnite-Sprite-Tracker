@@ -204,14 +204,14 @@ SPRITE_DIRECTORY = {
     },
     "Burnt Peanut Sprite": {
         "rarity": "Mythic", "max_level": 5,
-        "ability": "Passively increases all fire damage dealt and triggers a scorching explosion on each elimination.",
+        "ability": "Acts as a loot-amplifier. Grants a chance to generate bonus high-tier loot upon eliminating an opponent. At max level also adds a 10% chance for bonus loot to be Mythic rarity.",
         "costs": {"Normal": 7500},
         "levels": {
-            1: "Fire damage increased by +10%; small scorching explosion on elimination.",
-            2: "Fire damage increased by +20%; explosion radius grows.",
-            3: "Fire damage increased by +30%; explosions deal bonus damage to nearby enemies.",
-            4: "Fire damage increased by +40%; large area scorching explosion on elimination.",
-            5: "Maximum +50% fire damage; massive explosion; brief fire immunity after eliminations.",
+            1: "20% chance to generate bonus high-tier loot upon eliminating an opponent.",
+            2: "30% chance to generate bonus high-tier loot upon elimination.",
+            3: "40% chance to generate bonus high-tier loot upon elimination.",
+            4: "50% chance to generate bonus high-tier loot upon elimination.",
+            5: "60% chance for bonus high-tier loot upon elimination, plus a 10% chance for that bonus loot to be Mythic rarity.",
         }
     },
 }
@@ -227,6 +227,14 @@ TERMINAL_SERVICES = [
 ]
 
 TOTAL_VARIANTS = sum(len(info["costs"]) for info in SPRITE_DIRECTORY.values())
+
+# Extraction dust yield: base amount per rarity+level
+EXTRACTION_BASE = {
+    "Rare":      {1: 200,  2: 300,  3: 450,  4: 600,  5: 1000},
+    "Epic":      {1: 500,  2: 750,  3: 1000, 4: 1500, 5: 2500},
+    "Legendary": {1: 1000, 2: 1500, 3: 2250, 4: 3500, 5: 5000},
+    "Mythic":    {1: 2000, 2: 3000, 3: 4500, 4: 6000, 5: 8000},
+}
 
 
 def make_key(sprite_name, variant):
@@ -268,11 +276,12 @@ def index():
 @app.route("/api/directory")
 def get_directory():
     return jsonify({
-        "sprites":        SPRITE_DIRECTORY,
-        "variants":       VARIANTS,
-        "variant_perks":  VARIANT_PERKS,
-        "terminal":       TERMINAL_SERVICES,
-        "total_variants": TOTAL_VARIANTS,
+        "sprites":          SPRITE_DIRECTORY,
+        "variants":         VARIANTS,
+        "variant_perks":    VARIANT_PERKS,
+        "terminal":         TERMINAL_SERVICES,
+        "total_variants":   TOTAL_VARIANTS,
+        "extraction_base":  EXTRACTION_BASE,
     })
 
 
