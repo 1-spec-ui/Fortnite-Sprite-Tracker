@@ -6,8 +6,9 @@
     },
     "Earth Sprite||Galaxy": {
         "level": 5,
+        "mastered": true,
         "summoned": true,
-        "summon_cost": 15000
+        "summon_cost": 4000
     },
     "Earth Sprite||Gummy": {
         "level": 5,
