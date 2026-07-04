@@ -16,7 +16,6 @@
     }
     .page { position: relative; z-index: 1; max-width: 1240px; margin: 0 auto; padding: 24px 14px 80px; }
 
-    /* ── Header ── */
     header { text-align: center; margin-bottom: 18px; }
     header h1 {
       font-family: 'Orbitron', sans-serif;
@@ -46,7 +45,7 @@
     .dust-stat b { color:#ffd700; }
 
     /* ── Stats pills ── */
-    .stats-bar { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:14px; }
+    .stats-bar { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:12px; }
     .stat-pill {
       background: rgba(0,195,255,0.07); border: 1px solid rgba(0,195,255,0.18);
       border-radius: 999px; padding: 4px 15px; font-size:0.86rem; color:#90b4cc;
@@ -54,20 +53,14 @@
     .stat-pill b { color:#00c3ff; }
 
     /* ── Progress bars ── */
-    .progress-section { display:flex; flex-direction:column; gap:8px; margin-bottom:18px; }
+    .progress-section { display:flex; flex-direction:column; gap:8px; margin-bottom:16px; }
     .prog-row { display:flex; align-items:center; gap:12px; }
     .prog-label {
-      font-family:'Orbitron',sans-serif; font-size:0.65rem; color:#4a7090;
-      letter-spacing:1px; white-space:nowrap; min-width:190px;
+      font-family:'Orbitron',sans-serif; font-size:0.63rem; color:#4a7090;
+      letter-spacing:1px; white-space:nowrap; min-width:200px;
     }
-    .prog-track {
-      flex:1; height:8px; background:rgba(255,255,255,0.06);
-      border-radius:4px; overflow:hidden;
-    }
-    .prog-fill {
-      height:100%; border-radius:4px; transition:width 0.5s ease;
-      background: linear-gradient(90deg, #00c3ff, #0060c0);
-    }
+    .prog-track { flex:1; height:8px; background:rgba(255,255,255,0.06); border-radius:4px; overflow:hidden; }
+    .prog-fill { height:100%; border-radius:4px; transition:width 0.5s ease; background: linear-gradient(90deg, #00c3ff, #0060c0); }
     .prog-fill.mastered { background: linear-gradient(90deg, #ffd700, #c08000); }
     .prog-pct { font-size:0.8rem; color:#5a8090; min-width:80px; text-align:right; }
 
@@ -81,13 +74,21 @@
     }
     .tab-btn:hover { color:#90b4c8; }
     .tab-btn.active { color:#00c3ff; border-bottom-color:#00c3ff; }
-    .tab-panel { display:none; padding-top:18px; }
+    .tab-panel { display:none; padding-top:16px; }
     .tab-panel.active { display:block; }
 
-    /* ── Filter + Sort bar ── */
-    .filter-sort-bar {
-      display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:14px;
+    /* ── Info note (mastered explanation) ── */
+    .info-note {
+      display:flex; align-items:flex-start; gap:9px;
+      background: rgba(255,215,0,0.05); border: 1px solid rgba(255,215,0,0.15);
+      border-radius: 7px; padding: 8px 14px; margin-bottom: 12px; font-size:0.82rem;
+      color: #9a8030; line-height: 1.5;
     }
+    .info-note .in-icon { font-size:1rem; flex-shrink:0; margin-top:1px; }
+    .info-note b { color:#c8a000; }
+
+    /* ── Filter + Sort bar ── */
+    .filter-sort-bar { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:14px; }
     .filter-btn {
       background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10);
       border-radius: 6px; padding: 5px 13px;
@@ -118,9 +119,7 @@
     .rarity-header span { opacity:0.5; font-size:0.66rem; }
 
     /* ── Sprite block ── */
-    .sprite-block {
-      background: rgba(10,20,38,0.82); border:1px solid rgba(255,255,255,0.07); border-top:none;
-    }
+    .sprite-block { background: rgba(10,20,38,0.82); border:1px solid rgba(255,255,255,0.07); border-top:none; }
     .sprite-block:last-of-type { border-radius:0 0 8px 8px; margin-bottom:6px; }
 
     .sprite-label-row {
@@ -130,6 +129,11 @@
     }
     .s-name { font-weight:700; color:#c8dcf0; font-size:1rem; }
     .s-ability { font-size:0.79rem; color:#4a6888; margin-top:2px; line-height:1.4; max-width:700px; }
+    .s-maxlvl-badge {
+      display:inline-block; margin-top:3px;
+      font-size:0.68rem; background:rgba(255,160,40,0.10); border:1px solid rgba(255,160,40,0.22);
+      border-radius:4px; padding:1px 7px; color:#c08030; font-weight:600;
+    }
 
     /* ── Level guide ── */
     .expand-btn {
@@ -143,8 +147,7 @@
 
     .level-panel {
       display:none; background:rgba(0,20,40,0.6);
-      border-bottom:1px solid rgba(0,195,255,0.08);
-      padding: 12px 20px;
+      border-bottom:1px solid rgba(0,195,255,0.08); padding: 12px 20px;
     }
     .level-panel.open { display:block; }
     .level-panel-title { font-family:'Orbitron',sans-serif; font-size:0.64rem; color:#2a5870; letter-spacing:1.5px; margin-bottom:8px; }
@@ -158,13 +161,15 @@
       flex-shrink:0;
     }
     .lvl-num.m { background:rgba(255,215,0,0.12); border-color:rgba(255,215,0,0.3); color:#c8a000; }
+    .lvl-num.cap { background:rgba(255,140,0,0.10); border-color:rgba(255,140,0,0.25); color:#c07030; }
     .lvl-desc { font-size:0.82rem; color:#5a7888; line-height:1.45; }
     .lvl-desc.m { color:#a08020; font-weight:600; }
+    .lvl-desc.cap { color:#907030; }
 
     /* ── Variant rows ── */
     .variant-row {
       display:grid;
-      grid-template-columns: 32px minmax(110px,auto) 145px 130px 165px 120px 110px 1fr;
+      grid-template-columns: 32px minmax(110px,auto) 145px 130px 165px 125px 110px 1fr;
       align-items:center; column-gap:0; padding:9px 16px;
       border-bottom:1px solid rgba(255,255,255,0.035);
       transition:background 0.15s; min-height:52px;
@@ -176,7 +181,6 @@
     .variant-row.is-mastered { background:rgba(255,215,0,0.04); }
     .variant-row.is-mastered:hover { background:rgba(255,215,0,0.07); }
 
-    /* Checkbox */
     .own-check {
       appearance:none; -webkit-appearance:none;
       width:20px; height:20px; border:2px solid rgba(255,255,255,0.18); border-radius:5px;
@@ -186,7 +190,6 @@
     .own-check:checked { background:#00c3ff; border-color:#00c3ff; }
     .own-check:checked::after { content:'✓'; position:absolute; top:-1px; left:3px; color:#07101f; font-size:13px; font-weight:900; }
 
-    /* Variant chip + perk */
     .v-col { display:flex; flex-direction:column; gap:3px; padding-right:8px; }
     .v-chip { display:inline-block; border-radius:5px; padding:3px 9px; font-size:0.8rem; font-weight:700; width:fit-content; }
     .v-Normal { background:rgba(180,200,230,0.10); border:1px solid rgba(180,200,230,0.20); color:#b0c8e8; }
@@ -195,7 +198,6 @@
     .v-Galaxy { background:rgba(120,60,240,0.14);  border:1px solid rgba(120,60,240,0.28);  color:#b090ff; }
     .v-perk   { font-size:0.72rem; color:#3a5068; line-height:1.3; }
 
-    /* Cost */
     .v-cost { font-size:0.88rem; font-weight:700; color:#607080; white-space:nowrap; padding-right:8px; }
     .v-cost.hi { color:#ffd700; }
 
@@ -208,8 +210,9 @@
       cursor:pointer; transition:all 0.16s; display:flex; align-items:center; justify-content:center;
     }
     .lvl-btn:hover:not(:disabled) { border-color:rgba(0,195,255,0.5); color:#80b8d8; }
-    .lvl-btn:disabled { cursor:default; opacity:0.2; }
+    .lvl-btn:disabled { cursor:default; opacity:0.15; }
     .lvl-btn.lit { background:rgba(0,195,255,0.16); border-color:#00c3ff; color:#00c3ff; }
+    .lvl-btn.hidden-btn { visibility:hidden; pointer-events:none; }
 
     /* Mastered toggle */
     .mast-col { display:flex; align-items:center; gap:6px; padding-right:8px; }
@@ -224,7 +227,7 @@
     .mast-check:checked::after { content:'★'; position:absolute; top:-3px; left:1px; color:#ffd700; font-size:13px; }
     .mast-check:disabled { opacity:0.35; cursor:default; }
     .mast-label { font-size:0.78rem; color:#6a6020; white-space:nowrap; }
-    .mast-label.on { color:#c8a000; font-weight:700; }
+    .mast-label.on     { color:#c8a000; font-weight:700; }
     .mast-label.forced { color:#b09010; font-style:italic; }
 
     /* Summoned toggle */
@@ -245,12 +248,12 @@
     .tgl input:checked + .tgl-sl::after { transform:translateX(15px); background:#00c85a; }
     .tgl input:disabled + .tgl-sl { opacity:0.25; cursor:default; }
 
-    /* Status */
+    /* Status badges */
     .s-status { display:inline-flex; align-items:center; gap:5px; border-radius:5px; padding:3px 8px; font-size:0.77rem; font-weight:600; white-space:nowrap; }
     .status-mastered-locked { background:rgba(255,215,0,0.09);  border:1px solid rgba(255,215,0,0.25);  color:#c8a000; }
     .status-crown           { background:rgba(255,215,0,0.12);  border:1px solid rgba(255,215,0,0.3);   color:#ffd700; }
-    .status-dead            { background:rgba(255,60,80,0.09);  border:1px solid rgba(255,60,80,0.22);  color:#ff6070; }
     .status-active          { background:rgba(0,195,80,0.09);   border:1px solid rgba(0,195,80,0.22);   color:#00c85a; }
+    .status-indexed         { background:rgba(80,130,180,0.08); border:1px solid rgba(80,130,180,0.20); color:#6090b8; }
     .s-unowned { font-size:0.75rem; color:#1e3040; font-style:italic; }
 
     /* ── Terminal ── */
@@ -293,12 +296,12 @@
 
     .center-msg { text-align:center; padding:60px 20px; color:#304050; font-size:1rem; }
 
-    @media(max-width:1000px){
+    @media(max-width:1050px){
       .variant-row { grid-template-columns: 28px auto 110px 145px 110px 90px 1fr; }
       .v-perk { display:none; }
     }
-    @media(max-width:700px){
-      .variant-row { grid-template-columns: 26px auto 100px 135px 100px 1fr; }
+    @media(max-width:720px){
+      .variant-row { grid-template-columns: 26px auto 100px 140px 110px 1fr; }
       .s-toggle { display:none; }
     }
   </style>
@@ -311,7 +314,6 @@
     <p>Track every sprite variant, level, mastery, and your Sprite Dust</p>
   </header>
 
-  <!-- My Dust bar -->
   <div class="dust-bar">
     <span class="dust-label">💨 MY SPRITE DUST</span>
     <input id="myDustInput" type="number" min="0" placeholder="0" oninput="onDustChange()" />
@@ -322,7 +324,6 @@
     <div class="dust-stat">Terminal Basket: <b id="dustBasket">0</b> Dust</div>
   </div>
 
-  <!-- Stats pills -->
   <div class="stats-bar">
     <div class="stat-pill">Owned: <b id="sTotal">0</b></div>
     <div class="stat-pill">Mastered: <b id="sMastered">0</b></div>
@@ -330,7 +331,6 @@
     <div class="stat-pill">Not Summoned: <b id="sUnsummoned">0</b></div>
   </div>
 
-  <!-- Progress bars -->
   <div class="progress-section">
     <div class="prog-row">
       <span class="prog-label" id="collProgLabel">COLLECTION: 0 / 0 VARIANTS</span>
@@ -344,7 +344,6 @@
     </div>
   </div>
 
-  <!-- Tabs -->
   <div class="tab-nav">
     <button class="tab-btn active" onclick="switchTab('collection',this)">📋 COLLECTION</button>
     <button class="tab-btn" onclick="switchTab('terminal',this)">🏪 TERMINAL SERVICES</button>
@@ -354,11 +353,24 @@
   <!-- ══ COLLECTION TAB ══════════════════════════════════════ -->
   <div id="tab-collection" class="tab-panel active">
 
-    <!-- Filter + Sort -->
+    <!-- Mastered info note -->
+    <div class="info-note">
+      <span class="in-icon">⭐</span>
+      <span>
+        <b>About the ★ Mastered star:</b> Clicking the star checkbox when a sprite is below Level 5
+        marks it as Mastered independently of its level — use this to indicate you have mastered the
+        sprite's ability regardless of current level. At <b>Level 5</b>, mastered is set automatically.
+        <b>Dream Sprite</b> cannot reach Level 5; mark it mastered manually.
+        &nbsp;|&nbsp;
+        <b>Level buttons 2–5 are only active when a sprite is Summoned.</b>
+        Sprites that are owned but not summoned are indexed at Level 1 in-game.
+      </span>
+    </div>
+
     <div class="filter-sort-bar">
-      <button class="filter-btn active" data-filter="all"     onclick="setFilter('all',this)">All</button>
-      <button class="filter-btn"        data-filter="owned"   onclick="setFilter('owned',this)">✅ Owned</button>
-      <button class="filter-btn"        data-filter="unowned" onclick="setFilter('unowned',this)">☐ Not Owned</button>
+      <button class="filter-btn active" data-filter="all"      onclick="setFilter('all',this)">All</button>
+      <button class="filter-btn"        data-filter="owned"    onclick="setFilter('owned',this)">✅ Owned</button>
+      <button class="filter-btn"        data-filter="unowned"  onclick="setFilter('unowned',this)">☐ Not Owned</button>
       <button class="filter-btn"        data-filter="mastered" onclick="setFilter('mastered',this)">★ Mastered Only</button>
       <div class="filter-sep"></div>
       <button class="filter-btn rarity-filter" data-rarity="Rare"      onclick="setRarity('Rare',this)">Rare</button>
@@ -415,15 +427,15 @@
 /* ════════════════════════════════════════════════════════════
    State
 ════════════════════════════════════════════════════════════ */
-let allRows     = [];
-let TERMINAL    = [];
-let VPERKS      = {};
-let TOTAL_VARS  = 61;
-let filterMode  = 'all';
+let allRows      = [];
+let TERMINAL     = [];
+let VPERKS       = {};
+let TOTAL_VARS   = 61;
+let filterMode   = 'all';
 let rarityFilter = null;
-let sortMode    = 'default';
-let myDust      = 0;
-let basketQty   = {};
+let sortMode     = 'default';
+let myDust       = 0;
+let basketQty    = {};
 
 const RARITY_ORDER = ['Rare','Epic','Legendary','Mythic'];
 const RARITY_ICONS = { Rare:'💧', Epic:'⚡', Legendary:'🔥', Mythic:'🌌' };
@@ -470,14 +482,12 @@ function switchTab(name, btn) {
   document.getElementById('tab-'+name).classList.add('active');
   btn.classList.add('active');
 }
-
 function setFilter(mode, btn) {
   filterMode = mode;
   document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   render();
 }
-
 function setRarity(r, btn) {
   if (rarityFilter === r) {
     rarityFilter = null;
@@ -489,7 +499,6 @@ function setRarity(r, btn) {
   }
   render();
 }
-
 function setSort(mode, btn) {
   sortMode = mode;
   document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
@@ -501,23 +510,18 @@ function setSort(mode, btn) {
    Sort helper
 ════════════════════════════════════════════════════════════ */
 function applySort(rows) {
-  const VARIANTS_ORDER = ['Normal','Gold','Gummy','Galaxy'];
+  const VO = ['Normal','Gold','Gummy','Galaxy'];
   if (sortMode === 'default') {
     return [...rows].sort((a,b) =>
       RARITY_ORDER.indexOf(a.rarity) - RARITY_ORDER.indexOf(b.rarity) ||
       a.name.localeCompare(b.name) ||
-      VARIANTS_ORDER.indexOf(a.variant) - VARIANTS_ORDER.indexOf(b.variant)
+      VO.indexOf(a.variant) - VO.indexOf(b.variant)
     );
   }
-  if (sortMode === 'lvl-desc') {
-    return [...rows].sort((a,b) => b.level - a.level || a.name.localeCompare(b.name));
-  }
-  if (sortMode === 'lvl-asc') {
-    return [...rows].sort((a,b) => a.level - b.level || a.name.localeCompare(b.name));
-  }
-  if (sortMode === 'mastered') {
-    return [...rows].sort((a,b) => (b.mastered?1:0) - (a.mastered?1:0) || b.level - a.level || a.name.localeCompare(b.name));
-  }
+  if (sortMode === 'lvl-desc') return [...rows].sort((a,b) => b.level - a.level || a.name.localeCompare(b.name));
+  if (sortMode === 'lvl-asc')  return [...rows].sort((a,b) => a.level - b.level || a.name.localeCompare(b.name));
+  if (sortMode === 'mastered')
+    return [...rows].sort((a,b) => (b.mastered?1:0)-(a.mastered?1:0) || b.level-a.level || a.name.localeCompare(b.name));
   return rows;
 }
 
@@ -526,7 +530,7 @@ function applySort(rows) {
 ════════════════════════════════════════════════════════════ */
 function render() {
   let rows = allRows;
-  if (rarityFilter)            rows = rows.filter(r => r.rarity === rarityFilter);
+  if (rarityFilter)             rows = rows.filter(r => r.rarity === rarityFilter);
   if (filterMode === 'owned')   rows = rows.filter(r => r.owned);
   if (filterMode === 'unowned') rows = rows.filter(r => !r.owned);
   if (filterMode === 'mastered') rows = rows.filter(r => r.mastered);
@@ -537,73 +541,73 @@ function render() {
     return;
   }
 
-  // When sorting by level, group differently (flat list within rarity groups)
   const useRarityGroups = (sortMode === 'default' || rarityFilter);
-
-  if (useRarityGroups) {
-    renderGrouped(rows);
-  } else {
-    renderFlat(rows);
-  }
+  if (useRarityGroups) renderGrouped(rows);
+  else renderFlat(rows);
 }
 
 function renderGrouped(rows) {
   const grouped = {};
   for (const r of rows) {
-    grouped[r.rarity]       = grouped[r.rarity] || {};
+    grouped[r.rarity]         = grouped[r.rarity] || {};
     grouped[r.rarity][r.name] = grouped[r.rarity][r.name] || [];
     grouped[r.rarity][r.name].push(r);
   }
   let html = '';
   for (const rarity of RARITY_ORDER) {
     if (!grouped[rarity]) continue;
-    const spriteNames = Object.keys(grouped[rarity]);
-    html += `<div class="rarity-header ${rarity}">${RARITY_ICONS[rarity]} ${rarity.toUpperCase()} <span>(${spriteNames.length} sprite${spriteNames.length>1?'s':''})</span></div>`;
-    for (const name of spriteNames) {
-      html += buildSpriteBlock(name, grouped[rarity][name]);
-    }
+    const names = Object.keys(grouped[rarity]);
+    html += `<div class="rarity-header ${rarity}">${RARITY_ICONS[rarity]} ${rarity.toUpperCase()} <span>(${names.length} sprite${names.length>1?'s':''})</span></div>`;
+    for (const name of names) html += buildSpriteBlock(name, grouped[rarity][name]);
   }
   document.getElementById('list').innerHTML = html;
 }
 
 function renderFlat(rows) {
-  // Group by sprite name for level guide, but list in sorted order
-  const seen = new Set();
-  const blocks = [];
+  const seen = new Set(), blocks = [];
   for (const r of rows) {
     if (!seen.has(r.name)) {
       seen.add(r.name);
       blocks.push({ name: r.name, rows: rows.filter(x => x.name === r.name) });
     }
   }
-  let html = '';
-  for (const b of blocks) {
-    html += `<div style="margin-top:8px">` + buildSpriteBlock(b.name, b.rows) + `</div>`;
-  }
-  document.getElementById('list').innerHTML = html;
+  document.getElementById('list').innerHTML =
+    blocks.map(b => `<div style="margin-top:8px">${buildSpriteBlock(b.name, b.rows)}</div>`).join('');
 }
 
 function buildSpriteBlock(spriteName, variants) {
   const ability   = variants[0].ability;
   const levelData = variants[0].levels;
+  const maxLevel  = variants[0].max_level || 5;
   const sid       = safeId(spriteName);
 
+  // Level progression panel — only show levels up to max_level
   let levelRows = '<div class="lvl-desc-rows">';
-  for (let i = 1; i <= 5; i++) {
+  for (let i = 1; i <= maxLevel; i++) {
+    const isMax  = (i === maxLevel);
+    const isMast = isMax && maxLevel === 5;  // star only if true level-5 mastered
+    const numCls = isMast ? 'm' : (isMax ? 'cap' : '');
+    const dscCls = isMast ? 'm' : (isMax ? 'cap' : '');
+    const icon   = isMast ? '★' : i;
     levelRows += `<div class="lvl-desc-row">
-      <div class="lvl-num ${i===5?'m':''}">${i===5?'★':i}</div>
-      <div class="lvl-desc ${i===5?'m':''}">${esc(levelData[i]||'')}</div>
+      <div class="lvl-num ${numCls}">${icon}</div>
+      <div class="lvl-desc ${dscCls}">${esc(levelData[i]||'')}</div>
     </div>`;
   }
   levelRows += '</div>';
 
-  let variantRows = variants.map(r => buildVariantRow(r)).join('');
+  // Max-level badge for capped sprites
+  const maxBadge = maxLevel < 5
+    ? `<span class="s-maxlvl-badge">Max Level ${maxLevel}</span>` : '';
+
+  const variantRows = variants.map(r => buildVariantRow(r)).join('');
 
   return `<div class="sprite-block">
     <div class="sprite-label-row">
       <div>
         <div class="s-name">${esc(spriteName)}</div>
         <div class="s-ability">${esc(ability)}</div>
+        ${maxBadge}
       </div>
       <button class="expand-btn" onclick="toggleLP('lp-${sid}',this)">▼ Level Progression</button>
     </div>
@@ -623,31 +627,43 @@ function toggleLP(id, btn) {
 }
 
 function buildVariantRow(row) {
-  const key   = row.key;
-  const safe  = safeId(key);
-  const owned = row.owned;
-  const lvl   = row.level;
-  const mast  = row.mastered;
-  const summ  = row.summoned;
-  const perk  = VPERKS[row.variant] || '';
+  const key      = row.key;
+  const safe     = safeId(key);
+  const owned    = row.owned;
+  const lvl      = row.level;
+  const mast     = row.mastered;
+  const summ     = row.summoned;
+  const maxLevel = row.max_level || 5;
+  const perk     = VPERKS[row.variant] || '';
 
-  // Level buttons — lit up to current level; no special crown style (mastered is separate)
+  // Level buttons:
+  // - Only show buttons up to max_level (Dream Sprite shows 1-4, others 1-5)
+  // - Levels 2+ are disabled when not summoned (indexed sprites are always level 1)
   let lvlBtns = '';
   for (let i = 1; i <= 5; i++) {
-    const isLit  = owned && i <= lvl;
-    const cls    = isLit ? 'lvl-btn lit' : 'lvl-btn';
-    const label  = i === 5 ? '5' : i;
-    lvlBtns += `<button class="${cls}" ${owned?'':'disabled'}
-      onclick="setLevel('${esc(key)}',${i})" title="Level ${i}">${label}</button>`;
+    if (i > maxLevel) {
+      lvlBtns += `<button class="lvl-btn hidden-btn" disabled></button>`;
+      continue;
+    }
+    const isLit      = owned && i <= lvl;
+    const noSummon   = owned && !summ && i > 1;  // disable 2-5 if not summoned
+    const notOwned   = !owned;
+    const isDisabled = notOwned || noSummon;
+    const cls        = isLit ? 'lvl-btn lit' : 'lvl-btn';
+    const ttip       = noSummon ? `Level ${i} (enable Summoned first)` : `Level ${i}`;
+    lvlBtns += `<button class="${cls}" ${isDisabled?'disabled':''} onclick="setLevel('${esc(key)}',${i})" title="${ttip}">${i===5?'5':i}</button>`;
   }
 
-  // Mastered toggle — auto-forced at level 5
-  const mastForced = owned && lvl === 5;
+  // Mastered toggle
+  // Forced (auto) when level == 5 AND max_level == 5
+  const mastForced  = owned && lvl === 5 && maxLevel === 5;
   const mastChecked = owned && mast;
   const mastLblCls  = mastForced ? 'mast-label forced' : (mastChecked ? 'mast-label on' : 'mast-label');
   const mastLblText = mastForced ? '★ (Lv 5)' : (mastChecked ? '★ Yes' : '☆ No');
+  const mastTitle   = mastForced
+    ? 'Automatically mastered at Level 5'
+    : 'Click to mark this sprite as Mastered (independent of level)';
 
-  // Status
   const statusHtml = owned && row.status
     ? `<span class="s-status ${row.status.cls}">${row.status.icon} ${esc(row.status.text)}</span>`
     : `<span class="s-unowned">— not collected —</span>`;
@@ -667,7 +683,7 @@ function buildVariantRow(row) {
       <input type="checkbox" class="mast-check" id="mast-${safe}"
         ${mastChecked?'checked':''} ${(!owned||mastForced)?'disabled':''}
         onchange="toggleMastered('${esc(key)}',this.checked)"
-        title="${mastForced?'Automatically mastered at Level 5':'Mark as mastered'}" />
+        title="${esc(mastTitle)}" />
       <span class="${mastLblCls}" id="mastlbl-${safe}">${mastLblText}</span>
     </div>
     <div class="s-toggle">
@@ -689,22 +705,29 @@ async function toggleOwned(key, checked) {
   if (checked) await upsert(key, 1, false, false);
   else         await remove(key);
 }
+
 async function setLevel(key, level) {
-  const row = allRows.find(r=>r.key===key);
+  const row = allRows.find(r => r.key === key);
   if (!row || !row.owned) return;
-  // Level 5 forces mastered=true; below 5 keep existing mastered state
-  const newMastered = level===5 ? true : row.mastered;
+  const maxLevel = row.max_level || 5;
+  if (level > maxLevel) return;
+  // Level 5 (when max is 5) forces mastered; keep existing mastered otherwise
+  const newMastered = (level === 5 && maxLevel === 5) ? true : row.mastered;
   await upsert(key, level, row.summoned, newMastered);
 }
+
 async function toggleMastered(key, mastered) {
-  const row = allRows.find(r=>r.key===key);
+  const row = allRows.find(r => r.key === key);
   if (!row || !row.owned) return;
   await upsert(key, row.level, row.summoned, mastered);
 }
+
 async function toggleSummoned(key, summoned) {
-  const row = allRows.find(r=>r.key===key);
+  const row = allRows.find(r => r.key === key);
   if (!row || !row.owned) return;
-  await upsert(key, row.level, summoned, row.mastered);
+  // If unsummoning, level must drop to 1 (indexed state)
+  const newLevel = summoned ? row.level : 1;
+  await upsert(key, newLevel, summoned, row.mastered);
 }
 
 async function upsert(key, level, summoned, mastered) {
@@ -715,15 +738,18 @@ async function upsert(key, level, summoned, mastered) {
       body: JSON.stringify({level, summoned, mastered})
     });
     if (!res.ok) { const d=await res.json(); showToast(d.error||'Error saving.','err'); return; }
-    const row = allRows.find(r=>r.key===key);
+    const row = allRows.find(r => r.key === key);
     if (row) {
+      const maxLevel = row.max_level || 5;
       row.owned    = true;
-      row.level    = level;
+      row.level    = summoned ? level : 1;  // server also enforces this
       row.summoned = summoned;
-      row.mastered = mastered || level===5;
-      row.status   = computeStatus(level, row.mastered, summoned);
+      row.mastered = mastered || (level === 5 && maxLevel === 5);
+      row.status   = computeStatus(row.level, row.mastered, summoned);
     }
-    refreshRow(key);
+    // If unsummoned, re-render row to disable level 2-5 buttons
+    if (filterMode === 'mastered' && !row?.mastered) render();
+    else refreshRow(key);
     refreshStats();
     renderCalculator();
   } catch(e) { showToast('Network error.','err'); }
@@ -732,7 +758,7 @@ async function upsert(key, level, summoned, mastered) {
 async function remove(key) {
   try {
     await fetch('/api/collection/'+encodeKey(key), {method:'DELETE'});
-    const row = allRows.find(r=>r.key===key);
+    const row = allRows.find(r => r.key === key);
     if (row) { row.owned=false; row.level=0; row.summoned=false; row.mastered=false; row.status=null; }
     if (filterMode==='owned'||filterMode==='mastered') render();
     else refreshRow(key);
@@ -741,59 +767,68 @@ async function remove(key) {
   } catch(e) { showToast('Network error.','err'); }
 }
 
+/* ════════════════════════════════════════════════════════════
+   Refresh helpers
+════════════════════════════════════════════════════════════ */
 function refreshRow(key) {
-  const safe = safeId(key);
-  const row  = allRows.find(r=>r.key===key);
+  const safe     = safeId(key);
+  const row      = allRows.find(r => r.key === key);
   if (!row) return;
-  const {owned, level:lvl, mastered:mast, summoned:summ} = row;
+  const { owned, level:lvl, mastered:mast, summoned:summ, max_level } = row;
+  const maxLvl   = max_level || 5;
 
   const rowEl = document.getElementById('row-'+safe);
-  if (rowEl) rowEl.className = ['variant-row', owned?'owned':'', (owned&&mast)?'is-mastered':''].filter(Boolean).join(' ');
+  if (!rowEl) return;
+  rowEl.className = ['variant-row', owned?'owned':'', (owned&&mast)?'is-mastered':''].filter(Boolean).join(' ');
 
-  const cb = rowEl?.querySelector('.own-check');
+  const cb = rowEl.querySelector('.own-check');
   if (cb) cb.checked = owned;
 
   // Level buttons
   const lc = document.getElementById('lvls-'+safe);
   if (lc) {
-    let h='';
-    for (let i=1;i<=5;i++){
-      const isLit=owned&&i<=lvl;
-      h+=`<button class="${isLit?'lvl-btn lit':'lvl-btn'}" ${owned?'':'disabled'}
-        onclick="setLevel('${esc(key)}',${i})" title="Level ${i}">${i===5?'5':i}</button>`;
+    let h = '';
+    for (let i = 1; i <= 5; i++) {
+      if (i > maxLvl) { h += `<button class="lvl-btn hidden-btn" disabled></button>`; continue; }
+      const isLit    = owned && i <= lvl;
+      const noSummon = owned && !summ && i > 1;
+      const isDisabled = !owned || noSummon;
+      const ttip = noSummon ? `Level ${i} (enable Summoned first)` : `Level ${i}`;
+      h += `<button class="${isLit?'lvl-btn lit':'lvl-btn'}" ${isDisabled?'disabled':''}
+        onclick="setLevel('${esc(key)}',${i})" title="${ttip}">${i===5?'5':i}</button>`;
     }
-    lc.innerHTML=h;
+    lc.innerHTML = h;
   }
 
   // Mastered
-  const mastForced = owned && lvl===5;
+  const mastForced = owned && lvl === 5 && maxLvl === 5;
   const mc = document.getElementById('mast-'+safe);
-  if (mc) { mc.checked=owned&&mast; mc.disabled=!owned||mastForced; }
+  if (mc) { mc.checked = owned&&mast; mc.disabled = !owned||mastForced; }
   const ml = document.getElementById('mastlbl-'+safe);
   if (ml) {
-    ml.className = mastForced?'mast-label forced':(mast?'mast-label on':'mast-label');
-    ml.textContent = mastForced?'★ (Lv 5)':(mast?'★ Yes':'☆ No');
+    ml.className  = mastForced ? 'mast-label forced' : (mast ? 'mast-label on' : 'mast-label');
+    ml.textContent = mastForced ? '★ (Lv 5)' : (mast ? '★ Yes' : '☆ No');
   }
 
   // Summoned
-  const si=document.getElementById('sum-'+safe);
-  if (si){si.checked=summ; si.disabled=!owned;}
-  const sl=document.getElementById('sumlbl-'+safe);
-  if (sl){sl.textContent=summ?'Yes':'No'; sl.className='s-lbl '+(summ?'on':'');}
+  const si = document.getElementById('sum-'+safe);
+  if (si) { si.checked = summ; si.disabled = !owned; }
+  const sl = document.getElementById('sumlbl-'+safe);
+  if (sl) { sl.textContent = summ?'Yes':'No'; sl.className = 's-lbl '+(summ?'on':''); }
 
   // Status
-  const st=document.getElementById('stat-'+safe);
+  const st = document.getElementById('stat-'+safe);
   if (st) {
-    st.innerHTML = owned&&row.status
+    st.innerHTML = owned && row.status
       ? `<span class="s-status ${row.status.cls}">${row.status.icon} ${esc(row.status.text)}</span>`
       : `<span class="s-unowned">— not collected —</span>`;
   }
 }
 
 function refreshStats() {
-  const owned = allRows.filter(r=>r.owned);
-  const mast  = owned.filter(r=>r.mastered).length;
-  const summ  = owned.filter(r=>r.summoned).length;
+  const owned = allRows.filter(r => r.owned);
+  const mast  = owned.filter(r => r.mastered).length;
+  const summ  = owned.filter(r => r.summoned).length;
   document.getElementById('sTotal').textContent      = owned.length;
   document.getElementById('sMastered').textContent   = mast;
   document.getElementById('sSummoned').textContent   = summ;
@@ -812,22 +847,21 @@ function updateStats(s) {
 
 function updateProgressBars(owned, mastered) {
   const total   = TOTAL_VARS;
-  const collPct = total ? Math.round(owned/total*100) : 0;
-  const mastPct = owned ? Math.round(mastered/owned*100) : 0;
-
-  document.getElementById('collProgFill').style.width  = collPct+'%';
-  document.getElementById('mastProgFill').style.width  = mastPct+'%';
+  const collPct = total   ? Math.round(owned   / total   * 100) : 0;
+  const mastPct = owned   ? Math.round(mastered / owned   * 100) : 0;
+  document.getElementById('collProgFill').style.width  = collPct + '%';
+  document.getElementById('mastProgFill').style.width  = mastPct + '%';
   document.getElementById('collProgLabel').textContent = `COLLECTION: ${owned} / ${total} VARIANTS`;
   document.getElementById('mastProgLabel').textContent = `MASTERED: ${mastered} / ${owned} OWNED`;
-  document.getElementById('collProgPct').textContent   = collPct+'%';
-  document.getElementById('mastProgPct').textContent   = mastPct+'%';
+  document.getElementById('collProgPct').textContent   = collPct + '%';
+  document.getElementById('mastProgPct').textContent   = mastPct + '%';
 }
 
 function computeStatus(level, mastered, summoned) {
-  if (mastered && !summoned) return {icon:'🔒',text:'Mastered & Not Summoned',cls:'status-mastered-locked'};
-  if (mastered &&  summoned) return {icon:'👑',text:'Mastered & Summoned',cls:'status-crown'};
-  if (!summoned)             return {icon:'💀',text:`Level ${level} — Not Summoned`,cls:'status-dead'};
-  return {icon:'🏃',text:`Summoned (Level ${level})`,cls:'status-active'};
+  if (mastered && summoned)  return {icon:'👑', text:'Mastered & Summoned',    cls:'status-crown'};
+  if (mastered && !summoned) return {icon:'🔒', text:'Mastered — Not Summoned',cls:'status-mastered-locked'};
+  if (summoned)              return {icon:'🏃', text:`Summoned (Level ${level})`, cls:'status-active'};
+  return                            {icon:'📦', text:'Indexed (Level 1)',       cls:'status-indexed'};
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -835,31 +869,32 @@ function computeStatus(level, mastered, summoned) {
 ════════════════════════════════════════════════════════════ */
 function renderTerminal() {
   document.getElementById('terminalGrid').innerHTML = TERMINAL.map((s,i) => {
-    const qty=basketQty[i]||0;
+    const qty = basketQty[i] || 0;
     return `<div class="t-card">
       <div class="t-card-header">
         <div class="t-name">${esc(s.name)}</div>
         <div class="t-cost-badge">${s.cost.toLocaleString()} Dust</div>
       </div>
       <div class="t-cat">${esc(s.category)}</div>
-      ${s.limit?`<div class="t-limit">⏰ ${esc(s.limit)}</div>`:''}
+      ${s.limit ? `<div class="t-limit">⏰ ${esc(s.limit)}</div>` : ''}
       <div class="t-qty-row">
         <button class="t-qty-btn" onclick="adjustQty(${i},-1)">−</button>
         <span class="t-qty" id="qty-${i}">${qty}</span>
         <button class="t-qty-btn" onclick="adjustQty(${i},1)">+</button>
-        <span class="t-row-total" id="trow-${i}">${qty?'= '+(qty*s.cost).toLocaleString()+' Dust':''}</span>
+        <span class="t-row-total" id="trow-${i}">${qty ? '= '+(qty*s.cost).toLocaleString()+' Dust' : ''}</span>
       </div>
     </div>`;
   }).join('');
 }
 
 function adjustQty(i, delta) {
-  const s=TERMINAL[i]; const max=s.limit?1:99;
-  basketQty[i]=Math.max(0,Math.min(max,(basketQty[i]||0)+delta));
-  localStorage.setItem('basket',JSON.stringify(basketQty));
-  document.getElementById('qty-'+i).textContent=basketQty[i];
-  const tot=basketQty[i]*s.cost;
-  document.getElementById('trow-'+i).textContent=tot?'= '+tot.toLocaleString()+' Dust':'';
+  const s   = TERMINAL[i];
+  const max = s.limit ? 1 : 99;
+  basketQty[i] = Math.max(0, Math.min(max, (basketQty[i]||0) + delta));
+  localStorage.setItem('basket', JSON.stringify(basketQty));
+  document.getElementById('qty-'+i).textContent = basketQty[i];
+  const tot = basketQty[i] * s.cost;
+  document.getElementById('trow-'+i).textContent = tot ? '= '+tot.toLocaleString()+' Dust' : '';
   renderCalculator();
 }
 
@@ -867,63 +902,69 @@ function adjustQty(i, delta) {
    Calculator
 ════════════════════════════════════════════════════════════ */
 function renderCalculator() {
-  const owned = allRows.filter(r=>r.owned);
+  const owned = allRows.filter(r => r.owned);
   const byRarity = {};
-  for (const r of owned) byRarity[r.rarity]=(byRarity[r.rarity]||0)+r.cost;
-  const collTotal = owned.reduce((s,r)=>s+r.cost,0);
+  for (const r of owned) byRarity[r.rarity] = (byRarity[r.rarity]||0) + r.cost;
+  const collTotal = owned.reduce((s,r) => s+r.cost, 0);
 
-  let collLines='';
+  let collLines = '';
   if (!owned.length) {
-    collLines='<div style="color:#304050;font-size:0.88rem">No sprites owned yet.</div>';
+    collLines = '<div style="color:#304050;font-size:0.88rem">No sprites owned yet.</div>';
   } else {
     for (const rar of RARITY_ORDER) {
       if (!byRarity[rar]) continue;
-      collLines+=`<div class="calc-line"><span class="cl">${RARITY_ICONS[rar]} ${rar}</span><span class="cr">${byRarity[rar].toLocaleString()} Dust</span></div>`;
+      collLines += `<div class="calc-line"><span class="cl">${RARITY_ICONS[rar]} ${rar}</span><span class="cr">${byRarity[rar].toLocaleString()} Dust</span></div>`;
     }
-    collLines+=`<div class="calc-line"><span class="cl">Owned variants</span><span class="cr">${owned.length}</span></div>`;
+    collLines += `<div class="calc-line"><span class="cl">Owned variants</span><span class="cr">${owned.length}</span></div>`;
   }
-  document.getElementById('calcCollectionLines').innerHTML=collLines;
-  document.getElementById('calcTotalWorth').textContent=collTotal.toLocaleString()+' Dust';
-  document.getElementById('dustWorth').textContent=collTotal.toLocaleString();
+  document.getElementById('calcCollectionLines').innerHTML = collLines;
+  document.getElementById('calcTotalWorth').textContent    = collTotal.toLocaleString() + ' Dust';
+  document.getElementById('dustWorth').textContent         = collTotal.toLocaleString();
 
-  let basketTotal=0, termLines='', hasItems=false;
-  for (const [i,qty] of Object.entries(basketQty)) {
+  let basketTotal = 0, termLines = '', hasItems = false;
+  for (const [i, qty] of Object.entries(basketQty)) {
     if (!qty) continue;
-    hasItems=true;
-    const s=TERMINAL[i]; const sub=qty*s.cost;
-    basketTotal+=sub;
-    termLines+=`<div class="calc-line"><span class="cl">${esc(s.name)} ×${qty}</span><span class="cr">${sub.toLocaleString()} Dust</span></div>`;
+    hasItems = true;
+    const s = TERMINAL[i], sub = qty * s.cost;
+    basketTotal += sub;
+    termLines += `<div class="calc-line"><span class="cl">${esc(s.name)} ×${qty}</span><span class="cr">${sub.toLocaleString()} Dust</span></div>`;
   }
-  if (!hasItems) termLines='<div style="color:#304050;font-size:0.88rem">Nothing in basket — add services on the Terminal tab.</div>';
-  document.getElementById('calcTerminalLines').innerHTML=termLines;
-  document.getElementById('calcTerminalTotal').textContent=basketTotal.toLocaleString()+' Dust';
-  document.getElementById('dustBasket').textContent=basketTotal.toLocaleString();
+  if (!hasItems) termLines = '<div style="color:#304050;font-size:0.88rem">Nothing in basket — add services on the Terminal tab.</div>';
+  document.getElementById('calcTerminalLines').innerHTML = termLines;
+  document.getElementById('calcTerminalTotal').textContent = basketTotal.toLocaleString() + ' Dust';
+  document.getElementById('dustBasket').textContent        = basketTotal.toLocaleString();
 
-  const affEl=document.getElementById('affordNote');
-  if (hasItems&&myDust>0) {
-    affEl.style.display='block';
-    if (myDust>=basketTotal) {
-      affEl.className='afford-note can';
-      affEl.textContent=`✅ You can afford this! ${(myDust-basketTotal).toLocaleString()} Dust remaining after purchase.`;
-      document.getElementById('calcTerminalTotal').className='ct-val ok';
+  const affEl = document.getElementById('affordNote');
+  if (hasItems && myDust > 0) {
+    affEl.style.display = 'block';
+    if (myDust >= basketTotal) {
+      affEl.className   = 'afford-note can';
+      affEl.textContent = `✅ You can afford this! ${(myDust-basketTotal).toLocaleString()} Dust remaining after purchase.`;
+      document.getElementById('calcTerminalTotal').className = 'ct-val ok';
     } else {
-      affEl.className='afford-note cannot';
-      affEl.textContent=`❌ You need ${(basketTotal-myDust).toLocaleString()} more Dust to afford this basket.`;
-      document.getElementById('calcTerminalTotal').className='ct-val over';
+      affEl.className   = 'afford-note cannot';
+      affEl.textContent = `❌ You need ${(basketTotal-myDust).toLocaleString()} more Dust to afford this basket.`;
+      document.getElementById('calcTerminalTotal').className = 'ct-val over';
     }
   } else {
-    affEl.style.display='none';
-    document.getElementById('calcTerminalTotal').className='ct-val';
+    affEl.style.display = 'none';
+    document.getElementById('calcTerminalTotal').className = 'ct-val';
   }
 }
 
 /* ════════════════════════════════════════════════════════════
    Helpers
 ════════════════════════════════════════════════════════════ */
-function showToast(msg,type='ok'){const t=document.getElementById('toast');t.textContent=msg;t.className=`show ${type}`;setTimeout(()=>{t.className='';},2800);}
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
-function safeId(k){return k.replace(/[^a-zA-Z0-9]/g,'_');}
-function encodeKey(k){return k.split('||').map(encodeURIComponent).join('%7C%7C');}
+function showToast(msg, type='ok') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = `show ${type}`;
+  setTimeout(() => { t.className = ''; }, 2800);
+}
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function safeId(k)    { return k.replace(/[^a-zA-Z0-9]/g,'_'); }
+function encodeKey(k) { return k.split('||').map(encodeURIComponent).join('%7C%7C'); }
 
 boot();
 </script>
