@@ -356,8 +356,10 @@
     }
     @media(max-width:720px){
       .variant-row { grid-template-columns: 26px auto 100px 140px 110px 1fr; }
-      .s-toggle { display:none; }
-    }
+      ..s-toggle{
+    display:flex;
+    justify-content:flex-start;
+}
     /* ===========================================
    MOBILE LAYOUT (Phones)
 =========================================== */
