@@ -1,0 +1,27 @@
+Modify my Streamlit app to make it fully mobile-friendly and touch-optimized. Implement the following UI and layout enhancements:
+
+1. RESPONSIVE CONTAINER LAYOUT:
+   - Instead of using wide horizontal columns (st.columns with many items) which get squished and distorted on narrow smartphone screens, change the main dashboard to use stacked st.container() cards for each Sprite.
+   - Use small, compact metric cards at the top that stack vertically or cleanly wrap on mobile screens.
+
+2. TOUCH-FRIENDLY CONTROLS:
+   - Replace complex typing inputs with mobile-friendly widgets where possible (e.g., use st.pills or st.segmented_control for selecting variants like Base, Gold, Gummy, Galaxy).
+   - Use clean, prominent toggle switches (st.toggle) instead of tiny checkboxes for "Mastered" and "Summoned" states so they are easy to tap with a thumb.
+
+3. MOBILE STYLING (CSS Injection):
+   - Inject custom CSS using st.markdown(..., unsafe_allow_html=True) to ensure text auto-scales nicely on mobile devices and buttons have enough padding (minimum 44px touch target size) so they are easy to click on small screens.
+   - Collapse the sidebar by default or move primary actions to the main page using an st.expander labeled "➕ Add/Update Sprite" so mobile users don't have to constantly open the sidebar menu.
+Modify my Streamlit application so that the Sprite collection tracker is specific to the logged-in user instead of being shared globally. 
+
+Implement Replit User Authentication and user-isolated JSON storage using the following technical requirements:
+
+1. ENABLE REPLIT AUTHENTICATION:
+   - Use Streamlit's experimental_user or standard headers to read the Replit user identity, or tell the user to enable "Require Authentication" in the Replit Deployment settings.
+   - If a user is not logged in, show a friendly warning message: "Please log into your Replit account to access your personal Sprite Tracker."
+
+2. ISOLATE FILE STORAGE:
+   - Modify the load_data() and save_data() functions. Instead of reading from a generic "fortnite_sprites_web.json" file, dynamically generate the filename based on the active user's username.
+   - Example filename logic: f"sprites_{user_id}.json" or using a secure sub-folder string.
+
+3. PERSISTENCE LAYER:
+   - Ensure that when a user logs in, they only see their own custom Sprites, and their additions/deletions do not affect any other player's dashboard view.

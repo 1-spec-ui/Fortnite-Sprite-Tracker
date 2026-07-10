@@ -1,0 +1,45 @@
+ * Serving Flask app 'app'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.24.0.2:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 779-793-906
+127.0.0.1 - - [04/Jul/2026 21:45:04] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:45:05] "GET /api/directory HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:45:05] "GET /api/collection HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:45:06] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:45:06] "GET /api/directory HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:45:06] "GET /api/collection HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:45:06] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+127.0.0.1 - - [04/Jul/2026 21:45:12] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:45:12] "GET /api/directory HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:45:12] "GET /api/collection HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:46:47] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:46:47] "GET /api/directory HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:46:47] "GET /api/collection HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:46:55] "PUT /api/collection/Earth%20Sprite||Normal HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:46:57] "PUT /api/collection/Earth%20Sprite||Normal HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:47:00] "DELETE /api/collection/Earth%20Sprite||Normal HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:47:00] "PUT /api/collection/Earth%20Sprite||Normal HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:47:56] "PUT /api/collection/Earth%20Sprite||Normal HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:47:57] "PUT /api/collection/Earth%20Sprite||Normal HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:47:58] "PUT /api/collection/Earth%20Sprite||Normal HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:48:01] "PUT /api/collection/Earth%20Sprite||Normal HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:49:03] "PUT /api/collection/Burnt%20Peanut%20Sprite||Normal HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:49:04] "PUT /api/collection/Burnt%20Peanut%20Sprite||Normal HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:49:05] "PUT /api/collection/Burnt%20Peanut%20Sprite||Normal HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:49:09] "PUT /api/collection/Grim%20Reaper%20Sprite||Normal HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:49:13] "PUT /api/collection/Grim%20Reaper%20Sprite||Normal HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:49:15] "PUT /api/collection/Grim%20Reaper%20Sprite||Normal HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:49:17] "PUT /api/collection/Grim%20Reaper%20Sprite||Normal HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:51:55] "PUT /api/collection/Burnt%20Peanut%20Sprite||Normal HTTP/1.1" 200 -
+127.0.0.1 - - [04/Jul/2026 21:51:55] "PUT /api/collection/Burnt%20Peanut%20Sprite||Normal HTTP/1.1" 200 -
+ * Detected change in '/home/runner/workspace/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 779-793-906
+127.0.0.1 - - [04/Jul/2026 22:05:40] "PUT /api/collection/Earth%20Sprite||Gummy HTTP/1.1" 200 -

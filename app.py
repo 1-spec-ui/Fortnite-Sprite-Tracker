@@ -5,13 +5,14 @@ import os
 app = Flask(__name__)
 DATA_FILE = "fortnite_sprites.json"
 
-VARIANTS = ["Normal", "Gold", "Gummy", "Galaxy"]
+VARIANTS = ["Normal", "Gold", "Gummy", "Galaxy", "Holofoil"]
 
 VARIANT_PERKS = {
     "Normal": "Core standard baseline ability of that Sprite.",
     "Gold":   "3× Sprite XP for every elimination secured during a match.",
     "Gummy":  "+10% bonus Sprite Dust upon extraction.",
     "Galaxy": "+30% more ammunition when opening ammo crates and looting.",
+    "Holofoil": "+30% chance to find Rare Sprites"
 }
 
 # max_level defaults to 5 for all sprites; Dream Sprite is capped at 4.
@@ -20,7 +21,7 @@ SPRITE_DIRECTORY = {
     "Water Sprite": {
         "rarity": "Rare", "max_level": 5,
         "ability": "Replenishes shield while in water for you and your nearby Squad.",
-        "costs": {"Normal": 2000, "Gold": 4000, "Gummy": 4000, "Galaxy": 4000},
+        "costs": {"Normal": 2000, "Gold": 4000, "Gummy": 4000, "Galaxy": 4000, "Holofoil": 4000},
         "levels": {
             1: "Slowly replenishes your shield while standing in water.",
             2: "Faster shield regen in water; small shield regen extended to nearby allies.",
@@ -44,7 +45,7 @@ SPRITE_DIRECTORY = {
     "Fire Sprite": {
         "rarity": "Rare", "max_level": 5,
         "ability": "Creates a fiery burst when you deal enough damage to an enemy.",
-        "costs": {"Normal": 2000, "Gold": 4000, "Gummy": 4000, "Galaxy": 4000},
+        "costs": {"Normal": 2000, "Gold": 4000, "Gummy": 4000, "Galaxy": 4000, "Holofoil": 4000},
         "levels": {
             1: "Small fiery burst triggers after dealing 200 damage to an enemy.",
             2: "Larger burst; damage threshold reduced to 175.",
@@ -70,7 +71,7 @@ SPRITE_DIRECTORY = {
     "Duck Sprite": {
         "rarity": "Epic", "max_level": 5,
         "ability": "Emoting or Jamming on the battlefield slowly replenishes your shields.",
-        "costs": {"Normal": 3000, "Gold": 6000, "Gummy": 6000, "Galaxy": 6000},
+        "costs": {"Normal": 3000, "Gold": 6000, "Gummy": 6000, "Galaxy": 6000, "Holofoil": 6000},
         "levels": {
             1: "Restores 5 shield per second while emoting or jamming.",
             2: "Restores 10 shield/s; emote duration required reduced.",
@@ -82,7 +83,7 @@ SPRITE_DIRECTORY = {
     "Ghost Sprite": {
         "rarity": "Epic", "max_level": 5,
         "ability": "Grants a temporary active cloak duration immediately upon reloading.",
-        "costs": {"Normal": 3000, "Gold": 6000, "Gummy": 6000, "Galaxy": 6000},
+        "costs": {"Normal": 3000, "Gold": 6000, "Gummy": 6000, "Galaxy": 6000, "Holofoil": 6000},
         "levels": {
             1: "Grants 1 second of cloak immediately upon reloading.",
             2: "Cloak duration extended to 2 seconds.",
@@ -106,7 +107,7 @@ SPRITE_DIRECTORY = {
     "King Sprite": {
         "rarity": "Epic", "max_level": 5,
         "ability": "Your Harvesting Tool Pickaxe deals significantly more swing damage.",
-        "costs": {"Normal": 3000, "Gold": 6000, "Gummy": 6000, "Galaxy": 6000},
+        "costs": {"Normal": 3000, "Gold": 6000, "Gummy": 6000, "Galaxy": 6000, "Holofoil": 6000},
         "levels": {
             1: "Pickaxe deals +10% more damage per swing.",
             2: "Pickaxe deals +20% more damage per swing.",
@@ -130,7 +131,7 @@ SPRITE_DIRECTORY = {
     "Striker Sprite": {
         "rarity": "Epic", "max_level": 5,
         "ability": "Gain a functional speed Overdrive buff whenever you Mantle or Hurdle.",
-        "costs": {"Normal": 3000, "Gold": 6000, "Gummy": 6000, "Galaxy": 6000},
+        "costs": {"Normal": 3000, "Gold": 6000, "Gummy": 6000, "Galaxy": 6000, "Holofoil": 6000},
         "levels": {
             1: "Brief 1-second speed boost after each Mantle or Hurdle.",
             2: "Speed boost lasts 2 seconds; slightly faster sprint.",
