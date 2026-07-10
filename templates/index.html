@@ -358,6 +358,90 @@
       .variant-row { grid-template-columns: 26px auto 100px 140px 110px 1fr; }
       .s-toggle { display:none; }
     }
+    /* ===========================================
+   MOBILE LAYOUT (Phones)
+=========================================== */
+
+@media (max-width: 768px) {
+
+  .page{
+    padding:12px 8px 40px;
+  }
+
+  header h1{
+    font-size:1.45rem;
+    letter-spacing:1px;
+  }
+
+  header p{
+    font-size:.8rem;
+  }
+
+  .dust-bar,
+  .stats-bar,
+  .filter-sort-bar,
+  .ec-controls{
+    flex-direction:column;
+    align-items:stretch;
+    gap:10px;
+  }
+
+  .prog-row{
+    flex-direction:column;
+    align-items:stretch;
+    gap:6px;
+  }
+
+  .prog-label{
+    min-width:unset;
+  }
+
+  .sprite-label-row{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .expand-btn{
+    width:100%;
+  }
+
+  .variant-row{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+    padding:14px;
+  }
+
+  .variant-row > *{
+    width:100%;
+  }
+
+  .lvl-selector{
+    flex-wrap:wrap;
+  }
+
+  .mast-col,
+  .s-toggle{
+    justify-content:flex-start;
+  }
+
+  .calc-card{
+    padding:14px;
+  }
+
+  .calc-line{
+    flex-wrap:wrap;
+    gap:6px;
+  }
+
+  .ec-table{
+    display:block;
+    overflow-x:auto;
+    white-space:nowrap;
+  }
+
+}
   </style>
 </head>
 <body>
