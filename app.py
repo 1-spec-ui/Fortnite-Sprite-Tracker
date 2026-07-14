@@ -1,9 +1,9 @@
-from flask import Flask, render_template, request, jsonify
-import json
-import os
+import re
+from pathlib import Path
+
+from flask import Flask, render_template, jsonify, url_for
 
 app = Flask(__name__)
-DATA_FILE = "fortnite_sprites.json"
 
 VARIANTS = ["Normal", "Gold", "Gummy", "Galaxy", "Holofoil"]
 
@@ -229,6 +229,113 @@ TERMINAL_SERVICES = [
 
 TOTAL_VARIANTS = sum(len(info["costs"]) for info in SPRITE_DIRECTORY.values())
 
+SPRITE_IMAGE_DIR = Path(__file__).parent / "static" / "sprites"
+IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".svg"}
+VARIANT_IMAGE_KEYWORDS = {
+    "Normal": ["default", "ui", "normal"],
+    "Gold": ["gold"],
+    "Gummy": ["candy", "gummy"],
+    "Galaxy": ["galaxy"],
+    "Holofoil": ["holo", "holofoil"],
+    "Gem": ["gem"],
+    "Quack": ["quack"],
+}
+
+
+def _normalize_token(value: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "", (value or "").lower())
+
+
+def _tokenize(value: str) -> set[str]:
+    return {token for token in re.split(r"[^a-z0-9]+", (value or "").lower()) if token}
+
+
+def _list_sprite_images() -> list[Path]:
+    if not SPRITE_IMAGE_DIR.exists():
+        return []
+    return [path for path in SPRITE_IMAGE_DIR.iterdir() if path.is_file() and path.suffix.lower() in IMAGE_EXTENSIONS]
+
+
+def _candidate_match_score(candidate_path: Path, sprite_name: str) -> int:
+    candidate_slug = _normalize_token(candidate_path.name)
+    sprite_slug = _normalize_token(sprite_name).replace("sprite", "")
+    if sprite_slug and sprite_slug in candidate_slug:
+        return 1000 + len(sprite_slug)
+
+    sprite_tokens = _tokenize(sprite_name) - {"sprite"}
+    candidate_tokens = _tokenize(candidate_path.name) - {"sprite"}
+    overlap = sprite_tokens & candidate_tokens
+    if overlap:
+        return len(overlap) * 100 + len(overlap)
+
+    if sprite_slug and candidate_slug and sprite_slug[0:3] == candidate_slug[0:3]:
+        return 10
+
+    return 0
+
+
+def _resolve_sprite_image(sprite_name: str, variant: str | None = None) -> str | None:
+    base_slug = _normalize_token(sprite_name).replace("sprite", "")
+    if not base_slug:
+        return None
+
+    candidates = [path for path in _list_sprite_images() if _candidate_match_score(path, sprite_name) > 0]
+    if not candidates:
+        return None
+
+    ranked_candidates = sorted(candidates, key=lambda path: _candidate_match_score(path, sprite_name), reverse=True)
+    variant_key = variant or "Normal"
+
+    if variant_key == "Normal":
+        normal_candidates = [
+            candidate for candidate in ranked_candidates
+            if "unvault" in _normalize_token(candidate.name)
+            or not any(token in _normalize_token(candidate.name) for token in ["gold", "candy", "gummy", "galaxy", "holo", "gem", "quack"])
+        ]
+        if normal_candidates:
+            return url_for("static", filename=f"sprites/{normal_candidates[0].name}")
+
+    if variant_key in {"Gem", "Quack"}:
+        keywords = VARIANT_IMAGE_KEYWORDS.get(variant_key, [])
+        variant_matches = [
+            candidate for candidate in ranked_candidates
+            if any(keyword in _normalize_token(candidate.name) for keyword in keywords)
+        ]
+        if variant_matches:
+            return url_for("static", filename=f"sprites/{variant_matches[0].name}")
+        return None
+
+    keywords = VARIANT_IMAGE_KEYWORDS.get(variant_key, [])
+    variant_matches = [
+        candidate for candidate in ranked_candidates
+        if any(keyword in _normalize_token(candidate.name) for keyword in keywords)
+    ]
+    if variant_matches:
+        return url_for("static", filename=f"sprites/{variant_matches[0].name}")
+
+    fallback_candidates = [
+        candidate for candidate in ranked_candidates
+        if not any(token in _normalize_token(candidate.name) for token in ["gold", "candy", "gummy", "galaxy", "holo", "gem", "quack"])
+    ]
+    if fallback_candidates:
+        return url_for("static", filename=f"sprites/{fallback_candidates[0].name}")
+
+    return url_for("static", filename=f"sprites/{ranked_candidates[0].name}")
+
+
+def _enrich_sprite_directory(sprite_directory: dict) -> dict:
+    enriched = {}
+    for name, info in sprite_directory.items():
+        item = dict(info)
+        item["image"] = _resolve_sprite_image(name, "Normal")
+        item["images"] = {
+            variant: _resolve_sprite_image(name, variant)
+            for variant in VARIANTS + ["Gem", "Quack"]
+        }
+        enriched[name] = item
+    return enriched
+
+
 # Extraction dust yield: base amount per rarity+level
 EXTRACTION_BASE = {
     "Rare":      {1: 200,  2: 300,  3: 450,  4: 600,  5: 1000},
@@ -236,37 +343,6 @@ EXTRACTION_BASE = {
     "Legendary": {1: 1000, 2: 1500, 3: 2250, 4: 3500, 5: 5000},
     "Mythic":    {1: 2000, 2: 3000, 3: 4500, 4: 6000, 5: 8000},
 }
-
-
-def make_key(sprite_name, variant):
-    return f"{sprite_name}||{variant}"
-
-
-def load_data():
-    if os.path.exists(DATA_FILE):
-        try:
-            with open(DATA_FILE, "r") as f:
-                return json.load(f)
-        except json.JSONDecodeError:
-            return {}
-    return {}
-
-
-def save_data(collection):
-    with open(DATA_FILE, "w") as f:
-        json.dump(collection, f, indent=4)
-
-
-def get_status(level, mastered, summoned):
-    if mastered and not summoned:
-        return {"icon": "🔒", "text": "Mastered — Not Summoned", "cls": "status-mastered-locked"}
-    elif mastered and summoned:
-        return {"icon": "👑", "text": "Mastered & Summoned",     "cls": "status-crown"}
-    elif summoned:
-        return {"icon": "🏃", "text": f"Summoned (Level {level})", "cls": "status-active"}
-    else:
-        # Indexed: owned but not summoned and not mastered — always level 1 in-game
-        return {"icon": "📦", "text": "Indexed (Level 1)",         "cls": "status-indexed"}
 
 
 @app.route("/")
@@ -277,122 +353,13 @@ def index():
 @app.route("/api/directory")
 def get_directory():
     return jsonify({
-        "sprites":          SPRITE_DIRECTORY,
+        "sprites":          _enrich_sprite_directory(SPRITE_DIRECTORY),
         "variants":         VARIANTS,
         "variant_perks":    VARIANT_PERKS,
         "terminal":         TERMINAL_SERVICES,
         "total_variants":   TOTAL_VARIANTS,
         "extraction_base":  EXTRACTION_BASE,
     })
-
-
-@app.route("/api/collection")
-def get_collection():
-    collection = load_data()
-    rarity_order = ["Rare", "Epic", "Legendary", "Mythic"]
-    rows = []
-    for sprite_name, info in SPRITE_DIRECTORY.items():
-        available_variants = list(info["costs"].keys())
-        max_level = info.get("max_level", 5)
-        for variant in VARIANTS:
-            if variant not in available_variants:
-                continue
-            key     = make_key(sprite_name, variant)
-            entry   = collection.get(key)
-            owned   = entry is not None
-            level   = entry["level"] if owned else 0
-            mastered = entry.get("mastered", False) if owned else False
-            summoned = entry.get("summoned", False) if owned else False
-            # Level 5 (or max_level if it equals 5) forces mastered
-            if owned and level == 5 and max_level == 5:
-                mastered = True
-            cost    = info["costs"][variant]
-            status  = get_status(level, mastered, summoned) if owned else None
-            rows.append({
-                "key":       key,
-                "name":      sprite_name,
-                "variant":   variant,
-                "rarity":    info["rarity"],
-                "ability":   info["ability"],
-                "levels":    info["levels"],
-                "max_level": max_level,
-                "cost":      cost,
-                "owned":     owned,
-                "level":     level,
-                "mastered":  mastered,
-                "summoned":  summoned,
-                "status":    status,
-            })
-
-    rows.sort(key=lambda r: (
-        rarity_order.index(r["rarity"]),
-        r["name"],
-        (VARIANTS.index(r["variant"]) if r["variant"] in VARIANTS else 99)
-    ))
-
-    owned_rows = [r for r in rows if r["owned"]]
-    stats = {
-        "total":            len(owned_rows),
-        "mastered":         sum(1 for r in owned_rows if r["mastered"]),
-        "summoned":         sum(1 for r in owned_rows if r["summoned"]),
-        "unsummoned":       sum(1 for r in owned_rows if not r["summoned"]),
-        "collection_worth": sum(r["cost"] for r in owned_rows),
-        "total_variants":   TOTAL_VARIANTS,
-    }
-    return jsonify({"rows": rows, "stats": stats})
-
-
-@app.route("/api/collection/<path:key>", methods=["PUT"])
-def upsert_entry(key):
-    body        = request.get_json()
-    summoned    = bool(body.get("summoned", False))
-    mastered_in = bool(body.get("mastered", False))
-
-    # If not summoned: sprite is indexed — level is always 1 in-game
-    if not summoned:
-        level = 1
-    else:
-        try:
-            level = int(body.get("level", 1))
-        except (TypeError, ValueError):
-            return jsonify({"error": "Level must be a number."}), 400
-
-    parts = key.split("||")
-    if len(parts) != 2:
-        return jsonify({"error": "Invalid key format."}), 400
-    sprite_name, variant = parts[0], parts[1]
-    if sprite_name not in SPRITE_DIRECTORY:
-        return jsonify({"error": f"Unknown sprite '{sprite_name}'."}), 400
-    info = SPRITE_DIRECTORY[sprite_name]
-    if variant not in info["costs"]:
-        return jsonify({"error": f"Variant '{variant}' not available for '{sprite_name}'."}), 400
-
-    max_level = info.get("max_level", 5)
-    if not (1 <= level <= max_level):
-        return jsonify({"error": f"Level must be between 1 and {max_level} for {sprite_name}."}), 400
-
-    # Level 5 (max) forces mastered when max_level == 5
-    mastered = mastered_in or (level == 5 and max_level == 5)
-
-    cost = info["costs"][variant]
-    collection = load_data()
-    collection[key] = {
-        "level":       level,
-        "mastered":    mastered,
-        "summoned":    summoned,
-        "summon_cost": cost,
-    }
-    save_data(collection)
-    return jsonify({"ok": True})
-
-
-@app.route("/api/collection/<path:key>", methods=["DELETE"])
-def remove_entry(key):
-    collection = load_data()
-    if key in collection:
-        del collection[key]
-        save_data(collection)
-    return jsonify({"ok": True})
 
 
 if __name__ == "__main__":
