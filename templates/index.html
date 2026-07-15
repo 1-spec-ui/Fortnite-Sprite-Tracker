@@ -443,6 +443,7 @@
     /* ===========================================
        MOBILE LAYOUT (Phones)
     =========================================== */
+    .mobile-nav { display: none; }
     @media (max-width: 768px) {
       .page { padding: 16px 10px 48px; }
       header h1 { font-size: 1.45rem; letter-spacing: -0.02em; }
@@ -476,7 +477,199 @@
       .calc-card { padding: 16px; }
       .calc-line { flex-wrap: wrap; gap: 6px; }
       .ec-table { display: block; overflow-x: auto; white-space: nowrap; }
+
+      /* ── Mobile full redesign ── */
+      .tab-nav { display: none; }
+      .page { padding: 14px 10px 88px; }
+      header h1 { font-size: 1.35rem; }
+      header p { font-size: 0.78rem; }
+      .disclaimer { margin: 8px 0 14px; text-align: left; font-size: 0.72rem; }
+
+      .card-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .sprite-card.unowned { filter: grayscale(1) brightness(0.7) opacity(0.55); }
+      .card-name { font-size: 0.84rem; }
+      .card-crown { width: 22px; height: 22px; font-size: 0.85rem; top: 6px; right: 6px; }
+      .card-check { width: 19px; height: 19px; font-size: 0.64rem; top: 6px; left: 6px; }
+
+      .dash-tiles { grid-template-columns: repeat(2, 1fr); }
+      .dash-panel, .dash-tile { padding: 14px; }
+      .prog-row { flex-direction: column; align-items: stretch; gap: 6px; }
+      .prog-label { min-width: unset; font-size: 0.66rem; }
+      .prog-pct { text-align: left; }
+
+      .sprite-modal .modal-card { width: 100%; max-width: 100vw; max-height: 100vh; height: 100vh; border-radius: 0; padding: 20px 16px 32px; }
+      .sm-header { gap: 12px; }
+      .sm-thumb { width: 62px; height: 62px; border-radius: 14px; }
+      .sm-title { font-size: 1.05rem; }
+
+      .mobile-nav {
+        display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 500;
+        background: rgba(15,23,42,0.96); backdrop-filter: blur(8px);
+        border-top: 1px solid var(--border); padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+      }
+      .mnav-btn {
+        flex: 1; border: none; background: none; cursor: pointer;
+        display: flex; flex-direction: column; align-items: center; gap: 3px;
+        padding: 6px 2px; color: var(--text-muted); font-size: 0.6rem; font-weight: 600;
+        transition: color 0.15s;
+      }
+      .mnav-btn .mnav-icon { font-size: 1.15rem; line-height: 1; }
+      .mnav-btn.active { color: var(--accent); }
+      .mnav-btn.active .mnav-icon { transform: translateY(-1px); }
     }
+
+    /* ===========================================
+       COLLECTION — CARD GRID
+    =========================================== */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .sprite-card {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border-soft);
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, filter 0.2s ease;
+      box-shadow: var(--shadow);
+    }
+    .sprite-card:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: var(--shadow-lg); }
+    .sprite-card.is-mastered { border-color: rgba(245,158,11,0.45); }
+    .sprite-card.unowned { filter: grayscale(1) brightness(0.7) opacity(0.5); }
+    .sprite-card.unowned:hover { filter: grayscale(0.55) brightness(0.85) opacity(0.85); border-color: var(--border); }
+
+    .card-media {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      background: var(--surface-2);
+    }
+    .card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .card-media .placeholder {
+      font-size: 2.4rem; font-weight: 800; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .card-crown {
+      position: absolute; top: 8px; right: 8px;
+      width: 26px; height: 26px; border-radius: 8px;
+      background: rgba(15,23,42,0.72);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; box-shadow: 0 1px 4px rgba(0,0,0,0.45);
+    }
+    .card-check {
+      position: absolute; top: 8px; left: 8px;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--emerald-soft); border: 1px solid var(--emerald);
+      color: var(--emerald); font-size: 0.72rem; font-weight: 900;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .card-body { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 6px; }
+    .card-name { font-weight: 700; font-size: 0.9rem; line-height: 1.2; }
+    .card-variant { align-self: flex-start; }
+    .card-foot { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: 2px; }
+    .card-pips { display: flex; gap: 3px; }
+    .pip { width: 8px; height: 8px; border-radius: 50%; background: var(--surface-2); transition: background 0.15s; }
+    .pip.lit { background: var(--accent); }
+    .pip.mast { background: var(--amber); }
+    .card-lvl { font-family: var(--mono); font-size: 0.72rem; color: var(--text-secondary); font-weight: 700; }
+    .card-cost { font-family: var(--mono); font-size: 0.72rem; color: var(--amber); margin-top: 2px; }
+    .card-status { display:flex; align-items:center; gap:4px; margin-top:6px; font-size:0.7rem; font-weight:600; }
+    .card-status.unowned { color: var(--text-muted); font-style: italic; }
+    .card-status.status-active { color: var(--emerald); }
+    .card-status.status-crown { color: var(--legendary); }
+    .card-status.status-mastered-locked { color: var(--amber); }
+    .card-status.status-indexed { color: var(--text-muted); }
+
+    /* ── Per-sprite subcategory ── */
+    .sprite-group { margin-bottom: 6px; }
+    .sprite-group-head {
+      display:flex; align-items:center; gap:10px; margin: 20px 0 12px;
+      padding-bottom: 8px; border-bottom: 1px solid var(--border-soft);
+    }
+    .sprite-group-name { font-size: 1rem; font-weight: 700; color: var(--text); letter-spacing: -0.01em; }
+    .sprite-group-rar {
+      font-size: 0.66rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+      padding: 2px 9px; border-radius: 999px; border: 1px solid transparent;
+    }
+    .sprite-group-rar.Rare      { color: var(--rare);      background: rgba(59,130,246,0.12);  border-color: rgba(59,130,246,0.3); }
+    .sprite-group-rar.Epic      { color: var(--epic);      background: rgba(139,92,246,0.12);  border-color: rgba(139,92,246,0.3); }
+    .sprite-group-rar.Legendary { color: var(--legendary); background: rgba(245,158,11,0.12); border-color: rgba(245,158,11,0.3); }
+    .sprite-group-rar.Mythic    { color: var(--mythic);    background: rgba(244,63,94,0.12);   border-color: rgba(244,63,94,0.3); }
+
+    /* ===========================================
+       SPRITE DETAIL MODAL
+    =========================================== */
+    .sprite-modal .modal-card {
+      width: 460px; max-width: 95vw; max-height: 88vh; overflow-y: auto; padding: 22px;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute; top: 14px; right: 14px;
+      width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--border-soft);
+      background: var(--bg); color: var(--text-secondary); font-size: 0.95rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.15s;
+    }
+    .modal-close:hover { color: var(--text); border-color: var(--border); background: var(--surface-2); }
+    .sm-header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; padding-right: 28px; }
+    .sm-thumb {
+      width: 72px; height: 72px; border-radius: 16px; overflow: hidden; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+    .sm-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .sm-title { font-size: 1.18rem; font-weight: 800; line-height: 1.2; margin-bottom: 6px; letter-spacing: -0.01em; }
+    .sm-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+    .sm-ability {
+      font-size: 0.86rem; color: var(--text-secondary); line-height: 1.55;
+      background: var(--bg); border: 1px solid var(--border-soft); border-radius: var(--radius-sm);
+      padding: 10px 12px; margin-bottom: 14px;
+    }
+    .sm-section { margin-bottom: 16px; }
+    .sm-label {
+      font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.05em;
+      text-transform: uppercase; font-weight: 700; margin-bottom: 2px;
+    }
+    .sm-toggle-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+    .sm-owned {
+      display: flex; align-items: center; gap: 8px; font-size: 0.86rem; color: var(--text-secondary);
+      background: var(--bg); border: 1px solid var(--border-soft); border-radius: var(--radius-sm);
+      padding: 9px 12px; cursor: pointer; transition: all 0.15s; margin-bottom: 16px; font-weight: 600;
+    }
+    .sm-owned:hover { border-color: var(--border); color: var(--text); }
+    .sm-owned input { width: 18px; height: 18px; accent-color: var(--emerald); }
+
+    /* ===========================================
+       DASHBOARD TAB
+    =========================================== */
+    .dash-grid { display: flex; flex-direction: column; gap: 18px; }
+    .dash-tiles {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;
+    }
+    .dash-tile {
+      background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius);
+      padding: 16px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 4px;
+    }
+    .dash-tile .dt-label { font-size: 0.68rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-muted); font-weight: 700; }
+    .dash-tile .dt-value { font-family: var(--mono); font-size: 1.4rem; font-weight: 700; color: var(--text); }
+    .dash-tile .dt-sub { font-size: 0.74rem; color: var(--text-secondary); }
+    .dash-tile.accent .dt-value { color: var(--accent); }
+    .dash-tile.amber  .dt-value { color: var(--amber); }
+    .dash-tile.emerald .dt-value { color: var(--emerald); }
+    .dash-panel {
+      background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius);
+      padding: 18px 20px; box-shadow: var(--shadow);
+    }
+    .dash-panel h3 { font-size: 0.74rem; color: var(--text-secondary); letter-spacing: 0.05em; text-transform: uppercase; font-weight: 700; margin-bottom: 14px; }
+    .dash-panel .stats-bar { margin-bottom: 0; }
+
+    /* ===========================================
+       MOBILE BOTTOM NAV
+    =========================================== */
 
     /* ── Export Modal ── */
     .modal-backdrop {
@@ -527,43 +720,21 @@
     <div class="dust-stat">Terminal Basket: <b id="dustBasket">0</b> Dust</div>
   </div>
 
-  <div class="stats-bar">
-    <div class="stat-pill">Owned: <b id="sTotal">0</b></div>
-    <div class="stat-pill">Mastered: <b id="sMastered">0</b></div>
-    <div class="stat-pill">Summoned: <b id="sSummoned">0</b></div>
-    <div class="stat-pill">Not Summoned: <b id="sUnsummoned">0</b></div>
-  </div>
-
-  <div class="progress-section">
-    <div class="prog-row">
-      <span class="prog-label" id="collProgLabel">COLLECTION: 0 / 0 VARIANTS</span>
-      <div class="prog-track"><div class="prog-fill" id="collProgFill" style="width:0%"></div></div>
-      <span class="prog-pct" id="collProgPct">0%</span>
-    </div>
-    <div class="prog-row">
-      <span class="prog-label" id="mastProgLabel">MASTERED: 0 / 0 OWNED</span>
-      <div class="prog-track"><div class="prog-fill mastered" id="mastProgFill" style="width:0%"></div></div>
-      <span class="prog-pct" id="mastProgPct">0%</span>
-    </div>
-  </div>
-
   <div class="tab-nav">
-    <button class="tab-btn active" onclick="switchTab('collection',this)">📋 COLLECTION</button>
-    <button class="tab-btn" onclick="switchTab('terminal',this)">🏪 TERMINAL SERVICES</button>
-    <button class="tab-btn" onclick="switchTab('calculator',this)">🧮 CALCULATOR</button>
+    <button class="tab-btn active" data-tab="dashboard" onclick="switchTab('dashboard',this)">📊 Dashboard</button>
+    <button class="tab-btn" data-tab="collection" onclick="switchTab('collection',this)">📋 Collection</button>
+    <button class="tab-btn" data-tab="terminal" onclick="switchTab('terminal',this)">🏪 Terminal</button>
+    <button class="tab-btn" data-tab="calculator" onclick="switchTab('calculator',this)">🧮 Calculator</button>
   </div>
 
   <!-- ══ COLLECTION TAB ══════════════════════════════════════ -->
-  <div id="tab-collection" class="tab-panel active">
-
-    <!-- Mastered info note -->
+  <div id="tab-collection" class="tab-panel">
     <div class="info-note">
       <span class="in-icon">⭐</span>
       <span>
-        <b>About the ★ Mastered star:</b> Clicking the star checkbox when a sprite is below Level 5
-        marks it as Mastered independently of its level — use this to indicate you have mastered the
-        sprite's ability regardless of current level. At <b>Level 5</b>, mastered is set automatically.
-        <b>Dream Sprite</b> cannot reach Level 5; mark it mastered manually.
+        <b>About the ★ Mastered star:</b> Click any sprite card to open its details.
+        Toggle the star when a sprite is below Level 5 to mark it as Mastered independently of its level.
+        At <b>Level 5</b>, mastered is set automatically. <b>Dream Sprite</b> cannot reach Level 5; mark it mastered manually.
         &nbsp;|&nbsp;
         <b>Level buttons 2–5 are only active when a sprite is Summoned.</b>
         Sprites that are owned but not summoned are indexed at Level 1 in-game.
@@ -580,6 +751,9 @@
       <button class="filter-btn"        data-filter="owned"    onclick="setFilter('owned',this)">✅ Owned</button>
       <button class="filter-btn"        data-filter="unowned"  onclick="setFilter('unowned',this)">☐ Not Owned</button>
       <button class="filter-btn"        data-filter="mastered" onclick="setFilter('mastered',this)">★ Mastered Only</button>
+      <button class="filter-btn"        data-filter="notmastered" onclick="setFilter('notmastered',this)">☆ Not Mastered</button>
+      <button class="filter-btn"        data-filter="summoned" onclick="setFilter('summoned',this)">🏃 Summoned</button>
+      <button class="filter-btn"        data-filter="indexed"   onclick="setFilter('indexed',this)">📦 Indexed</button>
       <div class="filter-sep"></div>
       <button class="filter-btn rarity-filter" data-rarity="Rare"      onclick="setRarity('Rare',this)">Rare</button>
       <button class="filter-btn rarity-filter" data-rarity="Epic"      onclick="setRarity('Epic',this)">Epic</button>
@@ -597,6 +771,62 @@
     </div>
 
     <div id="list"><div class="center-msg">Loading…</div></div>
+  </div>
+
+  <!-- ══ DASHBOARD TAB ═════════════════════════════════════ -->
+  <div id="tab-dashboard" class="tab-panel active">
+    <div class="dash-grid">
+
+      <div class="dash-tiles">
+        <div class="dash-tile accent">
+          <span class="dt-label">Collection Worth</span>
+          <span class="dt-value" id="dashWorth">0</span>
+          <span class="dt-sub" id="dashWorthSub">0 / 0 variants</span>
+        </div>
+        <div class="dash-tile">
+          <span class="dt-label">Owned</span>
+          <span class="dt-value" id="dashOwned">0</span>
+          <span class="dt-sub">variants collected</span>
+        </div>
+        <div class="dash-tile amber">
+          <span class="dt-label">Mastered</span>
+          <span class="dt-value" id="dashMast">0</span>
+          <span class="dt-sub" id="dashMastSub">0 / 0 owned</span>
+        </div>
+        <div class="dash-tile emerald">
+          <span class="dt-label">Summoned</span>
+          <span class="dt-value" id="dashSumm">0</span>
+          <span class="dt-sub" id="dashUnsumm">0 not summoned</span>
+        </div>
+      </div>
+
+      <div class="dash-panel">
+        <h3>📈 PROGRESS</h3>
+        <div class="progress-section">
+          <div class="prog-row">
+            <span class="prog-label" id="collProgLabel">COLLECTION: 0 / 0 VARIANTS</span>
+            <div class="prog-track"><div class="prog-fill" id="collProgFill" style="width:0%"></div></div>
+            <span class="prog-pct" id="collProgPct">0%</span>
+          </div>
+          <div class="prog-row">
+            <span class="prog-label" id="mastProgLabel">MASTERED: 0 / 0 OWNED</span>
+            <div class="prog-track"><div class="prog-fill mastered" id="mastProgFill" style="width:0%"></div></div>
+            <span class="prog-pct" id="mastProgPct">0%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-panel">
+        <h3>📊 STATS</h3>
+        <div class="stats-bar">
+          <div class="stat-pill">Owned: <b id="sTotal">0</b></div>
+          <div class="stat-pill">Mastered: <b id="sMastered">0</b></div>
+          <div class="stat-pill">Summoned: <b id="sSummoned">0</b></div>
+          <div class="stat-pill">Not Summoned: <b id="sUnsummoned">0</b></div>
+        </div>
+      </div>
+
+    </div>
   </div>
 
   <!-- ══ TERMINAL TAB ════════════════════════════════════════ -->
@@ -725,6 +955,24 @@
 
   </div>
 </div>
+<div id="spriteModal" class="modal-backdrop sprite-modal" onclick="if(event.target===this)closeCard()">
+  <div class="modal-card" id="spriteModalCard"></div>
+</div>
+
+<nav class="mobile-nav">
+  <button class="mnav-btn active" data-tab="dashboard" onclick="switchTab('dashboard',this)">
+    <span class="mnav-icon">📊</span><span>Dashboard</span>
+  </button>
+  <button class="mnav-btn" data-tab="collection" onclick="switchTab('collection',this)">
+    <span class="mnav-icon">📋</span><span>Collection</span>
+  </button>
+  <button class="mnav-btn" data-tab="terminal" onclick="switchTab('terminal',this)">
+    <span class="mnav-icon">🏪</span><span>Terminal</span>
+  </button>
+  <button class="mnav-btn" data-tab="calculator" onclick="switchTab('calculator',this)">
+    <span class="mnav-icon">🧮</span><span>Calc</span>
+  </button>
+</nav>
 <div id="toast"></div>
 
 <script>
@@ -742,9 +990,15 @@ let VPERKS       = {};
 let SPRITE_DIR   = {};   // sprites dict from /api/directory
 let calcEntries  = [];   // [{spriteName, variant, rarity, level, maxLevel, cost}]
 let TOTAL_VARS   = 61;
-let filterMode   = 'all';
+let activeFilters = new Set();   // multi-select; conflicting filters live in the same group
 let rarityFilter = null;
 let sortMode     = 'default';
+// Mutually-exclusive groups so e.g. "mastered" and "not mastered" can't both apply
+const FILTER_GROUPS = {
+  owned:      'collection', unowned: 'collection',
+  mastered:   'mastery',    notmastered: 'mastery',
+  summoned:   'state',      indexed:  'state',
+};
 let searchQuery  = '';
 let myDust       = 0;
 
@@ -898,15 +1152,35 @@ function onDustChange() {
 ════════════════════════════════════════════════════════════ */
 function switchTab(name, btn) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
-  btn.classList.add('active');
+  document.querySelectorAll('.tab-btn, .mnav-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === name);
+  });
 }
 function setFilter(mode, btn) {
-  filterMode = mode;
-  document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+  if (mode === 'all') { activeFilters.clear(); updateFilterButtons(); render(); return; }
+  // "Not Owned" is fully exclusive — it can't stack with any other filter
+  if (mode === 'unowned') {
+    if (activeFilters.has('unowned')) activeFilters.delete('unowned');
+    else { activeFilters.clear(); activeFilters.add('unowned'); }
+    updateFilterButtons(); render(); return;
+  }
+  activeFilters.delete('unowned');   // any other filter clears Not Owned
+  if (activeFilters.has(mode)) {
+    activeFilters.delete(mode);            // toggle off
+  } else {
+    // drop any conflicting filter in the same mutually-exclusive group
+    const grp = FILTER_GROUPS[mode];
+    [...activeFilters].forEach(f => { if (FILTER_GROUPS[f] === grp) activeFilters.delete(f); });
+    activeFilters.add(mode);
+  }
+  updateFilterButtons();
   render();
+}
+function updateFilterButtons() {
+  document.querySelectorAll('[data-filter]').forEach(b => {
+    b.classList.toggle('active', b.dataset.filter === 'all' ? activeFilters.size === 0 : activeFilters.has(b.dataset.filter));
+  });
 }
 function setRarity(r, btn) {
   if (rarityFilter === r) {
@@ -973,10 +1247,14 @@ function render() {
   let rows = allRows;
   if (searchQuery) rows = rows.filter(r => matchesSearch(r, searchQuery));
   if (rarityFilter)             rows = rows.filter(r => r.rarity === rarityFilter);
-  if (filterMode === 'owned')   rows = rows.filter(r => r.owned);
-  if (filterMode === 'unowned') rows = rows.filter(r => !r.owned);
-  if (filterMode === 'mastered') rows = rows.filter(r => r.mastered);
-  rows = applySort(rows);
+  for (const f of activeFilters) {
+    if (f === 'owned')       rows = rows.filter(r => r.owned);
+    else if (f === 'unowned')     rows = rows.filter(r => !r.owned);
+    else if (f === 'mastered')   rows = rows.filter(r => r.owned && r.mastered);
+    else if (f === 'notmastered') rows = rows.filter(r => r.owned && !r.mastered);
+    else if (f === 'summoned')   rows = rows.filter(r => r.owned && r.summoned);
+    else if (f === 'indexed')     rows = rows.filter(r => r.owned && !r.summoned);
+  }
 
   if (!rows.length) {
     const msg = searchQuery
@@ -986,193 +1264,199 @@ function render() {
     return;
   }
 
-  const useRarityGroups = (sortMode === 'default' || rarityFilter);
-  if (useRarityGroups) renderGrouped(rows);
-  else renderFlat(rows);
-}
+  // Group into per-sprite subcategories
+  const groups = {};
+  for (const r of rows) (groups[r.name] = groups[r.name] || []).push(r);
 
-function renderGrouped(rows) {
-  const grouped = {};
-  for (const r of rows) {
-    grouped[r.rarity]         = grouped[r.rarity] || {};
-    grouped[r.rarity][r.name] = grouped[r.rarity][r.name] || [];
-    grouped[r.rarity][r.name].push(r);
-  }
-  for (const rarity in grouped) {
-    for (const sprite in grouped[rarity]) {
-      grouped[rarity][sprite].sort(
-        (a, b) => VARIANT_ORDER[a.variant] - VARIANT_ORDER[b.variant]
-      );
-    }
-  }
+  const names = orderGroups(groups);
   let html = '';
-  for (const rarity of RARITY_ORDER) {
-    if (!grouped[rarity]) continue;
-    const names = Object.keys(grouped[rarity]);
-    html += `<div class="rarity-header ${rarity}">${RARITY_ICONS[rarity]} ${rarity.toUpperCase()} <span>(${names.length} sprite${names.length>1?'s':''})</span></div>`;
-    for (const name of names) html += buildSpriteBlock(name, grouped[rarity][name]);
+  for (const name of names) {
+    const g = groups[name];
+    g.sort((a, b) => VARIANT_ORDER[a.variant] - VARIANT_ORDER[b.variant]);
+    const rarity  = g[0].rarity;
+    const display = name.replace(/\s+Sprite$/, '');
+    html += `<div class="sprite-group">
+      <div class="sprite-group-head">
+        <span class="sprite-group-name">${esc(display)}</span>
+        <span class="sprite-group-rar ${rarity}">${RARITY_ICONS[rarity]} ${rarity}</span>
+      </div>
+      <div class="card-grid">${g.map(buildCard).join('')}</div>
+    </div>`;
   }
   document.getElementById('list').innerHTML = html;
 }
 
-function renderFlat(rows) {
-  const seen = new Set(), blocks = [];
-  for (const r of rows) {
-    if (!seen.has(r.name)) {
-      seen.add(r.name);
-      blocks.push({ name: r.name, rows: rows.filter(x => x.name === r.name) });
-    }
+/* Order the sprite subcategories by the active sort */
+function orderGroups(groups) {
+  const names = Object.keys(groups);
+  if (sortMode === 'lvl-desc' || sortMode === 'lvl-asc') {
+    const dir = sortMode === 'lvl-desc' ? -1 : 1;
+    return names.sort((a, b) => dir * (groupMaxLvl(groups[b]) - groupMaxLvl(groups[a])) || a.localeCompare(b));
   }
-  document.getElementById('list').innerHTML =
-    blocks.map(b => `<div style="margin-top:8px">${buildSpriteBlock(b.name, b.rows)}</div>`).join('');
+  if (sortMode === 'mastered') {
+    return names.sort((a, b) =>
+      (groupHasMast(groups[b]) - groupHasMast(groups[a])) ||
+      RARITY_ORDER.indexOf(groups[a][0].rarity) - RARITY_ORDER.indexOf(groups[b][0].rarity) ||
+      a.localeCompare(b));
+  }
+  // default / owned / unowned — by rarity then name
+  return names.sort((a, b) =>
+    RARITY_ORDER.indexOf(groups[a][0].rarity) - RARITY_ORDER.indexOf(groups[b][0].rarity) ||
+    a.localeCompare(b));
 }
+function groupMaxLvl(g)  { return Math.max(0, ...g.map(r => r.owned ? r.level : 0)); }
+function groupHasMast(g) { return g.some(r => r.mastered) ? 1 : 0; }
 
-function buildSpriteBlock(spriteName, variants) {
-  const ability   = variants[0].ability;
-  const levelData = variants[0].levels;
-  const maxLevel  = variants[0].max_level || 5;
-  const sid       = safeId(spriteName);
-  const displayName = spriteName.replace(/\s+Sprite$/, '');
-  const spriteKey = displayName.toUpperCase();
+function buildCard(row) {
+  const key        = row.key;
+  const maxLvl     = row.max_level || 5;
+  const owned      = row.owned;
+  const displayName = row.name.replace(/\s+Sprite$/, '');
+  const media      = row.image
+    ? `<img src="${esc(row.image)}" alt="${esc(row.variant)}" />`
+    : `<span class="placeholder">${esc(displayName[0]||'?')}</span>`;
 
-  // Level progression panel — only show levels up to max_level
-  let levelRows = '<div class="lvl-desc-rows">';
-  for (let i = 1; i <= maxLevel; i++) {
-    const isMax  = (i === maxLevel);
-    const isMast = isMax && maxLevel === 5;  // star only if true level-5 mastered
-    const numCls = isMast ? 'm' : (isMax ? 'cap' : '');
-    const dscCls = isMast ? 'm' : (isMax ? 'cap' : '');
-    const icon   = isMast ? '★' : i;
-    levelRows += `<div class="lvl-desc-row">
-      <div class="lvl-num ${numCls}">${icon}</div>
-      <div class="lvl-desc ${dscCls}">${esc(levelData[i]||'')}</div>
-    </div>`;
+  let pips = '';
+  for (let i = 1; i <= maxLvl; i++) {
+    const lit     = owned && i <= row.level;
+    const mastPip = lit && row.mastered && i === row.level;
+    pips += `<span class="pip ${lit?'lit':''} ${mastPip?'mast':''}"></span>`;
   }
-  levelRows += '</div>';
 
-  // Max-level badge for capped sprites
-  const maxBadge = maxLevel < 5
-    ? `<span class="s-maxlvl-badge">Max Level ${maxLevel}</span>` : '';
+  const crown = (owned && row.mastered) ? `<div class="card-crown" title="Mastered">👑</div>` : '';
+  const check = owned ? `<div class="card-check" title="Collected">✓</div>` : '';
+  const cls   = ['sprite-card', owned?'':'unowned', (owned&&row.mastered)?'is-mastered':''].filter(Boolean).join(' ');
+  const lvlText = owned ? `Lv ${row.level}` : '—';
 
-  const variantRows = variants.map(r => buildVariantRow(r)).join('');
+  const statusHtml = owned && row.status
+    ? `<div class="card-status ${row.status.cls}"><span>${row.status.icon}</span><span>${esc(row.status.text)}</span></div>`
+    : `<div class="card-status unowned">Not collected</div>`;
 
-  const spriteImage = variants.find(r => r.image)?.image || variants[0].image || '';
-  return `<div class="sprite-block">
-    <div class="sprite-label-row">
-      <div class="sprite-header">
-        <div class="sprite-thumb" style="background:${variantColor(variants[0].variant)};">
-          ${spriteImage ? `<img src="${esc(spriteImage)}" alt="${esc(displayName)}" />` : `<span>${esc(displayName[0]||'?')}</span>`}
-        </div>
-        <div>
-          <div class="s-name">${esc(displayName)}</div>
-          <div class="s-ability">${esc(ability)}</div>
-          ${maxBadge}
-        </div>
+  return `<div class="${cls}" onclick="openCard('${esc(key)}')">
+    <div class="card-media">${media}${crown}${check}</div>
+    <div class="card-body">
+      <div class="card-name" title="${esc(displayName)}">${esc(displayName)}</div>
+      <span class="v-chip v-${esc(row.variant)} card-variant">${esc(row.variant)}</span>
+      <div class="card-foot">
+        <div class="card-pips">${pips}</div>
+        <div class="card-lvl">${lvlText}</div>
       </div>
-      <button class="expand-btn" onclick="toggleLP('lp-${sid}',this)">▼ Level Progression</button>
+      <div class="card-cost">💨 ${row.cost.toLocaleString()} Dust</div>
+      ${statusHtml}
     </div>
-    <div class="level-panel" id="lp-${sid}">
-      <div class="level-panel-title">ABILITY PROGRESSION BY LEVEL</div>
-      ${levelRows}
-    </div>
-    ${variantRows}
   </div>`;
 }
 
-function toggleLP(id, btn) {
-  const panel = document.getElementById(id);
-  const open  = panel.classList.toggle('open');
-  btn.textContent = open ? '▲ Level Progression' : '▼ Level Progression';
-  btn.classList.toggle('open', open);
+/* ════════════════════════════════════════════════════════════
+   Sprite detail modal (opened by clicking a card)
+════════════════════════════════════════════════════════════ */
+let modalKey = null;
+
+function openCard(key) {
+  modalKey = key;
+  renderModalContent(key);
+  document.getElementById('spriteModal').classList.add('show');
 }
+function closeCard() {
+  modalKey = null;
+  document.getElementById('spriteModal').classList.remove('show');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCard(); });
 
-function buildVariantRow(row) {
-  const key      = row.key;
-  const safe     = safeId(key);
-  const owned    = row.owned;
-  const lvl      = row.level;
-  const mast     = row.mastered;
-  const summ     = row.summoned;
-  const maxLevel = row.max_level || 5;
-  const perk     = VPERKS[row.variant] || '';
-  const available = true;
-  const hasIcon   = true;
+function renderModalContent(key) {
+  const row  = allRows.find(r => r.key === key);
+  if (!row) return;
+  const card = document.getElementById('spriteModalCard');
+  const maxLvl = row.max_level || 5;
+  const owned = row.owned, lvl = row.level, mast = row.mastered, summ = row.summoned;
+  const mastForced = owned && lvl === 5 && maxLvl === 5;
 
-  // Level buttons:
-  // - Only show buttons up to max_level (Dream Sprite shows 1-4, others 1-5)
-  // - Levels 2+ are disabled when not summoned (indexed sprites are always level 1)
+  // Level buttons
   let lvlBtns = '';
   for (let i = 1; i <= 5; i++) {
-    if (i > maxLevel) {
-      lvlBtns += `<button class="lvl-btn hidden-btn" disabled></button>`;
-      continue;
-    }
-    const isLit      = owned && i <= lvl;
-    const noSummon   = owned && !summ && i > 1;  // disable 2-5 if not summoned
-    const notOwned   = !owned;
-    const isDisabled = notOwned || noSummon;
-    const cls        = isLit ? 'lvl-btn lit' : 'lvl-btn';
-    const ttip       = noSummon ? `Level ${i} (enable Summoned first)` : `Level ${i}`;
-    lvlBtns += `<button class="${cls}" ${isDisabled?'disabled':''} onclick="setLevel('${esc(key)}',${i})" title="${ttip}">${i===5?'5':i}</button>`;
+    if (i > maxLvl) { lvlBtns += `<button class="lvl-btn hidden-btn" disabled></button>`; continue; }
+    const isLit    = owned && i <= lvl;
+    const noSummon = owned && !summ && i > 1;
+    const disabled = !owned || noSummon;
+    const ttip     = noSummon ? `Level ${i} (enable Summoned first)` : `Level ${i}`;
+    lvlBtns += `<button class="${isLit?'lvl-btn lit':'lvl-btn'}" ${disabled?'disabled':''}
+      onclick="mSetLevel('${esc(key)}',${i})" title="${ttip}">${i===5?'5':i}</button>`;
   }
 
-  // Mastered toggle
-  // Forced (auto) when level == 5 AND max_level == 5
-  const mastForced  = owned && lvl === 5 && maxLevel === 5;
   const mastChecked = owned && mast;
-  const mastLblCls  = mastForced ? 'mast-label forced' : (mastChecked ? 'mast-label on' : 'mast-label');
-  const mastLblText = mastForced ? '★ (Lv 5)' : (mastChecked ? '★ Yes' : '☆ No');
-  const mastTitle   = mastForced
+  const mastLbl    = mastForced ? '★ (Lv 5)' : (mastChecked ? '★ Yes' : '☆ No');
+  const mastCls    = mastForced ? 'mast-label forced' : (mastChecked ? 'mast-label on' : 'mast-label');
+  const mastTitle  = mastForced
     ? 'Automatically mastered at Level 5'
     : 'Click to mark this sprite as Mastered (independent of level)';
 
-  const statusHtml = owned && row.status
-    ? `<span class="s-status ${row.status.cls}">${row.status.icon} ${esc(row.status.text)}</span>`
-    : `<span class="s-unowned">— not collected —</span>`;
+  // Ability progression
+  let prog = '';
+  for (let i = 1; i <= maxLvl; i++) {
+    const isMax  = (i === maxLvl);
+    const isMast = isMax && maxLvl === 5;
+    const numCls = isMast ? 'm' : (isMax ? 'cap' : '');
+    const dscCls = isMast ? 'm' : (isMax ? 'cap' : '');
+    const icon   = isMast ? '★' : i;
+    prog += `<div class="lvl-desc-row">
+      <div class="lvl-num ${numCls}">${icon}</div>
+      <div class="lvl-desc ${dscCls}">${esc((row.levels && row.levels[i]) || '')}</div>
+    </div>`;
+  }
 
-  // Extraction yield hint
-  const yieldHtml = buildYieldHtml(row);
+  const media = row.image
+    ? `<img src="${esc(row.image)}" alt="${esc(row.variant)}" />`
+    : `<span style="font-size:2rem;font-weight:800;color:#fff">${esc(row.name[0]||'?')}</span>`;
+  const displayName = row.name.replace(/\s+Sprite$/, '');
+  const yieldHtml   = buildYieldHtml(row);
 
-  const statusBadge = !available ? '🚫' : (owned ? (mast ? '👑' : '✅') : '❌');
-  const rowCls = ['variant-row', owned?'owned':'', (owned&&mast)?'is-mastered':'', !available?'unavailable':''].filter(Boolean).join(' ');
-
-  const variantLabel = available ? row.variant.slice(0,3).toUpperCase() : 'N/A';
-  const variantStatus = available ? (owned ? (mast ? '👑' : '✅') : '❌') : '🚫';
-  const variantImage = row.image || '';
-  return `<div class="${rowCls}" id="row-${safe}">
-    <div class="variant-card" style="background:${available?VARIANT_COLORS[row.variant]:'#334155'};">
-      ${variantImage ? `<img src="${esc(variantImage)}" alt="${esc(row.variant)}" />` : `<span class="variant-card-badge">${variantStatus}</span><span class="variant-card-title">${esc(variantLabel)}</span>`}
+  card.innerHTML = `
+    <button class="modal-close" onclick="closeCard()" aria-label="Close">✕</button>
+    <div class="sm-header">
+      <div class="sm-thumb" style="background:${variantColor(row.variant)}">${media}</div>
+      <div class="sm-meta">
+        <div class="sm-title">${esc(displayName)}</div>
+        <span class="v-chip v-${esc(row.variant)}">${esc(row.variant)}</span>
+        <span class="t-cost-badge" style="margin-left:4px">💨 ${row.cost.toLocaleString()} Dust</span>
+      </div>
     </div>
-    <input type="checkbox" class="own-check" ${owned?'checked':''} ${!available?'disabled':''}
-      onchange="toggleOwned('${esc(key)}',this.checked)" title="Mark as owned" />
-    <div class="v-col">
-      <span class="v-chip v-${esc(row.variant)}">${esc(row.variant)}</span>
-      <span class="v-perk">${esc(perk)}</span>
+    <p class="sm-ability">${esc(row.ability)}</p>
+    <label class="sm-owned">
+      <input type="checkbox" ${owned?'checked':''} onchange="mToggleOwned('${esc(key)}',this.checked)" />
+      <span>${owned ? 'Collected — tap to remove' : 'Mark as Collected'}</span>
+    </label>
+    <div class="sm-section">
+      <div class="sm-label">LEVEL</div>
+      <div class="lvl-selector" style="margin-top:8px">${lvlBtns}</div>
     </div>
-    <span class="status-icon">${statusBadge}</span>
-    <span class="v-cost ${row.cost>=10000?'hi':''}">💨 ${row.cost.toLocaleString()} Dust</span>
-    <div class="lvl-selector" id="lvls-${safe}">${lvlBtns}</div>
-    <div class="mast-col" id="mastcol-${safe}">
-      <input type="checkbox" class="mast-check" id="mast-${safe}"
-        ${mastChecked?'checked':''} ${(!owned||mastForced)?'disabled':''}
-        onchange="toggleMastered('${esc(key)}',this.checked)"
-        title="${esc(mastTitle)}" />
-      <span class="${mastLblCls}" id="mastlbl-${safe}">${mastLblText}</span>
+    <div class="sm-section sm-toggle-row">
+      <div class="mast-col">
+        <input type="checkbox" class="mast-check" ${mastChecked?'checked':''} ${(!owned||mastForced)?'disabled':''}
+          onchange="mToggleMastered('${esc(key)}',this.checked)" title="${esc(mastTitle)}" />
+        <span class="${mastCls}">${mastLbl}</span>
+      </div>
+      <div class="s-toggle">
+        <label class="tgl">
+          <input type="checkbox" ${summ?'checked':''} ${owned?'':'disabled'}
+            onchange="mToggleSummoned('${esc(key)}',this.checked)" />
+          <span class="tgl-sl"></span>
+        </label>
+        <span class="s-lbl ${summ?'on':''}">${summ?'Summoned':'Indexed (Lv 1)'}</span>
+      </div>
     </div>
-    <div class="s-toggle">
-      <label class="tgl">
-        <input type="checkbox" id="sum-${safe}" ${summ?'checked':''} ${owned?'':'disabled'}
-          onchange="toggleSummoned('${esc(key)}',this.checked)" />
-        <span class="tgl-sl"></span>
-      </label>
-      <span class="s-lbl ${summ?'on':''}" id="sumlbl-${safe}">${summ?'Yes':'No'}</span>
+    <div class="sm-section">
+      <div class="sm-label">ABILITY PROGRESSION</div>
+      <div class="lvl-desc-rows" style="margin-top:8px">${prog}</div>
     </div>
-    <div id="stat-${safe}">
-      ${statusHtml}
-      ${yieldHtml}
-    </div>
-  </div>`;
+    ${yieldHtml ? `<div class="sm-section">${yieldHtml}</div>` : ''}
+  `;
 }
+
+function refreshModal() { if (modalKey) renderModalContent(modalKey); }
+async function mSetLevel(k, l)      { await setLevel(k, l);          refreshModal(); }
+async function mToggleMastered(k, m) { await toggleMastered(k, m);    refreshModal(); }
+async function mToggleSummoned(k, s) { await toggleSummoned(k, s);    refreshModal(); }
+async function mToggleOwned(k, o)    { await toggleOwned(k, o);       refreshModal(); }
 
 function buildYieldHtml(row) {
   if (!row.owned) return '';
@@ -1240,11 +1524,8 @@ function upsert(key, level, summoned, mastered) {
   row.mastered = mastered;
   row.status   = computeStatus(level, mastered, summoned);
 
-  // If this is a Gummy variant, all rows' yield hints change — re-render everything
-  const wasGummyToggle = row.variant === 'Gummy';
-  if (filterMode === 'mastered' && !row.mastered) render();
-  else if (wasGummyToggle) render();
-  else refreshRow(key);
+  // Re-render so filters (e.g. a sprite leaving a "mastered" view) stay correct
+  render();
   refreshStats();
   renderCalculator();
 }
@@ -1256,8 +1537,7 @@ function remove(key) {
 
   const row = allRows.find(r => r.key === key);
   if (row) { row.owned=false; row.level=0; row.summoned=false; row.mastered=false; row.status=null; }
-  if (filterMode==='owned'||filterMode==='mastered') render();
-  else refreshRow(key);
+  render();
   refreshStats();
   renderCalculator();
 }
@@ -1265,62 +1545,6 @@ function remove(key) {
 /* ════════════════════════════════════════════════════════════
    Refresh helpers
 ════════════════════════════════════════════════════════════ */
-function refreshRow(key) {
-  const safe     = safeId(key);
-  const row      = allRows.find(r => r.key === key);
-  if (!row) return;
-  const { owned, level:lvl, mastered:mast, summoned:summ, max_level } = row;
-  const maxLvl   = max_level || 5;
-
-  const rowEl = document.getElementById('row-'+safe);
-  if (!rowEl) return;
-  rowEl.className = ['variant-row', owned?'owned':'', (owned&&mast)?'is-mastered':''].filter(Boolean).join(' ');
-
-  const cb = rowEl.querySelector('.own-check');
-  if (cb) cb.checked = owned;
-
-  // Level buttons
-  const lc = document.getElementById('lvls-'+safe);
-  if (lc) {
-    let h = '';
-    for (let i = 1; i <= 5; i++) {
-      if (i > maxLvl) { h += `<button class="lvl-btn hidden-btn" disabled></button>`; continue; }
-      const isLit    = owned && i <= lvl;
-      const noSummon = owned && !summ && i > 1;
-      const isDisabled = !owned || noSummon;
-      const ttip = noSummon ? `Level ${i} (enable Summoned first)` : `Level ${i}`;
-      h += `<button class="${isLit?'lvl-btn lit':'lvl-btn'}" ${isDisabled?'disabled':''}
-        onclick="setLevel('${esc(key)}',${i})" title="${ttip}">${i===5?'5':i}</button>`;
-    }
-    lc.innerHTML = h;
-  }
-
-  // Mastered
-  const mastForced = owned && lvl === 5 && maxLvl === 5;
-  const mc = document.getElementById('mast-'+safe);
-  if (mc) { mc.checked = owned&&mast; mc.disabled = !owned||mastForced; }
-  const ml = document.getElementById('mastlbl-'+safe);
-  if (ml) {
-    ml.className  = mastForced ? 'mast-label forced' : (mast ? 'mast-label on' : 'mast-label');
-    ml.textContent = mastForced ? '★ (Lv 5)' : (mast ? '★ Yes' : '☆ No');
-  }
-
-  // Summoned
-  const si = document.getElementById('sum-'+safe);
-  if (si) { si.checked = summ; si.disabled = !owned; }
-  const sl = document.getElementById('sumlbl-'+safe);
-  if (sl) { sl.textContent = summ?'Yes':'No'; sl.className = 's-lbl '+(summ?'on':''); }
-
-  // Status + yield
-  const st = document.getElementById('stat-'+safe);
-  if (st) {
-    const statusPart = owned && row.status
-      ? `<span class="s-status ${row.status.cls}">${row.status.icon} ${esc(row.status.text)}</span>`
-      : `<span class="s-unowned">— not collected —</span>`;
-    st.innerHTML = statusPart + buildYieldHtml(row);
-  }
-}
-
 function refreshStats() {
   const owned = allRows.filter(r => r.owned);
   const mast  = owned.filter(r => r.mastered).length;
@@ -1331,6 +1555,15 @@ function refreshStats() {
   document.getElementById('sSummoned').textContent   = summ;
   document.getElementById('sUnsummoned').textContent = owned.length - summ;
   document.getElementById('dustWorth').textContent   = worth.toLocaleString();
+
+  const dw = document.getElementById('dashWorth');      if (dw) dw.textContent = worth.toLocaleString() + ' Dust';
+  const dwS = document.getElementById('dashWorthSub');  if (dwS) dwS.textContent = `${owned.length} / ${TOTAL_VARS} variants`;
+  const dO = document.getElementById('dashOwned');      if (dO) dO.textContent = owned.length;
+  const dM = document.getElementById('dashMast');       if (dM) dM.textContent = mast;
+  const dMs = document.getElementById('dashMastSub');   if (dMs) dMs.textContent = `${mast} / ${owned.length} owned`;
+  const dS = document.getElementById('dashSumm');       if (dS) dS.textContent = summ;
+  const dU = document.getElementById('dashUnsumm');     if (dU) dU.textContent = `${owned.length - summ} not summoned`;
+
   updateProgressBars(owned.length, mast);
 }
 
