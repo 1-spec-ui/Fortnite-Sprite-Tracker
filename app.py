@@ -5,14 +5,16 @@ from flask import Flask, render_template, jsonify, url_for
 
 app = Flask(__name__)
 
-VARIANTS = ["Normal", "Gold", "Gummy", "Galaxy", "Holofoil"]
+VARIANTS = ["Normal", "Gold", "Gummy", "Galaxy", "Holofoil", "Gem", "Quack"]
 
 VARIANT_PERKS = {
-    "Normal": "Core standard baseline ability of that Sprite.",
-    "Gold":   "3× Sprite XP for every elimination secured during a match.",
-    "Gummy":  "+10% bonus Sprite Dust upon extraction.",
-    "Galaxy": "+30% more ammunition when opening ammo crates and looting.",
-    "Holofoil": "+30% chance to find Rare Sprites"
+    "Normal":   "Core standard baseline ability of that Sprite.",
+    "Gold":     "3× Sprite XP for every elimination secured during a match.",
+    "Gummy":    "+10% bonus Sprite Dust upon extraction.",
+    "Galaxy":   "+30% more ammunition when opening ammo crates and looting.",
+    "Holofoil": "+30% chance to find Rare Sprites.",
+    "Gem":      "+20% bonus Sprite Dust from all sources during a match.",
+    "Quack":    "Emotes now also restore a small amount of shield over time.",
 }
 
 # max_level defaults to 5 for all sprites; Dream Sprite is capped at 4.
@@ -227,113 +229,123 @@ TERMINAL_SERVICES = [
     {"name": "Weapon Upgrade: Epic → Legendary",   "cost": 2000,  "limit": None,           "category": "Weapon"},
 ]
 
-TOTAL_VARIANTS = sum(len(info["costs"]) for info in SPRITE_DIRECTORY.values())
+# Special-variant pricing: matches the Galaxy tier (2x the Normal cost).
+# Applied to Holofoil, Gem, and Quack when not explicitly set in a sprite's costs.
+SPECIAL_VARIANT_COST = {
+    "Rare":      4000,
+    "Epic":      6000,
+    "Legendary": 10000,
+    "Mythic":    15000,
+}
 
 SPRITE_IMAGE_DIR = Path(__file__).parent / "static" / "sprites"
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".svg"}
-VARIANT_IMAGE_KEYWORDS = {
-    "Normal": ["default", "ui", "normal"],
-    "Gold": ["gold"],
-    "Gummy": ["candy", "gummy"],
-    "Galaxy": ["galaxy"],
-    "Holofoil": ["holo", "holofoil"],
-    "Gem": ["gem"],
-    "Quack": ["quack"],
-}
 
 
-def _normalize_token(value: str) -> str:
+def _normalize(value: str) -> str:
+    """Lowercase alphanumeric slug, used to match sprite names to image files."""
     return re.sub(r"[^a-z0-9]+", "", (value or "").lower())
 
 
-def _tokenize(value: str) -> set[str]:
-    return {token for token in re.split(r"[^a-z0-9]+", (value or "").lower()) if token}
+# Order variants are listed everywhere (filters, cards, sort, calc).
+VARIANT_ORDER = ["Normal", "Gold", "Gummy", "Galaxy", "Holofoil", "Gem", "Quack"]
+
+# Filename prefix → variant label. The first matching prefix wins, so order
+# matters (e.g. "gold_" must not be caught by a generic rule).
+_PREFIX_TO_VARIANT = [
+    ("gold_",     "Gold"),
+    ("gummy_",    "Gummy"),
+    ("galaxy_",   "Galaxy"),
+    ("holofoil_", "Holofoil"),
+    ("gem_",      "Gem"),
+    ("quack_",    "Quack"),
+    ("unvault_",  "Normal"),
+]
 
 
-def _list_sprite_images() -> list[Path]:
+def _build_image_index():
+    """Scan static/sprites once and return {sprite_slug: {variant: filename}}.
+
+    A file's sprite slug is whatever remains after stripping a known variant
+    prefix and the trailing ``_sprite`` / ``_speite`` token. ``unvault_`` files
+    are treated as the Normal variant art.
+    """
+    index: dict[str, dict[str, str]] = {}
     if not SPRITE_IMAGE_DIR.exists():
-        return []
-    return [path for path in SPRITE_IMAGE_DIR.iterdir() if path.is_file() and path.suffix.lower() in IMAGE_EXTENSIONS]
+        return index
+
+    for path in SPRITE_IMAGE_DIR.iterdir():
+        if not path.is_file() or path.suffix.lower() not in IMAGE_EXTENSIONS:
+            continue
+        name = path.name
+        variant = None
+        rest = name
+        for prefix, label in _PREFIX_TO_VARIANT:
+            if name.startswith(prefix):
+                variant = label
+                rest = name[len(prefix):]
+                break
+        if variant is None:
+            variant = "Normal"
+            rest = name
+        # Build slug from the filename AFTER the variant prefix is removed,
+        # then strip the extension and the trailing sprite/speite token.
+        stem = Path(rest).stem
+        slug = _normalize(stem)
+        for token in ("sprite", "speite"):
+            if slug.endswith(token):
+                slug = slug[: -len(token)]
+                break
+        index.setdefault(slug, {})[variant] = name
+    return index
 
 
-def _candidate_match_score(candidate_path: Path, sprite_name: str) -> int:
-    candidate_slug = _normalize_token(candidate_path.name)
-    sprite_slug = _normalize_token(sprite_name).replace("sprite", "")
-    if sprite_slug and sprite_slug in candidate_slug:
-        return 1000 + len(sprite_slug)
-
-    sprite_tokens = _tokenize(sprite_name) - {"sprite"}
-    candidate_tokens = _tokenize(candidate_path.name) - {"sprite"}
-    overlap = sprite_tokens & candidate_tokens
-    if overlap:
-        return len(overlap) * 100 + len(overlap)
-
-    if sprite_slug and candidate_slug and sprite_slug[0:3] == candidate_slug[0:3]:
-        return 10
-
-    return 0
+_IMAGE_INDEX = _build_image_index()
 
 
-def _resolve_sprite_image(sprite_name: str, variant: str | None = None) -> str | None:
-    base_slug = _normalize_token(sprite_name).replace("sprite", "")
-    if not base_slug:
-        return None
+def _variants_for_sprite(sprite_name: str, info: dict) -> list[dict]:
+    """Return the image-backed variant list for a sprite.
 
-    candidates = [path for path in _list_sprite_images() if _candidate_match_score(path, sprite_name) > 0]
-    if not candidates:
-        return None
-
-    ranked_candidates = sorted(candidates, key=lambda path: _candidate_match_score(path, sprite_name), reverse=True)
-    variant_key = variant or "Normal"
-
-    if variant_key == "Normal":
-        normal_candidates = [
-            candidate for candidate in ranked_candidates
-            if "unvault" in _normalize_token(candidate.name)
-            or not any(token in _normalize_token(candidate.name) for token in ["gold", "candy", "gummy", "galaxy", "holo", "gem", "quack"])
-        ]
-        if normal_candidates:
-            return url_for("static", filename=f"sprites/{normal_candidates[0].name}")
-
-    if variant_key in {"Gem", "Quack"}:
-        keywords = VARIANT_IMAGE_KEYWORDS.get(variant_key, [])
-        variant_matches = [
-            candidate for candidate in ranked_candidates
-            if any(keyword in _normalize_token(candidate.name) for keyword in keywords)
-        ]
-        if variant_matches:
-            return url_for("static", filename=f"sprites/{variant_matches[0].name}")
-        return None
-
-    keywords = VARIANT_IMAGE_KEYWORDS.get(variant_key, [])
-    variant_matches = [
-        candidate for candidate in ranked_candidates
-        if any(keyword in _normalize_token(candidate.name) for keyword in keywords)
-    ]
-    if variant_matches:
-        return url_for("static", filename=f"sprites/{variant_matches[0].name}")
-
-    fallback_candidates = [
-        candidate for candidate in ranked_candidates
-        if not any(token in _normalize_token(candidate.name) for token in ["gold", "candy", "gummy", "galaxy", "holo", "gem", "quack"])
-    ]
-    if fallback_candidates:
-        return url_for("static", filename=f"sprites/{fallback_candidates[0].name}")
-
-    return url_for("static", filename=f"sprites/{ranked_candidates[0].name}")
+    A variant is only included when an image file exists for it. Each entry
+    carries the variant label, its image URL, and its Sprite Dust cost.
+    """
+    slug = _normalize(sprite_name).replace("sprite", "")
+    available = _IMAGE_INDEX.get(slug, {})
+    costs = info.get("costs", {})
+    rarity = info["rarity"]
+    out = []
+    for variant in VARIANT_ORDER:
+        filename = available.get(variant)
+        if not filename:
+            continue
+        if variant in costs:
+            cost = costs[variant]
+        elif variant in ("Holofoil", "Gem", "Quack"):
+            cost = SPECIAL_VARIANT_COST.get(rarity, 0)
+        else:
+            cost = costs.get(variant, SPECIAL_VARIANT_COST.get(rarity, 0))
+        out.append({
+            "variant": variant,
+            "image": url_for("static", filename=f"sprites/{filename}"),
+            "cost": cost,
+        })
+    return out
 
 
 def _enrich_sprite_directory(sprite_directory: dict) -> dict:
+    """Attach image-backed ``variants`` to each sprite and drop the raw costs dict."""
     enriched = {}
     for name, info in sprite_directory.items():
-        item = dict(info)
-        item["image"] = _resolve_sprite_image(name, "Normal")
-        item["images"] = {
-            variant: _resolve_sprite_image(name, variant)
-            for variant in VARIANTS + ["Gem", "Quack"]
-        }
+        item = {k: v for k, v in info.items() if k != "costs"}
+        variants = _variants_for_sprite(name, info)
+        item["variants"] = variants
+        item["image"] = variants[0]["image"] if variants else None
         enriched[name] = item
     return enriched
+
+
+def _total_variants() -> int:
+    return sum(len(_variants_for_sprite(name, info)) for name, info in SPRITE_DIRECTORY.items())
 
 
 # Extraction dust yield: base amount per rarity+level
@@ -354,10 +366,10 @@ def index():
 def get_directory():
     return jsonify({
         "sprites":          _enrich_sprite_directory(SPRITE_DIRECTORY),
-        "variants":         VARIANTS,
+        "variants":         VARIANT_ORDER,
         "variant_perks":    VARIANT_PERKS,
         "terminal":         TERMINAL_SERVICES,
-        "total_variants":   TOTAL_VARIANTS,
+        "total_variants":   _total_variants(),
         "extraction_base":  EXTRACTION_BASE,
     })
 

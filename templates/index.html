@@ -839,17 +839,19 @@ function saveCollection(coll) {
 }
 
 /* Build the full row list by merging the static directory with the
-   user's local collection. Mirrors what the server used to return. */
+   user's local collection. Each sprite's variant list comes from the
+   image-backed variants[] provided by /api/directory. */
 function buildAllRows() {
   const coll = loadCollection();
   const rows = [];
   for (const [name, info] of Object.entries(SPRITE_DIR)) {
     const maxLevel = info.max_level || 5;
-    for (const variant of ALL_VARIANTS) {
+    const variants = info.variants || [];
+    for (const v of variants) {
+      const variant = v.variant;
       const key  = name + '||' + variant;
       const entry = coll[key];
-      const hasCost = Object.prototype.hasOwnProperty.call(info.costs || {}, variant);
-      const owned = !!entry && hasCost;
+      const owned = !!entry;
       let level    = owned ? entry.level : 0;
       let summoned = owned ? !!entry.summoned : false;
       let mastered = owned ? !!entry.mastered : false;
@@ -863,10 +865,8 @@ function buildAllRows() {
         ability:    info.ability,
         levels:     info.levels,
         max_level:  maxLevel,
-        cost:       hasCost ? info.costs[variant] : 0,
-        available:  hasCost,
-        image:      info.image || null,
-        images:     info.images || {},
+        cost:       v.cost || 0,
+        image:      v.image || null,
         owned,
         level,
         summoned,
@@ -879,7 +879,7 @@ function buildAllRows() {
     const ra = RARITY_ORDER.indexOf(a.rarity), rb = RARITY_ORDER.indexOf(b.rarity);
     if (ra !== rb) return ra - rb;
     if (a.name !== b.name) return a.name < b.name ? -1 : 1;
-    return VARIANT_ORDER[a.variant] - VARIANT_ORDER[b.variant];
+    return (VARIANT_ORDER[a.variant]||0) - (VARIANT_ORDER[b.variant]||0);
   });
   return rows;
 }
@@ -1095,8 +1095,8 @@ function buildVariantRow(row) {
   const summ     = row.summoned;
   const maxLevel = row.max_level || 5;
   const perk     = VPERKS[row.variant] || '';
-  const available = row.available !== false;
-  const hasIcon   = available;
+  const available = true;
+  const hasIcon   = true;
 
   // Level buttons:
   // - Only show buttons up to max_level (Dream Sprite shows 1-4, others 1-5)
@@ -1138,7 +1138,7 @@ function buildVariantRow(row) {
 
   const variantLabel = available ? row.variant.slice(0,3).toUpperCase() : 'N/A';
   const variantStatus = available ? (owned ? (mast ? '👑' : '✅') : '❌') : '🚫';
-  const variantImage = available ? (row.images?.[row.variant] || row.image || '') : '';
+  const variantImage = row.image || '';
   return `<div class="${rowCls}" id="row-${safe}">
     <div class="variant-card" style="background:${available?VARIANT_COLORS[row.variant]:'#334155'};">
       ${variantImage ? `<img src="${esc(variantImage)}" alt="${esc(row.variant)}" />` : `<span class="variant-card-badge">${variantStatus}</span><span class="variant-card-title">${esc(variantLabel)}</span>`}
@@ -1625,7 +1625,7 @@ function buildExportText() {
     const displayName = name.replace(/\s+Sprite$/, '');
     const cells = EXPORT_VARIANTS.map(variant => {
       const row = variantMap[variant];
-      if (!row || row.available === false) return EXPORT_ICONS.unavailable;
+      if (!row) return EXPORT_ICONS.unavailable;
       return row.owned ? EXPORT_ICONS.owned : EXPORT_ICONS.missing;
     });
     return `${displayName.padEnd(nameWidth, ' ')}|${cells.join('|')}|`;
