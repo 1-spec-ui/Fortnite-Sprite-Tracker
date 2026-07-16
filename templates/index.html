@@ -601,6 +601,13 @@
     .sprite-group-rar.Epic      { color: var(--epic);      background: rgba(139,92,246,0.12);  border-color: rgba(139,92,246,0.3); }
     .sprite-group-rar.Legendary { color: var(--legendary); background: rgba(245,158,11,0.12); border-color: rgba(245,158,11,0.3); }
     .sprite-group-rar.Mythic    { color: var(--mythic);    background: rgba(244,63,94,0.12);   border-color: rgba(244,63,94,0.3); }
+    .group-add-btn {
+      margin-left: auto; background: var(--surface); border: 1px solid var(--border-soft);
+      border-radius: var(--radius-sm); padding: 4px 11px; color: var(--accent);
+      font-size: 0.72rem; font-weight: 600; cursor: pointer; transition: all 0.15s;
+    }
+    .group-add-btn:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); }
+    .group-add-btn:disabled { opacity: 0.4; cursor: default; color: var(--text-muted); }
 
     /* ===========================================
        SPRITE DETAIL MODAL
@@ -1021,6 +1028,13 @@ const VARIANT_ORDER = {
   Holofoil: 5,
   Quack: 6,
 };
+const VARIANT_ICONS = {
+  Normal: '◻', Gold: '🥇', Gummy: '🍬', Galaxy: '🌠',
+  Gem: '💎', Holofoil: '🌈', Quack: '🦆',
+};
+function variantIcon(variant) {
+  return VARIANT_ICONS[variant] || VARIANT_ICONS.Normal;
+}
 function variantColor(variant) {
   return VARIANT_COLORS[variant] || VARIANT_COLORS.Normal;
 }
@@ -1270,19 +1284,21 @@ function render() {
 
   const names = orderGroups(groups);
   let html = '';
-  for (const name of names) {
-    const g = groups[name];
-    g.sort((a, b) => VARIANT_ORDER[a.variant] - VARIANT_ORDER[b.variant]);
-    const rarity  = g[0].rarity;
-    const display = name.replace(/\s+Sprite$/, '');
-    html += `<div class="sprite-group">
-      <div class="sprite-group-head">
-        <span class="sprite-group-name">${esc(display)}</span>
-        <span class="sprite-group-rar ${rarity}">${RARITY_ICONS[rarity]} ${rarity}</span>
-      </div>
-      <div class="card-grid">${g.map(buildCard).join('')}</div>
-    </div>`;
-  }
+    for (const name of names) {
+      const g = groups[name];
+      g.sort((a, b) => VARIANT_ORDER[a.variant] - VARIANT_ORDER[b.variant]);
+      const rarity  = g[0].rarity;
+      const display = name.replace(/\s+Sprite$/, '');
+      const allOwned = g.every(r => r.owned);
+      html += `<div class="sprite-group">
+        <div class="sprite-group-head">
+          <span class="sprite-group-name">${esc(display)}</span>
+          <span class="sprite-group-rar ${rarity}">${RARITY_ICONS[rarity]} ${rarity}</span>
+          <button class="group-add-btn" ${allOwned?'disabled':''} onclick="addSpriteVariants('${esc(name)}')" title="Add all variants of this sprite to your collection">＋ Add All Variants</button>
+        </div>
+        <div class="card-grid">${g.map(buildCard).join('')}</div>
+      </div>`;
+    }
   document.getElementById('list').innerHTML = html;
 }
 
@@ -1336,7 +1352,7 @@ function buildCard(row) {
     <div class="card-media">${media}${crown}${check}</div>
     <div class="card-body">
       <div class="card-name" title="${esc(displayName)}">${esc(displayName)}</div>
-      <span class="v-chip v-${esc(row.variant)} card-variant">${esc(row.variant)}</span>
+      <span class="v-chip v-${esc(row.variant)} card-variant">${variantIcon(row.variant)} ${esc(row.variant)}</span>
       <div class="card-foot">
         <div class="card-pips">${pips}</div>
         <div class="card-lvl">${lvlText}</div>
@@ -1416,7 +1432,7 @@ function renderModalContent(key) {
       <div class="sm-thumb" style="background:${variantColor(row.variant)}">${media}</div>
       <div class="sm-meta">
         <div class="sm-title">${esc(displayName)}</div>
-        <span class="v-chip v-${esc(row.variant)}">${esc(row.variant)}</span>
+        <span class="v-chip v-${esc(row.variant)}">${variantIcon(row.variant)} ${esc(row.variant)}</span>
         <span class="t-cost-badge" style="margin-left:4px">💨 ${row.cost.toLocaleString()} Dust</span>
       </div>
     </div>
@@ -1586,7 +1602,17 @@ function computeStatus(level, mastered, summoned) {
   return                            {icon:'📦', text:'Indexed (Level 1)',       cls:'status-indexed'};
 }
 
-/* ════════════════════════════════════════════════════════════
+/* Add every variant of a single sprite (e.g. all Water Sprite variants) to the collection */
+function addSpriteVariants(spriteName) {
+  let added = 0;
+  allRows.forEach(r => {
+    if (r.name === spriteName && !r.owned) { upsert(r.key, 1, false, false); added++; }
+  });
+  render(); refreshStats(); renderCalculator();
+  if (added > 0) showToast(`Added all ${added} variant${added>1?'s':''} of ${spriteName.replace(/\s+Sprite$/, '')} to your collection.`, 'ok');
+}
+
+/* ══════════════════════════════════════════════════════════
    Terminal
 ════════════════════════════════════════════════════════════ */
 function renderTerminal() {
