@@ -1826,10 +1826,9 @@ function onEcSpriteChange() {
   const sprite     = SPRITE_DIR[spriteName];
   if (!sprite) return;
 
-  // Populate variants
+  // Populate variants from the sprite's actual available variants (image-backed)
   const varSel  = document.getElementById('ecVariant');
-  const variants = ["Normal", "Gold", "Gummy", "Galaxy", "Holofoil"]
-    .filter(v => Object.prototype.hasOwnProperty.call(sprite.costs || {}, v));
+  const variants = (sprite.variants || []).map(v => v.variant);
   varSel.innerHTML = variants.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join('');
 
   // Populate levels 1..max_level
@@ -1851,7 +1850,8 @@ function addEcEntry() {
 
   const rarity   = sprite.rarity;
   const maxLevel = sprite.max_level || 5;
-  const cost     = (sprite.costs || {})[variant] || 0;
+  const variantInfo = (sprite.variants || []).find(v => v.variant === variant);
+  const cost     = variantInfo ? variantInfo.cost : 0;
 
   calcEntries.push({ spriteName, variant, rarity, level, maxLevel, cost });
   renderEcEntries();
