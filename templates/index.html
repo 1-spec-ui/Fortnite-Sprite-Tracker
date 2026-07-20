@@ -1969,13 +1969,14 @@ function buildExportText() {
 
   const lines = [
     'Sprite Collection Checklist',
-    `Total: ${ownedCount}/${totalCount} collected`,
+    '',
+    'Legend: 👑 Mastered (summoned) | ✅ Owned (summoned) | 👻 Lost / Indexed',
+    'Missing: ❌ | Not available: 🚫 | Digit after icon = level (2–5)',
     '',
     headerLine,
     ...rows,
     '',
-    'Legend: 👑 Mastered (summoned) | ✅ Owned (summoned) | 👻 Lost / Indexed',
-    'Missing: ❌ | Not available: 🚫 | Digit after icon = level (2–5)',
+    `Total: ${ownedCount}/${totalCount} collected`,
   ];
 
   return '```\n' + lines.join('\n') + '\n```';
