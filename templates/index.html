@@ -1949,17 +1949,17 @@ function buildExportText() {
     const availableVariants = spriteInfo ? (spriteInfo.variants || []).map(v => v.variant) : [];
 
     const cells = EXPORT_HEADER_VARIANTS.map(variant => {
-      if (!availableVariants.includes(variant)) return EXPORT_ICONS.unavailable;
+      if (!availableVariants.includes(variant)) return `${EXPORT_ICONS.unavailable} `;
       const row = variantMap[variant];
-      if (!row) return EXPORT_ICONS.unavailable;
-      if (!row.owned) return EXPORT_ICONS.missing;
+      if (!row) return `${EXPORT_ICONS.unavailable} `;
+      if (!row.owned) return `${EXPORT_ICONS.missing} `;
       if (row.mastered && row.summoned) {
-        return row.level > 1 ? `${EXPORT_ICONS.mastered}${row.level}` : EXPORT_ICONS.mastered;
+        return row.level > 1 ? `${EXPORT_ICONS.mastered}${row.level}` : `${EXPORT_ICONS.mastered} `;
       }
       if (row.summoned) {
-        return row.level > 1 ? `${EXPORT_ICONS.owned}${row.level}` : EXPORT_ICONS.owned;
+        return row.level > 1 ? `${EXPORT_ICONS.owned}${row.level}` : `${EXPORT_ICONS.owned} `;
       }
-      return row.level > 1 ? `${EXPORT_ICONS.lost}${row.level}` : EXPORT_ICONS.lost;
+      return row.level > 1 ? `${EXPORT_ICONS.lost}${row.level}` : `${EXPORT_ICONS.lost} `;
     });
 
     return `${displayName.padEnd(12)}|${cells.join('|')}|`;
@@ -1967,6 +1967,9 @@ function buildExportText() {
 
   return [
     `|${EXPORT_HEADER_VARIANTS.join('|')}|`,
+    '👑Mastered (summoned) | ✅Owned (summoned) | 👻Lost — needs re-summon (indexed) | ❌Missing | 🚫Not available',
+    'Digit after icon = sprite level (2–5).',
+    '------------------------------------------------------------------------------------------------',
     ...rows,
     '',
     `${ownedCount}/${totalCount} collected`
