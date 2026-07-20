@@ -217,6 +217,48 @@ SPRITE_DIRECTORY = {
             5: "60% chance for bonus high-tier loot upon elimination, plus a 10% chance for that bonus loot to be Mythic rarity.",
         }
     },
+
+    # ── RARE ──────────────────────────────────────────────────────────────
+    "Air Sprite": {
+        "rarity": "Rare", "max_level": 5,
+        "ability": "Sprint faster, jump higher, and negates all fall damage. Jump height and sprint speed increase with level, with jump height increasing the most.",
+        "costs": {"Normal": 3000, "Gold": 6000, "Gummy": 6000, "Galaxy": 6000, "Holofoil": 6000},
+        "levels": {
+            1: "Slightly increased sprint speed; small jump height boost; fall damage negated.",
+            2: "Moderate sprint boost; improved jump height; fall damage negated.",
+            3: "Significant sprint speed increase; notable jump height increase; fall damage negated.",
+            4: "High sprint speed; large jump height increase; fall damage negated.",
+            5: "Maximum sprint speed and jump height; fall damage fully negated.",
+        }
+    },
+
+    # ── LEGENDARY ─────────────────────────────────────────────────────────
+    "Seven Sprite": {
+        "rarity": "Legendary", "max_level": 5,
+        "ability": "Enemy player foot trails are visible in the world for your Squad. Duration increases at each Level Up.",
+        "costs": {"Normal": 5000, "Gold": 10000, "Gummy": 10000, "Galaxy": 10000, "Holofoil": 10000},
+        "levels": {
+            1: "Enemy foot trails visible to your Squad for 10 seconds.",
+            2: "Enemy foot trails visible to your Squad for 15 seconds.",
+            3: "Enemy foot trails visible to your Squad for 20 seconds.",
+            4: "Enemy foot trails visible to your Squad for 25 seconds.",
+            5: "Enemy foot trails visible to your Squad for 30 seconds.",
+        }
+    },
+
+    # ── MYTHIC ────────────────────────────────────────────────────────────
+    "Batman Sprite": {
+        "rarity": "Mythic", "max_level": 5,
+        "ability": "Redeploys your glider as a Batman cape that boosts you in the air. Level system currently unknown.",
+        "costs": {"Normal": 7500, "Gold": 15000, "Gummy": 15000, "Galaxy": 15000, "Holofoil": 15000},
+        "levels": {
+            1: "Glider redeploys as a Batman cape with a minor air boost.",
+            2: "Improved cape boost; extended air control.",
+            3: "Stronger cape boost; better aerial maneuverability.",
+            4: "Significant air boost; near-maximum cape glide.",
+            5: "Maximum cape boost and glide performance.",
+        }
+    },
 }
 
 TERMINAL_SERVICES = [

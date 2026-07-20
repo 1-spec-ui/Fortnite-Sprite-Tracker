@@ -162,6 +162,16 @@
     .rarity-filter.active-Legendary { background: rgba(245,158,11,0.14);  border-color: var(--legendary); color: var(--legendary); }
     .rarity-filter.active-Mythic    { background: rgba(244,63,94,0.14);   border-color: var(--mythic);    color: var(--mythic); }
     .sort-btn.active { background: rgba(139,92,246,0.14); border-color: var(--epic); color: var(--epic); }
+    .sort-select {
+      background: var(--surface); border: 1px solid var(--border-soft);
+      border-radius: var(--radius-sm); padding: 6px 28px 6px 10px;
+      color: var(--text-secondary); font-size: 0.82rem; font-weight: 600;
+      cursor: pointer; outline: none; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 8px center;
+    }
+    .sort-select:hover { border-color: var(--border); color: var(--text); }
+    .sort-select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 
     /* ── Rarity headers ── */
     .rarity-header {
@@ -586,6 +596,19 @@
     .card-status.status-mastered-locked { color: var(--amber); }
     .card-status.status-indexed { color: var(--text-muted); }
 
+    /* Indexed ↔ Summoned toggle on the card itself */
+    .card-toggle {
+      display: inline-flex; align-items: center; gap: 5px;
+      margin-top: 6px; padding: 4px 9px; border-radius: 7px;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.01em;
+      border: 1px solid var(--border); background: var(--bg); color: var(--text-secondary);
+      cursor: pointer; transition: all 0.15s; align-self: flex-start;
+    }
+    .card-toggle:hover { border-color: var(--accent); color: var(--text); }
+    .card-toggle.summoned { background: var(--emerald-soft); border-color: var(--emerald); color: var(--emerald); }
+    .card-toggle.summoned:hover { filter: brightness(1.08); }
+    .card-toggle svg { width: 12px; height: 12px; flex-shrink: 0; }
+
     /* ── Per-sprite subcategory ── */
     .sprite-group { margin-bottom: 6px; }
     .sprite-group-head {
@@ -634,7 +657,20 @@
     .sm-ability {
       font-size: 0.86rem; color: var(--text-secondary); line-height: 1.55;
       background: var(--bg); border: 1px solid var(--border-soft); border-radius: var(--radius-sm);
-      padding: 10px 12px; margin-bottom: 14px;
+      padding: 10px 12px; margin-bottom: 10px;
+    }
+    .sm-ability-label {
+      font-size: 0.64rem; color: var(--text-muted); letter-spacing: 0.05em;
+      text-transform: uppercase; font-weight: 700; margin-bottom: 4px;
+    }
+    .sm-variant-ability {
+      font-size: 0.82rem; color: var(--text); line-height: 1.5;
+      background: var(--bg); border: 1px solid var(--border-soft); border-left: 3px solid var(--accent);
+      border-radius: var(--radius-sm); padding: 9px 12px; margin-bottom: 14px;
+    }
+    .sm-variant-ability .sm-va-chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 0.68rem; font-weight: 700; color: var(--accent); margin-right: 6px;
     }
     .sm-section { margin-bottom: 16px; }
     .sm-label {
@@ -768,10 +804,12 @@
       <button class="filter-btn rarity-filter" data-rarity="Mythic"    onclick="setRarity('Mythic',this)">Mythic</button>
       <div class="filter-sep"></div>
       <span class="sort-label">SORT:</span>
-      <button class="filter-btn sort-btn active" data-sort="default"  onclick="setSort('default',this)">Default</button>
-      <button class="filter-btn sort-btn"        data-sort="lvl-desc" onclick="setSort('lvl-desc',this)">Level ↓</button>
-      <button class="filter-btn sort-btn"        data-sort="lvl-asc"  onclick="setSort('lvl-asc',this)">Level ↑</button>
-      <button class="filter-btn sort-btn"        data-sort="mastered" onclick="setSort('mastered',this)">★ Mastered First</button>
+      <select id="sortSelect" class="sort-select" onchange="setSort(this.value)">
+        <option value="default">Default</option>
+        <option value="lvl-desc">Level ↓</option>
+        <option value="lvl-asc">Level ↑</option>
+        <option value="mastered">★ Mastered First</option>
+      </select>
       <button class="filter-btn export-btn" onclick="openExportModal()">
     📤 Export Collection
       </button>
@@ -1209,8 +1247,6 @@ function setRarity(r, btn) {
 }
 function setSort(mode, btn) {
   sortMode = mode;
-  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
   render();
 }
 function setSearch(value) {
@@ -1348,6 +1384,21 @@ function buildCard(row) {
     ? `<div class="card-status ${row.status.cls}"><span>${row.status.icon}</span><span>${esc(row.status.text)}</span></div>`
     : `<div class="card-status unowned">Not collected</div>`;
 
+  // Indexed ↔ Summoned quick-toggle (only for owned sprites)
+  const summ = row.summoned;
+  const toggleHtml = owned
+    ? `<button type="button" class="card-toggle ${summ?'summoned':''}"
+         onclick="cardToggleSummoned(event,'${esc(key)}')"
+         title="${summ?'Set to Indexed (Level 1)':'Summon this sprite'}">
+         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+           ${summ
+             ? '<path d="M5 13l4 4L19 7"/>'
+             : '<path d="M12 5v14M5 12h14"/>'}
+         </svg>
+         ${summ ? 'Summoned' : 'Indexed'}
+       </button>`
+    : '';
+
   return `<div class="${cls}" onclick="openCard('${esc(key)}')">
     <div class="card-media">${media}${crown}${check}</div>
     <div class="card-body">
@@ -1359,8 +1410,18 @@ function buildCard(row) {
       </div>
       <div class="card-cost">💨 ${row.cost.toLocaleString()} Dust</div>
       ${statusHtml}
+      ${toggleHtml}
     </div>
   </div>`;
+}
+
+/* Indexed ↔ Summoned toggle directly on a collection card.
+   Stops the click from also opening the detail modal. */
+async function cardToggleSummoned(event, key) {
+  event.stopPropagation();
+  const row = allRows.find(r => r.key === key);
+  if (!row || !row.owned) return;
+  await toggleSummoned(key, !row.summoned);
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -1425,6 +1486,14 @@ function renderModalContent(key) {
     : `<span style="font-size:2rem;font-weight:800;color:#fff">${esc(row.name[0]||'?')}</span>`;
   const displayName = row.name.replace(/\s+Sprite$/, '');
   const yieldHtml   = buildYieldHtml(row);
+  const variantPerk = (VPERKS && VPERKS[row.variant]) || '';
+  // Variant ability block — shown for non-Normal variants that carry a perk
+  const variantAbilityHtml = (row.variant !== 'Normal' && variantPerk)
+    ? `<div class="sm-ability-label">Variant Ability — ${esc(row.variant)}</div>
+       <div class="sm-variant-ability">
+         <span class="sm-va-chip">${variantIcon(row.variant)} ${esc(row.variant)}</span>${esc(variantPerk)}
+       </div>`
+    : '';
 
   card.innerHTML = `
     <button class="modal-close" onclick="closeCard()" aria-label="Close">✕</button>
@@ -1436,7 +1505,9 @@ function renderModalContent(key) {
         <span class="t-cost-badge" style="margin-left:4px">💨 ${row.cost.toLocaleString()} Dust</span>
       </div>
     </div>
+    <div class="sm-ability-label">Base Ability</div>
     <p class="sm-ability">${esc(row.ability)}</p>
+    ${variantAbilityHtml}
     <label class="sm-owned">
       <input type="checkbox" ${owned?'checked':''} onchange="mToggleOwned('${esc(key)}',this.checked)" />
       <span>${owned ? 'Collected — tap to remove' : 'Mark as Collected'}</span>
@@ -1846,52 +1917,60 @@ function renderEcEntries() {
   }
 }
 
-const EXPORT_VARIANTS = ["Normal","Gold","Gummy","Galaxy","Gem","Holofoil","Quack"];
 const EXPORT_ICONS = {
   mastered: '👑',
   owned:    '✅',
+  lost:     '👻',
   missing:  '❌',
   unavailable: '🚫',
 };
+const EXPORT_HEADER_VARIANTS = ["Normal","Gold","Gummy","Galaxy","Gem","Holofoil"];
+const EXPORT_SPRITE_ORDER = [
+  "Water Sprite", "Earth Sprite", "Fire Sprite", "Fishy Sprite", "Air Sprite",
+  "Duck Sprite", "Ghost Sprite", "Demon Sprite", "King Sprite", "Aura Sprite",
+  "Striker Sprite", "Dream Sprite", "Punk Sprite", "Boss Sprite", "Seven Sprite",
+  "Batman Sprite", "Grim Reaper Sprite", "Zero Point Sprite", "Burnt Peanut Sprite"
+];
 
 function buildExportText() {
   const ownedCount = allRows.filter(r => r.owned).length;
   const totalCount = allRows.length;
 
-  const rowsByName = Object.keys(SPRITE_DIR).reduce((acc, name) => {
-    acc[name] = {};
-    return acc;
-  }, {});
+  const rowsByName = {};
   allRows.forEach(row => {
     rowsByName[row.name] = rowsByName[row.name] || {};
     rowsByName[row.name][row.variant] = row;
   });
 
-  const names = Object.keys(rowsByName);
-  const nameWidth = Math.max(0, ...names.map(n => n.length)) + 2;
-
-  const headerLines = [
-    `|${EXPORT_VARIANTS.join('|')}|`,
-    '👑Mastered',
-    '✅Owned',
-    '❌Missing',
-    '🚫Not available',
-    '-----------------------------',
-  ];
-
-  const rows = names.map(name => {
+  const rows = EXPORT_SPRITE_ORDER.map(name => {
+    const spriteInfo = SPRITE_DIR[name];
     const variantMap = rowsByName[name] || {};
     const displayName = name.replace(/\s+Sprite$/, '');
-    const cells = EXPORT_VARIANTS.map(variant => {
+    const availableVariants = spriteInfo ? (spriteInfo.variants || []).map(v => v.variant) : [];
+
+    const cells = EXPORT_HEADER_VARIANTS.map(variant => {
+      if (!availableVariants.includes(variant)) return EXPORT_ICONS.unavailable;
       const row = variantMap[variant];
       if (!row) return EXPORT_ICONS.unavailable;
-      return row.owned ? EXPORT_ICONS.owned : EXPORT_ICONS.missing;
+      if (!row.owned) return EXPORT_ICONS.missing;
+      if (row.mastered && row.summoned) {
+        return row.level > 1 ? `${EXPORT_ICONS.mastered}${row.level}` : EXPORT_ICONS.mastered;
+      }
+      if (row.summoned) {
+        return row.level > 1 ? `${EXPORT_ICONS.owned}${row.level}` : EXPORT_ICONS.owned;
+      }
+      return row.level > 1 ? `${EXPORT_ICONS.lost}${row.level}` : EXPORT_ICONS.lost;
     });
-    return `${displayName.padEnd(nameWidth, ' ')}|${cells.join('|')}|`;
+
+    return `${displayName.padEnd(12)}|${cells.join('|')}|`;
   });
 
-  const summary = `${ownedCount}/${totalCount} collected`;
-  return [...headerLines, ...rows, '', summary].join('\n');
+  return [
+    `|${EXPORT_HEADER_VARIANTS.join('|')}|`,
+    ...rows,
+    '',
+    `${ownedCount}/${totalCount} collected`
+  ].join('\n');
 }
 
 async function copyTextToClipboard(text) {
