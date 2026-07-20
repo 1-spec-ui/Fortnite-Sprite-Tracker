@@ -1942,6 +1942,8 @@ function buildExportText() {
     rowsByName[row.name][row.variant] = row;
   });
 
+  const headerLine = `|${EXPORT_HEADER_VARIANTS.join('|')}|`;
+
   const rows = EXPORT_SPRITE_ORDER.map(name => {
     const spriteInfo = SPRITE_DIR[name];
     const variantMap = rowsByName[name] || {};
@@ -1965,40 +1967,17 @@ function buildExportText() {
     return `${displayName.padEnd(12)}|${cells.join('|')}|`;
   });
 
-  return [
-    `|${EXPORT_HEADER_VARIANTS.join('|')}|`,
-    '👑Mastered (summoned) | ✅Owned (summoned) | 👻Lost — needs re-summon (indexed) | ❌Missing | 🚫Not available',
-    'Digit after icon = sprite level (2–5).',
-    '------------------------------------------------------------------------------------------------',
-    ...rows,
+  const lines = [
+    'Sprite Collection Checklist',
+    `Total: ${ownedCount}/${totalCount} collected`,
     '',
-    `${ownedCount}/${totalCount} collected`
-  ].join('\n');
-}
+    headerLine,
+    ...rows,
+  ];
 
-async function copyTextToClipboard(text) {
-  try {
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      await navigator.clipboard.writeText(text);
-      return true;
-    }
-  } catch (e) {}
-
-  const ta = document.createElement('textarea');
-  ta.value = text;
-  ta.setAttribute('readonly', '');
-  ta.style.position = 'fixed';
-  ta.style.left = '-9999px';
-  document.body.appendChild(ta);
-  ta.select();
-  try {
-    document.execCommand('copy');
-    return true;
-  } catch (e) {
-    return false;
-  } finally {
-    document.body.removeChild(ta);
-  }
+  return '```\n' + lines.join('\n') + '\n```\n\n' +
+    'Legend: 👑 Mastered (summoned) | ✅ Owned (summoned) | 👻 Lost / Indexed\n' +
+    'Missing: ❌ | Not available: 🚫 | Digit after icon = level (2–5)';
 }
 
 async function loadExportImage(url) {
@@ -2162,10 +2141,46 @@ async function startExport() {
   showToast(copied ? 'Collection checklist copied to clipboard.' : 'Copy failed. Please select and copy the text manually.', copied ? 'ok' : 'err');
 }
 
+function downloadTextFile(text, filename) {
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
 function showToast(msg, type='ok') {
   const t = document.getElementById('toast');
   t.textContent = msg; t.className = `show ${type}`;
   setTimeout(() => { t.className = ''; }, 2800);
+}
+async function copyTextToClipboard(text) {
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+  } catch (e) {}
+
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.setAttribute('readonly', '');
+  ta.style.position = 'fixed';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    document.execCommand('copy');
+    return true;
+  } catch (e) {
+    return false;
+  } finally {
+    document.body.removeChild(ta);
+  }
 }
 function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
