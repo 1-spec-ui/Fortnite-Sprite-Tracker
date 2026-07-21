@@ -217,6 +217,31 @@ SPRITE_DIRECTORY = {
             5: "60% chance for bonus high-tier loot upon elimination, plus a 10% chance for that bonus loot to be Mythic rarity.",
         }
     },
+    "Pollo Sprite": {
+        "rarity": "Mythic", "max_level": 5,
+        "ability": "Upon earning an elimination, slowly replenish shield for you and nearby squad members for a duration.",
+        "costs": {"Normal": 7500},
+        "levels": {
+            1: "Upon elimination, slowly replenish shield for you and nearby squad members for 6 seconds.",
+            2: "Shield replenishment duration increased to 7 seconds.",
+            3: "Shield replenishment duration increased to 8 seconds.",
+            4: "Shield replenishment duration increased to 9 seconds.",
+            5: "Shield replenishment duration increased to 10 seconds.",
+        }
+    },
+    "VIni Jr. Sprite": {
+        "rarity": "Mythic", "max_level": 5,
+        "ability": "Sprinting for a short time makes your slide destructive. Slidekicking enemies increases rate of fire and reload speed.",
+        "costs": {"Normal": 7500},
+        "levels": {
+            1: "Sprint to gain a destructive slide. Slidekicking enemies grants 40 dmg / +10% fire rate and reload speed.",
+            2: "Slidekick grants 45 dmg / +20% fire rate and reload speed.",
+            3: "Slidekick grants 50 dmg / +30% fire rate and reload speed.",
+            4: "Slidekick grants 55 dmg / +40% fire rate and reload speed.",
+            5: "Slidekick grants 60 dmg / +50% fire rate and reload speed.",
+        }
+    },
+
 
     # ── RARE ──────────────────────────────────────────────────────────────
     "Air Sprite": {
