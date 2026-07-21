@@ -713,6 +713,32 @@
     }
     .dash-panel h3 { font-size: 0.74rem; color: var(--text-secondary); letter-spacing: 0.05em; text-transform: uppercase; font-weight: 700; margin-bottom: 14px; }
     .dash-panel .stats-bar { margin-bottom: 0; }
+    .dash-expand-btn {
+      width: 100%; padding: 12px 18px; border-radius: var(--radius);
+      background: var(--accent-soft); border: 1px solid var(--accent); color: var(--accent);
+      font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.15s;
+      text-align: left; display: flex; align-items: center; justify-content: space-between;
+    }
+    .dash-expand-btn:hover { filter: brightness(1.05); }
+    .dash-expand-btn .expand-arrow { transition: transform 0.2s; font-size: 0.8rem; }
+    .dash-expand-btn.open .expand-arrow { transform: rotate(180deg); }
+    .variant-progress-row { margin-bottom: 14px; }
+    .variant-progress-row:last-child { margin-bottom: 0; }
+    .vp-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+    .vp-name { font-weight: 700; font-size: 0.9rem; color: var(--text); }
+    .vp-rarity { font-size: 0.66rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.03em; }
+    .vp-rarity.Rare { background: rgba(59,130,246,0.12); color: var(--rare); border: 1px solid rgba(59,130,246,0.3); }
+    .vp-rarity.Epic { background: rgba(139,92,246,0.12); color: var(--epic); border: 1px solid rgba(139,92,246,0.3); }
+    .vp-rarity.Legendary { background: rgba(245,158,11,0.12); color: var(--legendary); border: 1px solid rgba(245,158,11,0.3); }
+    .vp-rarity.Mythic { background: rgba(244,63,94,0.12); color: var(--mythic); border: 1px solid rgba(244,63,94,0.3); }
+    .vp-bars { display: flex; flex-direction: column; gap: 5px; }
+    .vp-bar-row { display: flex; align-items: center; gap: 8px; }
+    .vp-bar-label { font-size: 0.72rem; color: var(--text-secondary); min-width: 72px; font-weight: 600; }
+    .vp-bar-track { flex: 1; height: 6px; background: var(--surface-2); border-radius: 3px; overflow: hidden; }
+    .vp-bar-fill { height: 100%; border-radius: 3px; transition: width 0.4s ease; }
+    .vp-bar-fill.owned { background: var(--accent); }
+    .vp-bar-fill.mastered { background: var(--amber); }
+    .vp-bar-pct { font-size: 0.68rem; color: var(--text-muted); min-width: 36px; text-align: right; font-family: var(--mono); }
 
     /* ===========================================
        MOBILE BOTTOM NAV
@@ -873,6 +899,22 @@
           <div class="stat-pill">Summoned: <b id="sSummoned">0</b></div>
           <div class="stat-pill">Not Summoned: <b id="sUnsummoned">0</b></div>
         </div>
+      </div>
+
+      <button class="dash-expand-btn" id="dashVariantToggle" onclick="toggleVariantProgress()">
+        📊 Sprite Variant Progress
+      </button>
+      <div class="dash-panel" id="variantProgressPanel" style="display:none">
+        <h3>📈 SPRITE VARIANT PROGRESS</h3>
+        <div id="variantProgressContent"></div>
+      </div>
+
+      <button class="dash-expand-btn" id="dashPerVariantToggle" onclick="togglePerVariantProgress()">
+        📈 Per-Variant Type Progress
+      </button>
+      <div class="dash-panel" id="perVariantProgressPanel" style="display:none">
+        <h3>📈 PER-VARIANT TYPE PROGRESS</h3>
+        <div id="perVariantProgressContent"></div>
       </div>
 
     </div>
@@ -1658,6 +1700,8 @@ function refreshStats() {
   const dU = document.getElementById('dashUnsumm');     if (dU) dU.textContent = `${owned.length - summ} not summoned`;
 
   updateProgressBars(owned.length, mast);
+  if (variantProgressOpen) renderVariantProgress();
+  if (perVariantProgressOpen) renderPerVariantProgress();
 }
 
 function updateProgressBars(owned, mastered) {
@@ -1677,6 +1721,112 @@ function computeStatus(level, mastered, summoned) {
   if (mastered && !summoned) return {icon:'🔒', text:'Mastered — Not Summoned',cls:'status-mastered-locked'};
   if (summoned)              return {icon:'🏃', text:`Summoned (Level ${level})`, cls:'status-active'};
   return                            {icon:'📦', text:'Indexed (Level 1)',       cls:'status-indexed'};
+}
+
+/* ════════════════════════════════════════════════════════════
+   Dashboard — Sprite Variant Progress
+════════════════════════════════════════════════════════════ */
+let variantProgressOpen = false;
+
+function toggleVariantProgress() {
+  variantProgressOpen = !variantProgressOpen;
+  const btn    = document.getElementById('dashVariantToggle');
+  const panel  = document.getElementById('variantProgressPanel');
+  btn.classList.toggle('open', variantProgressOpen);
+  if (panel) panel.style.display = variantProgressOpen ? 'block' : 'none';
+  if (variantProgressOpen) renderVariantProgress();
+}
+
+function renderVariantProgress() {
+  const container = document.getElementById('variantProgressContent');
+  if (!container) return;
+
+  const spriteNames = Object.keys(SPRITE_DIR).sort((a, b) => {
+    const ra = RARITY_ORDER.indexOf(SPRITE_DIR[a].rarity);
+    const rb = RARITY_ORDER.indexOf(SPRITE_DIR[b].rarity);
+    return ra !== rb ? ra - rb : a.localeCompare(b);
+  });
+
+  let html = '';
+  for (const name of spriteNames) {
+    const info = SPRITE_DIR[name];
+    const variants = (info.variants || []).map(v => v.variant);
+    const ownedCount = variants.filter(v => allRows.some(r => r.name === name && r.variant === v && r.owned)).length;
+    const mastCount  = variants.filter(v => allRows.some(r => r.name === name && r.variant === v && r.mastered)).length;
+    const total      = variants.length;
+    const ownedPct   = total ? Math.round((ownedCount / total) * 100) : 0;
+    const mastPct    = total ? Math.round((mastCount  / total) * 100) : 0;
+    const displayName = name.replace(/\s+Sprite$/, '');
+
+    html += `<div class="variant-progress-row">
+      <div class="vp-header">
+        <span class="vp-name">${esc(displayName)}</span>
+        <span class="vp-rarity ${info.rarity}">${info.rarity}</span>
+      </div>
+      <div class="vp-bars">
+        <div class="vp-bar-row">
+          <span class="vp-bar-label">Owned</span>
+          <div class="vp-bar-track"><div class="vp-bar-fill owned" style="width:${ownedPct}%"></div></div>
+          <span class="vp-bar-pct">${ownedCount}/${total}</span>
+        </div>
+        <div class="vp-bar-row">
+          <span class="vp-bar-label">Mastered</span>
+          <div class="vp-bar-track"><div class="vp-bar-fill mastered" style="width:${mastPct}%"></div></div>
+          <span class="vp-bar-pct">${mastCount}/${total}</span>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  container.innerHTML = html;
+}
+
+let perVariantProgressOpen = false;
+
+function togglePerVariantProgress() {
+  perVariantProgressOpen = !perVariantProgressOpen;
+  const btn    = document.getElementById('dashPerVariantToggle');
+  const panel  = document.getElementById('perVariantProgressPanel');
+  btn.classList.toggle('open', perVariantProgressOpen);
+  if (panel) panel.style.display = perVariantProgressOpen ? 'block' : 'none';
+  if (perVariantProgressOpen) renderPerVariantProgress();
+}
+
+function renderPerVariantProgress() {
+  const container = document.getElementById('perVariantProgressContent');
+  if (!container) return;
+
+  const variantTypes = ["Normal", "Gold", "Gummy", "Galaxy", "Cube", "Holofoil", "Gem", "Quack"];
+
+  let html = '';
+  for (const variant of variantTypes) {
+    const totalSprites = Object.keys(SPRITE_DIR).length;
+    const ownedCount   = allRows.filter(r => r.variant === variant && r.owned).length;
+    const mastCount    = allRows.filter(r => r.variant === variant && r.mastered).length;
+    const totalExists  = allRows.filter(r => r.variant === variant).length;
+    const ownedPct     = totalExists ? Math.round((ownedCount / totalExists) * 100) : 0;
+    const mastPct      = totalExists ? Math.round((mastCount  / totalExists) * 100) : 0;
+
+    html += `<div class="variant-progress-row">
+      <div class="vp-header">
+        <span class="vp-name">${variantIcon(variant)} ${variant}</span>
+      </div>
+      <div class="vp-bars">
+        <div class="vp-bar-row">
+          <span class="vp-bar-label">Owned</span>
+          <div class="vp-bar-track"><div class="vp-bar-fill owned" style="width:${ownedPct}%"></div></div>
+          <span class="vp-bar-pct">${ownedCount}/${totalExists}</span>
+        </div>
+        <div class="vp-bar-row">
+          <span class="vp-bar-label">Mastered</span>
+          <div class="vp-bar-track"><div class="vp-bar-fill mastered" style="width:${mastPct}%"></div></div>
+          <span class="vp-bar-pct">${mastCount}/${totalExists}</span>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  container.innerHTML = html;
 }
 
 /* Add every variant of a single sprite (e.g. all Water Sprite variants) to the collection */
