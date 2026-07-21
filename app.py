@@ -315,7 +315,7 @@ def _normalize(value: str) -> str:
 
 
 # Order variants are listed everywhere (filters, cards, sort, calc).
-VARIANT_ORDER = ["Normal", "Gold", "Gummy", "Galaxy", "Cube", "Holofoil", "Gem", "Quack"]
+VARIANT_ORDER = ["Normal", "Gold", "Gummy", "Galaxy", "Holofoil", "Gem", "Cube", "Quack"]
 
 # Filename prefix → variant label. The first matching prefix wins, so order
 # matters (e.g. "gold_" must not be caught by a generic rule).
