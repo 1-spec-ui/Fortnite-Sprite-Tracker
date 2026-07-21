@@ -229,7 +229,7 @@ SPRITE_DIRECTORY = {
             5: "Shield replenishment duration increased to 10 seconds.",
         }
     },
-    "VIni Jr. Sprite": {
+    "Vini Jr. Sprite": {
         "rarity": "Mythic", "max_level": 5,
         "ability": "Sprinting for a short time makes your slide destructive. Slidekicking enemies increases rate of fire and reload speed.",
         "costs": {"Normal": 7500},
