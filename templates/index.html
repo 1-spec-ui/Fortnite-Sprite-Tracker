@@ -264,6 +264,10 @@
     .v-Gold   { background: rgba(245,158,11,0.14); border:1px solid rgba(245,158,11,0.32);  color: var(--legendary); }
     .v-Gummy  { background: rgba(236,72,153,0.14); border:1px solid rgba(236,72,153,0.30);  color: #f472b6; }
     .v-Galaxy { background: rgba(139,92,246,0.16); border:1px solid rgba(139,92,246,0.30);  color: var(--epic); }
+    .v-Cube {
+      background: rgba(59,130,246,0.16); border:1px solid rgba(59,130,246,0.35);  color: #3b82f6;
+      text-shadow: 0 1px 4px rgba(59,130,246,0.25);
+    }
     .v-Holofoil {
       background: linear-gradient(135deg, rgba(59,130,246,0.45), rgba(16,185,129,0.45), rgba(245,158,11,0.45), rgba(236,72,153,0.45));
       border: 1px solid rgba(255,255,255,0.2);
@@ -1047,14 +1051,15 @@ const FILTER_GROUPS = {
 let searchQuery  = '';
 let myDust       = 0;
 
-const ALL_VARIANTS = ["Normal","Gold","Gummy","Galaxy","Gem","Holofoil","Quack"];
+const ALL_VARIANTS = ["Normal","Gold","Gummy","Galaxy","Cube","Holofoil","Gem","Quack"];
 const VARIANT_COLORS = {
   Normal: '#94a3b8',
   Gold: '#fbbf24',
   Gummy: '#ec4899',
   Galaxy: '#8b5cf6',
-  Gem: '#22c55e',
+  Cube: '#3b82f6',
   Holofoil: '#2dd4bf',
+  Gem: '#22c55e',
   Quack: '#f97316',
 };
 const VARIANT_ORDER = {
@@ -1062,13 +1067,14 @@ const VARIANT_ORDER = {
   Gold: 1,
   Gummy: 2,
   Galaxy: 3,
-  Gem: 4,
+  Cube: 4,
   Holofoil: 5,
-  Quack: 6,
+  Gem: 6,
+  Quack: 7,
 };
 const VARIANT_ICONS = {
   Normal: '◻', Gold: '🥇', Gummy: '🍬', Galaxy: '🌠',
-  Gem: '💎', Holofoil: '🌈', Quack: '🦆',
+  Cube: '🧊', Holofoil: '🌈', Gem: '💎', Quack: '🦆',
 };
 function variantIcon(variant) {
   return VARIANT_ICONS[variant] || VARIANT_ICONS.Normal;
@@ -1924,7 +1930,7 @@ const EXPORT_ICONS = {
   missing:  '❌',
   unavailable: '🚫',
 };
-const EXPORT_HEADER_VARIANTS = ["Normal","Gold","Gummy","Galaxy","Gem","Holofoil"];
+const EXPORT_HEADER_VARIANTS = ["Normal","Gold","Gummy","Galaxy","Cube","Holofoil","Gem"];
 const EXPORT_SPRITE_ORDER = [
   "Water Sprite", "Earth Sprite", "Fire Sprite", "Fishy Sprite", "Air Sprite",
   "Duck Sprite", "Ghost Sprite", "Demon Sprite", "King Sprite", "Aura Sprite",

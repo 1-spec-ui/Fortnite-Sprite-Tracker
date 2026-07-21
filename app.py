@@ -315,7 +315,7 @@ def _normalize(value: str) -> str:
 
 
 # Order variants are listed everywhere (filters, cards, sort, calc).
-VARIANT_ORDER = ["Normal", "Gold", "Gummy", "Galaxy", "Holofoil", "Gem", "Quack"]
+VARIANT_ORDER = ["Normal", "Gold", "Gummy", "Galaxy", "Cube", "Holofoil", "Gem", "Quack"]
 
 # Filename prefix → variant label. The first matching prefix wins, so order
 # matters (e.g. "gold_" must not be caught by a generic rule).
@@ -323,6 +323,7 @@ _PREFIX_TO_VARIANT = [
     ("gold_",     "Gold"),
     ("gummy_",    "Gummy"),
     ("galaxy_",   "Galaxy"),
+    ("cube_",     "Cube"),
     ("holofoil_", "Holofoil"),
     ("gem_",      "Gem"),
     ("quack_",    "Quack"),
@@ -387,7 +388,7 @@ def _variants_for_sprite(sprite_name: str, info: dict) -> list[dict]:
             continue
         if variant in costs:
             cost = costs[variant]
-        elif variant in ("Holofoil", "Gem", "Quack"):
+        elif variant in ("Holofoil", "Gem", "Quack", "Cube"):
             cost = SPECIAL_VARIANT_COST.get(rarity, 0)
         else:
             cost = costs.get(variant, SPECIAL_VARIANT_COST.get(rarity, 0))
