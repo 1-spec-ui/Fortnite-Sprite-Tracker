@@ -12,6 +12,7 @@ VARIANT_PERKS = {
     "Gold":     "3× Sprite XP for every elimination secured during a match.",
     "Gummy":    "+10% bonus Sprite Dust upon extraction.",
     "Galaxy":   "+30% more ammunition when opening ammo crates and looting.",
+    "Cube":     "Grants the overdrive effect when in storm.",
     "Holofoil": "+30% chance to find Rare Sprites.",
     "Gem":      "+20% bonus Sprite Dust from all sources during a match.",
     "Quack":    "Emotes now also restore a small amount of shield over time.",
