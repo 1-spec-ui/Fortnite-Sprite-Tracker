@@ -2104,7 +2104,10 @@ function buildExportText() {
   const rows = EXPORT_SPRITE_ORDER.map(name => {
     const spriteInfo = SPRITE_DIR[name];
     const variantMap = rowsByName[name] || {};
-    const displayName = name.replace(/\s+Sprite$/, '');
+    let displayName = name.replace(/\s+Sprite$/, '');
+    if (displayName === 'Zero Point') displayName = 'ZP';
+    if (displayName === 'Grim Reaper') displayName = 'Grim';
+    if (displayName === 'Burnt Peanut') displayName = 'Peanut';
     const availableVariants = spriteInfo ? (spriteInfo.variants || []).map(v => v.variant) : [];
 
     const cells = EXPORT_HEADER_VARIANTS.map(variant => {
@@ -2121,7 +2124,23 @@ function buildExportText() {
       return row.level > 1 ? `${EXPORT_ICONS.lost}${row.level}` : `${EXPORT_ICONS.lost} `;
     });
 
-    return `${displayName.padEnd(12)}|${cells.join('|')}|`;
+    return `${displayName}|${cells.join('|')}|`;
+  });
+
+  // Pad names so the checklist columns align, with just one space after the longest name
+  const maxNameLen = Math.max(0, ...EXPORT_SPRITE_ORDER.map(name => {
+    let displayName = name.replace(/\s+Sprite$/, '');
+    if (displayName === 'Zero Point') displayName = 'ZP';
+    if (displayName === 'Grim Reaper') displayName = 'Grim';
+    if (displayName === 'Burnt Peanut') displayName = 'Peanut';
+    return displayName.length;
+  }));
+  const paddedRows = rows.map(row => {
+    const parts = row.split('|');
+    if (parts.length > 0) {
+      parts[0] = parts[0].padEnd(maxNameLen + 1);
+    }
+    return parts.join('|');
   });
 
   const lines = [
@@ -2131,7 +2150,7 @@ function buildExportText() {
     'Missing: ❌ | Not available: 🚫 | Digit after icon = level (2–5)',
     '',
     headerLine,
-    ...rows,
+    ...paddedRows,
     '',
     `Total: ${ownedCount}/${totalCount} collected`,
   ];
