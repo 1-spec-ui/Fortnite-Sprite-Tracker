@@ -994,22 +994,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Extraction planner — full width -->
-    <div class="calc-card" style="margin-top:16px">
-      <h3>📤 EXTRACTION DUST YIELD PLANNER</h3>
-      <div id="calcExtractionGummyNote" style="margin-bottom:10px;font-size:0.82rem;"></div>
-      <div id="calcExtractionLines"><div class="calc-empty">No sprites summoned yet. Summon sprites in the Collection tab to see extraction yields.</div></div>
-      <div class="calc-total" style="margin-top:14px">
-        <span class="ct-label">TOTAL IF ALL SUMMONED EXTRACTED</span>
-        <span class="ct-val" id="calcExtractionTotal">0 Dust</span>
-      </div>
-      <div style="margin-top:8px; font-size:0.74rem; color: var(--text-muted); line-height:1.5;">
-        Yield = base rarity × level at time of extraction.
-        A <span class="gummy-boost-text">Gummy Sprite (Summoned)</span> in your loadout boosts all other sprites' yield by +20%.
-        The Gummy sprite itself always yields its standard base value.
-      </div>
-    </div>
   </div>
 
 </div>
@@ -1476,9 +1460,11 @@ async function cardToggleSummoned(event, key) {
    Sprite detail modal (opened by clicking a card)
 ════════════════════════════════════════════════════════════ */
 let modalKey = null;
+let modalGummyOverride = null; // null=auto, true=force +20%, false=force off
 
 function openCard(key) {
   modalKey = key;
+  modalGummyOverride = null;
   renderModalContent(key);
   document.getElementById('spriteModal').classList.add('show');
 }
@@ -1578,6 +1564,14 @@ function renderModalContent(key) {
         </label>
         <span class="s-lbl ${summ?'on':''}">${summ?'Summoned':'Indexed (Lv 1)'}</span>
       </div>
+      <div class="s-toggle">
+        <label class="tgl">
+          <input type="checkbox" ${modalGummyOverride!==false?'checked':''}
+            onchange="modalGummyOverride=this.checked; refreshModal();" />
+          <span class="tgl-sl"></span>
+        </label>
+        <span class="s-lbl ${modalGummyOverride!==false?'on':''}">🍬 +20% Gummy</span>
+      </div>
     </div>
     <div class="sm-section">
       <div class="sm-label">ABILITY PROGRESSION</div>
@@ -1596,16 +1590,17 @@ async function mToggleOwned(k, o)    { await toggleOwned(k, o);       refreshMod
 function buildYieldHtml(row) {
   if (!row.owned) return '';
   const yld     = computeYield(row);
-  const hasGum  = gummySummoned();
   const isGummy = row.variant === 'Gummy';
   let cls = 'yield-hint';
   let txt = `📤 Est. Yield: ${yld.toLocaleString()} Dust`;
   if (!row.summoned) {
     cls = 'yield-hint inactive';
     txt = `📤 Indexed yield: ${yld.toLocaleString()} Dust (Lv 1)`;
-  } else if (hasGum && !isGummy) {
+  } else if (modalGummyOverride === true || (modalGummyOverride === null && gummySummoned() && !isGummy)) {
+    const boosted = Math.round(yld * 1.20);
+    const delta = boosted - yld;
     cls = 'yield-hint gummy-boost';
-    txt = `📤 Est. Yield: ${yld.toLocaleString()} Dust (+20% Gummy)`;
+    txt = `📤 Est. Yield: ${yld.toLocaleString()} Dust + ${delta.toLocaleString()} Dust (20%) = ${boosted.toLocaleString()} Dust`;
   }
   return `<div class="${cls}">${txt}</div>`;
 }
@@ -1925,45 +1920,6 @@ function renderCalculator() {
     affEl.style.display = 'none';
     document.getElementById('calcTerminalTotal').className = 'ct-val';
   }
-
-  // ── Extraction Planner ──
-  const hasGum  = gummySummoned();
-  const gumNote = document.getElementById('calcExtractionGummyNote');
-  if (gumNote) {
-    gumNote.innerHTML = hasGum
-      ? `<span class="gummy-boost-text">🍬 Gummy Sprite is SUMMONED — all other sprites gain +20% extraction yield!</span>`
-      : `<span class="gummy-muted">No Gummy Sprite summoned — standard yields apply.</span>`;
-  }
-
-  const summoned = allRows.filter(r => r.owned && r.summoned);
-  const extLines = document.getElementById('calcExtractionLines');
-  const extTotal = document.getElementById('calcExtractionTotal');
-
-  if (!summoned.length) {
-    if (extLines) extLines.innerHTML = '<div class="calc-empty">No sprites summoned yet. Summon sprites in the Collection tab to see extraction yields.</div>';
-    if (extTotal) extTotal.textContent = '0 Dust';
-    return;
-  }
-
-  let extSum = 0;
-  let extHTML = '';
-  // Group by rarity for display
-  for (const rar of RARITY_ORDER) {
-    const group = summoned.filter(r => r.rarity === rar);
-    if (!group.length) continue;
-    for (const r of group) {
-      const yld  = computeYield(r);
-      extSum    += yld;
-      const boost = hasGum && r.variant !== 'Gummy' ? ' <span class="gummy-boost-text" style="font-size:0.75em">(+20%)</span>' : '';
-      extHTML += `<div class="calc-line">
-        <span class="cl">${RARITY_ICONS[rar]||''} ${esc(r.name)} — ${esc(r.variant)} (Lv ${r.level})</span>
-        <span class="cr">${yld.toLocaleString()} Dust${boost}</span>
-      </div>`;
-    }
-  }
-
-  if (extLines) extLines.innerHTML = extHTML;
-  if (extTotal) extTotal.textContent = extSum.toLocaleString() + ' Dust';
 }
 
 /* ════════════════════════════════════════════════════════════
