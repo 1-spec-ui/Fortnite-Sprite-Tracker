@@ -24,7 +24,7 @@ SPRITE_DIRECTORY = {
     "Water Sprite": {
         "rarity": "Rare", "max_level": 5,
         "ability": "Replenishes shield while in water for you and your nearby Squad.",
-        "costs": {"Normal": 2000, "Gold": 4000, "Gummy": 4000, "Galaxy": 4000, "Holofoil": 4000},
+        "costs": {"Normal": 2000, "Gold": 2700, "Gummy": 2700, "Galaxy": 2700, "Holofoil": 2700, "Cube": 2700},
         "levels": {
             1: "Slowly replenishes your shield while standing in water.",
             2: "Faster shield regen in water; small shield regen extended to nearby allies.",
@@ -36,7 +36,7 @@ SPRITE_DIRECTORY = {
     "Earth Sprite": {
         "rarity": "Rare", "max_level": 5,
         "ability": "Gives a chance to find additional rare items when opening chests.",
-        "costs": {"Normal": 2000, "Gold": 4000, "Gummy": 4000, "Galaxy": 4000},
+        "costs": {"Normal": 2000, "Gold": 2700, "Gummy": 2700, "Galaxy": 2700, "Cube": 2700},
         "levels": {
             1: "Small chance to find an extra item when opening a chest.",
             2: "Improved chance; bonus item quality increased to uncommon.",
@@ -48,7 +48,7 @@ SPRITE_DIRECTORY = {
     "Fire Sprite": {
         "rarity": "Rare", "max_level": 5,
         "ability": "Creates a fiery burst when you deal enough damage to an enemy.",
-        "costs": {"Normal": 2000, "Gold": 4000, "Gummy": 4000, "Galaxy": 4000, "Holofoil": 4000},
+        "costs": {"Normal": 2000, "Gold": 2700, "Gummy": 2700, "Galaxy": 2700, "Holofoil": 2700, "Cube": 2700},
         "levels": {
             1: "Small fiery burst triggers after dealing 200 damage to an enemy.",
             2: "Larger burst; damage threshold reduced to 175.",
@@ -60,7 +60,7 @@ SPRITE_DIRECTORY = {
     "Fishy Sprite": {
         "rarity": "Rare", "max_level": 5,
         "ability": "Increases swimming speed and gives a movement boost after taking damage.",
-        "costs": {"Normal": 2000, "Gold": 4000, "Gummy": 4000, "Galaxy": 4000},
+        "costs": {"Normal": 2000, "Gold": 2700, "Gummy": 2700, "Galaxy": 2700, "Cube": 2700},
         "levels": {
             1: "Minor swim speed boost; short movement burst after taking damage.",
             2: "Faster swimming; improved post-damage movement boost duration.",
@@ -74,7 +74,7 @@ SPRITE_DIRECTORY = {
     "Duck Sprite": {
         "rarity": "Epic", "max_level": 5,
         "ability": "Emoting or Jamming on the battlefield slowly replenishes your shields.",
-        "costs": {"Normal": 3000, "Gold": 6000, "Gummy": 6000, "Galaxy": 6000, "Holofoil": 6000},
+        "costs": {"Normal": 3000, "Gold": 4000, "Gummy": 4000, "Galaxy": 4000, "Holofoil": 4000, "Cube": 4000},
         "levels": {
             1: "Restores 5 shield per second while emoting or jamming.",
             2: "Restores 10 shield/s; emote duration required reduced.",
@@ -185,7 +185,7 @@ SPRITE_DIRECTORY = {
     "Grim Reaper Sprite": {
         "rarity": "Mythic", "max_level": 5,
         "ability": "Instantly executes downed enemies in range and reveals nearby opponents after each elimination.",
-        "costs": {"Normal": 7500, "Gold": 15000, "Gummy": 15000, "Galaxy": 15000},
+        "costs": {"Normal": 7500, "Gold": 10000, "Gummy": 10000, "Galaxy": 10000, "Cube": 10000},
         "levels": {
             1: "Executes downed enemies within 5m; reveals nearby enemies for 2 seconds.",
             2: "Execution range extends to 8m; enemy reveal lasts 3 seconds.",
@@ -197,7 +197,7 @@ SPRITE_DIRECTORY = {
     "Zero Point Sprite": {
         "rarity": "Mythic", "max_level": 5,
         "ability": "Deploys a defensive Shield Bubble Jr. protecting you automatically as you heal.",
-        "costs": {"Normal": 7500, "Gold": 15000, "Gummy": 15000, "Galaxy": 15000},
+        "costs": {"Normal": 7500, "Gold": 10000, "Gummy": 10000, "Galaxy": 10000, "Cube": 10000},
         "levels": {
             1: "Deploys a small Shield Bubble Jr. while healing; lasts 5 seconds.",
             2: "Slightly larger bubble; duration extended to 8 seconds.",
@@ -209,7 +209,7 @@ SPRITE_DIRECTORY = {
     "Burnt Peanut Sprite": {
         "rarity": "Mythic", "max_level": 5,
         "ability": "Acts as a loot-amplifier. Grants a chance to generate bonus high-tier loot upon eliminating an opponent. At max level also adds a 10% chance for bonus loot to be Mythic rarity.",
-        "costs": {"Normal": 7500},
+        "costs": {"Normal": 7500, "Gold": 10000, "Gummy": 10000, "Galaxy": 10000, "Cube": 10000},
         "levels": {
             1: "20% chance to generate bonus high-tier loot upon eliminating an opponent.",
             2: "30% chance to generate bonus high-tier loot upon elimination.",
@@ -220,8 +220,8 @@ SPRITE_DIRECTORY = {
     },
     "Pollo Sprite": {
         "rarity": "Mythic", "max_level": 5,
-        "ability": "Upon earning an elimination, slowly replenish shield for you and nearby squad members for a duration.",
-        "costs": {"Normal": 7500},
+        "ability": "Upon earning an elimination, slowly replenish shield for you and nearby squad members for a duration. Duration increases at each Level Up: 6 Seconds -> 7 Seconds -> 8 Seconds -> 9 Seconds -> 10 Seconds",
+        "costs": {"Normal": 7500, "Gold": 10000, "Gummy": 10000, "Galaxy": 10000, "Cube": 10000},
         "levels": {
             1: "Upon elimination, slowly replenish shield for you and nearby squad members for 6 seconds.",
             2: "Shield replenishment duration increased to 7 seconds.",
@@ -232,8 +232,8 @@ SPRITE_DIRECTORY = {
     },
     "Vini Jr. Sprite": {
         "rarity": "Mythic", "max_level": 5,
-        "ability": "Sprinting for a short time makes your slide destructive. Slidekicking enemies increases rate of fire and reload speed.",
-        "costs": {"Normal": 7500},
+        "ability": "Sprinting for a short time makes your slide destructive. Slidekicking enemies increases rate of fire and reload speed. Increases in power at each Level Up: 40 dmg / 10% fire rate -> 45 dmg / 20% fire rate -> 50 dmg / 30% fire rate -> 55 dmg / 40% fire rate -> 60 dmg / 50% fire rate",
+        "costs": {"Normal": 7500, "Gold": 10000, "Gummy": 10000, "Galaxy": 10000, "Cube": 10000},
         "levels": {
             1: "Sprint to gain a destructive slide. Slidekicking enemies grants 40 dmg / +10% fire rate and reload speed.",
             2: "Slidekick grants 45 dmg / +20% fire rate and reload speed.",
@@ -248,7 +248,7 @@ SPRITE_DIRECTORY = {
     "Air Sprite": {
         "rarity": "Rare", "max_level": 5,
         "ability": "Sprint faster, jump higher, and negates all fall damage. Jump height and sprint speed increase with level, with jump height increasing the most.",
-        "costs": {"Normal": 3000, "Gold": 6000, "Gummy": 6000, "Galaxy": 6000, "Holofoil": 6000},
+        "costs": {"Normal": 2000, "Gold": 2700, "Gummy": 2700, "Galaxy": 2700, "Holofoil": 2700, "Cube": 2700},
         "levels": {
             1: "Slightly increased sprint speed; small jump height boost; fall damage negated.",
             2: "Moderate sprint boost; improved jump height; fall damage negated.",
@@ -262,7 +262,7 @@ SPRITE_DIRECTORY = {
     "Seven Sprite": {
         "rarity": "Legendary", "max_level": 5,
         "ability": "Enemy player foot trails are visible in the world for your Squad. Duration increases at each Level Up.",
-        "costs": {"Normal": 5000, "Gold": 10000, "Gummy": 10000, "Galaxy": 10000, "Holofoil": 10000},
+        "costs": {"Normal": 5000, "Gold": 6750, "Gummy": 6750, "Galaxy": 6750, "Holofoil": 6750, "Cube": 6750},
         "levels": {
             1: "Enemy foot trails visible to your Squad for 10 seconds.",
             2: "Enemy foot trails visible to your Squad for 15 seconds.",
@@ -276,7 +276,7 @@ SPRITE_DIRECTORY = {
     "Batman Sprite": {
         "rarity": "Mythic", "max_level": 5,
         "ability": "Redeploys your glider as a Batman cape that boosts you in the air. Level system currently unknown.",
-        "costs": {"Normal": 7500, "Gold": 15000, "Gummy": 15000, "Galaxy": 15000, "Holofoil": 15000},
+        "costs": {"Normal": 7500, "Gold": 10000, "Gummy": 10000, "Galaxy": 10000, "Holofoil": 10000, "Cube": 10000},
         "levels": {
             1: "Glider redeploys as a Batman cape with a minor air boost.",
             2: "Improved cape boost; extended air control.",
@@ -300,10 +300,10 @@ TERMINAL_SERVICES = [
 # Special-variant pricing: matches the Galaxy tier (2x the Normal cost).
 # Applied to Holofoil, Gem, and Quack when not explicitly set in a sprite's costs.
 SPECIAL_VARIANT_COST = {
-    "Rare":      4000,
-    "Epic":      6000,
-    "Legendary": 10000,
-    "Mythic":    15000,
+    "Rare":      2700,
+    "Epic":      4000,
+    "Legendary": 6750,
+    "Mythic":    10000,
 }
 
 SPRITE_IMAGE_DIR = Path(__file__).parent / "static" / "sprites"
