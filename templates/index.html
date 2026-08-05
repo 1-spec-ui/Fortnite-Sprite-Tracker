@@ -35,6 +35,10 @@
       --mono: 'JetBrains Mono', ui-monospace, monospace;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    @keyframes slideUp {
+      from { transform: translateY(100%); opacity: 0; }
+      to   { transform: translateY(0); opacity: 1; }
+    }
     body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-feature-settings: 'tnum' 1, 'cv05' 1; -webkit-font-smoothing: antialiased; }
     body::before {
       content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
@@ -148,14 +152,16 @@
       font-size: 0.9rem; padding: 0 2px;
     }
     .clear-btn:hover { color: var(--text); }
-    .filter-btn {
+    .filter-icon-btn {
       background: var(--surface); border: 1px solid var(--border-soft);
-      border-radius: var(--radius-sm); padding: 6px 13px;
-      color: var(--text-secondary); font-size: 0.84rem;
+      border-radius: var(--radius-sm); padding: 5px 8px;
+      color: var(--text-secondary); font-size: 0.85rem;
       font-weight: 600; cursor:pointer; transition: all 0.15s;
+      min-width: 28px; height: 28px;
+      display: inline-flex; align-items: center; justify-content: center;
     }
-    .filter-btn:hover { border-color: var(--border); color: var(--text); }
-    .filter-btn.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+    .filter-icon-btn:hover { border-color: var(--border); color: var(--text); }
+    .filter-icon-btn.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
     .filter-sep { width: 1px; height: 24px; background: var(--border-soft); }
     .sort-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; }
     .rarity-filter.active-Rare      { background: rgba(59,130,246,0.14);  border-color: var(--rare);      color: var(--rare); }
@@ -584,6 +590,22 @@
       color: var(--emerald); font-size: 0.72rem; font-weight: 900;
       display: flex; align-items: center; justify-content: center;
     }
+    .card-summ-badge {
+      position: absolute; top: 34px; left: 8px;
+      width: 22px; height: 22px; border-radius: 6px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff; font-size: 0.65rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .card-indexed-badge {
+      position: absolute; top: 34px; left: 8px;
+      width: 22px; height: 22px; border-radius: 6px;
+      background: var(--surface-2); border: 1px solid var(--border);
+      color: var(--text-secondary); font-size: 0.65rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
     .card-body { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 6px; }
     .card-name { font-weight: 700; font-size: 0.9rem; line-height: 1.2; }
     .card-variant { align-self: flex-start; }
@@ -828,29 +850,26 @@
         <input id="spriteSearch" type="search" placeholder="Search sprites, abilities, variants..." oninput="setSearch(this.value)" />
         <button class="clear-btn" type="button" onclick="clearSearch()" aria-label="Clear search">✕</button>
       </label>
-      <button class="filter-btn active" data-filter="all"      onclick="setFilter('all',this)">All</button>
-      <button class="filter-btn"        data-filter="owned"    onclick="setFilter('owned',this)">✅ Owned</button>
-      <button class="filter-btn"        data-filter="unowned"  onclick="setFilter('unowned',this)">☐ Not Owned</button>
-      <button class="filter-btn"        data-filter="mastered" onclick="setFilter('mastered',this)">★ Mastered Only</button>
-      <button class="filter-btn"        data-filter="notmastered" onclick="setFilter('notmastered',this)">☆ Not Mastered</button>
-      <button class="filter-btn"        data-filter="summoned" onclick="setFilter('summoned',this)">🏃 Summoned</button>
-      <button class="filter-btn"        data-filter="indexed"   onclick="setFilter('indexed',this)">📦 Indexed</button>
+      <button class="filter-icon-btn active" data-filter="all" onclick="setFilter('all',this)" title="All">📋</button>
+      <button class="filter-icon-btn" data-filter="owned" onclick="setFilter('owned',this)" title="Owned">✅</button>
+      <button class="filter-icon-btn" data-filter="unowned" onclick="setFilter('unowned',this)" title="Not Owned">☐</button>
+      <button class="filter-icon-btn" data-filter="mastered" onclick="setFilter('mastered',this)" title="Mastered Only">★</button>
+      <button class="filter-icon-btn" data-filter="notmastered" onclick="setFilter('notmastered',this)" title="Not Mastered">☆</button>
+      <button class="filter-icon-btn" data-filter="summoned" onclick="setFilter('summoned',this)" title="Summoned">🏃</button>
+      <button class="filter-icon-btn" data-filter="indexed" onclick="setFilter('indexed',this)" title="Indexed">📦</button>
       <div class="filter-sep"></div>
-      <button class="filter-btn rarity-filter" data-rarity="Rare"      onclick="setRarity('Rare',this)">Rare</button>
-      <button class="filter-btn rarity-filter" data-rarity="Epic"      onclick="setRarity('Epic',this)">Epic</button>
-      <button class="filter-btn rarity-filter" data-rarity="Legendary" onclick="setRarity('Legendary',this)">Legendary</button>
-      <button class="filter-btn rarity-filter" data-rarity="Mythic"    onclick="setRarity('Mythic',this)">Mythic</button>
+      <button class="filter-icon-btn rarity-filter" data-rarity="Rare" onclick="setRarity('Rare',this)" title="Rare">🔵</button>
+      <button class="filter-icon-btn rarity-filter" data-rarity="Epic" onclick="setRarity('Epic',this)" title="Epic">🟣</button>
+      <button class="filter-icon-btn rarity-filter" data-rarity="Legendary" onclick="setRarity('Legendary',this)" title="Legendary">🟡</button>
+      <button class="filter-icon-btn rarity-filter" data-rarity="Mythic" onclick="setRarity('Mythic',this)" title="Mythic">🔴</button>
       <div class="filter-sep"></div>
       <span class="sort-label">SORT:</span>
-      <select id="sortSelect" class="sort-select" onchange="setSort(this.value)">
-        <option value="default">Default</option>
-        <option value="lvl-desc">Level ↓</option>
-        <option value="lvl-asc">Level ↑</option>
-        <option value="mastered">★ Mastered First</option>
-      </select>
-      <button class="filter-btn export-btn" onclick="openExportModal()">
-    📤 Export Collection
-      </button>
+      <button class="filter-icon-btn sort-icon-btn active" data-sort="default" onclick="setSort('default',this)" title="Default sort">⇅</button>
+      <button class="filter-icon-btn sort-icon-btn" data-sort="lvl-desc" onclick="setSort('lvl-desc',this)" title="Level high to low">↓</button>
+      <button class="filter-icon-btn sort-icon-btn" data-sort="lvl-asc" onclick="setSort('lvl-asc',this)" title="Level low to high">↑</button>
+      <button class="filter-icon-btn sort-icon-btn" data-sort="mastered" onclick="setSort('mastered',this)" title="Mastered first">★</button>
+      <div class="filter-sep"></div>
+      <button class="filter-icon-btn export-btn" onclick="openExportModal()" title="Export Collection">📤</button>
     </div>
 
     <div id="list"><div class="center-msg">Loading…</div></div>
@@ -1370,7 +1389,7 @@ function render() {
         <div class="sprite-group-head">
           <span class="sprite-group-name">${esc(display)}</span>
           <span class="sprite-group-rar ${rarity}">${RARITY_ICONS[rarity]} ${rarity}</span>
-          <button class="group-add-btn" ${allOwned?'disabled':''} onclick="addSpriteVariants('${jsAttr(name)}')" title="Add all variants of this sprite to your collection">＋ Add All Variants</button>
+          <button class="group-add-btn" ${allOwned?'disabled':''} onclick="addSpriteVariants('${esc(name)}')" title="Add all variants of this sprite to your collection">＋ Add All Variants</button>
         </div>
         <div class="card-grid">${g.map(buildCard).join('')}</div>
       </div>`;
@@ -1417,6 +1436,8 @@ function buildCard(row) {
 
   const crown = (owned && row.mastered) ? `<div class="card-crown" title="Mastered">👑</div>` : '';
   const check = owned ? `<div class="card-check" title="Collected">✓</div>` : '';
+  const summBadge = (owned && row.summoned) ? `<div class="card-summ-badge" title="Summoned">⚡</div>` : '';
+  const indexedBadge = (owned && !row.summoned) ? `<div class="card-indexed-badge" title="Indexed">📦</div>` : '';
   const cls   = ['sprite-card', owned?'':'unowned', (owned&&row.mastered)?'is-mastered':''].filter(Boolean).join(' ');
   const lvlText = owned ? `Lv ${row.level}` : '—';
 
@@ -1428,7 +1449,7 @@ function buildCard(row) {
   const summ = row.summoned;
   const toggleHtml = owned
     ? `<button type="button" class="card-toggle ${summ?'summoned':''}"
-         onclick="cardToggleSummoned(event,'${jsAttr(key)}')"
+         onclick="cardToggleSummoned(event,'${esc(key)}')"
          title="${summ?'Set to Indexed (Level 1)':'Summon this sprite'}">
          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
            ${summ
@@ -1440,7 +1461,7 @@ function buildCard(row) {
     : '';
 
   return `<div class="${cls}" onclick="openCard('${jsAttr(key)}')">
-    <div class="card-media">${media}${crown}${check}</div>
+    <div class="card-media">${media}${crown}${check}${summBadge}${indexedBadge}</div>
     <div class="card-body">
       <div class="card-name" title="${esc(displayName)}">${esc(displayName)}</div>
       <span class="v-chip v-${esc(row.variant)} card-variant">${variantIcon(row.variant)} ${esc(row.variant)}</span>
@@ -1499,7 +1520,7 @@ function renderModalContent(key) {
     const disabled = !owned || noSummon;
     const ttip     = noSummon ? `Level ${i} (enable Summoned first)` : `Level ${i}`;
     lvlBtns += `<button class="${isLit?'lvl-btn lit':'lvl-btn'}" ${disabled?'disabled':''}
-      onclick="mSetLevel('${jsAttr(key)}',${i})" title="${ttip}">${i===5?'5':i}</button>`;
+      onclick="mSetLevel('${esc(key)}',${i})" title="${ttip}">${i===5?'5':i}</button>`;
   }
 
   const mastChecked = owned && mast;
@@ -1551,7 +1572,7 @@ function renderModalContent(key) {
     <p class="sm-ability">${esc(row.ability)}</p>
     ${variantAbilityHtml}
     <label class="sm-owned">
-      <input type="checkbox" ${owned?'checked':''} onchange="mToggleOwned('${jsAttr(key)}',this.checked)" />
+      <input type="checkbox" ${owned?'checked':''} onchange="mToggleOwned('${esc(key)}',this.checked)" />
       <span>${owned ? 'Collected — tap to remove' : 'Mark as Collected'}</span>
     </label>
     <div class="sm-section">
@@ -1561,13 +1582,13 @@ function renderModalContent(key) {
     <div class="sm-section sm-toggle-row">
       <div class="mast-col">
         <input type="checkbox" class="mast-check" ${mastChecked?'checked':''} ${(!owned||mastForced)?'disabled':''}
-          onchange="mToggleMastered('${jsAttr(key)}',this.checked)" title="${esc(mastTitle)}" />
+          onchange="mToggleMastered('${esc(key)}',this.checked)" title="${esc(mastTitle)}" />
         <span class="${mastCls}">${mastLbl}</span>
       </div>
       <div class="s-toggle">
         <label class="tgl">
           <input type="checkbox" ${summ?'checked':''} ${owned?'':'disabled'}
-            onchange="mToggleSummoned('${jsAttr(key)}',this.checked)" />
+            onchange="mToggleSummoned('${esc(key)}',this.checked)" />
           <span class="tgl-sl"></span>
         </label>
         <span class="s-lbl ${summ?'on':''}">${summ?'Summoned':'Indexed (Lv 1)'}</span>
@@ -2283,6 +2304,13 @@ async function startExport() {
     return;
   }
 
+  if (type === 'list') {
+    const text = buildSpriteListText();
+    const copied = await copyTextToClipboard(text);
+    showToast(copied ? `Copied sprite list to clipboard` : 'Copy failed. Please select and copy the text manually.', copied ? 'ok' : 'err');
+    return;
+  }
+
   const text = buildExportText();
   const copied = await copyTextToClipboard(text);
   showToast(copied ? 'Collection checklist copied to clipboard.' : 'Copy failed. Please select and copy the text manually.', copied ? 'ok' : 'err');
@@ -2338,20 +2366,73 @@ function jsAttr(s) {
 function safeId(k)    { return k.replace(/[^a-zA-Z0-9]/g,'_'); }
 
 function openExportModal() {
-
-    document
-        .getElementById("exportModal")
-        .classList.add("show");
-
+  document
+      .getElementById("exportModal")
+      .classList.add("show");
 }
-
 function closeExportModal() {
-
     document
         .getElementById("exportModal")
         .classList.remove("show");
-
 }
+function populateSpriteCheckboxes() {
+  const container = document.getElementById('spriteCheckboxes');
+  if (!container) return;
+  const grouped = {};
+  for (const r of allRows) {
+    if (!grouped[r.name]) grouped[r.name] = [];
+    grouped[r.name].push(r);
+  }
+  const names = Object.keys(grouped).sort();
+  container.innerHTML = names.map(name => {
+    const display = name.replace(/\s+Sprite$/, '');
+    const owned = grouped[name].some(v => v.owned);
+    return `<label style="display:flex; align-items:center; gap:6px; font-size:0.8rem; cursor:pointer; color:var(--text-secondary);">
+      <input type="checkbox" data-sprite="${esc(name)}" ${owned?'checked':'disabled'} style="accent-color:var(--accent);" />
+      ${esc(display)} ${owned ? '' : '(none owned)'}
+    </label>`;
+  }).join('');
+}
+function selectAllSprites() {
+  document.querySelectorAll('#spriteCheckboxes input[type="checkbox"]').forEach(cb => { if (!cb.disabled) cb.checked = true; });
+}
+function deselectAllSprites() {
+  document.querySelectorAll('#spriteCheckboxes input[type="checkbox"]').forEach(cb => { if (!cb.disabled) cb.checked = false; });
+}
+function buildSpriteListText() {
+  const checkboxes = document.querySelectorAll('#spriteCheckboxes input[type="checkbox"]:checked');
+  const selectedNames = new Set();
+  checkboxes.forEach(cb => { if (cb.dataset.sprite) selectedNames.add(cb.dataset.sprite); });
+  const rows = applySort(allRows).filter(r => selectedNames.has(r.name));
+  const grouped = {};
+  for (const r of rows) {
+    if (!grouped[r.name]) grouped[r.name] = [];
+    grouped[r.name].push(r);
+  }
+  const lines = [];
+  for (const [name, variants] of Object.entries(grouped)) {
+    variants.sort((a, b) => VARIANT_ORDER[a.variant] - VARIANT_ORDER[b.variant]);
+    const owned = variants.filter(v => v.owned);
+    if (owned.length === 0) continue;
+    const display = name.replace(/\s+Sprite$/, '');
+    const parts = owned.map(v => {
+      const mark = v.mastered ? ' ★' : '';
+      const lvl = v.summoned ? ` Lv${v.level}` : ' Indexed';
+      return `${v.variant}${lvl}${mark}`;
+    });
+    lines.push(`${display}: ${parts.join(', ')}`);
+  }
+  return lines.join('\n');
+}
+
+document.addEventListener('change', (e) => {
+  if (e.target.name === 'exportType') {
+    const listOptions = document.getElementById('listOptions');
+    if (listOptions) {
+      listOptions.style.display = e.target.value === 'list' ? 'block' : 'none';
+    }
+  }
+});
 
 boot();
 </script>
