@@ -1370,7 +1370,7 @@ function render() {
         <div class="sprite-group-head">
           <span class="sprite-group-name">${esc(display)}</span>
           <span class="sprite-group-rar ${rarity}">${RARITY_ICONS[rarity]} ${rarity}</span>
-          <button class="group-add-btn" ${allOwned?'disabled':''} onclick="addSpriteVariants('${esc(name)}')" title="Add all variants of this sprite to your collection">＋ Add All Variants</button>
+          <button class="group-add-btn" ${allOwned?'disabled':''} onclick="addSpriteVariants('${jsAttr(name)}')" title="Add all variants of this sprite to your collection">＋ Add All Variants</button>
         </div>
         <div class="card-grid">${g.map(buildCard).join('')}</div>
       </div>`;
@@ -1428,7 +1428,7 @@ function buildCard(row) {
   const summ = row.summoned;
   const toggleHtml = owned
     ? `<button type="button" class="card-toggle ${summ?'summoned':''}"
-         onclick="cardToggleSummoned(event,'${esc(key)}')"
+         onclick="cardToggleSummoned(event,'${jsAttr(key)}')"
          title="${summ?'Set to Indexed (Level 1)':'Summon this sprite'}">
          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
            ${summ
@@ -1439,7 +1439,7 @@ function buildCard(row) {
        </button>`
     : '';
 
-  return `<div class="${cls}" onclick="openCard('${esc(key)}')">
+  return `<div class="${cls}" onclick="openCard('${jsAttr(key)}')">
     <div class="card-media">${media}${crown}${check}</div>
     <div class="card-body">
       <div class="card-name" title="${esc(displayName)}">${esc(displayName)}</div>
@@ -1499,7 +1499,7 @@ function renderModalContent(key) {
     const disabled = !owned || noSummon;
     const ttip     = noSummon ? `Level ${i} (enable Summoned first)` : `Level ${i}`;
     lvlBtns += `<button class="${isLit?'lvl-btn lit':'lvl-btn'}" ${disabled?'disabled':''}
-      onclick="mSetLevel('${esc(key)}',${i})" title="${ttip}">${i===5?'5':i}</button>`;
+      onclick="mSetLevel('${jsAttr(key)}',${i})" title="${ttip}">${i===5?'5':i}</button>`;
   }
 
   const mastChecked = owned && mast;
@@ -1551,7 +1551,7 @@ function renderModalContent(key) {
     <p class="sm-ability">${esc(row.ability)}</p>
     ${variantAbilityHtml}
     <label class="sm-owned">
-      <input type="checkbox" ${owned?'checked':''} onchange="mToggleOwned('${esc(key)}',this.checked)" />
+      <input type="checkbox" ${owned?'checked':''} onchange="mToggleOwned('${jsAttr(key)}',this.checked)" />
       <span>${owned ? 'Collected — tap to remove' : 'Mark as Collected'}</span>
     </label>
     <div class="sm-section">
@@ -1561,13 +1561,13 @@ function renderModalContent(key) {
     <div class="sm-section sm-toggle-row">
       <div class="mast-col">
         <input type="checkbox" class="mast-check" ${mastChecked?'checked':''} ${(!owned||mastForced)?'disabled':''}
-          onchange="mToggleMastered('${esc(key)}',this.checked)" title="${esc(mastTitle)}" />
+          onchange="mToggleMastered('${jsAttr(key)}',this.checked)" title="${esc(mastTitle)}" />
         <span class="${mastCls}">${mastLbl}</span>
       </div>
       <div class="s-toggle">
         <label class="tgl">
           <input type="checkbox" ${summ?'checked':''} ${owned?'':'disabled'}
-            onchange="mToggleSummoned('${esc(key)}',this.checked)" />
+            onchange="mToggleSummoned('${jsAttr(key)}',this.checked)" />
           <span class="tgl-sl"></span>
         </label>
         <span class="s-lbl ${summ?'on':''}">${summ?'Summoned':'Indexed (Lv 1)'}</span>
@@ -2331,6 +2331,9 @@ async function copyTextToClipboard(text) {
 }
 function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function jsAttr(s) {
+  return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'");
 }
 function safeId(k)    { return k.replace(/[^a-zA-Z0-9]/g,'_'); }
 
