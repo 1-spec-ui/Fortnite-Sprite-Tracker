@@ -15,7 +15,7 @@ VARIANT_PERKS = {
     "Cube":     "Grants the overdrive effect when in storm.",
     "Holofoil": "+30% chance to find Rare Sprites.",
     "Gem":      "+20% bonus Sprite Dust from all sources during a match.",
-    "Quack":    "Emotes now also restore a small amount of shield over time.",
+    "Quack":    "Grants 50% of Sprite XP earned to all other Sprites in your inventory.",
 }
 
 # max_level defaults to 5 for all sprites; Dream Sprite is capped at 4.
@@ -242,6 +242,30 @@ SPRITE_DIRECTORY = {
             5: "Slidekick grants 60 dmg / +50% fire rate and reload speed.",
         }
     },
+    "Peeky Peely": {
+        "rarity": "Legendary", "max_level": 5,
+        "ability": "Emits a ping for players with rare sprites nearby, but marks you on the map. Ping radius increases at each Level Up: 40m -> 50m -> 60m -> 70m -> 80m",
+        "costs": {"Normal": 5000, "Gold": 10000, "Gummy": 10000, "Galaxy": 10000, "Holofoil": 10000},
+        "levels": {
+            1: "Pings players with rare sprites within 40m; your location is revealed on the map.",
+            2: "Ping radius increased to 50m; your map marker duration slightly reduced.",
+            3: "Ping radius increased to 60m; ping cooldown reduced.",
+            4: "Ping radius increased to 70m; can ping through obstacles.",
+            5: "Ping radius increased to 80m; reveals sprite rarity on the ping.",
+        }
+    },
+    "Lootin' Llama": {
+        "rarity": "Legendary", "max_level": 5,
+        "ability": "Opening ammo boxes has a chance to grant a weapon upgrade. Chance increases at each Level Up: 5% -> 10% -> 15% -> 17% -> 20%",
+        "costs": {"Normal": 5000, "Gold": 10000, "Gummy": 10000, "Galaxy": 10000, "Gem": 10000},
+        "levels": {
+            1: "5% chance to upgrade a weapon when opening an ammo box.",
+            2: "10% chance to upgrade a weapon when opening an ammo box.",
+            3: "15% chance to upgrade a weapon when opening an ammo box.",
+            4: "17% chance to upgrade a weapon when opening an ammo box.",
+            5: "20% chance to upgrade a weapon when opening an ammo box.",
+        }
+    },
 
 
     # ── RARE ──────────────────────────────────────────────────────────────
@@ -283,6 +307,30 @@ SPRITE_DIRECTORY = {
             3: "Stronger cape boost; better aerial maneuverability.",
             4: "Significant air boost; near-maximum cape glide.",
             5: "Maximum cape boost and glide performance.",
+        }
+    },
+    "John Wick": {
+        "rarity": "Mythic", "max_level": 5,
+        "ability": "Knocking players reveals others nearby. Mark duration increases at each Level Up: 3 Seconds -> 3.5 Seconds -> 4 Seconds -> 4.5 Seconds -> 5 Seconds",
+        "costs": {"Normal": 7500, "Gold": 10000, "Gummy": 10000, "Galaxy": 10000, "Holofoil": 10000},
+        "levels": {
+            1: "Knocking a player reveals nearby opponents for 3 seconds.",
+            2: "Reveal duration increased to 3.5 seconds.",
+            3: "Reveal duration increased to 4 seconds.",
+            4: "Reveal duration increased to 4.5 seconds.",
+            5: "Reveal duration increased to 5 seconds.",
+        }
+    },
+    "Iron Mouse": {
+        "rarity": "Mythic", "max_level": 5,
+        "ability": "Regenerate health over time when low. While regenerating, gain Cloak and low gravity! Health regenerated to increases at each Level Up: 60 Health -> 70 Health -> 80 Health -> 90 Health -> 100 Health",
+        "costs": {"Normal": 7500, "Gold": 10000, "Gummy": 10000, "Galaxy": 10000, "Holofoil": 10000},
+        "levels": {
+            1: "Regenerate health to 60 when low; gain Cloak and low gravity during regen.",
+            2: "Regenerate health to 70 when low; gain Cloak and low gravity during regen.",
+            3: "Regenerate health to 80 when low; gain Cloak and low gravity during regen.",
+            4: "Regenerate health to 90 when low; gain Cloak and low gravity during regen.",
+            5: "Regenerate health to 100 when low; gain Cloak and low gravity during regen.",
         }
     },
 }
@@ -378,7 +426,12 @@ def _variants_for_sprite(sprite_name: str, info: dict) -> list[dict]:
     A variant is only included when an image file exists for it. Each entry
     carries the variant label, its image URL, and its Sprite Dust cost.
     """
-    slug = _normalize(sprite_name).replace("sprite", "")
+    primary = _normalize(sprite_name).replace("sprite", "")
+    slug = primary
+    if slug not in _IMAGE_INDEX:
+        last = _normalize(sprite_name.split()[-1])
+        if last in _IMAGE_INDEX:
+            slug = last
     available = _IMAGE_INDEX.get(slug, {})
     costs = info.get("costs", {})
     rarity = info["rarity"]
