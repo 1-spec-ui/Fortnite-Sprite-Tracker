@@ -14,7 +14,7 @@ VARIANT_PERKS = {
     "Galaxy":   "+30% more ammunition when opening ammo crates and looting.",
     "Cube":     "Grants the overdrive effect when in storm.",
     "Holofoil": "+30% chance to find Rare Sprites.",
-    "Gem":      "+20% bonus Sprite Dust from all sources during a match.",
+    "Gem":      "Take 30% less fall damage.",
     "Quack":    "Grants 50% of Sprite XP earned to all other Sprites in your inventory.",
 }
 
