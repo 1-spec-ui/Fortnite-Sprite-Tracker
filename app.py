@@ -357,6 +357,10 @@ SPECIAL_VARIANT_COST = {
 SPRITE_IMAGE_DIR = Path(__file__).parent / "static" / "sprites"
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".svg"}
 
+# Variants to hide from the collection (sprite_name, variant_label)
+EXCLUDED_VARIANTS = {
+    ("Punk Sprite", "Gem"),
+}
 
 def _normalize(value: str) -> str:
     """Lowercase alphanumeric slug, used to match sprite names to image files."""
@@ -439,6 +443,8 @@ def _variants_for_sprite(sprite_name: str, info: dict) -> list[dict]:
     for variant in VARIANT_ORDER:
         filename = available.get(variant)
         if not filename:
+            continue
+        if (sprite_name, variant) in EXCLUDED_VARIANTS:
             continue
         if variant in costs:
             cost = costs[variant]
