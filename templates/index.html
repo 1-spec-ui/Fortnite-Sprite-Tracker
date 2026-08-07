@@ -659,6 +659,13 @@
     }
     .group-add-btn:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); }
     .group-add-btn:disabled { opacity: 0.4; cursor: default; color: var(--text-muted); }
+    .group-master-btn {
+      margin-left: 6px; background: var(--surface); border: 1px solid var(--border-soft);
+      border-radius: var(--radius-sm); padding: 4px 11px; color: var(--amber);
+      font-size: 0.72rem; font-weight: 600; cursor: pointer; transition: all 0.15s;
+    }
+    .group-master-btn:hover:not(:disabled) { border-color: var(--amber); background: var(--amber-soft); }
+    .group-master-btn:disabled { opacity: 0.4; cursor: default; color: var(--text-muted); }
 
     /* ===========================================
        SPRITE DETAIL MODAL
@@ -1386,11 +1393,13 @@ function render() {
       const rarity  = g[0].rarity;
       const display = name.replace(/\s+Sprite$/, '');
       const allOwned = g.every(r => r.owned);
+      const allMastered = g.every(r => r.mastered);
       html += `<div class="sprite-group">
         <div class="sprite-group-head">
           <span class="sprite-group-name">${esc(display)}</span>
           <span class="sprite-group-rar ${rarity}">${RARITY_ICONS[rarity]} ${rarity}</span>
            <button class="group-add-btn" ${allOwned?'disabled':''} onclick="addSpriteVariants('${jsAttr(name)}')" title="Add all variants of this sprite to your collection">＋ Add All Variants</button>
+           <button class="group-master-btn" ${allMastered?'disabled':''} onclick="masterAllSpriteVariants('${jsAttr(name)}')" title="Add all variants and set them to Level 5 Mastered">★ Master All</button>
         </div>
         <div class="card-grid">${g.map(buildCard).join('')}</div>
       </div>`;
@@ -1862,6 +1871,20 @@ function addSpriteVariants(spriteName) {
   });
   render(); refreshStats(); renderCalculator();
   if (added > 0) showToast(`Added all ${added} variant${added>1?'s':''} of ${spriteName.replace(/\s+Sprite$/, '')} to your collection.`, 'ok');
+}
+
+/* Add every variant of a single sprite and set them all to max level + mastered */
+function masterAllSpriteVariants(spriteName) {
+  let updated = 0;
+  allRows.forEach(r => {
+    if (r.name === spriteName) {
+      const maxLevel = r.max_level || 5;
+      upsert(r.key, maxLevel, true, true);
+      updated++;
+    }
+  });
+  render(); refreshStats(); renderCalculator();
+  if (updated > 0) showToast(`Mastered all ${updated} variants of ${spriteName.replace(/\s+Sprite$/, '')}.`, 'ok');
 }
 
 /* ══════════════════════════════════════════════════════════
