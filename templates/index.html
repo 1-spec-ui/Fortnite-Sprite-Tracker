@@ -386,18 +386,83 @@
     /* ── Filter + Sort bar ── */
     .filter-sort-bar {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       flex-wrap: wrap;
-      align-items: center;
+      align-items: flex-start;
       margin-bottom: 16px;
       background: var(--surface-glass);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: var(--radius);
-      padding: 10px 12px;
+      padding: 12px;
       box-shadow: var(--shadow-sm);
       animation: fadeIn 0.4s ease 0.1s both;
+    }
+    .filter-group {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 6px;
+    }
+    .filter-group-label {
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0 4px;
+      white-space: nowrap;
+      line-height: 44px;
+    }
+    .filter-group-btns {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .filter-desktop { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
+    .filter-mobile { display: none; }
+    .rarity-dropdown { display: none; }
+
+    @media (max-width: 640px) {
+      .filter-sort-bar { padding: 8px; gap: 8px; }
+      .filter-desktop { display: none; }
+      .filter-mobile { display: flex; flex-direction: column; gap: 8px; }
+      .rarity-dropdown { display: flex; flex-direction: column; gap: 4px; width: 100%; }
+      .rarity-dropdown select { width: 100%; }
+      .filter-group { flex-direction: column; align-items: stretch; gap: 4px; }
+      .filter-group-label { display: block; }
+      .filter-group-btns { justify-content: stretch; }
+      .filter-icon-btn { flex: 1; }
+    }
+      background: var(--bg-inset);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 6px 10px;
+      min-width: 130px;
+      min-height: 44px;
+      outline: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      cursor: pointer;
+      font-family: inherit;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .rarity-dropdown select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .rarity-dropdown select option { background: var(--bg-elevated); color: var(--text-primary); }
+
+    @media (max-width: 640px) {
+      .filter-sort-bar { padding: 8px; gap: 8px; }
+      .filter-group { width: 100%; }
+      .filter-group-btns { justify-content: stretch; }
+      .filter-icon-btn { flex: 1; }
+      .rarity-dropdown { width: 100%; }
+      .rarity-dropdown select { width: 100%; }
     }
       .filter-scroll {
         display: flex; gap: 6px; flex-wrap: wrap; align-items: center; flex: 1;
@@ -448,11 +513,11 @@
     .filter-icon-btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
     .filter-sep { width: 1px; height: 28px; background: var(--border-soft); flex-shrink: 0; }
     .sort-label { font-size: 0.68rem; color: var(--text-muted); font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
-    .rarity-filter.active-Rare      { background: rgba(59,130,246,0.14);  border-color: var(--rare);      color: var(--rare); }
-    .rarity-filter.active-Epic      { background: rgba(139,92,246,0.14);  border-color: var(--epic);      color: var(--epic); }
-    .rarity-filter.active-Legendary { background: rgba(245,158,11,0.14);  border-color: var(--legendary); color: var(--legendary); }
-    .rarity-filter.active-Mythic    { background: rgba(244,63,94,0.14);   border-color: var(--mythic);    color: var(--mythic); }
-    .sort-btn.active { background: rgba(139,92,246,0.14); border-color: var(--epic); color: var(--epic); }
+    .sort-btn.active { background: var(--violet-soft); border-color: var(--violet); color: var(--violet); }
+    .rarity-filter.active-Rare      { background: var(--blue-soft);      border-color: var(--rarity-rare);      color: var(--rarity-rare); box-shadow: 0 0 10px rgba(59,130,246,0.12); }
+    .rarity-filter.active-Epic      { background: var(--violet-soft);    border-color: var(--rarity-epic);      color: var(--rarity-epic); box-shadow: 0 0 10px rgba(139,92,246,0.12); }
+    .rarity-filter.active-Legendary { background: var(--gold-soft);      border-color: var(--rarity-legendary); color: var(--rarity-legendary); box-shadow: 0 0 10px rgba(245,158,11,0.12); }
+    .rarity-filter.active-Mythic    { background: var(--rose-soft);      border-color: var(--rarity-mythic);    color: var(--rarity-mythic); box-shadow: 0 0 10px rgba(244,63,94,0.12); }
     .sort-select {
       background: var(--surface); border: 1px solid var(--border-soft);
       border-radius: var(--radius-sm); padding: 6px 28px 6px 10px;
@@ -1492,24 +1557,80 @@
         <input id="spriteSearch" type="search" placeholder="Search sprites, abilities, variants..." oninput="setSearch(this.value)" />
         <button class="clear-btn" type="button" onclick="clearSearch()" aria-label="Clear search">✕</button>
       </label>
-      <button class="filter-icon-btn active" data-filter="all" onclick="setFilter('all',this)" title="All">📋</button>
-      <button class="filter-icon-btn" data-filter="owned" onclick="setFilter('owned',this)" title="Owned">✅</button>
-      <button class="filter-icon-btn" data-filter="unowned" onclick="setFilter('unowned',this)" title="Not Owned">☐</button>
-      <button class="filter-icon-btn" data-filter="mastered" onclick="setFilter('mastered',this)" title="Mastered Only">★</button>
-      <button class="filter-icon-btn" data-filter="notmastered" onclick="setFilter('notmastered',this)" title="Not Mastered">☆</button>
-      <button class="filter-icon-btn" data-filter="summoned" onclick="setFilter('summoned',this)" title="Summoned">🏃</button>
-      <button class="filter-icon-btn" data-filter="indexed" onclick="setFilter('indexed',this)" title="Indexed">📦</button>
+
+      <div class="filter-desktop">
+        <div class="filter-group-label">Collection</div>
+        <button class="filter-icon-btn active" data-filter="all" onclick="setFilter('all',this)" title="All">📋</button>
+        <button class="filter-icon-btn" data-filter="owned" onclick="setFilter('owned',this)" title="Owned">✅</button>
+        <button class="filter-icon-btn" data-filter="unowned" onclick="setFilter('unowned',this)" title="Not Owned">☐</button>
+        <div class="filter-sep"></div>
+
+        <div class="filter-group-label">Mastery</div>
+        <button class="filter-icon-btn" data-filter="mastered" onclick="setFilter('mastered',this)" title="Mastered Only">★</button>
+        <button class="filter-icon-btn" data-filter="notmastered" onclick="setFilter('notmastered',this)" title="Not Mastered">☆</button>
+        <div class="filter-sep"></div>
+
+        <div class="filter-group-label">State</div>
+        <button class="filter-icon-btn" data-filter="summoned" onclick="setFilter('summoned',this)" title="Summoned">🏃</button>
+        <button class="filter-icon-btn" data-filter="indexed" onclick="setFilter('indexed',this)" title="Indexed">📦</button>
+        <div class="filter-sep"></div>
+
+        <div class="filter-group-label">Rarity</div>
+        <button class="filter-icon-btn rarity-filter" data-rarity="Rare" onclick="setRarity('Rare',this)" title="Rare">🔵</button>
+        <button class="filter-icon-btn rarity-filter" data-rarity="Epic" onclick="setRarity('Epic',this)" title="Epic">🟣</button>
+        <button class="filter-icon-btn rarity-filter" data-rarity="Legendary" onclick="setRarity('Legendary',this)" title="Legendary">🟡</button>
+        <button class="filter-icon-btn rarity-filter" data-rarity="Mythic" onclick="setRarity('Mythic',this)" title="Mythic">🔴</button>
+        <div class="filter-sep"></div>
+      </div>
+
+      <div class="filter-mobile">
+        <div class="filter-group">
+          <div class="filter-group-label">Collection</div>
+          <div class="filter-group-btns">
+            <button class="filter-icon-btn active" data-filter="all" onclick="setFilter('all',this)" title="All">📋</button>
+            <button class="filter-icon-btn" data-filter="owned" onclick="setFilter('owned',this)" title="Owned">✅</button>
+            <button class="filter-icon-btn" data-filter="unowned" onclick="setFilter('unowned',this)" title="Not Owned">☐</button>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <div class="filter-group-label">Mastery</div>
+          <div class="filter-group-btns">
+            <button class="filter-icon-btn" data-filter="mastered" onclick="setFilter('mastered',this)" title="Mastered Only">★</button>
+            <button class="filter-icon-btn" data-filter="notmastered" onclick="setFilter('notmastered',this)" title="Not Mastered">☆</button>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <div class="filter-group-label">State</div>
+          <div class="filter-group-btns">
+            <button class="filter-icon-btn" data-filter="summoned" onclick="setFilter('summoned',this)" title="Summoned">🏃</button>
+            <button class="filter-icon-btn" data-filter="indexed" onclick="setFilter('indexed',this)" title="Indexed">📦</button>
+          </div>
+        </div>
+
+        <div class="filter-sep"></div>
+
+        <div class="rarity-dropdown">
+          <div class="filter-group-label">Rarity</div>
+          <select id="raritySelect" class="ec-select" onchange="setRarity(this.value); this.blur();">
+            <option value="">All Rarities</option>
+            <option value="Rare">🔵 Rare</option>
+            <option value="Epic">🟣 Epic</option>
+            <option value="Legendary">🟡 Legendary</option>
+            <option value="Mythic">🔴 Mythic</option>
+          </select>
+        </div>
+      </div>
+
       <div class="filter-sep"></div>
-      <button class="filter-icon-btn rarity-filter" data-rarity="Rare" onclick="setRarity('Rare',this)" title="Rare">🔵</button>
-      <button class="filter-icon-btn rarity-filter" data-rarity="Epic" onclick="setRarity('Epic',this)" title="Epic">🟣</button>
-      <button class="filter-icon-btn rarity-filter" data-rarity="Legendary" onclick="setRarity('Legendary',this)" title="Legendary">🟡</button>
-      <button class="filter-icon-btn rarity-filter" data-rarity="Mythic" onclick="setRarity('Mythic',this)" title="Mythic">🔴</button>
-      <div class="filter-sep"></div>
+
       <span class="sort-label">SORT:</span>
       <button class="filter-icon-btn sort-icon-btn active" data-sort="default" onclick="setSort('default',this)" title="Default sort">⇅</button>
       <button class="filter-icon-btn sort-icon-btn" data-sort="lvl-desc" onclick="setSort('lvl-desc',this)" title="Level high to low">↓</button>
       <button class="filter-icon-btn sort-icon-btn" data-sort="lvl-asc" onclick="setSort('lvl-asc',this)" title="Level low to high">↑</button>
       <button class="filter-icon-btn sort-icon-btn" data-sort="mastered" onclick="setSort('mastered',this)" title="Mastered first">★</button>
+
       <div class="filter-sep"></div>
       <button class="filter-icon-btn export-btn" onclick="openExportModal()" title="Export Collection">📤</button>
     </div>
@@ -1949,14 +2070,14 @@ function updateFilterButtons() {
   });
 }
 function setRarity(r, btn) {
-  if (rarityFilter === r) {
-    rarityFilter = null;
-    document.querySelectorAll('.rarity-filter').forEach(b => { b.className='filter-btn rarity-filter'; });
-  } else {
-    rarityFilter = r;
-    document.querySelectorAll('.rarity-filter').forEach(b => { b.className='filter-btn rarity-filter'; });
-    btn.classList.add('active-'+r);
+  if (r === rarityFilter) {
+    r = '';
   }
+  rarityFilter = r || null;
+  const sel = document.getElementById('raritySelect');
+  if (sel) sel.value = r || '';
+  document.querySelectorAll('.rarity-filter').forEach(b => b.classList.remove('active-Rare','active-Epic','active-Legendary','active-Mythic'));
+  if (btn && r) btn.classList.add('active-' + r);
   render();
 }
 function setSort(mode, btn) {
