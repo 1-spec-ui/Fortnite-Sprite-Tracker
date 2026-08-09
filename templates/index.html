@@ -1927,14 +1927,35 @@
       position: relative;
       min-height: 300px;
     }
-    .sprite-card:hover { transform: translateY(-4px); border-color: rgba(56,189,248,0.22); box-shadow: 0 28px 60px rgba(0,0,0,0.22); }
-    .sprite-card.is-mastered { border-color: rgba(250,204,21,0.36); box-shadow: 0 30px 90px rgba(250,204,21,0.06); }
+    .sprite-card:hover { transform: translateY(-4px); box-shadow: 0 28px 60px rgba(0,0,0,0.22); }
+    .sprite-card.is-mastered { border-color: rgba(245,158,11,0.24); box-shadow: 0 30px 90px rgba(245,158,11,0.06); }
     .sprite-card.unowned { filter: grayscale(0.64) brightness(0.88) contrast(0.92); opacity: 0.88; }
-    .sprite-card.summoned {
-      border: 1px solid rgba(56,189,248,0.22);
-      box-shadow: 0 32px 90px rgba(56,189,248,0.12), 0 0 0 6px rgba(34,197,94,0.04);
-    }
-    .sprite-card.indexed { border-color: rgba(148,163,184,0.12); box-shadow: 0 18px 48px rgba(2,6,23,0.16); }
+
+    /* Default subtle states */
+    .sprite-card.indexed { border-color: rgba(148,163,184,0.10); box-shadow: 0 18px 48px rgba(2,6,23,0.14); }
+    .sprite-card.summoned { border: 1px solid rgba(6,182,212,0.18); box-shadow: 0 32px 90px rgba(6,182,212,0.10); }
+
+    /* Rarity-based indexed glows (soft) */
+    .sprite-card.rarity-rare.indexed { border-color: rgba(59,130,246,0.14); box-shadow: 0 18px 48px rgba(59,130,246,0.06); }
+    .sprite-card.rarity-epic.indexed { border-color: rgba(139,92,246,0.14); box-shadow: 0 18px 48px rgba(139,92,246,0.06); }
+    .sprite-card.rarity-legendary.indexed { border-color: rgba(245,158,11,0.14); box-shadow: 0 18px 48px rgba(245,158,11,0.06); }
+    .sprite-card.rarity-mythic.indexed { border-color: rgba(244,63,94,0.14); box-shadow: 0 18px 48px rgba(244,63,94,0.06); }
+
+    /* Rarity-based summoned glows (brighter, rounded-friendly) */
+    .sprite-card.rarity-rare.summoned { border: 1px solid rgba(59,130,246,0.24); box-shadow: 0 36px 110px rgba(59,130,246,0.12), 0 0 0 8px rgba(59,130,246,0.05); }
+    .sprite-card.rarity-epic.summoned { border: 1px solid rgba(139,92,246,0.24); box-shadow: 0 36px 110px rgba(139,92,246,0.12), 0 0 0 8px rgba(139,92,246,0.05); }
+    .sprite-card.rarity-legendary.summoned { border: 1px solid rgba(245,158,11,0.28); box-shadow: 0 40px 120px rgba(245,158,11,0.10), 0 0 0 10px rgba(245,158,11,0.04); }
+    .sprite-card.rarity-mythic.summoned { border: 1px solid rgba(244,63,94,0.26); box-shadow: 0 40px 120px rgba(244,63,94,0.10), 0 0 0 10px rgba(244,63,94,0.04); }
+
+    /* Mastered combined states (give gold warmth + rarity tint) */
+    .sprite-card.is-mastered.indexed { border: 1px solid rgba(245,158,11,0.22); box-shadow: 0 28px 80px rgba(245,158,11,0.06), 0 0 0 6px rgba(255,255,255,0.02); }
+    .sprite-card.is-mastered.summoned { border: 1px solid rgba(245,158,11,0.30); box-shadow: 0 48px 150px rgba(245,158,11,0.12), 0 0 36px rgba(34,197,94,0.06); }
+
+    /* Mastered + rarity combos: strengthen the rarity tint subtly */
+    .sprite-card.is-mastered.rarity-rare.summoned { box-shadow: 0 52px 160px rgba(245,158,11,0.10), 0 0 40px rgba(59,130,246,0.10); }
+    .sprite-card.is-mastered.rarity-epic.summoned { box-shadow: 0 52px 160px rgba(245,158,11,0.10), 0 0 40px rgba(139,92,246,0.10); }
+    .sprite-card.is-mastered.rarity-legendary.summoned { box-shadow: 0 56px 180px rgba(245,158,11,0.14), 0 0 44px rgba(245,158,11,0.12); }
+    .sprite-card.is-mastered.rarity-mythic.summoned { box-shadow: 0 52px 160px rgba(245,158,11,0.10), 0 0 40px rgba(244,63,94,0.10); }
     .card-media { aspect-ratio: 1 / 1; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.04)); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
     .card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s ease, opacity 0.35s ease; }
     .sprite-card:hover .card-media img { transform: scale(1.02); }
@@ -2047,10 +2068,10 @@
       .hero-banner { padding: 18px; }
       .dust-bar { padding: 14px; }
       .filter-sort-bar { padding: 14px; }
-      .card-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
       .tab-nav { display: none; }
       .mobile-nav { bottom: 0; }
-      .sprite-card { min-height: 280px; }
+      .sprite-card { min-height: 260px; }
     }
   </style>
 </head>
