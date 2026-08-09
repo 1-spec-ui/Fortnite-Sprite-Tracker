@@ -536,6 +536,7 @@
       .filter-group-btns { justify-content: stretch; }
       .filter-icon-btn { flex: 1; }
     }
+    .rarity-dropdown select {
       background: var(--bg-inset);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
@@ -2636,7 +2637,8 @@ function onDustChange() {
 ════════════════════════════════════════════════════════════ */
 function switchTab(name, btn) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('tab-'+name).classList.add('active');
+  const targetPanel = document.getElementById('tab-'+name);
+  if (targetPanel) targetPanel.classList.add('active');
   document.querySelectorAll('.tab-btn, .mnav-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.tab === name);
   });
