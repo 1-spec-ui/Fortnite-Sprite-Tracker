@@ -901,6 +901,18 @@
     .card-toggle.summoned { background: var(--emerald-soft); border-color: var(--emerald); color: var(--emerald); }
     .card-toggle svg { width: 12px; height: 12px; flex-shrink: 0; }
     .card-toggle:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+    .card-add-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+      margin-top: 4px; padding: 6px 12px; border-radius: var(--radius-sm);
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.01em;
+      border: 1px solid var(--emerald); background: var(--emerald-soft); color: var(--emerald);
+      cursor: pointer; transition: all var(--transition-fast); align-self: flex-start;
+      min-height: 36px; min-width: 80px;
+    }
+    .card-add-btn:hover { background: var(--emerald); color: #fff; }
+    .card-add-btn:active { transform: scale(0.95); }
+    .card-add-btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+    .card-add-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
 
     /* ── Per-sprite subcategory ── */
     .sprite-group { margin-bottom: 8px; animation: fadeIn 0.3s ease both; }
@@ -1970,6 +1982,7 @@ function buildCard(row) {
   const check = owned ? `<div class="card-check" title="Collected">✓</div>` : '';
   const summBadge = (owned && row.summoned) ? `<div class="card-summ-badge" title="Summoned">⚡</div>` : '';
   const indexedBadge = (owned && !row.summoned) ? `<div class="card-indexed-badge" title="Indexed">📦</div>` : '';
+  const statusIcons = owned ? `<div class="card-status-icons">${check}${summBadge}${indexedBadge}</div>` : '';
   const cls   = ['sprite-card', owned?'':'unowned', (owned&&row.mastered)?'is-mastered':''].filter(Boolean).join(' ');
   const lvlText = owned ? `Lv ${row.level}` : '—';
 
@@ -1977,23 +1990,13 @@ function buildCard(row) {
     ? `<div class="card-status ${row.status.cls}"><span>${row.status.icon}</span><span>${esc(row.status.text)}</span></div>`
     : `<div class="card-status unowned">Not collected</div>`;
 
-  // Indexed ↔ Summoned quick-toggle (only for owned sprites)
-  const summ = row.summoned;
-  const toggleHtml = owned
-    ? `<button type="button" class="card-toggle ${summ?'summoned':''}"
-          onclick="cardToggleSummoned(event,'${jsAttr(key)}')"
-         title="${summ?'Set to Indexed (Level 1)':'Summon this sprite'}">
-         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-           ${summ
-             ? '<path d="M5 13l4 4L19 7"/>'
-             : '<path d="M12 5v14M5 12h14"/>'}
-         </svg>
-         ${summ ? 'Summoned' : 'Indexed'}
-       </button>`
-    : '';
+  const addBtn = owned ? '' : `<button type="button" class="card-add-btn" onclick="addVariant(event,'${jsAttr(key)}')" title="Add ${esc(row.variant)} ${esc(displayName)} to your collection">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    Add
+  </button>`;
 
   return `<div class="${cls}" onclick="openCard('${jsAttr(key)}')">
-    <div class="card-media">${media}${crown}${check}${summBadge}${indexedBadge}</div>
+    <div class="card-media">${media}${crown}${statusIcons}</div>
     <div class="card-body">
       <div class="card-name" title="${esc(displayName)}">${esc(displayName)}</div>
       <span class="v-chip v-${esc(row.variant)} card-variant">${variantIcon(row.variant)} ${esc(row.variant)}</span>
@@ -2003,7 +2006,7 @@ function buildCard(row) {
       </div>
       <div class="card-cost">💨 ${row.cost.toLocaleString()} Dust</div>
       ${statusHtml}
-      ${toggleHtml}
+      ${addBtn}
     </div>
   </div>`;
 }
@@ -2452,6 +2455,16 @@ function masterAllSpriteVariants(spriteName) {
   });
   render(); refreshStats(); renderCalculator();
   if (updated > 0) showToast(`Mastered all ${updated} variants of ${spriteName.replace(/\s+Sprite$/, '')}.`, 'ok');
+}
+
+/* Add a single variant to the collection from the card button */
+async function addVariant(event, key) {
+  event.stopPropagation();
+  const row = allRows.find(r => r.key === key);
+  if (!row || row.owned) return;
+  await upsert(key, 1, false, false);
+  render(); refreshStats(); renderCalculator();
+  showToast(`Added ${row.variant} ${row.name.replace(/\s+Sprite$/, '')} to collection.`, 'ok');
 }
 
 /* ══════════════════════════════════════════════════════════
