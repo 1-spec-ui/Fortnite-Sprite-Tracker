@@ -3,1643 +3,293 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#06080f" />
+  <meta name="theme-color" content="#0a0a12" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="description" content="Fortnite Sprite Tracker — a premium collection companion to track every sprite, variant, level, mastery, and your Sprite Dust." />
   <meta name="google-site-verification" content="UYIDwo7XeaPs0bodKqiDjrncljF5trsb8mo9kGOb_Rc" />
   <meta name="google-site-verification" content="7cQuDoP0scRps-kvOYTqDkBZBIfDc8UDk3TePAEfjI4" />
   <title>Fortnite Sprite Tracker</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap');
-
-    :root {
-      --bg-root: #06080f;
-      --bg-primary: #0a0e17;
-      --bg-secondary: #0f1520;
-      --bg-elevated: #161f2d;
-      --bg-surface: #1a2538;
-      --bg-surface-hover: #1f2d42;
-      --bg-inset: #0c1219;
-      --surface: rgba(22, 31, 45, 0.88);
-      --surface-elevated: rgba(30, 41, 59, 0.92);
-      --surface-glass: rgba(15, 23, 42, 0.78);
-      --surface-glass-hover: rgba(22, 33, 50, 0.85);
-      --border: rgba(148, 163, 184, 0.14);
-      --border-subtle: rgba(148, 163, 184, 0.08);
-      --border-strong: rgba(148, 163, 184, 0.22);
-      --border-glow: rgba(6, 182, 212, 0.3);
-      --border-gold: rgba(245, 158, 11, 0.32);
-      --border-emerald: rgba(16, 185, 129, 0.32);
-      --text-primary: #f1f5f9;
-      --text-secondary: #cbd5e1;
-      --text-muted: #64748b;
-      --text-faint: #475569;
-      --accent: #06b6d4;
-      --accent-hover: #22d3ee;
-      --accent-soft: rgba(6, 182, 212, 0.12);
-      --accent-glow: rgba(6, 182, 212, 0.22);
-      --accent-glow-strong: rgba(6, 182, 212, 0.38);
-      --gold: #f59e0b;
-      --gold-soft: rgba(245, 158, 11, 0.12);
-      --gold-glow: rgba(245, 158, 11, 0.22);
-      --emerald: #10b981;
-      --emerald-soft: rgba(16, 185, 129, 0.12);
-      --emerald-glow: rgba(16, 185, 129, 0.22);
-      --rose: #f43f5e;
-      --rose-soft: rgba(244, 63, 94, 0.12);
-      --violet: #8b5cf6;
-      --violet-soft: rgba(139, 92, 246, 0.12);
-      --blue: #3b82f6;
-      --blue-soft: rgba(59, 130, 246, 0.12);
-      --pink: #ec4899;
-      --pink-soft: rgba(236, 72, 153, 0.12);
-      --orange: #f97316;
-      --orange-soft: rgba(249, 115, 22, 0.12);
-      --rarity-rare: #3b82f6;
-      --rarity-epic: #8b5cf6;
-      --rarity-legendary: #f59e0b;
-      --rarity-mythic: #f43f5e;
-      --rare: var(--rarity-rare);
-      --epic: var(--rarity-epic);
-      --legendary: var(--rarity-legendary);
-      --mythic: var(--rarity-mythic);
-      --amber: var(--gold);
-      --amber-soft: var(--gold-soft);
-      --cyan: var(--accent);
-      --cyan-soft: var(--accent-soft);
-      --mono: var(--font-mono);
-      --danger: #ef4444;
-      --danger-soft: rgba(239, 68, 68, 0.14);
-      --glass: var(--surface-glass);
-      --glass-border: rgba(255, 255, 255, 0.06);
-      --surface-solid: var(--bg-elevated);
-      --surface-2: var(--bg-elevated);
-      --accent-2: var(--accent-hover);
-      --skeleton: linear-gradient(90deg, var(--surface-2) 25%, rgba(148,163,184,0.08) 50%, var(--surface-2) 75%);
-      --skeleton-speed: 1.4s;
-      --radius-xs: 6px;
-      --radius-sm: 8px;
-      --radius: 12px;
-      --radius-lg: 16px;
-      --radius-xl: 20px;
-      --radius-full: 999px;
-      --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
-      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
-      --shadow: 0 4px 12px rgba(0, 0, 0, 0.35), 0 1px 3px rgba(0, 0, 0, 0.25);
-      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.3);
-      --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.35);
-      --shadow-glow: 0 0 24px rgba(6, 182, 212, 0.07);
-      --shadow-gold: 0 0 24px rgba(245, 158, 11, 0.09);
-      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-      --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
-      --transition-fast: 0.12s cubic-bezier(0.4, 0, 0.2, 1);
-      --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      --transition-slow: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-      --transition-bounce: 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-      --nav-height: 48px;
-      --mobile-nav-height: 60px;
-      --safe-bottom: env(safe-area-inset-bottom, 0px);
-      --safe-top: env(safe-area-inset-top, 0px);
-      --max-width: 1200px;
-      --focus-ring: 0 0 0 3px var(--accent-soft), 0 0 0 1px var(--accent);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    @keyframes shimmer {
-      0% { background-position: -200% 0; }
-      100% { background-position: 200% 0; }
-    }
-    @keyframes skeletonPulse {
-      0% { background-position: -200% 0; }
-      100% { background-position: 200% 0; }
-    }
-    @keyframes slideUp {
-      from { transform: translateY(100%); opacity: 0; }
-      to   { transform: translateY(0); opacity: 1; }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes modalIn {
-      from { opacity: 0; transform: translateY(16px) scale(0.98); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    @keyframes countUp {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes pulseGlow {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0); }
-      50% { box-shadow: 0 0 12px 2px rgba(34, 211, 238, 0.12); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
-    body {
-      font-family: var(--font-sans);
-      background: var(--bg-root);
-      color: var(--text-primary);
-      min-height: 100dvh;
-      min-height: 100vh;
-      font-feature-settings: 'tnum' 1, 'cv05' 1, 'ss01' 1;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      overflow-x: hidden;
-      line-height: 1.5;
-    }
-    body::before {
-      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
-      background:
-        radial-gradient(ellipse 80% 50% at 20% -10%, rgba(6, 182, 212, 0.07) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 40% at 90% 110%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
-        radial-gradient(ellipse 40% 30% at 50% 50%, rgba(59, 130, 246, 0.03) 0%, transparent 60%);
-      animation: bgShift 20s ease-in-out infinite alternate;
-    }
-    @keyframes bgShift {
-      0% { opacity: 1; transform: scale(1); }
-      100% { opacity: 0.8; transform: scale(1.05); }
-    }
-    body::after {
-      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.18;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-    }
-    .page {
-      position: relative; z-index: 1;
-      max-width: 1280px; margin: 0 auto;
-      padding: calc(20px + var(--safe-top)) 16px calc(80px + var(--safe-bottom));
-    }
-
-    /* ── App Header ── */
-    .app-header {
-      text-align: center;
-      margin-bottom: 20px;
-      animation: fadeIn 0.4s ease both;
-    }
-    header h1, .app-header h1 {
-      font-family: var(--font-sans);
-      font-weight: 800;
-      font-size: clamp(1.35rem, 4.5vw, 2rem);
-      letter-spacing: -0.04em;
-      margin-bottom: 6px;
-      background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 60%, var(--accent-hover) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      filter: drop-shadow(0 0 14px rgba(6, 182, 212, 0.18));
-    }
-    header p, .app-header p {
-      color: var(--text-secondary); font-size: 0.88rem; font-weight: 500;
-    }
-    .disclaimer {
-      margin: 12px auto 16px;
-      max-width: 780px;
-      padding: 10px 14px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-soft);
-      background: var(--glass);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      color: var(--text-secondary);
-      font-size: 0.76rem;
-      line-height: 1.5;
-      text-align: center;
-    }
-    .disclaimer a { color: var(--accent); text-decoration: none; font-weight: 600; transition: color var(--transition-fast); }
-    .disclaimer a:hover { color: var(--accent-hover); text-decoration: underline; }
-
-    /* ════════════════════════════════════════════════════════════
-       MOBILE BOTTOM NAVIGATION
-    ════════════════════════════════════════════════════════════ */
-    .mobile-nav {
-      display: none;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 500;
-      background: rgba(10, 14, 23, 0.96);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-top: 1px solid var(--border-subtle);
-      padding: 6px 4px calc(6px + var(--safe-bottom));
-    }
-    .mnav-btn {
-      flex: 1;
-      border: none;
-      background: none;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-      padding: 8px 2px;
-      color: var(--text-muted);
-      font-size: 0.6rem;
-      font-weight: 600;
-      transition: color 0.15s, transform 0.15s;
-      position: relative;
-      font-family: inherit;
-    }
-    .mnav-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 2px;
-      background: var(--accent);
-      border-radius: 1px;
-      transition: width 0.2s ease;
-    }
-    .mnav-btn .mnav-icon { font-size: 1.2rem; line-height: 1; transition: transform 0.15s; }
-    .mnav-btn.active { color: var(--accent); }
-    .mnav-btn.active::before { width: 24px; }
-    .mnav-btn.active .mnav-icon { transform: translateY(-1px); }
-    .mnav-btn:active { transform: scale(0.9); }
-
-    @media (max-width: 768px) {
-      .mobile-nav { display: flex; }
-      .tab-nav { display: none; }
-      .page { padding: 14px 10px calc(84px + var(--safe-bottom)); }
-    }
-
-    /* ── Dust bar ── */
-    .dust-bar {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
-      background: var(--surface-glass);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: var(--radius);
-      padding: 12px 18px;
-      box-shadow: var(--shadow), var(--shadow-glow);
-      animation: fadeIn 0.5s ease 0.15s both;
-    }
-    .dust-label {
-      font-size: 0.68rem; color: var(--amber); letter-spacing: 0.06em;
-      font-weight: 700; text-transform: uppercase;
-    }
-    #myDustInput {
-      background: var(--bg-elevated); border: 1px solid var(--border);
-      border-radius: var(--radius-sm); padding: 8px 12px;
-      color: var(--amber); font-family: var(--mono); font-size: 0.95rem; font-weight: 600;
-      width: clamp(120px, 30vw, 160px); outline: none; text-align: right;
-      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-      min-height: 44px;
-    }
-    #myDustInput:focus {
-      border-color: var(--amber);
-      box-shadow: 0 0 0 3px var(--amber-soft);
-    }
-    .dust-unit { font-size: 0.82rem; color: var(--text-muted); font-weight: 500; }
-    .dust-sep { width: 1px; height: 28px; background: var(--border-soft); flex-shrink: 0; }
-    .dust-stat { font-size: 0.84rem; color: var(--text-secondary); white-space: nowrap; }
-    .dust-stat b { color: var(--amber); font-family: var(--mono); font-weight: 700; }
-
-    /* ── Stats pills ── */
-    .stats-bar { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:14px; }
-    .stat-pill {
-      background: var(--surface); border: 1px solid var(--border-soft);
-      border-radius: 999px; padding: 5px 16px; font-size: 0.85rem; color: var(--text-secondary); font-weight: 500;
-    }
-    .stat-pill b { color: var(--accent); font-family: var(--mono); font-weight: 700; }
-
-    /* ── Progress bars ── */
-    .progress-section { display:flex; flex-direction:column; gap:10px; margin-bottom:18px; }
-    .prog-row { display:flex; align-items:center; gap:12px; }
-    .prog-label {
-      font-size: 0.7rem; color: var(--text-muted); font-weight: 600;
-      letter-spacing: 0.03em; white-space: nowrap; min-width: 200px; text-transform: uppercase;
-    }
-    .prog-track { flex:1; height:8px; background: var(--surface-2); border-radius:4px; overflow:hidden; position: relative; }
-    .prog-fill { height:100%; border-radius:4px; transition:width 0.6s cubic-bezier(0.4, 0, 0.2, 1); background: var(--accent); position: relative; }
-    .prog-fill::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%);
-      background-size: 200% 100%;
-      animation: shimmer 2s ease-in-out infinite;
-    }
-    .prog-fill.mastered { background: linear-gradient(90deg, var(--amber), #fcd34d); }
-    .prog-fill.mastered::after { background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%); background-size: 200% 100%; animation: shimmer 2s ease-in-out infinite; }
-    .prog-pct { font-size: 0.8rem; color: var(--text-secondary); min-width: 80px; text-align: right; font-family: var(--mono); font-weight: 600; }
-
-    /* ── Tabs ── */
-    .tab-nav-wrap {
-      position: sticky; top: 0; z-index: 100;
-      margin-bottom: 0;
-      padding: 8px 0 0;
-      background: linear-gradient(to bottom, var(--bg) 70%, transparent);
-    }
-    .tab-nav {
-      display: flex;
-      gap: 4px;
-      background: var(--surface-glass);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: var(--radius);
-      padding: 4px;
-      box-shadow: var(--shadow-sm);
-    }
-    .tab-btn {
-      flex: 1;
-      padding: 10px 16px; cursor: pointer;
-      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.01em;
-      color: var(--text-muted); border: none; background: none;
-      border-radius: var(--radius-sm);
-      transition: color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
-      min-height: 44px;
-      white-space: nowrap;
-      position: relative;
-    }
-    .tab-btn:hover { color: var(--text-secondary); background: var(--surface-hover); }
-    .tab-btn:active { transform: scale(0.96); }
-    .tab-btn.active {
-      color: var(--text-primary);
-      background: var(--accent-soft);
-      box-shadow: inset 0 0 0 1px rgba(6, 182, 212, 0.22), 0 1px 2px rgba(0,0,0,0.2);
-    }
-    .tab-btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
-    .tab-panel { display: none; padding-top: 20px; animation: fadeIn 0.25s ease both; }
-    .tab-panel.active { display: block; }
-
-    /* ── Info note (mastered explanation) ── */
-    .info-note {
-      display:flex; align-items:flex-start; gap:10px;
-      background: var(--amber-soft); border: 1px solid rgba(245,158,11,0.2);
-      border-radius: var(--radius-sm); padding: 10px 14px; margin-bottom: 14px; font-size: 0.83rem;
-      color: var(--text-secondary); line-height: 1.55;
-    }
-    .info-note .in-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
-    .info-note b { color: var(--amber); }
-
-    /* ── Filter + Sort bar ── */
-    .filter-sort-bar {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items: flex-start;
-      margin-bottom: 16px;
-      background: var(--surface-glass);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: var(--radius);
-      padding: 12px;
-      box-shadow: var(--shadow-sm);
-      animation: fadeIn 0.4s ease 0.1s both;
-    }
-    .filter-group {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 6px;
-    }
-    .filter-group-label {
-      font-size: 0.6rem;
-      color: var(--text-muted);
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 0 4px;
-      white-space: nowrap;
-      line-height: 44px;
-    }
-    .filter-group-btns {
-      display: flex;
-      gap: 4px;
-      flex-wrap: wrap;
-    }
-    .filter-desktop { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
-    .filter-mobile { display: none; }
-    .rarity-dropdown { display: none; }
-
-    @media (max-width: 640px) {
-      .filter-sort-bar { padding: 8px; gap: 8px; }
-      .filter-desktop { display: none; }
-      .filter-mobile { display: flex; flex-direction: column; gap: 8px; }
-      .rarity-dropdown { display: flex; flex-direction: column; gap: 4px; width: 100%; }
-      .rarity-dropdown select { width: 100%; }
-      .filter-group { flex-direction: column; align-items: stretch; gap: 4px; }
-      .filter-group-label { display: block; }
-      .filter-group-btns { justify-content: stretch; }
-      .filter-icon-btn { flex: 1; }
-    }
-      background: var(--bg-inset);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      color: var(--text-primary);
-      font-size: 0.82rem;
-      font-weight: 600;
-      padding: 6px 10px;
-      min-width: 130px;
-      min-height: 44px;
-      outline: none;
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 8px center;
-      cursor: pointer;
-      font-family: inherit;
-      transition: border-color 0.15s, box-shadow 0.15s;
-    }
-    .rarity-dropdown select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-    .rarity-dropdown select option { background: var(--bg-elevated); color: var(--text-primary); }
-
-    @media (max-width: 640px) {
-      .filter-sort-bar { padding: 8px; gap: 8px; }
-      .filter-group { width: 100%; }
-      .filter-group-btns { justify-content: stretch; }
-      .filter-icon-btn { flex: 1; }
-      .rarity-dropdown { width: 100%; }
-      .rarity-dropdown select { width: 100%; }
-    }
-      .filter-scroll {
-        display: flex; gap: 6px; flex-wrap: wrap; align-items: center; flex: 1;
-      }
-      @media (max-width: 640px) {
-        .filter-sort-bar { padding: 8px; }
-        .filter-icon-btn { min-width: 40px; min-height: 40px; font-size: 0.78rem; padding: 0 10px; }
-        .sort-label { display: none; }
-      }
-    .search-box {
-      display: flex; align-items: center; gap: 8px;
-      flex: 1 1 240px; min-width: min(240px, 100%);
-      background: var(--bg-elevated); border: 1px solid var(--border-soft);
-      border-radius: var(--radius-sm); padding: 8px 12px;
-      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-      min-height: 44px;
-    }
-    .search-box:focus-within {
-      border-color: var(--cyan);
-      box-shadow: 0 0 0 3px var(--cyan-soft);
-    }
-    .search-box input {
-      flex: 1; border: none; outline: none; background: transparent;
-      color: var(--text); font-size: 0.88rem; font-family: inherit;
-      min-width: 0;
-    }
-    .search-box input::placeholder { color: var(--text-muted); }
-    .clear-btn {
-      border: none; background: transparent; color: var(--text-muted); cursor: pointer;
-      font-size: 0.9rem; padding: 4px 6px; border-radius: 4px;
-      min-width: 32px; min-height: 32px;
-      transition: color var(--transition-fast), background var(--transition-fast);
-    }
-    .clear-btn:hover { color: var(--text); background: var(--surface-hover); }
-    .filter-icon-btn {
-      background: var(--bg-elevated); border: 1px solid var(--border-soft);
-      border-radius: var(--radius-sm); padding: 0;
-      color: var(--text-secondary); font-size: 0.85rem;
-      font-weight: 600; cursor: pointer;
-      transition: all var(--transition-fast);
-      min-width: 44px; min-height: 44px;
-      display: inline-flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .filter-icon-btn:hover { border-color: var(--border); color: var(--text); transform: translateY(-1px); }
-    .filter-icon-btn:active { transform: scale(0.96); }
-    .filter-icon-btn.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
-    .filter-icon-btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
-    .filter-sep { width: 1px; height: 28px; background: var(--border-soft); flex-shrink: 0; }
-    .sort-label { font-size: 0.68rem; color: var(--text-muted); font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
-    .sort-btn.active { background: var(--violet-soft); border-color: var(--violet); color: var(--violet); }
-    .rarity-filter.active-Rare      { background: var(--blue-soft);      border-color: var(--rarity-rare);      color: var(--rarity-rare); box-shadow: 0 0 10px rgba(59,130,246,0.12); }
-    .rarity-filter.active-Epic      { background: var(--violet-soft);    border-color: var(--rarity-epic);      color: var(--rarity-epic); box-shadow: 0 0 10px rgba(139,92,246,0.12); }
-    .rarity-filter.active-Legendary { background: var(--gold-soft);      border-color: var(--rarity-legendary); color: var(--rarity-legendary); box-shadow: 0 0 10px rgba(245,158,11,0.12); }
-    .rarity-filter.active-Mythic    { background: var(--rose-soft);      border-color: var(--rarity-mythic);    color: var(--rarity-mythic); box-shadow: 0 0 10px rgba(244,63,94,0.12); }
-    .sort-select {
-      background: var(--surface); border: 1px solid var(--border-soft);
-      border-radius: var(--radius-sm); padding: 6px 28px 6px 10px;
-      color: var(--text-secondary); font-size: 0.82rem; font-weight: 600;
-      cursor: pointer; outline: none; appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right 8px center;
-      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-    }
-    .sort-select:hover { border-color: var(--border); color: var(--text); }
-    .sort-select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-
-    /* ── Rarity headers ── */
-    .rarity-header {
-      display:flex; align-items:center; gap:10px;
-      padding: 10px 16px; margin-top:12px;
-      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-      border-radius: 10px 10px 0 0;
-    }
-    .rarity-header.Rare      { background: rgba(59,130,246,0.10);  color: var(--rare);      border-top: 1px solid rgba(59,130,246,0.3); }
-    .rarity-header.Epic      { background: rgba(139,92,246,0.10);  color: var(--epic);      border-top: 1px solid rgba(139,92,246,0.3); }
-    .rarity-header.Legendary { background: rgba(245,158,11,0.10);  color: var(--legendary); border-top: 1px solid rgba(245,158,11,0.3); }
-    .rarity-header.Mythic    { background: rgba(244,63,94,0.10);   color: var(--mythic);    border-top: 1px solid rgba(244,63,94,0.3); }
-    .rarity-header span { opacity: 0.6; font-size: 0.68rem; font-weight: 500; }
-
-    /* ── Sprite block ── */
-    .sprite-block { background: var(--surface); border: 1px solid var(--border-soft); border-top: none; }
-    .sprite-block:last-of-type { border-radius: 0 0 10px 10px; margin-bottom: 8px; }
-
-    .sprite-label-row {
-      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
-      padding: 12px 16px 10px; border-bottom: 1px solid var(--border-soft);
-      background: var(--surface);
-    }
-    .s-name { font-weight: 700; color: var(--text); font-size: 1rem; }
-    .s-ability { font-size: 0.8rem; color: var(--text-muted); margin-top: 3px; line-height: 1.45; max-width: 700px; }
-    .s-maxlvl-badge {
-      display:inline-block; margin-top:4px;
-      font-size: 0.68rem; background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.28);
-      border-radius: var(--radius-sm); padding: 2px 8px; color: var(--legendary); font-weight: 600;
-    }
-
-    /* ── Level guide ── */
-    .expand-btn {
-      font-size: 0.72rem; color: var(--text-secondary); border: 1px solid var(--border-soft);
-      background: var(--surface); border-radius: var(--radius-sm); padding: 5px 11px;
-      cursor:pointer; white-space: nowrap; flex-shrink: 0;
-      font-weight: 600;
-      transition: all 0.15s; align-self: flex-start;
-    }
-    .expand-btn:hover, .expand-btn.open { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
-    .expand-btn:active { transform: scale(0.96); }
-    .expand-btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
-
-    .level-panel {
-      display:none; background: var(--bg);
-      border-bottom: 1px solid var(--border-soft); padding: 14px 20px;
-    }
-    .level-panel.open { display:block; }
-    .level-panel-title { font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase; font-weight: 600; margin-bottom: 10px; }
-    .lvl-desc-rows { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:6px 16px; }
-    .lvl-desc-row { display:flex; gap:10px; align-items:flex-start; padding:4px 0; }
-    .lvl-num {
-      font-family: var(--mono); font-size: 0.64rem; font-weight: 700;
-      min-width: 22px; height: 22px; border-radius: 50%;
-      display:flex; align-items:center; justify-content:center;
-      background: var(--accent-soft); border: 1px solid rgba(59,130,246,0.3); color: var(--accent);
-      flex-shrink: 0;
-    }
-    .lvl-num.m { background: var(--amber-soft); border-color: rgba(245,158,11,0.35); color: var(--amber); }
-    .lvl-num.cap { background: rgba(244,63,94,0.12); border-color: rgba(244,63,94,0.3); color: var(--mythic); }
-    .lvl-desc { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.45; }
-    .lvl-desc.m { color: var(--amber); font-weight: 600; }
-    .lvl-desc.cap { color: var(--mythic); }
-
-    /* ── Variant rows ── */
-    .variant-row {
-      display:grid;
-      grid-template-columns: 32px minmax(110px,auto) 145px 130px 165px 125px 110px 1fr;
-      align-items:center; column-gap:0; padding:10px 16px;
-      border-bottom: 1px solid var(--border-soft);
-      transition: background 0.15s; min-height: 52px;
-    }
-    .variant-row:last-child { border-bottom: none; }
-    .variant-row:hover { background: rgba(59,130,246,0.04); }
-    .variant-row.owned { background: rgba(59,130,246,0.06); }
-    .variant-row.owned:hover { background: rgba(59,130,246,0.09); }
-    .variant-row.is-mastered { background: rgba(245,158,11,0.05); }
-    .variant-row.is-mastered:hover { background: rgba(245,158,11,0.09); }
-
-    .own-check {
-      appearance:none; -webkit-appearance:none;
-      width:20px; height:20px; border:2px solid var(--border); border-radius:5px;
-      background: var(--bg); cursor:pointer; transition: all 0.15s; position:relative;
-    }
-    .own-check:hover { border-color: var(--accent); }
-    .own-check:checked { background: var(--accent); border-color: var(--accent); }
-    .own-check:checked::after { content:'✓'; position:absolute; top:-1px; left:3px; color: #fff; font-size:13px; font-weight:900; }
-
-    .v-col { display:flex; flex-direction:column; gap:3px; padding-right:8px; }
-    .v-chip { display:inline-block; border-radius: var(--radius-sm); padding:3px 9px; font-size:0.8rem; font-weight:600; width:fit-content; }
-    .v-Normal { background: rgba(148,163,184,0.12); border:1px solid rgba(148,163,184,0.25); color: var(--text-secondary); }
-    .v-Gold   { background: rgba(245,158,11,0.14); border:1px solid rgba(245,158,11,0.32);  color: var(--legendary); }
-    .v-Gummy  { background: rgba(236,72,153,0.14); border:1px solid rgba(236,72,153,0.30);  color: #f472b6; }
-    .v-Galaxy { background: rgba(139,92,246,0.16); border:1px solid rgba(139,92,246,0.30);  color: var(--epic); }
-    .v-Cube {
-      background: rgba(59,130,246,0.16); border:1px solid rgba(59,130,246,0.35);  color: #3b82f6;
-      text-shadow: 0 1px 4px rgba(59,130,246,0.25);
-    }
-    .v-Holofoil {
-      background: linear-gradient(135deg, rgba(59,130,246,0.45), rgba(16,185,129,0.45), rgba(245,158,11,0.45), rgba(236,72,153,0.45));
-      border: 1px solid rgba(255,255,255,0.2);
-      color: #fff;
-      font-weight: 700;
-    }
-    .v-Gem {
-      background: rgba(16,185,129,0.14); border:1px solid rgba(16,185,129,0.32); color: #22c55e;
-    }
-    .v-Quack {
-      background: rgba(249,115,22,0.14); border:1px solid rgba(249,115,22,0.32); color: #fb923c;
-    }
-    .v-perk   { font-size:0.72rem; color: var(--text-muted); line-height:1.3; }
-
-    .v-cost { font-size: 0.88rem; font-weight: 600; color: var(--text-muted); white-space: nowrap; padding-right: 8px; font-family: var(--mono); }
-    .v-cost.hi { color: var(--amber); }
-
-    /* Level buttons */
-    .lvl-selector { display:flex; gap:4px; padding-right:8px; }
-    .lvl-btn {
-      width:28px; height:28px; border-radius:50%;
-      border: 1px solid var(--border); background: var(--bg); color: var(--text-muted);
-      font-family: var(--mono); font-size: 0.6rem; font-weight: 700;
-      cursor:pointer; transition: all 0.15s; display:flex; align-items:center; justify-content:center;
-    }
-    .lvl-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--text); }
-    .lvl-btn:disabled { cursor: default; opacity: 0.2; }
-    .lvl-btn.lit { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
-    .lvl-btn.hidden-btn { visibility: hidden; pointer-events: none; }
-
-    /* Mastered toggle */
-    .mast-col { display:flex; align-items:center; gap:6px; padding-right:8px; }
-    .mast-check {
-      appearance:none; -webkit-appearance:none;
-      width:18px; height:18px; border-radius:4px;
-      border: 2px solid var(--border); background: var(--bg);
-      cursor:pointer; transition: all 0.15s; position:relative; flex-shrink:0;
-    }
-    .mast-check:hover:not(:disabled) { border-color: var(--amber); }
-    .mast-check:checked { background: var(--amber-soft); border-color: var(--amber); }
-    .mast-check:checked::after { content:'★'; position:absolute; top:-3px; left:1px; color: var(--amber); font-size:13px; }
-    .mast-check:disabled { opacity: 0.35; cursor: default; }
-    .mast-label { font-size: 0.78rem; color: var(--text-muted); white-space: nowrap; }
-    .mast-label.on     { color: var(--amber); font-weight: 700; }
-    .mast-label.forced { color: var(--legendary); font-style: italic; }
-
-    /* Summoned toggle */
-    .s-toggle { display:flex; align-items:center; gap:6px; padding-right:8px; }
-    .s-lbl { font-size:0.78rem; color: var(--text-muted); }
-    .s-lbl.on { color: var(--emerald); font-weight: 700; }
-    .tgl { position:relative; width:34px; height:19px; flex-shrink:0; }
-    .tgl input { opacity:0; width:0; height:0; }
-    .tgl-sl {
-      position:absolute; inset:0; background: var(--surface-2); border-radius:20px;
-      cursor:pointer; border: 1px solid var(--border); transition: 0.2s;
-    }
-    .tgl-sl::after {
-      content:''; position:absolute; width:13px; height:13px; left:2px; top:2px;
-      background: var(--text-muted); border-radius:50%; transition: 0.2s;
-    }
-    .tgl input:checked + .tgl-sl { background: var(--emerald-soft); border-color: var(--emerald); }
-    .tgl input:checked + .tgl-sl::after { transform: translateX(15px); background: var(--emerald); }
-    .tgl input:disabled + .tgl-sl { opacity: 0.3; cursor: default; }
-
-    /* Status badges */
-    .s-status { display:inline-flex; align-items:center; gap:5px; border-radius: var(--radius-sm); padding:3px 8px; font-size:0.77rem; font-weight:600; white-space:nowrap; }
-    .status-mastered-locked { background: var(--amber-soft); border:1px solid rgba(245,158,11,0.28); color: var(--amber); }
-    .status-crown           { background: rgba(245,158,11,0.16); border:1px solid rgba(245,158,11,0.34); color: var(--legendary); }
-    .status-active          { background: var(--emerald-soft); border:1px solid rgba(16,185,129,0.28); color: var(--emerald); }
-    .status-indexed         { background: rgba(148,163,184,0.10); border:1px solid rgba(148,163,184,0.22); color: var(--text-muted); }
-    .s-unowned { font-size: 0.75rem; color: var(--text-muted); font-style: italic; }
-    .yield-hint { font-size: 0.72rem; color: var(--emerald); margin-top: 3px; white-space: nowrap; font-family: var(--mono); }
-    .yield-hint.gummy-boost { color: var(--emerald); font-weight: 700; }
-    .yield-hint.inactive { color: var(--text-muted); }
-
-    .sprite-header { display:flex; align-items:center; gap:14px; margin-bottom: 0.5rem; }
-    .sprite-thumb { width: 52px; height: 52px; border-radius: 18px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.25rem; font-weight:800; box-shadow: 0 8px 20px rgba(0,0,0,0.15); overflow:hidden; flex-shrink: 0; }
-    .sprite-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
-    .variant-card { width: 56px; height: 56px; border-radius: 16px; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff; font-size: 0.8rem; font-weight: 700; text-align:center; padding: 6px 4px; overflow:hidden; flex-shrink: 0; }
-    .variant-card img { width:100%; height:100%; object-fit:cover; display:block; }
-    .variant-card span { line-height: 1.1; }
-    .variant-card-title { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; }
-    .variant-card-badge { font-size: 1rem; margin-bottom: 2px; }
-    .variant-thumb { width: 34px; height: 34px; border-radius: 12px; display:flex; align-items:center; justify-content:center; color:#fff; font-size: 0.95rem; font-weight: 700; margin-right: 10px; }
-    .variant-row { display:grid; grid-template-columns: 56px 26px minmax(110px,auto) 145px 130px 165px 125px 110px 1fr; align-items:center; column-gap:0; padding:10px 16px; border-bottom: 1px solid var(--border-soft); transition: background 0.15s; min-height: 52px; }
-    .variant-row.unavailable { opacity: 0.55; }
-    .status-icon { font-size: 1rem; width: 26px; text-align:center; }
-
-    /* ── Terminal ── */
-    .terminal-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px; }
-    .t-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding:16px 18px; display:flex; flex-direction:column; gap:6px; box-shadow: var(--shadow); transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast); }
-    @media (hover: hover) {
-      .t-card:hover { transform: translateY(-2px); border-color: var(--border); box-shadow: var(--shadow-lg); }
-    }
-    .t-card:active { transform: scale(0.98); }
-    .t-card-header { display:flex; justify-content:space-between; align-items:flex-start; gap:8px; }
-    .t-name { font-weight: 700; color: var(--text); font-size: 0.94rem; line-height: 1.3; }
-    .t-cost-badge { background: var(--amber-soft); border: 1px solid rgba(245,158,11,0.3); border-radius: var(--radius-sm); padding: 4px 10px; color: var(--amber); font-family: var(--mono); font-size: 0.68rem; font-weight: 700; white-space: nowrap; flex-shrink: 0; }
-    .t-cat { font-size: 0.73rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.02em; }
-    .t-limit { font-size: 0.74rem; color: var(--legendary); background: rgba(245,158,11,0.10); border: 1px solid rgba(245,158,11,0.25); border-radius: var(--radius-sm); padding: 2px 7px; width: fit-content; }
-    .t-qty-row { display:flex; align-items:center; gap:8px; margin-top:4px; }
-    .t-qty-btn { width:28px; height:28px; border-radius:50%; border: 1px solid var(--border); background: var(--bg); color: var(--text-secondary); font-size:1rem; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; transition: all 0.15s; }
-    .t-qty-btn:hover { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); transform: translateY(-1px); }
-    .t-qty-btn:active { transform: scale(0.9); }
-    .t-qty { font-family: var(--mono); font-size: 0.85rem; color: var(--accent); min-width: 24px; text-align: center; font-weight: 700; }
-    .t-row-total { font-size: 0.82rem; color: var(--text-secondary); margin-left: auto; font-family: var(--mono); }
-
-    /* ── Calculator ── */
-    .calc-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-    @media(max-width:640px){ .calc-grid { grid-template-columns:1fr; } }
-    .calc-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 20px 22px; box-shadow: var(--shadow); transition: transform var(--transition-fast), border-color var(--transition-fast); }
-    @media (hover: hover) {
-      .calc-card:hover { border-color: var(--border); }
-    }
-    .calc-card h3 { font-size: 0.74rem; color: var(--text-secondary); letter-spacing: 0.05em; text-transform: uppercase; font-weight: 700; margin-bottom: 14px; }
-    .calc-line { display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom: 1px solid var(--border-soft); font-size: 0.87rem; }
-    .calc-line:last-child { border-bottom: none; }
-    .calc-line .cl { color: var(--text-secondary); }
-    .calc-line .cr { color: var(--text); font-weight: 700; font-family: var(--mono); }
-    .calc-total { display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding-top:12px; border-top: 1px solid var(--border); }
-    .calc-total .ct-label { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 600; }
-    .calc-total .ct-val { font-family: var(--mono); font-size: 1.1rem; color: var(--accent); font-weight: 700; transition: color var(--transition-fast); }
-    .calc-total .ct-val.over { color: var(--danger); }
-    .calc-total .ct-val.ok   { color: var(--emerald); }
-    .afford-note { font-size: 0.8rem; margin-top: 10px; padding: 10px 14px; border-radius: var(--radius-sm); transition: all var(--transition-fast); }
-    .afford-note.can    { background: var(--emerald-soft); border: 1px solid rgba(16,185,129,0.25); color: var(--emerald); }
-    .afford-note.cannot { background: var(--danger-soft); border: 1px solid rgba(239,68,68,0.25); color: var(--danger); }
-
-    /* ── Extraction Dust Calculator ── */
-    .ec-controls { display:flex; flex-wrap:wrap; gap:8px; align-items:flex-end; margin-bottom:18px; }
-    .ec-field { display:flex; flex-direction:column; gap:4px; }
-    .ec-field label { font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.04em; font-weight: 600; text-transform: uppercase; }
-    .ec-select {
-      background: var(--bg-inset); border: 1px solid var(--border); border-radius: var(--radius-sm);
-      color: var(--text-primary); font-size: 0.85rem; padding: 7px 10px; cursor: pointer; outline: none;
-      min-width: 150px; transition: border-color 0.15s, box-shadow 0.15s;
-    }
-    .ec-select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-    .ec-select option { background: var(--bg-elevated); color: var(--text-primary); }
-    .ec-add-btn {
-      background: var(--accent-soft); border: 1px solid var(--accent); border-radius: var(--radius-sm);
-      color: var(--accent); font-size: 0.84rem; font-weight: 700; padding: 7px 18px; cursor: pointer;
-      transition: all 0.15s; align-self: flex-end;
-    }
-    .ec-add-btn:hover { background: var(--accent); color: #fff; }
-    .ec-add-btn:active { transform: scale(0.96); }
-    .ec-table { width:100%; border-collapse:collapse; font-size:0.83rem; }
-    .ec-table th {
-      font-size: 0.64rem; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase; font-weight: 600;
-      padding:8px 10px; text-align:left; border-bottom: 1px solid var(--border);
-    }
-    .ec-table th:not(:first-child) { text-align:right; }
-    .ec-table td { padding:8px 10px; border-bottom: 1px solid var(--border-soft); color: var(--text-secondary); vertical-align: middle; }
-    .ec-table td:not(:first-child) { text-align:right; }
-    .ec-table tr:last-child td { border-bottom: none; }
-    .ec-table tr:hover td { background: rgba(59,130,246,0.04); }
-    .ec-base  { color: var(--text); font-weight: 700; font-family: var(--mono); }
-    .ec-gummy { color: var(--emerald); font-weight: 700; font-family: var(--mono); }
-    .ec-rm { background: none; border: 1px solid rgba(239,68,68,0.25); border-radius: var(--radius-sm); color: var(--text-muted); cursor: pointer; padding: 2px 8px; font-size: 0.78rem; transition: all 0.15s; }
-    .ec-rm:hover { background: var(--danger-soft); color: var(--danger); border-color: var(--danger); }
-    .ec-rm:active { transform: scale(0.92); }
-    .ec-totals { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; padding-top:16px; border-top: 1px solid var(--border); }
-    .ec-total-box { background: var(--bg); border-radius: var(--radius-sm); padding: 14px 16px; text-align: center; }
-    .ec-total-box.gummy { border: 1px solid rgba(16,185,129,0.3); }
-    .ec-total-box.base  { border: 1px solid rgba(59,130,246,0.3); }
-    .ec-total-lbl { font-size: 0.64rem; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 6px; }
-    .ec-total-val { font-family: var(--mono); font-size: 1.1rem; font-weight: 700; }
-    .ec-total-val.base-v  { color: var(--accent); }
-    .ec-total-val.gummy-v { color: var(--emerald); }
-    .ec-empty { color: var(--text-muted); font-size: 0.85rem; padding: 18px 0; text-align: center; }
-
-    /* ── EC table inline-text helper classes (replace JS hardcoded colors) ── */
-    .ec-sprite-name { color: var(--text); }
-    .ec-variant-sub { font-size: 0.78rem; color: var(--text-muted); margin-left: 6px; }
-    .ec-lvl-label { color: var(--accent); font-family: var(--mono); font-size: 0.78rem; }
-    .ec-gummy-delta { font-size: 0.72rem; color: var(--emerald); }
-    .calc-empty { color: var(--text-muted); font-size: 0.88rem; }
-    .gummy-boost-text { color: var(--emerald); font-weight: 700; }
-    .gummy-muted { color: var(--text-muted); }
-
-    /* ── Toast ── */
-    #toast { position:fixed; bottom:22px; right:22px; padding:11px 18px; border-radius: var(--radius-sm); font-weight: 600; font-size: 0.9rem; z-index: 999; opacity: 0; transform: translateY(8px); transition: all 0.25s; pointer-events: none; max-width: 320px; box-shadow: var(--shadow-lg); }
-    #toast.show { opacity: 1; transform: translateY(0); }
-    #toast.ok  { background: var(--emerald-soft); border: 1px solid rgba(16,185,129,0.35); color: var(--emerald); }
-    #toast.err { background: var(--danger-soft); border: 1px solid rgba(239,68,68,0.35); color: var(--danger); }
-
-    .center-msg { text-align:center; padding:60px 20px; color: var(--text-muted); font-size: 1rem; }
-
-    @media(max-width:1050px){
-      .variant-row { grid-template-columns: 28px auto 110px 145px 110px 90px 1fr; }
-      .v-perk { display:none; }
-    }
-    @media(max-width:720px){
-      .variant-row { grid-template-columns: 26px auto 100px 140px 110px 1fr; }
-      .s-toggle { display:flex; justify-content:flex-start; }
-    }
-
-    /* ===========================================
-       MOBILE LAYOUT (Phones)
-    =========================================== */
-    .mobile-nav { display: none; }
-    @media (max-width: 768px) {
-      .page { padding: 16px 10px 48px; }
-      header h1 { font-size: 1.45rem; letter-spacing: -0.02em; }
-      header p { font-size: 0.8rem; }
-      .disclaimer { margin: 8px 0 14px; text-align: left; }
-      .dust-bar, .stats-bar, .filter-sort-bar, .ec-controls {
-        flex-direction: column; align-items: stretch; gap: 10px;
-      }
-      .prog-row { flex-direction: column; align-items: stretch; gap: 6px; }
-      .prog-label { min-width: unset; }
-      .sprite-label-row { flex-direction: column; align-items: flex-start; gap: 10px; }
-      .expand-btn { width: 100%; }
-      .sprite-header { align-items: flex-start; }
-      .sprite-thumb { width: 60px; height: 60px; border-radius: 20px; }
-      .variant-row {
-        display: grid;
-        grid-template-columns: 64px minmax(0, 1fr);
-        gap: 10px 12px;
-        padding: 14px;
-        align-items: start;
-      }
-      .variant-card { width: 64px; height: 64px; border-radius: 18px; }
-      .variant-row .own-check, .variant-row .v-col, .variant-row .v-cost, .variant-row .lvl-selector, .variant-row .mast-col, .variant-row .s-toggle, .variant-row .status-icon, .variant-row [id^="stat-"] {
-        grid-column: 2;
-      }
-      .variant-row .own-check { margin-top: 2px; }
-      .variant-row .v-col { padding-right: 0; }
-      .variant-row .v-cost { padding-right: 0; }
-      .variant-row .lvl-selector { flex-wrap: wrap; gap: 6px; }
-      .variant-row .mast-col, .variant-row .s-toggle { justify-content: flex-start; }
-      .calc-card { padding: 16px; }
-      .calc-line { flex-wrap: wrap; gap: 6px; }
-      .ec-table { display: block; overflow-x: auto; white-space: nowrap; }
-
-      /* ── Mobile full redesign ── */
-      .tab-nav { display: none; }
-      .page { padding: 14px 10px 88px; }
-      header h1 { font-size: 1.35rem; }
-      header p { font-size: 0.78rem; }
-      .disclaimer { margin: 8px 0 14px; text-align: left; font-size: 0.72rem; }
-
-      .card-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      .sprite-card.unowned { filter: grayscale(1) brightness(0.7) opacity(0.55); }
-      .card-name { font-size: 0.84rem; }
-      .card-crown { width: 22px; height: 22px; font-size: 0.85rem; top: 6px; right: 6px; }
-      .card-check { width: 19px; height: 19px; font-size: 0.64rem; top: 6px; left: 6px; }
-
-      .dash-tiles { grid-template-columns: repeat(2, 1fr); }
-      .dash-panel, .dash-tile { padding: 14px; }
-      .prog-row { flex-direction: column; align-items: stretch; gap: 6px; }
-      .prog-label { min-width: unset; font-size: 0.66rem; }
-      .prog-pct { text-align: left; }
-
-       .sprite-modal .modal-card { width: 100%; max-width: 100vw; max-height: 85dvh; height: auto; border-radius: var(--radius-lg) var(--radius-lg) 0 0; padding: 20px 16px calc(32px + env(safe-area-inset-bottom)); border-bottom: none; animation: slideUp 0.32s cubic-bezier(0.22, 1, 0.36, 1) both; }
-       .sm-header { gap: 12px; }
-       .sm-thumb { width: 62px; height: 62px; border-radius: 14px; }
-       .sm-title { font-size: 1.05rem; }
-       .sprite-modal .modal-card::before {
-         content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
-         width: 36px; height: 4px; border-radius: 2px; background: var(--surface-2);
-         z-index: 5; flex-shrink: 0;
-       }
-       .modal-close { top: 12px; right: 12px; }
-
-      .mobile-nav {
-        display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 500;
-        background: rgba(15,23,42,0.96); backdrop-filter: blur(8px);
-        border-top: 1px solid var(--border); padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
-      }
-      .mnav-btn {
-        flex: 1; border: none; background: none; cursor: pointer;
-        display: flex; flex-direction: column; align-items: center; gap: 3px;
-        padding: 8px 2px; color: var(--text-muted); font-size: 0.6rem; font-weight: 600;
-        transition: color 0.15s, transform 0.15s;
-        position: relative;
-      }
-      .mnav-btn::before {
-        content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-        width: 0; height: 2px; background: var(--accent); border-radius: 1px;
-        transition: width 0.2s ease;
-      }
-      .mnav-btn .mnav-icon { font-size: 1.2rem; line-height: 1; transition: transform 0.15s; }
-      .mnav-btn.active { color: var(--accent); }
-      .mnav-btn.active::before { width: 24px; }
-      .mnav-btn.active .mnav-icon { transform: translateY(-1px); }
-      .mnav-btn:active { transform: scale(0.9); }
-    }
-
-    /* ===========================================
-       COLLECTION — CARD GRID
-    =========================================== */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-    @media (max-width: 640px) {
-      .card-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    }
-    .sprite-card {
-      position: relative;
-      background: linear-gradient(165deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%);
-      border: 1px solid var(--border-soft);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition), filter var(--transition);
-      box-shadow: var(--shadow);
-      animation: fadeIn 0.4s ease both;
-      will-change: transform;
-    }
-    .sprite-card:nth-child(1)  { animation-delay: 0.02s; }
-    .sprite-card:nth-child(2)  { animation-delay: 0.04s; }
-    .sprite-card:nth-child(3)  { animation-delay: 0.06s; }
-    .sprite-card:nth-child(4)  { animation-delay: 0.08s; }
-    .sprite-card:nth-child(5)  { animation-delay: 0.10s; }
-    .sprite-card:nth-child(6)  { animation-delay: 0.12s; }
-    .sprite-card:nth-child(7)  { animation-delay: 0.14s; }
-    .sprite-card:nth-child(8)  { animation-delay: 0.16s; }
-    .sprite-card:nth-child(9)  { animation-delay: 0.18s; }
-    .sprite-card:nth-child(10) { animation-delay: 0.20s; }
-    .sprite-card:nth-child(n+11) { animation-delay: 0.22s; }
-    .sprite-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: var(--rare);
-      opacity: 0.85;
-      z-index: 2;
-    }
-    .sprite-card.rarity-Rare::before { background: linear-gradient(90deg, var(--rare), #60a5fa); }
-    .sprite-card.rarity-Epic::before { background: linear-gradient(90deg, var(--epic), #a78bfa); }
-    .sprite-card.rarity-Legendary::before { background: linear-gradient(90deg, var(--legendary), #fcd34d); }
-    .sprite-card.rarity-Mythic::before { background: linear-gradient(90deg, var(--mythic), #fb7185); }
-    @media (hover: hover) {
-      .sprite-card:hover {
-        transform: translateY(-4px) scale(1.01);
-        border-color: var(--border-glow);
-        box-shadow: var(--shadow-lg), 0 0 28px rgba(34, 211, 238, 0.1);
-      }
-      .sprite-card:hover .card-media img { transform: scale(1.05); }
-    }
-    .sprite-card:active { transform: scale(0.98); }
-    .sprite-card.is-mastered {
-      border-color: rgba(245, 158, 11, 0.35);
-      box-shadow: var(--shadow), 0 0 16px rgba(245, 158, 11, 0.08);
-    }
-    .sprite-card.unowned { filter: grayscale(0.85) brightness(0.75) opacity(0.55); }
-    @media (hover: hover) {
-      .sprite-card.unowned:hover {
-        filter: grayscale(0.4) brightness(0.9) opacity(0.85);
-        border-color: var(--border);
-      }
-    }
-
-    .card-media {
-      position: relative;
-      aspect-ratio: 1 / 1;
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-      background: linear-gradient(180deg, var(--surface-2) 0%, var(--bg-elevated) 100%);
-    }
-     .card-media img {
-       width: 100%; height: 100%; object-fit: cover; display: block;
-       transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
-       opacity: 0;
-       filter: blur(8px);
-     }
-     .card-media img.loaded { opacity: 1; filter: blur(0); }
-    .card-media .placeholder {
-      font-size: 2.2rem; font-weight: 800; color: #fff;
-      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
-    }
-    .card-lvl-badge {
-      position: absolute; bottom: 8px; right: 8px;
-      background: rgba(15, 23, 42, 0.88);
-      backdrop-filter: blur(8px);
-      border: 1px solid var(--border-soft);
-      border-radius: 6px;
-      padding: 2px 7px;
-      font-family: var(--mono); font-size: 0.68rem; font-weight: 700;
-      color: var(--text); z-index: 2;
-    }
-    .card-lvl-badge.mast { color: var(--amber); border-color: rgba(245, 158, 11, 0.35); }
-    .card-crown {
-      position: absolute; top: 8px; right: 8px;
-      width: 28px; height: 28px; border-radius: 8px;
-      background: rgba(15, 23, 42, 0.82);
-      backdrop-filter: blur(6px);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.95rem;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
-      z-index: 2;
-    }
-    .card-check {
-      position: absolute; top: 8px; left: 8px;
-      width: 24px; height: 24px; border-radius: 50%;
-      background: var(--emerald-soft); border: 1px solid var(--emerald);
-      color: var(--emerald); font-size: 0.72rem; font-weight: 900;
-      display: flex; align-items: center; justify-content: center;
-      z-index: 2;
-    }
-    .card-status-icons {
-      position: absolute; top: 8px; left: 8px;
-      display: flex; gap: 4px; z-index: 2;
-    }
-    .card-status-icons .card-check { position: static; }
-    .card-summ-badge, .card-indexed-badge {
-      width: 24px; height: 24px; border-radius: 6px;
-      font-size: 0.68rem; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-    }
-    .card-summ-badge {
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #fff;
-    }
-    .card-indexed-badge {
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid var(--border);
-      color: var(--text-secondary);
-    }
-    .card-body { padding: 10px 11px 12px; display: flex; flex-direction: column; gap: 5px; flex: 1; }
-    .card-name {
-      font-weight: 700; font-size: 0.86rem; line-height: 1.25;
-      overflow: hidden; text-overflow: ellipsis;
-      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-    }
-    .card-variant { align-self: flex-start; font-size: 0.72rem !important; padding: 2px 8px !important; }
-    .card-foot { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: auto; }
-    .card-pips { display: flex; gap: 3px; }
-    .pip { width: 7px; height: 7px; border-radius: 50%; background: var(--surface-2); transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast); }
-    .pip.lit { background: var(--accent); }
-    .pip.mast { background: var(--amber); box-shadow: 0 0 6px rgba(245, 158, 11, 0.4); }
-    .card-lvl { font-family: var(--mono); font-size: 0.68rem; color: var(--text-muted); font-weight: 600; }
-    .card-cost { font-family: var(--mono); font-size: 0.68rem; color: var(--amber); opacity: 0.9; }
-    .card-status {
-      display: flex; align-items: center; gap: 4px;
-      font-size: 0.66rem; font-weight: 600;
-      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    }
-    .card-status.unowned { color: var(--text-muted); font-style: italic; }
-    .card-status.status-active { color: var(--emerald); }
-    .card-status.status-crown { color: var(--legendary); }
-    .card-status.status-mastered-locked { color: var(--amber); }
-    .card-status.status-indexed { color: var(--text-muted); }
-
-    .card-toggle {
-      display: inline-flex; align-items: center; justify-content: center; gap: 5px;
-      margin-top: 4px; padding: 6px 10px; border-radius: var(--radius-sm);
-      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.01em;
-      border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text-secondary);
-      cursor: pointer; transition: all var(--transition-fast); align-self: flex-start;
-      min-height: 36px; min-width: 80px;
-    }
-    .card-toggle:hover { border-color: var(--accent); color: var(--text); background: var(--accent-soft); }
-    .card-toggle:active { transform: scale(0.95); }
-    .card-toggle.summoned { background: var(--emerald-soft); border-color: var(--emerald); color: var(--emerald); }
-    .card-toggle svg { width: 12px; height: 12px; flex-shrink: 0; }
-    .card-toggle:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
-    .card-add-btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 5px;
-      margin-top: 4px; padding: 6px 12px; border-radius: var(--radius-sm);
-      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.01em;
-      border: 1px solid var(--emerald); background: var(--emerald-soft); color: var(--emerald);
-      cursor: pointer; transition: all var(--transition-fast); align-self: flex-start;
-      min-height: 36px; min-width: 80px;
-    }
-    .card-add-btn:hover { background: var(--emerald); color: #fff; }
-    .card-add-btn:active { transform: scale(0.95); }
-    .card-add-btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
-    .card-add-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
-
-    /* ── Per-sprite subcategory ── */
-    .sprite-group { margin-bottom: 8px; animation: fadeIn 0.3s ease both; }
-    .sprite-group-head {
-      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-      margin: 22px 0 12px;
-      padding: 10px 14px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius);
-      backdrop-filter: blur(8px);
-    }
-    .sprite-group-name { font-size: 0.95rem; font-weight: 700; color: var(--text); letter-spacing: -0.01em; }
-    .sprite-group-rar {
-      font-size: 0.64rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
-      padding: 3px 10px; border-radius: 999px; border: 1px solid transparent;
-    }
-    .sprite-group-rar.Rare      { color: var(--rare);      background: rgba(59,130,246,0.12);  border-color: rgba(59,130,246,0.3); }
-    .sprite-group-rar.Epic      { color: var(--epic);      background: rgba(139,92,246,0.12);  border-color: rgba(139,92,246,0.3); }
-    .sprite-group-rar.Legendary { color: var(--legendary); background: rgba(245,158,11,0.12); border-color: rgba(245,158,11,0.3); }
-    .sprite-group-rar.Mythic    { color: var(--mythic);    background: rgba(244,63,94,0.12);   border-color: rgba(244,63,94,0.3); }
-    .group-add-btn, .group-master-btn {
-      background: var(--bg-elevated); border: 1px solid var(--border-soft);
-      border-radius: var(--radius-sm); padding: 6px 12px;
-      font-size: 0.72rem; font-weight: 600; cursor: pointer;
-      transition: all var(--transition-fast);
-      min-height: 36px;
-    }
-    .group-add-btn { margin-left: auto; color: var(--accent); }
-    .group-add-btn:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); }
-    .group-add-btn:active:not(:disabled) { transform: scale(0.96); }
-    .group-master-btn { color: var(--amber); }
-    .group-master-btn:hover:not(:disabled) { border-color: var(--amber); background: var(--amber-soft); }
-    .group-master-btn:active:not(:disabled) { transform: scale(0.96); }
-    .group-add-btn:disabled, .group-master-btn:disabled { opacity: 0.4; cursor: default; color: var(--text-muted); }
-    .group-add-btn:focus-visible, .group-master-btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
-
-    /* ===========================================
-       SPRITE DETAIL MODAL
-    =========================================== */
-    .sprite-modal .modal-card {
-      width: min(480px, 95vw);
-      max-height: min(88dvh, 900px);
-      overflow-y: auto;
-      overflow-x: hidden;
-      padding: 24px;
-      position: relative;
-      background: linear-gradient(180deg, rgba(30, 41, 59, 0.98) 0%, rgba(15, 23, 42, 0.99) 100%);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-lg), 0 0 40px rgba(0, 0, 0, 0.3);
-      animation: modalIn 0.28s ease both;
-      -webkit-overflow-scrolling: touch;
-    }
-    .modal-close {
-      position: sticky; top: 0; float: right;
-      width: 36px; height: 36px; border-radius: var(--radius-sm);
-      border: 1px solid var(--border-soft);
-      background: var(--bg-elevated); color: var(--text-secondary);
-      font-size: 1rem; cursor: pointer; z-index: 10;
-      display: flex; align-items: center; justify-content: center;
-      transition: all var(--transition-fast);
-      margin: -4px -4px 0 0;
-    }
-    .modal-close:hover { color: var(--text); border-color: var(--border); background: var(--surface-2); }
-    .modal-close:active { transform: scale(0.92); }
-    .sm-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px; padding-right: 8px; clear: both; }
-    .sm-thumb {
-      width: 80px; height: 80px; border-radius: var(--radius);
-      overflow: hidden; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: var(--shadow-lg);
-      border: 2px solid var(--border-soft);
-    }
-    .sm-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .sm-title { font-size: 1.2rem; font-weight: 800; line-height: 1.2; margin-bottom: 8px; letter-spacing: -0.02em; }
-    .sm-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
-    .sm-rarity {
-      font-size: 0.64rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
-      padding: 2px 8px; border-radius: 999px;
-    }
-    .sm-rarity.Rare { color: var(--rare); background: rgba(59, 130, 246, 0.14); border: 1px solid rgba(59, 130, 246, 0.3); }
-    .sm-rarity.Epic { color: var(--epic); background: rgba(139, 92, 246, 0.14); border: 1px solid rgba(139, 92, 246, 0.3); }
-    .sm-rarity.Legendary { color: var(--legendary); background: rgba(245, 158, 11, 0.14); border: 1px solid rgba(245, 158, 11, 0.3); }
-    .sm-rarity.Mythic { color: var(--mythic); background: rgba(244, 63, 94, 0.14); border: 1px solid rgba(244, 63, 94, 0.3); }
-    .sm-ability {
-      font-size: 0.86rem; color: var(--text-secondary); line-height: 1.55;
-      background: var(--bg-elevated); border: 1px solid var(--border-soft);
-      border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 12px;
-    }
-    .sm-ability-label {
-      font-size: 0.62rem; color: var(--cyan); letter-spacing: 0.06em;
-      text-transform: uppercase; font-weight: 700; margin-bottom: 6px;
-    }
-    .sm-variant-ability {
-      font-size: 0.84rem; color: var(--text); line-height: 1.5;
-      background: var(--bg-elevated); border: 1px solid var(--border-soft);
-      border-left: 3px solid var(--cyan);
-      border-radius: var(--radius-sm); padding: 10px 14px; margin-bottom: 14px;
-    }
-    .sm-variant-ability .sm-va-chip {
-      display: inline-flex; align-items: center; gap: 4px;
-      font-size: 0.68rem; font-weight: 700; color: var(--cyan); margin-right: 6px;
-    }
-    .sm-section {
-      margin-bottom: 18px;
-      padding: 14px;
-      background: var(--bg-elevated);
-      border: 1px solid var(--border-soft);
-      border-radius: var(--radius);
-    }
-    .sm-section:last-child { margin-bottom: 0; }
-    .sm-label {
-      font-size: 0.62rem; color: var(--text-muted); letter-spacing: 0.06em;
-      text-transform: uppercase; font-weight: 700; margin-bottom: 10px;
-    }
-    .sm-toggle-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
-    .sm-owned {
-      display: flex; align-items: center; gap: 10px; font-size: 0.88rem; color: var(--text-secondary);
-      background: var(--bg-elevated); border: 1px solid var(--border-soft);
-      border-radius: var(--radius-sm); padding: 12px 14px;
-      cursor: pointer; transition: all var(--transition-fast); margin-bottom: 14px;
-      font-weight: 600; min-height: 48px;
-    }
-    .sm-owned:hover { border-color: var(--border); color: var(--text); }
-    .sm-owned input { width: 20px; height: 20px; accent-color: var(--emerald); flex-shrink: 0; }
-
-    /* Variant strip in modal */
-    .sm-variant-strip {
-      display: flex; gap: 10px;
-      overflow-x: auto; overflow-y: hidden;
-      padding: 4px 2px 12px;
-      margin: 0 -2px 14px;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin;
-    }
-    .sm-variant-strip::-webkit-scrollbar { height: 4px; }
-    .sm-variant-strip::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 4px; }
-    .sm-variant-chip {
-      flex: 0 0 auto;
-      min-width: 150px; max-width: 240px;
-      scroll-snap-align: start;
-      display: flex; flex-direction: column; gap: 8px;
-      padding: 12px 14px;
-      background: var(--bg-elevated);
-      border: 1px solid var(--border-soft);
-      border-radius: var(--radius);
-      cursor: pointer;
-      text-align: left;
-      transition: all var(--transition-fast);
-      font-family: inherit;
-      color: inherit;
-      min-height: 100px;
-      justify-content: space-between;
-    }
-    .sm-variant-chip:hover { border-color: var(--border); transform: translateY(-2px); box-shadow: var(--shadow); }
-    .sm-variant-chip:active { transform: scale(0.97); }
-    .sm-variant-chip.active {
-      border-color: var(--cyan);
-      background: var(--cyan-soft);
-      box-shadow: 0 0 16px rgba(34, 211, 238, 0.12);
-    }
-    .sm-variant-chip .svc-name { font-size: 0.8rem; font-weight: 700; }
-    .sm-variant-chip .svc-perk {
-      font-size: 0.74rem; color: var(--text-secondary); line-height: 1.45;
-      display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden;
-    }
-    .sm-variant-chip.active .svc-perk { color: var(--text); }
-    .sm-status-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-    }
-    .sm-status-item {
-      display: flex; align-items: center; gap: 8px;
-      padding: 10px 12px;
-      background: var(--surface-solid);
-      border: 1px solid var(--border-soft);
-      border-radius: var(--radius-sm);
-      min-height: 48px;
-    }
-    .sm-status-item .sm-status-label { font-size: 0.78rem; color: var(--text-secondary); font-weight: 600; }
-    .sm-level-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-    .sm-level-display {
-      font-family: var(--mono); font-size: 1.1rem; font-weight: 700;
-      color: var(--text); min-width: 80px; text-align: center;
-      padding: 6px 12px;
-      background: var(--surface-solid);
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-soft);
-    }
-    .lvl-btn {
-      width: 36px; height: 36px; border-radius: 50%;
-      border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text-muted);
-      font-family: var(--mono); font-size: 0.72rem; font-weight: 700;
-      cursor: pointer; transition: all var(--transition-fast);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .lvl-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--text); background: var(--accent-soft); transform: translateY(-1px); }
-    .lvl-btn:active:not(:disabled) { transform: scale(0.9); }
-    .lvl-btn:disabled { cursor: default; opacity: 0.25; }
-    .lvl-btn.lit { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
-    .lvl-btn.hidden-btn { visibility: hidden; pointer-events: none; }
-    .lvl-btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
-
-    /* ===========================================
-       DASHBOARD TAB
-    =========================================== */
-    .dash-grid { display: flex; flex-direction: column; gap: 18px; }
-    .dash-tiles {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;
-    }
-    .dash-tile {
-      background: var(--glass);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius);
-      padding: 16px 18px;
-      box-shadow: var(--shadow);
-      display: flex; flex-direction: column; gap: 4px;
-      transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
-      animation: fadeIn 0.4s ease both;
-      position: relative;
-      overflow: hidden;
-    }
-    .dash-tile::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      opacity: 0.7;
-    }
-    .dash-tile.accent::before { background: linear-gradient(90deg, var(--accent), var(--cyan)); }
-    .dash-tile.amber::before  { background: linear-gradient(90deg, var(--amber), #fcd34d); }
-    .dash-tile.emerald::before { background: linear-gradient(90deg, var(--emerald), #34d399); }
-    @media (hover: hover) {
-      .dash-tile:hover { transform: translateY(-2px); border-color: var(--border-glow); box-shadow: var(--shadow-lg), 0 0 16px rgba(34, 211, 238, 0.06); }
-    }
-    .dash-tile:active { transform: scale(0.98); }
-    .dash-tile .dt-label { font-size: 0.68rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-muted); font-weight: 700; }
-    .dash-tile .dt-value { font-family: var(--mono); font-size: 1.4rem; font-weight: 700; color: var(--text); }
-    .dash-tile .dt-sub { font-size: 0.74rem; color: var(--text-secondary); }
-    .dash-tile.accent .dt-value { color: var(--accent); }
-    .dash-tile.amber  .dt-value { color: var(--amber); }
-    .dash-tile.emerald .dt-value { color: var(--emerald); }
-    .dash-panel {
-      background: var(--glass);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius);
-      padding: 18px 20px;
-      box-shadow: var(--shadow);
-    }
-    .dash-panel h3 { font-size: 0.74rem; color: var(--text-secondary); letter-spacing: 0.05em; text-transform: uppercase; font-weight: 700; margin-bottom: 14px; }
-    .dash-panel .stats-bar { margin-bottom: 0; }
-    .dash-expand-btn {
-      width: 100%; padding: 12px 18px; border-radius: var(--radius);
-      background: var(--accent-soft); border: 1px solid var(--accent); color: var(--accent);
-      font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.15s;
-      text-align: left; display: flex; align-items: center; justify-content: space-between;
-    }
-    .dash-expand-btn:hover { filter: brightness(1.05); }
-    .dash-expand-btn .expand-arrow { transition: transform 0.2s; font-size: 0.8rem; }
-    .dash-expand-btn.open .expand-arrow { transform: rotate(180deg); }
-    .variant-progress-row { margin-bottom: 14px; }
-    .variant-progress-row:last-child { margin-bottom: 0; }
-    .vp-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
-    .vp-name { font-weight: 700; font-size: 0.9rem; color: var(--text); }
-    .vp-rarity { font-size: 0.66rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.03em; }
-    .vp-rarity.Rare { background: rgba(59,130,246,0.12); color: var(--rare); border: 1px solid rgba(59,130,246,0.3); }
-    .vp-rarity.Epic { background: rgba(139,92,246,0.12); color: var(--epic); border: 1px solid rgba(139,92,246,0.3); }
-    .vp-rarity.Legendary { background: rgba(245,158,11,0.12); color: var(--legendary); border: 1px solid rgba(245,158,11,0.3); }
-    .vp-rarity.Mythic { background: rgba(244,63,94,0.12); color: var(--mythic); border: 1px solid rgba(244,63,94,0.3); }
-    .vp-bars { display: flex; flex-direction: column; gap: 5px; }
-    .vp-bar-row { display: flex; align-items: center; gap: 8px; }
-    .vp-bar-label { font-size: 0.72rem; color: var(--text-secondary); min-width: 72px; font-weight: 600; }
-    .vp-bar-track { flex: 1; height: 6px; background: var(--surface-2); border-radius: 3px; overflow: hidden; }
-    .vp-bar-fill { height: 100%; border-radius: 3px; transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); position: relative; }
-    .vp-bar-fill.owned { background: linear-gradient(90deg, var(--accent), #60a5fa); }
-    .vp-bar-fill.mastered { background: linear-gradient(90deg, var(--amber), #fcd34d); }
-    .vp-bar-fill::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.18) 50%, transparent 100%);
-      background-size: 200% 100%;
-      animation: shimmer 2.2s ease-in-out infinite;
-    }
-    .vp-bar-pct { font-size: 0.68rem; color: var(--text-muted); min-width: 36px; text-align: right; font-family: var(--mono); }
-
-    /* ===========================================
-       MOBILE BOTTOM NAV
-    =========================================== */
-
-    /* ── Export Modal & Buttons ── */
-    .modal-backdrop {
-      position: fixed; inset: 0;
-      background: rgba(0, 0, 0, 0.65);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      display: none; justify-content: center; align-items: center;
-      z-index: 9999;
-      padding: 16px;
-      padding-bottom: calc(16px + var(--safe-bottom));
-    }
-    .modal-backdrop.show { display: flex; animation: fadeIn 0.2s ease both; }
-    .modal-card {
-      width: min(420px, 100%);
-      background: linear-gradient(180deg, rgba(30, 41, 59, 0.98) 0%, rgba(15, 23, 42, 0.99) 100%);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      box-shadow: var(--shadow-lg);
-      animation: modalIn 0.25s ease both;
-      max-height: min(90dvh, 600px);
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    @media (max-width: 640px) {
-      .modal-backdrop { align-items: flex-end; padding: 0; }
-      .modal-card { width: 100%; max-height: 85dvh; border-radius: var(--radius-lg) var(--radius-lg) 0 0; border-bottom: none; animation: slideUp 0.32s cubic-bezier(0.22, 1, 0.36, 1) both; }
-    }
-    .modal-title { font-size: 1.15rem; font-weight: 800; color: var(--text); margin-bottom: 6px; letter-spacing: -0.02em; }
-    .modal-subtitle { color: var(--text-secondary); margin-bottom: 18px; font-size: 0.88rem; line-height: 1.5; }
-    .export-option {
-      display: flex; align-items: center; gap: 12px;
-      padding: 14px 12px; cursor: pointer; color: var(--text);
-      border: 1px solid var(--border-soft); border-radius: var(--radius-sm);
-      margin-bottom: 8px; transition: all var(--transition-fast);
-      min-height: 48px;
-    }
-    .export-option:hover { border-color: var(--border); background: var(--bg-elevated); }
-    .export-option:has(input:checked) { border-color: var(--cyan); background: var(--cyan-soft); }
-    .export-option input { width: 18px; height: 18px; accent-color: var(--cyan); flex-shrink: 0; }
-    .modal-buttons { display: flex; justify-content: flex-end; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
-    .filter-btn, .btn-secondary {
-      background: var(--bg-elevated); border: 1px solid var(--border-soft);
-      border-radius: var(--radius-sm); padding: 10px 18px;
-      color: var(--text-secondary); font-size: 0.84rem; font-weight: 600;
-      cursor: pointer; transition: all var(--transition-fast);
-      min-height: 44px; font-family: inherit;
-    }
-    .filter-btn:hover, .btn-secondary:hover { border-color: var(--border); color: var(--text); }
-    .filter-btn:active, .btn-secondary:active { transform: scale(0.96); }
-    .filter-btn.active, .btn-primary {
-      background: var(--accent-soft); border: 1px solid var(--accent);
-      color: var(--accent); font-size: 0.84rem; font-weight: 700;
-      border-radius: var(--radius-sm); padding: 10px 18px;
-      cursor: pointer; transition: all var(--transition-fast);
-      min-height: 44px; font-family: inherit;
-    }
-    .filter-btn.active:hover, .btn-primary:hover { background: var(--accent); color: #fff; }
-    .filter-btn:focus-visible, .btn-secondary:focus-visible, .btn-primary:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
-    .export-btn { margin-left: auto; }
-
-    /* ── Toast ── */
-    #toast {
-      position: fixed;
-      bottom: calc(22px + var(--safe-bottom));
-      right: 16px; left: 16px;
-      margin-left: auto; max-width: 360px;
-      padding: 12px 18px; border-radius: var(--radius-sm);
-      font-weight: 600; font-size: 0.88rem; z-index: 10000;
-      opacity: 0; transform: translateY(12px);
-      transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-      pointer-events: none;
-      box-shadow: var(--shadow-lg);
-      backdrop-filter: blur(12px);
-    }
-    #toast.show { opacity: 1; transform: translateY(0); animation: slideUp 0.28s ease both; }
-    #toast.ok  { background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.35); color: var(--emerald); }
-    #toast.err { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.35); color: var(--danger); }
-
-    .center-msg {
-      text-align: center; padding: 60px 20px;
-      color: var(--text-muted); font-size: 0.95rem;
-      background: var(--glass); border-radius: var(--radius);
-      border: 1px dashed var(--border-soft);
-    }
-    .skeleton {
-      background: var(--skeleton);
-      background-size: 200% 100%;
-      animation: skeletonPulse var(--skeleton-speed) ease-in-out infinite;
-      border-radius: var(--radius-sm);
-    }
-    .skeleton-card {
-      background: var(--surface);
-      border: 1px solid var(--border-soft);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-    }
-    .skeleton-card .sk-media { aspect-ratio: 1/1; }
-    .skeleton-card .sk-body { padding: 12px; display: flex; flex-direction: column; gap: 8px; }
-    .skeleton-card .sk-line { height: 12px; border-radius: 6px; }
-    .skeleton-card .sk-line.short { width: 60%; }
-    .skeleton-card .sk-line.medium { width: 80%; }
-
-    /* Loading state */
-    .loading-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
-      gap: 12px;
-    }
-    @media (max-width: 768px) {
-      .loading-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}" />
 </head>
 <body>
-<div class="page">
 
-  <header>
-    <h1>🎮 FORTNITE SPRITE TRACKER</h1>
-    <p>Track every sprite variant, level, mastery, and your Sprite Dust</p>
-  </header>
+<!-- ══ Icon sprite (referenced via <use>) ══ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-dashboard" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></symbol>
+    <symbol id="i-collection" viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></symbol>
+    <symbol id="i-terminal" viewBox="0 0 24 24"><path d="M20.59 13.41 13.42 20.6a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82Z"/><circle cx="7.5" cy="7.5" r="1.5"/></symbol>
+    <symbol id="i-calculator" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="8" x2="8.01" y1="14" y2="14"/><line x1="12" x2="12.01" y1="14" y2="14"/><line x1="16" x2="16.01" y1="14" y2="14"/><line x1="8" x2="8.01" y1="18" y2="18"/><line x1="12" x2="12.01" y1="18" y2="18"/><line x1="16" x2="16.01" y1="18" y2="18"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></symbol>
+    <symbol id="i-sort" viewBox="0 0 24 24"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></symbol>
+    <symbol id="i-export" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M5 12h14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></symbol>
+    <symbol id="i-crown" viewBox="0 0 24 24"><path d="M5 16 3 6l5.5 4L12 4l3.5 6L21 6l-2 10Z"/><path d="M5 20h14"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-dust" viewBox="0 0 24 24"><path d="M12 3l1.6 4.6L18 9l-4.4 1.4L12 15l-1.6-4.6L6 9l4.4-1.4z"/><path d="M18 14l.8 2.2L21 17l-2.2.8L18 20l-.8-2.2L15 17l2.2-.8z"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9.3 16.6 14 18.5 21 12 17.2 5.5 21 7.4 14 2 9.3 9 9"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></symbol>
+  </defs>
+</svg>
 
-  <div class="disclaimer">
-    <a href="https://fortnite-sprite-tracker-seven.vercel.app/">https://fortnite-sprite-tracker-seven.vercel.app/</a> is an unofficial fan-made project and is not affiliated with Epic Games.
-  </div>
+<div class="app">
 
-  <div class="dust-bar">
-    <span class="dust-label">💨 MY SPRITE DUST</span>
-    <input id="myDustInput" type="number" min="0" placeholder="0" oninput="onDustChange()" />
-    <span class="dust-unit">Dust</span>
-    <div class="dust-sep"></div>
-    <div class="dust-stat">Collection Worth: <b id="dustWorth">0</b> Dust</div>
-    <div class="dust-sep"></div>
-    <div class="dust-stat">Terminal Basket: <b id="dustBasket">0</b> Dust</div>
-  </div>
-
-  <div class="tab-nav">
-    <button class="tab-btn active" data-tab="dashboard" onclick="switchTab('dashboard',this)">📊 Dashboard</button>
-    <button class="tab-btn" data-tab="collection" onclick="switchTab('collection',this)">📋 Collection</button>
-    <button class="tab-btn" data-tab="terminal" onclick="switchTab('terminal',this)">🏪 Terminal</button>
-    <button class="tab-btn" data-tab="calculator" onclick="switchTab('calculator',this)">🧮 Calculator</button>
-  </div>
-
-  <!-- ══ COLLECTION TAB ══════════════════════════════════════ -->
-  <div id="tab-collection" class="tab-panel">
-    <div class="info-note">
-      <span class="in-icon">⭐</span>
-      <span>
-        <b>About the ★ Mastered star:</b> Click any sprite card to open its details.
-        Toggle the star when a sprite is below Level 5 to mark it as Mastered independently of its level.
-        At <b>Level 5</b>, mastered is set automatically. <b>Dream Sprite</b> cannot reach Level 5; mark it mastered manually.
-        &nbsp;|&nbsp;
-        <b>Level buttons 2–5 are only active when a sprite is Summoned.</b>
-        Sprites that are owned but not summoned are indexed at Level 1 in-game.
+  <!-- ══════════════ Desktop sidebar ══════════════ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"><svg class="ic"><use href="#i-collection"/></svg></span>
+      <span class="brand-text">
+        <span class="brand-title">SPRITE TRACKER</span>
+        <span class="brand-sub">Fortnite Collection</span>
       </span>
     </div>
 
-    <div class="filter-sort-bar">
-      <label class="search-box" for="spriteSearch">
-        <span aria-hidden="true">🔎</span>
-        <input id="spriteSearch" type="search" placeholder="Search sprites, abilities, variants..." oninput="setSearch(this.value)" />
-        <button class="clear-btn" type="button" onclick="clearSearch()" aria-label="Clear search">✕</button>
-      </label>
+    <nav class="side-nav" aria-label="Primary">
+      <button class="nav-item tab-btn active" data-tab="dashboard" onclick="switchTab('dashboard',this)">
+        <svg class="ic" aria-hidden="true"><use href="#i-dashboard"/></svg><span>Dashboard</span>
+      </button>
+      <button class="nav-item tab-btn" data-tab="collection" onclick="switchTab('collection',this)">
+        <svg class="ic" aria-hidden="true"><use href="#i-collection"/></svg><span>Collection</span>
+      </button>
+      <button class="nav-item tab-btn" data-tab="terminal" onclick="switchTab('terminal',this)">
+        <svg class="ic" aria-hidden="true"><use href="#i-terminal"/></svg><span>Terminal</span>
+      </button>
+      <button class="nav-item tab-btn" data-tab="calculator" onclick="switchTab('calculator',this)">
+        <svg class="ic" aria-hidden="true"><use href="#i-calculator"/></svg><span>Calculator</span>
+      </button>
+    </nav>
 
-      <div class="filter-desktop">
-        <div class="filter-group-label">Collection</div>
-        <button class="filter-icon-btn active" data-filter="all" onclick="setFilter('all',this)" title="All">📋</button>
-        <button class="filter-icon-btn" data-filter="owned" onclick="setFilter('owned',this)" title="Owned">✅</button>
-        <button class="filter-icon-btn" data-filter="unowned" onclick="setFilter('unowned',this)" title="Not Owned">☐</button>
-        <div class="filter-sep"></div>
-
-        <div class="filter-group-label">Mastery</div>
-        <button class="filter-icon-btn" data-filter="mastered" onclick="setFilter('mastered',this)" title="Mastered Only">★</button>
-        <button class="filter-icon-btn" data-filter="notmastered" onclick="setFilter('notmastered',this)" title="Not Mastered">☆</button>
-        <div class="filter-sep"></div>
-
-        <div class="filter-group-label">State</div>
-        <button class="filter-icon-btn" data-filter="summoned" onclick="setFilter('summoned',this)" title="Summoned">🏃</button>
-        <button class="filter-icon-btn" data-filter="indexed" onclick="setFilter('indexed',this)" title="Indexed">📦</button>
-        <div class="filter-sep"></div>
-
-        <div class="filter-group-label">Rarity</div>
-        <button class="filter-icon-btn rarity-filter" data-rarity="Rare" onclick="setRarity('Rare',this)" title="Rare">🔵</button>
-        <button class="filter-icon-btn rarity-filter" data-rarity="Epic" onclick="setRarity('Epic',this)" title="Epic">🟣</button>
-        <button class="filter-icon-btn rarity-filter" data-rarity="Legendary" onclick="setRarity('Legendary',this)" title="Legendary">🟡</button>
-        <button class="filter-icon-btn rarity-filter" data-rarity="Mythic" onclick="setRarity('Mythic',this)" title="Mythic">🔴</button>
-        <div class="filter-sep"></div>
-      </div>
-
-      <div class="filter-mobile">
-        <div class="filter-group">
-          <div class="filter-group-label">Collection</div>
-          <div class="filter-group-btns">
-            <button class="filter-icon-btn active" data-filter="all" onclick="setFilter('all',this)" title="All">📋</button>
-            <button class="filter-icon-btn" data-filter="owned" onclick="setFilter('owned',this)" title="Owned">✅</button>
-            <button class="filter-icon-btn" data-filter="unowned" onclick="setFilter('unowned',this)" title="Not Owned">☐</button>
-          </div>
-        </div>
-
-        <div class="filter-group">
-          <div class="filter-group-label">Mastery</div>
-          <div class="filter-group-btns">
-            <button class="filter-icon-btn" data-filter="mastered" onclick="setFilter('mastered',this)" title="Mastered Only">★</button>
-            <button class="filter-icon-btn" data-filter="notmastered" onclick="setFilter('notmastered',this)" title="Not Mastered">☆</button>
-          </div>
-        </div>
-
-        <div class="filter-group">
-          <div class="filter-group-label">State</div>
-          <div class="filter-group-btns">
-            <button class="filter-icon-btn" data-filter="summoned" onclick="setFilter('summoned',this)" title="Summoned">🏃</button>
-            <button class="filter-icon-btn" data-filter="indexed" onclick="setFilter('indexed',this)" title="Indexed">📦</button>
-          </div>
-        </div>
-
-        <div class="filter-sep"></div>
-
-        <div class="rarity-dropdown">
-          <div class="filter-group-label">Rarity</div>
-          <select id="raritySelect" class="ec-select" onchange="setRarity(this.value); this.blur();">
-            <option value="">All Rarities</option>
-            <option value="Rare">🔵 Rare</option>
-            <option value="Epic">🟣 Epic</option>
-            <option value="Legendary">🟡 Legendary</option>
-            <option value="Mythic">🔴 Mythic</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="filter-sep"></div>
-
-      <span class="sort-label">SORT:</span>
-      <button class="filter-icon-btn sort-icon-btn active" data-sort="default" onclick="setSort('default',this)" title="Default sort">⇅</button>
-      <button class="filter-icon-btn sort-icon-btn" data-sort="lvl-desc" onclick="setSort('lvl-desc',this)" title="Level high to low">↓</button>
-      <button class="filter-icon-btn sort-icon-btn" data-sort="lvl-asc" onclick="setSort('lvl-asc',this)" title="Level low to high">↑</button>
-      <button class="filter-icon-btn sort-icon-btn" data-sort="mastered" onclick="setSort('mastered',this)" title="Mastered first">★</button>
-
-      <div class="filter-sep"></div>
-      <button class="filter-icon-btn export-btn" onclick="openExportModal()" title="Export Collection">📤</button>
+    <div class="side-foot">
+      <button class="btn-ghost side-export" onclick="openExportModal()">
+        <svg class="ic" aria-hidden="true"><use href="#i-export"/></svg><span>Export Checklist</span>
+      </button>
+      <p class="side-legal">
+        <a href="https://fortnite-sprite-tracker-seven.vercel.app/">Unofficial fan project</a> — not affiliated with Epic Games.
+      </p>
     </div>
+  </aside>
+
+  <!-- ══════════════ Main content ══════════════ -->
+  <main class="main">
+
+    <!-- Mobile top app bar -->
+    <header class="appbar">
+      <div class="brand brand-compact">
+        <span class="brand-mark" aria-hidden="true"><svg class="ic"><use href="#i-collection"/></svg></span>
+        <span class="brand-title">SPRITE TRACKER</span>
+      </div>
+      <div class="appbar-dust" title="Collection Worth">
+        <svg class="ic" aria-hidden="true"><use href="#i-dust"/></svg>
+        <b id="appbarWorth">0</b>
+      </div>
+    </header>
+
+    <!-- Dust / worth strip -->
+    <section class="dust-strip" aria-label="Sprite Dust">
+      <div class="dust-input-box">
+        <span class="dust-glyph" aria-hidden="true"><svg class="ic"><use href="#i-dust"/></svg></span>
+        <label class="dust-cap" for="myDustInput">My Sprite Dust</label>
+        <input id="myDustInput" type="number" min="0" inputmode="numeric" placeholder="0" oninput="onDustChange()" aria-label="My Sprite Dust balance" />
+      </div>
+      <div class="dust-metrics">
+        <div class="dust-metric">
+          <span class="dm-label">Collection Worth</span>
+          <span class="dm-value"><b id="dustWorth">0</b> Dust</span>
+        </div>
+        <div class="dust-metric">
+          <span class="dm-label">Terminal Basket</span>
+          <span class="dm-value"><b id="dustBasket">0</b> Dust</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ DASHBOARD ══ -->
+    <div id="tab-dashboard" class="tab-panel active">
+      <div class="page-head">
+        <h1 class="page-title">Dashboard</h1>
+        <p class="page-sub">Your collection at a glance.</p>
+      </div>
+
+      <div class="dash">
+        <section class="panel hero-panel">
+          <div class="ring" role="img" aria-label="Collection completion">
+            <svg viewBox="0 0 120 120" class="ring-svg">
+              <circle class="ring-bg" cx="60" cy="60" r="52"/>
+              <circle class="ring-arc" id="collRingArc" cx="60" cy="60" r="52"/>
+            </svg>
+            <div class="ring-center">
+              <span class="ring-pct" id="collRingPct">0%</span>
+              <span class="ring-sub">Complete</span>
+            </div>
+          </div>
+          <div class="hero-lines">
+            <div class="hero-line">
+              <span class="hl-label"><svg class="ic" aria-hidden="true"><use href="#i-collection"/></svg> Collection</span>
+              <span class="hl-value" id="collProgLabel">0 / 0 VARIANTS</span>
+            </div>
+            <div class="bar"><div class="bar-fill" id="collProgFill" style="width:0%"></div></div>
+            <div class="hero-line">
+              <span class="hl-label"><svg class="ic" aria-hidden="true"><use href="#i-crown"/></svg> Mastered</span>
+              <span class="hl-value" id="mastProgLabel">0 / 0 OWNED</span>
+            </div>
+            <div class="bar"><div class="bar-fill gold" id="mastProgFill" style="width:0%"></div></div>
+            <span class="sr-only" id="collProgPct">0%</span>
+            <span class="sr-only" id="mastProgPct">0%</span>
+          </div>
+        </section>
+
+        <section class="stat-grid">
+          <div class="stat-card accent">
+            <span class="stat-ic" aria-hidden="true"><svg class="ic"><use href="#i-dust"/></svg></span>
+            <span class="stat-label">Collection Worth</span>
+            <span class="stat-value" id="dashWorth">0</span>
+            <span class="stat-sub" id="dashWorthSub">0 / 0 variants</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-ic" aria-hidden="true"><svg class="ic"><use href="#i-check"/></svg></span>
+            <span class="stat-label">Owned</span>
+            <span class="stat-value" id="dashOwned">0</span>
+            <span class="stat-sub">variants collected</span>
+          </div>
+          <div class="stat-card gold">
+            <span class="stat-ic" aria-hidden="true"><svg class="ic"><use href="#i-crown"/></svg></span>
+            <span class="stat-label">Mastered</span>
+            <span class="stat-value" id="dashMast">0</span>
+            <span class="stat-sub" id="dashMastSub">0 / 0 owned</span>
+          </div>
+          <div class="stat-card emerald">
+            <span class="stat-ic" aria-hidden="true"><svg class="ic"><use href="#i-bolt"/></svg></span>
+            <span class="stat-label">Summoned</span>
+            <span class="stat-value" id="dashSumm">0</span>
+            <span class="stat-sub" id="dashUnsumm">0 indexed</span>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h3 class="panel-title">Quick Stats</h3>
+          <div class="chip-row">
+            <span class="chip"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg> Owned <b id="sTotal">0</b></span>
+            <span class="chip"><svg class="ic" aria-hidden="true"><use href="#i-crown"/></svg> Mastered <b id="sMastered">0</b></span>
+            <span class="chip"><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg> Summoned <b id="sSummoned">0</b></span>
+            <span class="chip"><svg class="ic" aria-hidden="true"><use href="#i-box"/></svg> Indexed <b id="sUnsummoned">0</b></span>
+          </div>
+        </section>
+
+        <button class="disclosure" id="dashVariantToggle" onclick="toggleVariantProgress()" aria-expanded="false">
+          <span><svg class="ic" aria-hidden="true"><use href="#i-collection"/></svg> Sprite Variant Progress</span>
+          <svg class="ic chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+        </button>
+        <section class="panel disclosure-panel" id="variantProgressPanel" style="display:none">
+          <div id="variantProgressContent"></div>
+        </section>
+
+        <button class="disclosure" id="dashPerVariantToggle" onclick="togglePerVariantProgress()" aria-expanded="false">
+          <span><svg class="ic" aria-hidden="true"><use href="#i-sort"/></svg> Per-Variant Type Progress</span>
+          <svg class="ic chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+        </button>
+        <section class="panel disclosure-panel" id="perVariantProgressPanel" style="display:none">
+          <div id="perVariantProgressContent"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ══ COLLECTION ══ -->
+    <div id="tab-collection" class="tab-panel">
+      <div class="page-head">
+        <h1 class="page-title">Collection</h1>
+        <p class="page-sub">Track ownership, level, mastery and summon state for every sprite variant.</p>
+      </div>
+
+      <div class="toolbar">
+        <label class="search" for="spriteSearch">
+          <svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>
+          <input id="spriteSearch" type="search" placeholder="Search sprites, abilities, variants…" oninput="setSearch(this.value)" />
+          <button class="search-clear" type="button" onclick="clearSearch()" aria-label="Clear search"><svg class="ic"><use href="#i-close"/></svg></button>
+        </label>
+
+        <div class="toolbar-actions">
+          <button class="tool-btn filters-btn" id="filtersBtn" onclick="toggleFilterSheet()" aria-haspopup="dialog">
+            <svg class="ic" aria-hidden="true"><use href="#i-filter"/></svg><span>Filters</span>
+            <span class="filter-count" id="filterCount" hidden></span>
+          </button>
+          <div class="sort-seg" role="group" aria-label="Sort">
+            <svg class="ic sort-lead" aria-hidden="true"><use href="#i-sort"/></svg>
+            <button class="seg-btn active" data-sort="default" onclick="setSort('default',this)" title="Default order">Default</button>
+            <button class="seg-btn" data-sort="lvl-desc" onclick="setSort('lvl-desc',this)" title="Level high to low">Lvl ↓</button>
+            <button class="seg-btn" data-sort="lvl-asc" onclick="setSort('lvl-asc',this)" title="Level low to high">Lvl ↑</button>
+            <button class="seg-btn" data-sort="mastered" onclick="setSort('mastered',this)" title="Mastered first">Mastered</button>
+          </div>
+          <button class="tool-btn" onclick="openExportModal()" title="Export collection">
+            <svg class="ic" aria-hidden="true"><use href="#i-export"/></svg><span class="tool-btn-label">Export</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Filter panel: inline on desktop, bottom-sheet on mobile -->
+      <div class="filter-backdrop" id="filterBackdrop" onclick="closeFilterSheet()"></div>
+      <div class="filter-panel" id="filterPanel">
+        <div class="filter-sheet-head">
+          <span class="filter-sheet-title">Filters</span>
+          <button class="filter-clear" onclick="setFilter('all')">Reset</button>
+          <button class="filter-done" onclick="closeFilterSheet()">Done</button>
+        </div>
+        <div class="filter-groups">
+          <div class="filter-group">
+            <span class="fg-label">Collection</span>
+            <div class="fg-btns">
+              <button class="pill active" data-filter="all" onclick="setFilter('all',this)"><svg class="ic"><use href="#i-collection"/></svg> All</button>
+              <button class="pill" data-filter="owned" onclick="setFilter('owned',this)"><svg class="ic"><use href="#i-check"/></svg> Owned</button>
+              <button class="pill" data-filter="unowned" onclick="setFilter('unowned',this)"><svg class="ic"><use href="#i-box"/></svg> Missing</button>
+            </div>
+          </div>
+          <div class="filter-group">
+            <span class="fg-label">Mastery</span>
+            <div class="fg-btns">
+              <button class="pill" data-filter="mastered" onclick="setFilter('mastered',this)"><svg class="ic"><use href="#i-crown"/></svg> Mastered</button>
+              <button class="pill" data-filter="notmastered" onclick="setFilter('notmastered',this)"><svg class="ic"><use href="#i-star"/></svg> Not Mastered</button>
+            </div>
+          </div>
+          <div class="filter-group">
+            <span class="fg-label">State</span>
+            <div class="fg-btns">
+              <button class="pill" data-filter="summoned" onclick="setFilter('summoned',this)"><svg class="ic"><use href="#i-bolt"/></svg> Summoned</button>
+              <button class="pill" data-filter="indexed" onclick="setFilter('indexed',this)"><svg class="ic"><use href="#i-box"/></svg> Indexed</button>
+            </div>
+          </div>
+          <div class="filter-group">
+            <span class="fg-label">Rarity</span>
+            <div class="fg-btns">
+              <button class="pill rarity-filter r-Rare" data-rarity="Rare" onclick="setRarity('Rare',this)"><i class="r-dot"></i> Rare</button>
+              <button class="pill rarity-filter r-Epic" data-rarity="Epic" onclick="setRarity('Epic',this)"><i class="r-dot"></i> Epic</button>
+              <button class="pill rarity-filter r-Legendary" data-rarity="Legendary" onclick="setRarity('Legendary',this)"><i class="r-dot"></i> Legendary</button>
+              <button class="pill rarity-filter r-Mythic" data-rarity="Mythic" onclick="setRarity('Mythic',this)"><i class="r-dot"></i> Mythic</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-note">
+        <svg class="ic" aria-hidden="true"><use href="#i-star"/></svg>
+        <span>Tap any sprite to open its details. At <b>Level 5</b> a sprite is mastered automatically — toggle the <b>crown</b> manually for lower levels or for Dream Sprite. Levels 2–5 unlock once a sprite is <b>Summoned</b>.</span>
+      </div>
 
       <div id="list"><div class="center-msg">Loading…</div></div>
       <div id="loadingSkeleton" style="display:none">
-        <div class="loading-grid">
-          <div class="skeleton-card"><div class="sk-media skeleton"></div><div class="sk-body"><div class="sk-line medium skeleton"></div><div class="sk-line short skeleton"></div></div></div>
-          <div class="skeleton-card"><div class="sk-media skeleton"></div><div class="sk-body"><div class="sk-line medium skeleton"></div><div class="sk-line short skeleton"></div></div></div>
+        <div class="card-grid">
           <div class="skeleton-card"><div class="sk-media skeleton"></div><div class="sk-body"><div class="sk-line medium skeleton"></div><div class="sk-line short skeleton"></div></div></div>
           <div class="skeleton-card"><div class="sk-media skeleton"></div><div class="sk-body"><div class="sk-line medium skeleton"></div><div class="sk-line short skeleton"></div></div></div>
           <div class="skeleton-card"><div class="sk-media skeleton"></div><div class="sk-body"><div class="sk-line medium skeleton"></div><div class="sk-line short skeleton"></div></div></div>
@@ -1650,1648 +300,128 @@
       </div>
     </div>
 
-  <!-- ══ DASHBOARD TAB ═════════════════════════════════════ -->
-  <div id="tab-dashboard" class="tab-panel active">
-    <div class="dash-grid">
+    <!-- ══ TERMINAL ══ -->
+    <div id="tab-terminal" class="tab-panel">
+      <div class="page-head">
+        <h1 class="page-title">Terminal</h1>
+        <p class="page-sub">Spend Sprite Dust at Sprite Dust Services terminals across the map. Add services to your basket, then review them in the Calculator.</p>
+      </div>
+      <div class="terminal-grid" id="terminalGrid"></div>
+    </div>
 
-      <div class="dash-tiles">
-        <div class="dash-tile accent">
-          <span class="dt-label">Collection Worth</span>
-          <span class="dt-value" id="dashWorth">0</span>
-          <span class="dt-sub" id="dashWorthSub">0 / 0 variants</span>
-        </div>
-        <div class="dash-tile">
-          <span class="dt-label">Owned</span>
-          <span class="dt-value" id="dashOwned">0</span>
-          <span class="dt-sub">variants collected</span>
-        </div>
-        <div class="dash-tile amber">
-          <span class="dt-label">Mastered</span>
-          <span class="dt-value" id="dashMast">0</span>
-          <span class="dt-sub" id="dashMastSub">0 / 0 owned</span>
-        </div>
-        <div class="dash-tile emerald">
-          <span class="dt-label">Summoned</span>
-          <span class="dt-value" id="dashSumm">0</span>
-          <span class="dt-sub" id="dashUnsumm">0 not summoned</span>
-        </div>
+    <!-- ══ CALCULATOR ══ -->
+    <div id="tab-calculator" class="tab-panel">
+      <div class="page-head">
+        <h1 class="page-title">Calculator</h1>
+        <p class="page-sub">See what your collection is worth and plan your Terminal spending.</p>
       </div>
 
-      <div class="dash-panel">
-        <h3>📈 PROGRESS</h3>
-        <div class="progress-section">
-          <div class="prog-row">
-            <span class="prog-label" id="collProgLabel">COLLECTION: 0 / 0 VARIANTS</span>
-            <div class="prog-track"><div class="prog-fill" id="collProgFill" style="width:0%"></div></div>
-            <span class="prog-pct" id="collProgPct">0%</span>
+      <div class="calc-grid">
+        <section class="panel calc-card">
+          <h3 class="panel-title"><svg class="ic" aria-hidden="true"><use href="#i-dust"/></svg> Collection Value</h3>
+          <div id="calcCollectionLines"><div class="calc-empty">No sprites owned yet.</div></div>
+          <div class="calc-total">
+            <span class="ct-label">Total Worth</span>
+            <span class="ct-val" id="calcTotalWorth">0 Dust</span>
           </div>
-          <div class="prog-row">
-            <span class="prog-label" id="mastProgLabel">MASTERED: 0 / 0 OWNED</span>
-            <div class="prog-track"><div class="prog-fill mastered" id="mastProgFill" style="width:0%"></div></div>
-            <span class="prog-pct" id="mastProgPct">0%</span>
+        </section>
+        <section class="panel calc-card">
+          <h3 class="panel-title"><svg class="ic" aria-hidden="true"><use href="#i-terminal"/></svg> Terminal Basket</h3>
+          <div id="calcTerminalLines"><div class="calc-empty">Nothing in basket.</div></div>
+          <div class="calc-total">
+            <span class="ct-label">Basket Cost</span>
+            <span class="ct-val" id="calcTerminalTotal">0 Dust</span>
+          </div>
+          <div id="affordNote" class="afford-note" style="display:none"></div>
+        </section>
+      </div>
+
+      <section class="panel calc-card" style="margin-top:16px">
+        <h3 class="panel-title"><svg class="ic" aria-hidden="true"><use href="#i-calculator"/></svg> Extraction Dust Calculator</h3>
+        <p class="panel-desc">Build a custom extraction list — pick any sprite, variant and level to compare base yield vs. yield with a Gummy Sprite in your loadout.</p>
+
+        <div class="ec-controls">
+          <div class="ec-field">
+            <label for="ecSprite">Sprite</label>
+            <select id="ecSprite" class="select" onchange="onEcSpriteChange()"></select>
+          </div>
+          <div class="ec-field">
+            <label for="ecVariant">Variant</label>
+            <select id="ecVariant" class="select"></select>
+          </div>
+          <div class="ec-field ec-field-sm">
+            <label for="ecLevel">Level</label>
+            <select id="ecLevel" class="select"></select>
+          </div>
+          <button class="btn-primary ec-add-btn" onclick="addEcEntry()"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg> Add</button>
+          <button class="btn-danger ec-clear-btn" onclick="clearEcEntries()"><svg class="ic" aria-hidden="true"><use href="#i-trash"/></svg> Clear</button>
+        </div>
+
+        <div id="ecTableWrap">
+          <div class="ec-empty">No sprites added yet. Use the controls above to build your extraction list.</div>
+        </div>
+
+        <div class="ec-totals" id="ecTotals" style="display:none">
+          <div class="ec-total-box base">
+            <span class="ec-total-lbl">Total — No Gummy</span>
+            <span class="ec-total-val base-v" id="ecTotalBase">0 Dust</span>
+          </div>
+          <div class="ec-total-box gummy">
+            <span class="ec-total-lbl">Total — With Gummy (+20%)</span>
+            <span class="ec-total-val gummy-v" id="ecTotalGummy">0 Dust</span>
+            <div class="ec-gummy-delta" id="ecTotalDiff"></div>
           </div>
         </div>
-      </div>
-
-      <div class="dash-panel">
-        <h3>📊 STATS</h3>
-        <div class="stats-bar">
-          <div class="stat-pill">Owned: <b id="sTotal">0</b></div>
-          <div class="stat-pill">Mastered: <b id="sMastered">0</b></div>
-          <div class="stat-pill">Summoned: <b id="sSummoned">0</b></div>
-          <div class="stat-pill">Not Summoned: <b id="sUnsummoned">0</b></div>
-        </div>
-      </div>
-
-      <button class="dash-expand-btn" id="dashVariantToggle" onclick="toggleVariantProgress()">
-        📊 Sprite Variant Progress
-      </button>
-      <div class="dash-panel" id="variantProgressPanel" style="display:none">
-        <h3>📈 SPRITE VARIANT PROGRESS</h3>
-        <div id="variantProgressContent"></div>
-      </div>
-
-      <button class="dash-expand-btn" id="dashPerVariantToggle" onclick="togglePerVariantProgress()">
-        📈 Per-Variant Type Progress
-      </button>
-      <div class="dash-panel" id="perVariantProgressPanel" style="display:none">
-        <h3>📈 PER-VARIANT TYPE PROGRESS</h3>
-        <div id="perVariantProgressContent"></div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ══ TERMINAL TAB ════════════════════════════════════════ -->
-  <div id="tab-terminal" class="tab-panel">
-    <div style="margin-bottom:14px; font-size:0.88rem; color: var(--text-secondary); line-height:1.6;">
-      Spend Sprite Dust at <b style="color: var(--text)">Sprite Dust Services terminals</b> at Extraction Sites across the map.
-      Use <b>+/−</b> to add services to your basket, then check the Calculator tab.
-    </div>
-    <div class="terminal-grid" id="terminalGrid"></div>
-  </div>
-
-  <!-- ══ CALCULATOR TAB ══════════════════════════════════════ -->
-  <div id="tab-calculator" class="tab-panel">
-    <div class="calc-grid">
-      <div class="calc-card">
-        <h3>💰 COLLECTION VALUE</h3>
-        <div id="calcCollectionLines"><div class="calc-empty">No sprites owned yet.</div></div>
-        <div class="calc-total">
-          <span class="ct-label">TOTAL WORTH</span>
-          <span class="ct-val" id="calcTotalWorth">0 Dust</span>
-        </div>
-      </div>
-      <div class="calc-card">
-        <h3>🏪 TERMINAL BASKET</h3>
-        <div id="calcTerminalLines"><div class="calc-empty">Nothing in basket.</div></div>
-        <div class="calc-total">
-          <span class="ct-label">BASKET COST</span>
-          <span class="ct-val" id="calcTerminalTotal">0 Dust</span>
-        </div>
-        <div id="affordNote" class="afford-note" style="display:none"></div>
-      </div>
+      </section>
     </div>
 
-    <!-- ── Standalone Extraction Dust Calculator ── -->
-    <div class="calc-card" style="margin-top:16px">
-      <h3>🧮 EXTRACTION DUST CALCULATOR</h3>
-      <p style="font-size:0.8rem;color: var(--text-muted); margin-bottom:14px; line-height:1.5">
-        Build a custom extraction list — pick any sprite, variant, and level to compare base yield vs. yield with a Gummy Sprite in your loadout.
-      </p>
-
-      <!-- Input controls -->
-      <div class="ec-controls">
-        <div class="ec-field">
-          <label>SPRITE</label>
-          <select id="ecSprite" class="ec-select" onchange="onEcSpriteChange()"></select>
-        </div>
-        <div class="ec-field">
-          <label>VARIANT</label>
-          <select id="ecVariant" class="ec-select"></select>
-        </div>
-        <div class="ec-field">
-          <label>LEVEL</label>
-          <select id="ecLevel" class="ec-select" style="min-width:80px"></select>
-        </div>
-        <button class="ec-add-btn" onclick="addEcEntry()">+ Add Sprite</button>
-        <button class="ec-add-btn" onclick="clearEcEntries()" style="background: var(--danger-soft); border-color: rgba(239,68,68,0.3); color: var(--danger); margin-left:auto">✕ Clear All</button>
-      </div>
-
-      <!-- Entry table -->
-      <div id="ecTableWrap">
-        <div class="ec-empty">No sprites added yet. Use the controls above to build your extraction list.</div>
-      </div>
-
-      <!-- Totals -->
-      <div class="ec-totals" id="ecTotals" style="display:none">
-        <div class="ec-total-box base">
-          <span class="ec-total-lbl">TOTAL — NO GUMMY</span>
-          <span class="ec-total-val base-v" id="ecTotalBase">0 Dust</span>
-        </div>
-        <div class="ec-total-box gummy">
-          <span class="ec-total-lbl">TOTAL — WITH GUMMY (+20%)</span>
-          <span class="ec-total-val gummy-v" id="ecTotalGummy">0 Dust</span>
-          <div class="ec-gummy-delta" style="margin-top:3px" id="ecTotalDiff"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
+  </main>
 </div>
-<div id="exportModal" class="modal-backdrop">
-  <div class="modal-card">
-    <div class="modal-title">
-      Export Collection
-    </div>
-    <div class="modal-subtitle">
-      Choose how you'd like to export your collection.
-    </div>
+
+<!-- ══ Mobile bottom nav ══ -->
+<nav class="mobile-nav" aria-label="Primary mobile">
+  <button class="mnav-btn active" data-tab="dashboard" onclick="switchTab('dashboard',this)">
+    <svg class="ic" aria-hidden="true"><use href="#i-dashboard"/></svg><span>Dashboard</span>
+  </button>
+  <button class="mnav-btn" data-tab="collection" onclick="switchTab('collection',this)">
+    <svg class="ic" aria-hidden="true"><use href="#i-collection"/></svg><span>Collection</span>
+  </button>
+  <button class="mnav-btn" data-tab="terminal" onclick="switchTab('terminal',this)">
+    <svg class="ic" aria-hidden="true"><use href="#i-terminal"/></svg><span>Terminal</span>
+  </button>
+  <button class="mnav-btn" data-tab="calculator" onclick="switchTab('calculator',this)">
+    <svg class="ic" aria-hidden="true"><use href="#i-calculator"/></svg><span>Calc</span>
+  </button>
+</nav>
+
+<!-- ══ Export modal ══ -->
+<div id="exportModal" class="modal-backdrop" onclick="if(event.target===this)closeExportModal()">
+  <div class="modal-card export-card" role="dialog" aria-modal="true" aria-label="Export collection">
+    <button class="modal-close" onclick="closeExportModal()" aria-label="Close"><svg class="ic"><use href="#i-close"/></svg></button>
+    <div class="modal-title">Export Collection</div>
+    <div class="modal-subtitle">Share your progress or compare with friends.</div>
     <label class="export-option">
       <input type="radio" name="exportType" value="text" checked>
-      Copy as Text
+      <span class="eo-body"><span class="eo-title">Copy as Text</span><span class="eo-desc">Compact checklist grid — great for pasting to compare collections.</span></span>
     </label>
     <label class="export-option">
       <input type="radio" name="exportType" value="image">
-      Download as Image
+      <span class="eo-body"><span class="eo-title">Download as Image</span><span class="eo-desc">A rendered locker card with your sprite artwork.</span></span>
     </label>
     <div class="modal-buttons">
-      <button class="filter-btn" onclick="closeExportModal()">
-        Cancel
-      </button>
-      <button class="filter-btn active" onclick="startExport()">
-        Export
-      </button>
+      <button class="btn-ghost" onclick="closeExportModal()">Cancel</button>
+      <button class="btn-primary" onclick="startExport()">Export</button>
     </div>
   </div>
 </div>
+
+<!-- ══ Sprite detail modal ══ -->
 <div id="spriteModal" class="modal-backdrop sprite-modal" onclick="if(event.target===this)closeCard()">
   <div class="modal-card" id="spriteModalCard"></div>
 </div>
 
-<nav class="mobile-nav">
-  <button class="mnav-btn active" data-tab="dashboard" onclick="switchTab('dashboard',this)">
-    <span class="mnav-icon">📊</span><span>Dashboard</span>
-  </button>
-  <button class="mnav-btn" data-tab="collection" onclick="switchTab('collection',this)">
-    <span class="mnav-icon">📋</span><span>Collection</span>
-  </button>
-  <button class="mnav-btn" data-tab="terminal" onclick="switchTab('terminal',this)">
-    <span class="mnav-icon">🏪</span><span>Terminal</span>
-  </button>
-  <button class="mnav-btn" data-tab="calculator" onclick="switchTab('calculator',this)">
-    <span class="mnav-icon">🧮</span><span>Calc</span>
-  </button>
-</nav>
 <div id="toast"></div>
 
-<script>
-/* ════════════════════════════════════════════════════════════
-   State
-   The collection lives entirely in this browser's localStorage,
-   so each person's collection is private and survives server
-   restarts. The server only provides static sprite reference
-   data via /api/directory.
-════════════════════════════════════════════════════════════ */
-const COL_KEY  = 'spriteCollection';   // map of key -> {level, summoned, mastered}
-let allRows      = [];
-let TERMINAL     = [];
-let VPERKS       = {};
-let SPRITE_DIR   = {};   // sprites dict from /api/directory
-let calcEntries  = [];   // [{spriteName, variant, rarity, level, maxLevel, cost}]
-let TOTAL_VARS   = 61;
-let activeFilters = new Set();   // multi-select; conflicting filters live in the same group
-let rarityFilter = null;
-let sortMode     = 'default';
-// Mutually-exclusive groups so e.g. "mastered" and "not mastered" can't both apply
-const FILTER_GROUPS = {
-  owned:      'collection', unowned: 'collection',
-  mastered:   'mastery',    notmastered: 'mastery',
-  summoned:   'state',      indexed:  'state',
-};
-let searchQuery  = '';
-let myDust       = 0;
-
-const ALL_VARIANTS = ["Normal","Gold","Gummy","Galaxy","Holofoil","Gem","Cube","Quack"];
-const VARIANT_COLORS = {
-  Normal: '#94a3b8',
-  Gold: '#fbbf24',
-  Gummy: '#ec4899',
-  Galaxy: '#8b5cf6',
-  Cube: '#3b82f6',
-  Holofoil: '#2dd4bf',
-  Gem: '#22c55e',
-  Quack: '#f97316',
-};
-const VARIANT_ORDER = {
-  Normal: 0,
-  Gold: 1,
-  Gummy: 2,
-  Galaxy: 3,
-  Holofoil: 4,
-  Gem: 5,
-  Cube: 6,
-  Quack: 7,
-};
-const VARIANT_ICONS = {
-  Normal: '◻', Gold: '🥇', Gummy: '🍬', Galaxy: '🌠',
-  Cube: '🧊', Holofoil: '🌈', Gem: '💎', Quack: '🦆',
-};
-function variantIcon(variant) {
-  return VARIANT_ICONS[variant] || VARIANT_ICONS.Normal;
-}
-function variantColor(variant) {
-  return VARIANT_COLORS[variant] || VARIANT_COLORS.Normal;
-}
-let basketQty    = {};
-
-const RARITY_ORDER = ['Rare','Epic','Legendary','Mythic'];
-const RARITY_ICONS = { Rare:'💧', Epic:'⚡', Legendary:'🔥', Mythic:'🌌' };
-
-// Populated from /api/directory
-let EXTRACTION_BASE = {
-  Rare:      {1:200, 2:300,  3:450,  4:600,  5:1000},
-  Epic:      {1:500, 2:750,  3:1000, 4:1500, 5:2500},
-  Legendary: {1:1000,2:1500, 3:2250, 4:3500, 5:5000},
-  Mythic:    {1:2000,2:3000, 3:4500, 4:6000, 5:8000},
-};
-
-/* Compute extraction yield for a row.
-   Rules:
-   - Level used = sprite's current level when summoned, else 1 (indexed).
-   - A Gummy-variant sprite that is Summoned gives +20% to ALL other sprites (not itself).
-*/
-function gummySummoned() {
-  return allRows.some(r => r.variant === 'Gummy' && r.summoned);
-}
-function computeYield(row) {
-  if (!row.owned) return 0;
-  const lvl  = row.summoned ? row.level : 1;
-  const base = (EXTRACTION_BASE[row.rarity] || {})[lvl] || 0;
-  const isGummy = row.variant === 'Gummy';
-  if (gummySummoned() && !isGummy) return Math.round(base * 1.20);
-  return base;
-}
-
-/* ════════════════════════════════════════════════════════════
-   Boot
-════════════════════════════════════════════════════════════ */
-async function boot() {
-  const listEl = document.getElementById('list');
-  const skeletonEl = document.getElementById('loadingSkeleton');
-  if (listEl) listEl.style.display = 'none';
-  if (skeletonEl) skeletonEl.style.display = 'block';
-
-  const saved = localStorage.getItem('myDust');
-  if (saved) { myDust = parseInt(saved)||0; document.getElementById('myDustInput').value = myDust; }
-  const sb = localStorage.getItem('basket');
-  if (sb) { try { basketQty = JSON.parse(sb); } catch(e){} }
-
-  const dirRes = await fetch('/api/directory');
-  const dir    = await dirRes.json();
-
-  TERMINAL        = dir.terminal;
-  VPERKS          = dir.variant_perks;
-  SPRITE_DIR      = dir.sprites || {};
-  TOTAL_VARS      = dir.total_variants || 61;
-  if (dir.extraction_base) EXTRACTION_BASE = dir.extraction_base;
-
-  allRows         = buildAllRows();
-
-  if (listEl) listEl.style.display = 'block';
-  if (skeletonEl) skeletonEl.style.display = 'none';
-
-  refreshStats();
-  render();
-  renderTerminal();
-  populateEcSprite();
-  renderCalculator();
-}
-
-/* ── Local collection persistence ──
-   Stored as a flat map: { "SpriteName||Variant": {level, summoned, mastered} }
-   Built once on boot into allRows, updated on every toggle. */
-function loadCollection() {
-  try { return JSON.parse(localStorage.getItem(COL_KEY) || '{}') || {}; }
-  catch (e) { return {}; }
-}
-function saveCollection(coll) {
-  localStorage.setItem(COL_KEY, JSON.stringify(coll));
-}
-
-/* Build the full row list by merging the static directory with the
-   user's local collection. Each sprite's variant list comes from the
-   image-backed variants[] provided by /api/directory. */
-function buildAllRows() {
-  const coll = loadCollection();
-  const rows = [];
-  for (const [name, info] of Object.entries(SPRITE_DIR)) {
-    const maxLevel = info.max_level || 5;
-    const variants = info.variants || [];
-    for (const v of variants) {
-      const variant = v.variant;
-      const key  = name + '||' + variant;
-      const entry = coll[key];
-      const owned = !!entry;
-      let level    = owned ? entry.level : 0;
-      let summoned = owned ? !!entry.summoned : false;
-      let mastered = owned ? !!entry.mastered : false;
-      if (owned && !summoned) level = 1;
-      if (owned && level === 5 && maxLevel === 5) mastered = true;
-      rows.push({
-        key,
-        name,
-        variant,
-        rarity:     info.rarity,
-        ability:    info.ability,
-        levels:     info.levels,
-        max_level:  maxLevel,
-        cost:       v.cost || 0,
-        image:      v.image || null,
-        owned,
-        level,
-        summoned,
-        mastered,
-        status:     owned ? computeStatus(level, mastered, summoned) : null,
-      });
-    }
-  }
-  rows.sort((a, b) => {
-    const ra = RARITY_ORDER.indexOf(a.rarity), rb = RARITY_ORDER.indexOf(b.rarity);
-    if (ra !== rb) return ra - rb;
-    if (a.name !== b.name) return a.name < b.name ? -1 : 1;
-    return (VARIANT_ORDER[a.variant]||0) - (VARIANT_ORDER[b.variant]||0);
-  });
-  return rows;
-}
-
-/* ════════════════════════════════════════════════════════════
-   Dust
-════════════════════════════════════════════════════════════ */
-function onDustChange() {
-  myDust = parseInt(document.getElementById('myDustInput').value)||0;
-  localStorage.setItem('myDust', myDust);
-  renderCalculator();
-}
-
-/* ════════════════════════════════════════════════════════════
-   Tabs / Filters / Sort
-════════════════════════════════════════════════════════════ */
-function switchTab(name, btn) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('tab-'+name).classList.add('active');
-  document.querySelectorAll('.tab-btn, .mnav-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.tab === name);
-  });
-}
-function setFilter(mode, btn) {
-  if (mode === 'all') { activeFilters.clear(); updateFilterButtons(); render(); return; }
-  // "Not Owned" is fully exclusive — it can't stack with any other filter
-  if (mode === 'unowned') {
-    if (activeFilters.has('unowned')) activeFilters.delete('unowned');
-    else { activeFilters.clear(); activeFilters.add('unowned'); }
-    updateFilterButtons(); render(); return;
-  }
-  activeFilters.delete('unowned');   // any other filter clears Not Owned
-  if (activeFilters.has(mode)) {
-    activeFilters.delete(mode);            // toggle off
-  } else {
-    // drop any conflicting filter in the same mutually-exclusive group
-    const grp = FILTER_GROUPS[mode];
-    [...activeFilters].forEach(f => { if (FILTER_GROUPS[f] === grp) activeFilters.delete(f); });
-    activeFilters.add(mode);
-  }
-  updateFilterButtons();
-  render();
-}
-function updateFilterButtons() {
-  document.querySelectorAll('[data-filter]').forEach(b => {
-    b.classList.toggle('active', b.dataset.filter === 'all' ? activeFilters.size === 0 : activeFilters.has(b.dataset.filter));
-  });
-}
-function setRarity(r, btn) {
-  if (r === rarityFilter) {
-    r = '';
-  }
-  rarityFilter = r || null;
-  const sel = document.getElementById('raritySelect');
-  if (sel) sel.value = r || '';
-  document.querySelectorAll('.rarity-filter').forEach(b => b.classList.remove('active-Rare','active-Epic','active-Legendary','active-Mythic'));
-  if (btn && r) btn.classList.add('active-' + r);
-  render();
-}
-function setSort(mode, btn) {
-  sortMode = mode;
-  render();
-}
-function setSearch(value) {
-  searchQuery = (value || '').trim().toLowerCase();
-  render();
-}
-function clearSearch() {
-  searchQuery = '';
-  const input = document.getElementById('spriteSearch');
-  if (input) input.value = '';
-  render();
-}
-function matchesSearch(row, query) {
-  const haystack = [
-    row.name,
-    row.ability,
-    row.variant,
-    row.rarity,
-    row.status ? row.status.text : '',
-    Object.values(row.levels || {}).join(' '),
-  ].join(' ').toLowerCase();
-  return haystack.includes(query);
-}
-
-/* ════════════════════════════════════════════════════════════
-   Sort helper
-════════════════════════════════════════════════════════════ */
-function applySort(rows) {
-  const VO = ALL_VARIANTS;
-  if (sortMode === 'default') {
-    return [...rows].sort((a,b) =>
-      RARITY_ORDER.indexOf(a.rarity) - RARITY_ORDER.indexOf(b.rarity) ||
-      a.name.localeCompare(b.name) ||
-      VO.indexOf(a.variant) - VO.indexOf(b.variant)
-    );
-  }
-  if (sortMode === 'lvl-desc') return [...rows].sort((a,b) => b.level - a.level || a.name.localeCompare(b.name));
-  if (sortMode === 'lvl-asc')  return [...rows].sort((a,b) => a.level - b.level || a.name.localeCompare(b.name));
-  if (sortMode === 'mastered')
-    return [...rows].sort((a,b) => (b.mastered?1:0)-(a.mastered?1:0) || b.level-a.level || a.name.localeCompare(b.name));
-  return rows;
-}
-
-/* ════════════════════════════════════════════════════════════
-   Render collection
-════════════════════════════════════════════════════════════ */
-function render() {
-  let rows = allRows;
-  if (searchQuery) rows = rows.filter(r => matchesSearch(r, searchQuery));
-  if (rarityFilter)             rows = rows.filter(r => r.rarity === rarityFilter);
-  for (const f of activeFilters) {
-    if (f === 'owned')       rows = rows.filter(r => r.owned);
-    else if (f === 'unowned')     rows = rows.filter(r => !r.owned);
-    else if (f === 'mastered')   rows = rows.filter(r => r.owned && r.mastered);
-    else if (f === 'notmastered') rows = rows.filter(r => r.owned && !r.mastered);
-    else if (f === 'summoned')   rows = rows.filter(r => r.owned && r.summoned);
-    else if (f === 'indexed')     rows = rows.filter(r => r.owned && !r.summoned);
-  }
-
-  if (!rows.length) {
-    const msg = searchQuery
-      ? `<div class="center-msg">No sprites match “${esc(searchQuery)}”.</div>`
-      : '<div class="center-msg">No sprites match the current filter.</div>';
-    document.getElementById('list').innerHTML = msg;
-    return;
-  }
-
-  // Group into per-sprite subcategories
-  const groups = {};
-  for (const r of rows) (groups[r.name] = groups[r.name] || []).push(r);
-
-  const names = orderGroups(groups);
-  let html = '';
-    for (const name of names) {
-      const g = groups[name];
-      g.sort((a, b) => VARIANT_ORDER[a.variant] - VARIANT_ORDER[b.variant]);
-      const rarity  = g[0].rarity;
-      const display = name.replace(/\s+Sprite$/, '');
-      const allOwned = g.every(r => r.owned);
-      const allMastered = g.every(r => r.mastered);
-      html += `<div class="sprite-group">
-        <div class="sprite-group-head">
-          <span class="sprite-group-name">${esc(display)}</span>
-          <span class="sprite-group-rar ${rarity}">${RARITY_ICONS[rarity]} ${rarity}</span>
-           <button class="group-add-btn" ${allOwned?'disabled':''} onclick="addSpriteVariants('${jsAttr(name)}')" title="Add all variants of this sprite to your collection">＋ Add All Variants</button>
-           <button class="group-master-btn" ${allMastered?'disabled':''} onclick="masterAllSpriteVariants('${jsAttr(name)}')" title="Add all variants and set them to Level 5 Mastered">★ Master All</button>
-        </div>
-        <div class="card-grid">${g.map(buildCard).join('')}</div>
-      </div>`;
-    }
-  document.getElementById('list').innerHTML = html;
-
-  // Trigger image load animations with blur-up effect
-  requestAnimationFrame(() => {
-    document.querySelectorAll('.card-media img:not(.loaded)').forEach(img => {
-      if (img.complete) {
-        img.classList.add('loaded');
-      } else {
-        img.addEventListener('load', () => img.classList.add('loaded'), { once: true });
-        img.addEventListener('error', () => img.classList.add('loaded'), { once: true });
-      }
-    });
-  });
-}
-
-/* Order the sprite subcategories by the active sort */
-function orderGroups(groups) {
-  const names = Object.keys(groups);
-  if (sortMode === 'lvl-desc' || sortMode === 'lvl-asc') {
-    const dir = sortMode === 'lvl-desc' ? -1 : 1;
-    return names.sort((a, b) => dir * (groupMaxLvl(groups[b]) - groupMaxLvl(groups[a])) || a.localeCompare(b));
-  }
-  if (sortMode === 'mastered') {
-    return names.sort((a, b) =>
-      (groupHasMast(groups[b]) - groupHasMast(groups[a])) ||
-      RARITY_ORDER.indexOf(groups[a][0].rarity) - RARITY_ORDER.indexOf(groups[b][0].rarity) ||
-      a.localeCompare(b));
-  }
-  // default / owned / unowned — by rarity then name
-  return names.sort((a, b) =>
-    RARITY_ORDER.indexOf(groups[a][0].rarity) - RARITY_ORDER.indexOf(groups[b][0].rarity) ||
-    a.localeCompare(b));
-}
-function groupMaxLvl(g)  { return Math.max(0, ...g.map(r => r.owned ? r.level : 0)); }
-function groupHasMast(g) { return g.some(r => r.mastered) ? 1 : 0; }
-
-function buildCard(row) {
-  const key        = row.key;
-  const maxLvl     = row.max_level || 5;
-  const owned      = row.owned;
-  const displayName = row.name.replace(/\s+Sprite$/, '');
-  const media      = row.image
-    ? `<img src="${esc(row.image)}" alt="${esc(row.variant)}" loading="lazy" decoding="async" />`
-    : `<span class="placeholder">${esc(displayName[0]||'?')}</span>`;
-
-  let pips = '';
-  for (let i = 1; i <= maxLvl; i++) {
-    const lit     = owned && i <= row.level;
-    const mastPip = lit && row.mastered && i === row.level;
-    pips += `<span class="pip ${lit?'lit':''} ${mastPip?'mast':''}"></span>`;
-  }
-
-  const crown = (owned && row.mastered) ? `<div class="card-crown" title="Mastered">👑</div>` : '';
-  const check = owned ? `<div class="card-check" title="Collected">✓</div>` : '';
-  const summBadge = (owned && row.summoned) ? `<div class="card-summ-badge" title="Summoned">⚡</div>` : '';
-  const indexedBadge = (owned && !row.summoned) ? `<div class="card-indexed-badge" title="Indexed">📦</div>` : '';
-  const statusIcons = owned ? `<div class="card-status-icons">${check}${summBadge}${indexedBadge}</div>` : '';
-  const cls   = ['sprite-card', owned?'':'unowned', (owned&&row.mastered)?'is-mastered':''].filter(Boolean).join(' ');
-  const lvlText = owned ? `Lv ${row.level}` : '—';
-
-  const statusHtml = owned && row.status
-    ? `<div class="card-status ${row.status.cls}"><span>${row.status.icon}</span><span>${esc(row.status.text)}</span></div>`
-    : `<div class="card-status unowned">Not collected</div>`;
-
-  const addBtn = owned ? '' : `<button type="button" class="card-add-btn" onclick="addVariant(event,'${jsAttr(key)}')" title="Add ${esc(row.variant)} ${esc(displayName)} to your collection">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
-    Add
-  </button>`;
-
-  const summonToggle = owned ? `<button type="button" class="card-toggle ${row.summoned?'summoned':''}" onclick="cardToggleSummoned(event,'${jsAttr(key)}')" title="${row.summoned?'Switch to Indexed':'Switch to Summoned'}">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-    ${row.summoned ? 'Summoned' : 'Indexed'}
-  </button>` : '';
-
-  return `<div class="${cls}" onclick="openCard('${jsAttr(key)}')">
-    <div class="card-media">${media}${crown}${statusIcons}</div>
-    <div class="card-body">
-      <div class="card-name" title="${esc(displayName)}">${esc(displayName)}</div>
-      <span class="v-chip v-${esc(row.variant)} card-variant">${variantIcon(row.variant)} ${esc(row.variant)}</span>
-      <div class="card-foot">
-        <div class="card-pips">${pips}</div>
-        <div class="card-lvl">${lvlText}</div>
-      </div>
-      <div class="card-cost">💨 ${row.cost.toLocaleString()} Dust</div>
-      ${statusHtml}
-      ${addBtn}
-      ${summonToggle}
-    </div>
-  </div>`;
-}
-
-/* Indexed ↔ Summoned toggle directly on a collection card.
-   Stops the click from also opening the detail modal. */
-async function cardToggleSummoned(event, key) {
-  event.stopPropagation();
-  const row = allRows.find(r => r.key === key);
-  if (!row || !row.owned) return;
-  await toggleSummoned(key, !row.summoned);
-}
-
-/* ════════════════════════════════════════════════════════════
-   Sprite detail modal (opened by clicking a card)
-════════════════════════════════════════════════════════════ */
-let modalKey = null;
-let modalGummyOverride = null; // null=auto, true=force +20%, false=force off
-
-function openCard(key) {
-  modalKey = key;
-  modalGummyOverride = null;
-  renderModalContent(key);
-  document.getElementById('spriteModal').classList.add('show');
-  document.body.style.overflow = 'hidden';
-}
-function closeCard() {
-  modalKey = null;
-  document.getElementById('spriteModal').classList.remove('show');
-  document.body.style.overflow = '';
-}
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCard(); });
-
-/* Swipe-to-dismiss for mobile modal */
-(function() {
-  let startY = 0;
-  let currentY = 0;
-  let isDragging = false;
-  const modal = document.getElementById('spriteModal');
-  const card = document.getElementById('spriteModalCard');
-
-  if (!modal || !card) return;
-
-  modal.addEventListener('touchstart', (e) => {
-    if (e.target.closest('.modal-card') && card.scrollTop === 0) {
-      startY = e.touches[0].clientY;
-      isDragging = true;
-      card.style.transition = 'none';
-    }
-  }, { passive: true });
-
-  modal.addEventListener('touchmove', (e) => {
-    if (!isDragging) return;
-    currentY = e.touches[0].clientY;
-    const deltaY = currentY - startY;
-    if (deltaY > 0) {
-      card.style.transform = `translateY(${deltaY}px)`;
-      card.style.opacity = Math.max(0.4, 1 - deltaY / 400);
-    }
-  }, { passive: true });
-
-  modal.addEventListener('touchend', () => {
-    if (!isDragging) return;
-    isDragging = false;
-    card.style.transition = 'transform 0.25s ease, opacity 0.25s ease';
-    const deltaY = currentY - startY;
-    if (deltaY > 120) {
-      closeCard();
-    }
-    card.style.transform = '';
-    card.style.opacity = '';
-    startY = 0;
-    currentY = 0;
-  });
-})();
-
-function renderModalContent(key) {
-  const row  = allRows.find(r => r.key === key);
-  if (!row) return;
-  const card = document.getElementById('spriteModalCard');
-  const maxLvl = row.max_level || 5;
-  const owned = row.owned, lvl = row.level, mast = row.mastered, summ = row.summoned;
-  const mastForced = owned && lvl === 5 && maxLvl === 5;
-
-  // Level buttons
-  let lvlBtns = '';
-  for (let i = 1; i <= 5; i++) {
-    if (i > maxLvl) { lvlBtns += `<button class="lvl-btn hidden-btn" disabled></button>`; continue; }
-    const isLit    = owned && i <= lvl;
-    const noSummon = owned && !summ && i > 1;
-    const disabled = !owned || noSummon;
-    const ttip     = noSummon ? `Level ${i} (enable Summoned first)` : `Level ${i}`;
-    lvlBtns += `<button class="${isLit?'lvl-btn lit':'lvl-btn'}" ${disabled?'disabled':''}
-      onclick="mSetLevel('${jsAttr(key)}',${i})" title="${ttip}">${i===5?'5':i}</button>`;
-  }
-
-  const mastChecked = owned && mast;
-  const mastLbl    = mastForced ? '★ (Lv 5)' : (mastChecked ? '★ Yes' : '☆ No');
-  const mastCls    = mastForced ? 'mast-label forced' : (mastChecked ? 'mast-label on' : 'mast-label');
-  const mastTitle  = mastForced
-    ? 'Automatically mastered at Level 5'
-    : 'Click to mark this sprite as Mastered (independent of level)';
-
-  // Ability progression
-  let prog = '';
-  for (let i = 1; i <= maxLvl; i++) {
-    const isMax  = (i === maxLvl);
-    const isMast = isMax && maxLvl === 5;
-    const numCls = isMast ? 'm' : (isMax ? 'cap' : '');
-    const dscCls = isMast ? 'm' : (isMax ? 'cap' : '');
-    const icon   = isMast ? '★' : i;
-    prog += `<div class="lvl-desc-row">
-      <div class="lvl-num ${numCls}">${icon}</div>
-      <div class="lvl-desc ${dscCls}">${esc((row.levels && row.levels[i]) || '')}</div>
-    </div>`;
-  }
-
-  const media = row.image
-    ? `<img src="${esc(row.image)}" alt="${esc(row.variant)}" loading="lazy" decoding="async" />`
-    : `<span style="font-size:2rem;font-weight:800;color:#fff">${esc(row.name[0]||'?')}</span>`;
-  const displayName = row.name.replace(/\s+Sprite$/, '');
-  const yieldHtml   = buildYieldHtml(row);
-  const variantPerk = (VPERKS && VPERKS[row.variant]) || '';
-  // Variant ability block — shown for non-Normal variants that carry a perk
-  const variantAbilityHtml = (row.variant !== 'Normal' && variantPerk)
-    ? `<div class="sm-ability-label">Variant Ability — ${esc(row.variant)}</div>
-       <div class="sm-variant-ability">
-         <span class="sm-va-chip">${variantIcon(row.variant)} ${esc(row.variant)}</span>${esc(variantPerk)}
-       </div>`
-    : '';
-
-  card.innerHTML = `
-    <button class="modal-close" onclick="closeCard()" aria-label="Close">✕</button>
-    <div class="sm-header">
-      <div class="sm-thumb" style="background:${variantColor(row.variant)}">${media}</div>
-      <div class="sm-meta">
-        <div class="sm-title">${esc(displayName)}</div>
-        <span class="v-chip v-${esc(row.variant)}">${variantIcon(row.variant)} ${esc(row.variant)}</span>
-        <span class="t-cost-badge" style="margin-left:4px">💨 ${row.cost.toLocaleString()} Dust</span>
-      </div>
-    </div>
-    <div class="sm-ability-label">Base Ability</div>
-    <p class="sm-ability">${esc(row.ability)}</p>
-    ${variantAbilityHtml}
-    <label class="sm-owned">
-      <input type="checkbox" ${owned?'checked':''} onchange="mToggleOwned('${jsAttr(key)}',this.checked)" />
-      <span>${owned ? 'Collected — tap to remove' : 'Mark as Collected'}</span>
-    </label>
-    <div class="sm-section">
-      <div class="sm-label">LEVEL</div>
-      <div class="lvl-selector" style="margin-top:8px">${lvlBtns}</div>
-    </div>
-    <div class="sm-section sm-toggle-row">
-      <div class="mast-col">
-        <input type="checkbox" class="mast-check" ${mastChecked?'checked':''} ${(!owned||mastForced)?'disabled':''}
-          onchange="mToggleMastered('${jsAttr(key)}',this.checked)" title="${esc(mastTitle)}" />
-        <span class="${mastCls}">${mastLbl}</span>
-      </div>
-      <div class="s-toggle">
-        <label class="tgl">
-          <input type="checkbox" ${summ?'checked':''} ${owned?'':'disabled'}
-            onchange="mToggleSummoned('${jsAttr(key)}',this.checked)" />
-          <span class="tgl-sl"></span>
-        </label>
-        <span class="s-lbl ${summ?'on':''}">${summ?'Summoned':'Indexed (Lv 1)'}</span>
-      </div>
-      <div class="s-toggle">
-        <label class="tgl">
-          <input type="checkbox" ${modalGummyOverride!==false?'checked':''}
-            onchange="modalGummyOverride=this.checked; refreshModal();" />
-          <span class="tgl-sl"></span>
-        </label>
-        <span class="s-lbl ${modalGummyOverride!==false?'on':''}">🍬 +20% Gummy</span>
-      </div>
-    </div>
-    <div class="sm-section">
-      <div class="sm-label">ABILITY PROGRESSION</div>
-      <div class="lvl-desc-rows" style="margin-top:8px">${prog}</div>
-    </div>
-    ${yieldHtml ? `<div class="sm-section">${yieldHtml}</div>` : ''}
-  `;
-}
-
-function refreshModal() { if (modalKey) renderModalContent(modalKey); }
-async function mSetLevel(k, l)      { await setLevel(k, l);          refreshModal(); }
-async function mToggleMastered(k, m) { await toggleMastered(k, m);    refreshModal(); }
-async function mToggleSummoned(k, s) { await toggleSummoned(k, s);    refreshModal(); }
-async function mToggleOwned(k, o)    { await toggleOwned(k, o);       refreshModal(); }
-
-function buildYieldHtml(row) {
-  if (!row.owned) return '';
-  const yld     = computeYield(row);
-  const isGummy = row.variant === 'Gummy';
-  let cls = 'yield-hint';
-  let txt = `📤 Est. Yield: ${yld.toLocaleString()} Dust`;
-  if (!row.summoned) {
-    cls = 'yield-hint inactive';
-    txt = `📤 Indexed yield: ${yld.toLocaleString()} Dust (Lv 1)`;
-  } else if (modalGummyOverride === true || (modalGummyOverride === null && gummySummoned() && !isGummy)) {
-    const boosted = Math.round(yld * 1.20);
-    const delta = boosted - yld;
-    cls = 'yield-hint gummy-boost';
-    txt = `📤 Est. Yield: ${yld.toLocaleString()} Dust + ${delta.toLocaleString()} Dust (20%) = ${boosted.toLocaleString()} Dust`;
-  }
-  return `<div class="${cls}">${txt}</div>`;
-}
-
-/* ════════════════════════════════════════════════════════════
-   Actions
-════════════════════════════════════════════════════════════ */
-async function toggleOwned(key, checked) {
-  if (checked) await upsert(key, 1, false, false);
-  else         await remove(key);
-}
-
-async function setLevel(key, level) {
-  const row = allRows.find(r => r.key === key);
-  if (!row || !row.owned) return;
-  const maxLevel = row.max_level || 5;
-  if (level > maxLevel) return;
-  // Level 5 (when max is 5) forces mastered; keep existing mastered otherwise
-  const newMastered = (level === 5 && maxLevel === 5) ? true : row.mastered;
-  await upsert(key, level, row.summoned, newMastered);
-}
-
-async function toggleMastered(key, mastered) {
-  const row = allRows.find(r => r.key === key);
-  if (!row || !row.owned) return;
-  await upsert(key, row.level, row.summoned, mastered);
-}
-
-async function toggleSummoned(key, summoned) {
-  const row = allRows.find(r => r.key === key);
-  if (!row || !row.owned) return;
-  // If unsummoning, level must drop to 1 (indexed state)
-  const newLevel = summoned ? row.level : 1;
-  await upsert(key, newLevel, summoned, row.mastered);
-}
-
-function upsert(key, level, summoned, mastered) {
-  const row = allRows.find(r => r.key === key);
-  if (!row) return;
-  const maxLevel = row.max_level || 5;
-  if (!summoned) level = 1;
-  if (level === 5 && maxLevel === 5) mastered = true;
-
-  const coll = loadCollection();
-  coll[key] = { level, summoned, mastered };
-  saveCollection(coll);
-
-  row.owned    = true;
-  row.level    = level;
-  row.summoned = summoned;
-  row.mastered = mastered;
-  row.status   = computeStatus(level, mastered, summoned);
-
-  // Re-render so filters (e.g. a sprite leaving a "mastered" view) stay correct
-  render();
-  refreshStats();
-  renderCalculator();
-}
-
-function remove(key) {
-  const coll = loadCollection();
-  delete coll[key];
-  saveCollection(coll);
-
-  const row = allRows.find(r => r.key === key);
-  if (row) { row.owned=false; row.level=0; row.summoned=false; row.mastered=false; row.status=null; }
-  render();
-  refreshStats();
-  renderCalculator();
-}
-
-/* ════════════════════════════════════════════════════════════
-   Refresh helpers
-════════════════════════════════════════════════════════════ */
-function refreshStats() {
-  const owned = allRows.filter(r => r.owned);
-  const mast  = owned.filter(r => r.mastered).length;
-  const summ  = owned.filter(r => r.summoned).length;
-  const worth = owned.reduce((s, r) => s + r.cost, 0);
-  document.getElementById('sTotal').textContent      = owned.length;
-  document.getElementById('sMastered').textContent   = mast;
-  document.getElementById('sSummoned').textContent   = summ;
-  document.getElementById('sUnsummoned').textContent = owned.length - summ;
-  document.getElementById('dustWorth').textContent   = worth.toLocaleString();
-
-  const dw = document.getElementById('dashWorth');      if (dw) dw.textContent = worth.toLocaleString() + ' Dust';
-  const dwS = document.getElementById('dashWorthSub');  if (dwS) dwS.textContent = `${owned.length} / ${TOTAL_VARS} variants`;
-  const dO = document.getElementById('dashOwned');      if (dO) dO.textContent = owned.length;
-  const dM = document.getElementById('dashMast');       if (dM) dM.textContent = mast;
-  const dMs = document.getElementById('dashMastSub');   if (dMs) dMs.textContent = `${mast} / ${owned.length} owned`;
-  const dS = document.getElementById('dashSumm');       if (dS) dS.textContent = summ;
-  const dU = document.getElementById('dashUnsumm');     if (dU) dU.textContent = `${owned.length - summ} not summoned`;
-
-  updateProgressBars(owned.length, mast);
-  if (variantProgressOpen) renderVariantProgress();
-  if (perVariantProgressOpen) renderPerVariantProgress();
-}
-
-function updateProgressBars(owned, mastered) {
-  const total   = TOTAL_VARS;
-  const collPct = total   ? Math.round(owned   / total   * 100) : 0;
-  const mastPct = owned   ? Math.round(mastered / owned   * 100) : 0;
-  document.getElementById('collProgFill').style.width  = collPct + '%';
-  document.getElementById('mastProgFill').style.width  = mastPct + '%';
-  document.getElementById('collProgLabel').textContent = `COLLECTION: ${owned} / ${total} VARIANTS`;
-  document.getElementById('mastProgLabel').textContent = `MASTERED: ${mastered} / ${owned} OWNED`;
-  document.getElementById('collProgPct').textContent   = collPct + '%';
-  document.getElementById('mastProgPct').textContent   = mastPct + '%';
-}
-
-function computeStatus(level, mastered, summoned) {
-  if (mastered && summoned)  return {icon:'👑', text:'Mastered & Summoned',    cls:'status-crown'};
-  if (mastered && !summoned) return {icon:'🔒', text:'Mastered — Not Summoned',cls:'status-mastered-locked'};
-  if (summoned)              return {icon:'🏃', text:`Summoned (Level ${level})`, cls:'status-active'};
-  return                            {icon:'📦', text:'Indexed (Level 1)',       cls:'status-indexed'};
-}
-
-/* ════════════════════════════════════════════════════════════
-   Dashboard — Sprite Variant Progress
-════════════════════════════════════════════════════════════ */
-let variantProgressOpen = false;
-
-function toggleVariantProgress() {
-  variantProgressOpen = !variantProgressOpen;
-  const btn    = document.getElementById('dashVariantToggle');
-  const panel  = document.getElementById('variantProgressPanel');
-  btn.classList.toggle('open', variantProgressOpen);
-  if (panel) panel.style.display = variantProgressOpen ? 'block' : 'none';
-  if (variantProgressOpen) renderVariantProgress();
-}
-
-function renderVariantProgress() {
-  const container = document.getElementById('variantProgressContent');
-  if (!container) return;
-
-  const spriteNames = Object.keys(SPRITE_DIR).sort((a, b) => {
-    const ra = RARITY_ORDER.indexOf(SPRITE_DIR[a].rarity);
-    const rb = RARITY_ORDER.indexOf(SPRITE_DIR[b].rarity);
-    return ra !== rb ? ra - rb : a.localeCompare(b);
-  });
-
-  let html = '';
-  for (const name of spriteNames) {
-    const info = SPRITE_DIR[name];
-    const variants = (info.variants || []).map(v => v.variant);
-    const ownedCount = variants.filter(v => allRows.some(r => r.name === name && r.variant === v && r.owned)).length;
-    const mastCount  = variants.filter(v => allRows.some(r => r.name === name && r.variant === v && r.mastered)).length;
-    const total      = variants.length;
-    const ownedPct   = total ? Math.round((ownedCount / total) * 100) : 0;
-    const mastPct    = total ? Math.round((mastCount  / total) * 100) : 0;
-    const displayName = name.replace(/\s+Sprite$/, '');
-
-    html += `<div class="variant-progress-row">
-      <div class="vp-header">
-        <span class="vp-name">${esc(displayName)}</span>
-        <span class="vp-rarity ${info.rarity}">${info.rarity}</span>
-      </div>
-      <div class="vp-bars">
-        <div class="vp-bar-row">
-          <span class="vp-bar-label">Owned</span>
-          <div class="vp-bar-track"><div class="vp-bar-fill owned" style="width:${ownedPct}%"></div></div>
-          <span class="vp-bar-pct">${ownedCount}/${total}</span>
-        </div>
-        <div class="vp-bar-row">
-          <span class="vp-bar-label">Mastered</span>
-          <div class="vp-bar-track"><div class="vp-bar-fill mastered" style="width:${mastPct}%"></div></div>
-          <span class="vp-bar-pct">${mastCount}/${total}</span>
-        </div>
-      </div>
-    </div>`;
-  }
-
-  container.innerHTML = html;
-}
-
-let perVariantProgressOpen = false;
-
-function togglePerVariantProgress() {
-  perVariantProgressOpen = !perVariantProgressOpen;
-  const btn    = document.getElementById('dashPerVariantToggle');
-  const panel  = document.getElementById('perVariantProgressPanel');
-  btn.classList.toggle('open', perVariantProgressOpen);
-  if (panel) panel.style.display = perVariantProgressOpen ? 'block' : 'none';
-  if (perVariantProgressOpen) renderPerVariantProgress();
-}
-
-function renderPerVariantProgress() {
-  const container = document.getElementById('perVariantProgressContent');
-  if (!container) return;
-
-  const variantTypes = ["Normal", "Gold", "Gummy", "Galaxy", "Cube", "Holofoil", "Gem", "Quack"];
-
-  let html = '';
-  for (const variant of variantTypes) {
-    const totalSprites = Object.keys(SPRITE_DIR).length;
-    const ownedCount   = allRows.filter(r => r.variant === variant && r.owned).length;
-    const mastCount    = allRows.filter(r => r.variant === variant && r.mastered).length;
-    const totalExists  = allRows.filter(r => r.variant === variant).length;
-    const ownedPct     = totalExists ? Math.round((ownedCount / totalExists) * 100) : 0;
-    const mastPct      = totalExists ? Math.round((mastCount  / totalExists) * 100) : 0;
-
-    html += `<div class="variant-progress-row">
-      <div class="vp-header">
-        <span class="vp-name">${variantIcon(variant)} ${variant}</span>
-      </div>
-      <div class="vp-bars">
-        <div class="vp-bar-row">
-          <span class="vp-bar-label">Owned</span>
-          <div class="vp-bar-track"><div class="vp-bar-fill owned" style="width:${ownedPct}%"></div></div>
-          <span class="vp-bar-pct">${ownedCount}/${totalExists}</span>
-        </div>
-        <div class="vp-bar-row">
-          <span class="vp-bar-label">Mastered</span>
-          <div class="vp-bar-track"><div class="vp-bar-fill mastered" style="width:${mastPct}%"></div></div>
-          <span class="vp-bar-pct">${mastCount}/${totalExists}</span>
-        </div>
-      </div>
-    </div>`;
-  }
-
-  container.innerHTML = html;
-}
-
-/* Add every variant of a single sprite (e.g. all Water Sprite variants) to the collection */
-function addSpriteVariants(spriteName) {
-  let added = 0;
-  allRows.forEach(r => {
-    if (r.name === spriteName && !r.owned) { upsert(r.key, 1, false, false); added++; }
-  });
-  render(); refreshStats(); renderCalculator();
-  if (added > 0) showToast(`Added all ${added} variant${added>1?'s':''} of ${spriteName.replace(/\s+Sprite$/, '')} to your collection.`, 'ok');
-}
-
-/* Add every variant of a single sprite and set them all to max level + mastered */
-function masterAllSpriteVariants(spriteName) {
-  let updated = 0;
-  allRows.forEach(r => {
-    if (r.name === spriteName) {
-      const maxLevel = r.max_level || 5;
-      upsert(r.key, maxLevel, true, true);
-      updated++;
-    }
-  });
-  render(); refreshStats(); renderCalculator();
-  if (updated > 0) showToast(`Mastered all ${updated} variants of ${spriteName.replace(/\s+Sprite$/, '')}.`, 'ok');
-}
-
-/* Add a single variant to the collection from the card button */
-async function addVariant(event, key) {
-  event.stopPropagation();
-  const row = allRows.find(r => r.key === key);
-  if (!row || row.owned) return;
-  await upsert(key, 1, false, false);
-  render(); refreshStats(); renderCalculator();
-  showToast(`Added ${row.variant} ${row.name.replace(/\s+Sprite$/, '')} to collection.`, 'ok');
-}
-
-/* ══════════════════════════════════════════════════════════
-   Terminal
-════════════════════════════════════════════════════════════ */
-function renderTerminal() {
-  document.getElementById('terminalGrid').innerHTML = TERMINAL.map((s,i) => {
-    const qty = basketQty[i] || 0;
-    return `<div class="t-card">
-      <div class="t-card-header">
-        <div class="t-name">${esc(s.name)}</div>
-        <div class="t-cost-badge">${s.cost.toLocaleString()} Dust</div>
-      </div>
-      <div class="t-cat">${esc(s.category)}</div>
-      ${s.limit ? `<div class="t-limit">⏰ ${esc(s.limit)}</div>` : ''}
-      <div class="t-qty-row">
-        <button class="t-qty-btn" onclick="adjustQty(${i},-1)">−</button>
-        <span class="t-qty" id="qty-${i}">${qty}</span>
-        <button class="t-qty-btn" onclick="adjustQty(${i},1)">+</button>
-        <span class="t-row-total" id="trow-${i}">${qty ? '= '+(qty*s.cost).toLocaleString()+' Dust' : ''}</span>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function adjustQty(i, delta) {
-  const s   = TERMINAL[i];
-  const max = s.limit ? 1 : 99;
-  basketQty[i] = Math.max(0, Math.min(max, (basketQty[i]||0) + delta));
-  localStorage.setItem('basket', JSON.stringify(basketQty));
-  document.getElementById('qty-'+i).textContent = basketQty[i];
-  const tot = basketQty[i] * s.cost;
-  document.getElementById('trow-'+i).textContent = tot ? '= '+tot.toLocaleString()+' Dust' : '';
-  renderCalculator();
-}
-
-/* ════════════════════════════════════════════════════════════
-   Calculator
-════════════════════════════════════════════════════════════ */
-function renderCalculator() {
-  const owned = allRows.filter(r => r.owned);
-  const byRarity = {};
-  for (const r of owned) byRarity[r.rarity] = (byRarity[r.rarity]||0) + r.cost;
-  const collTotal = owned.reduce((s,r) => s+r.cost, 0);
-
-  let collLines = '';
-  if (!owned.length) {
-    collLines = '<div class="calc-empty">No sprites owned yet.</div>';
-  } else {
-    for (const rar of RARITY_ORDER) {
-      if (!byRarity[rar]) continue;
-      collLines += `<div class="calc-line"><span class="cl">${RARITY_ICONS[rar]} ${rar}</span><span class="cr">${byRarity[rar].toLocaleString()} Dust</span></div>`;
-    }
-    collLines += `<div class="calc-line"><span class="cl">Owned variants</span><span class="cr">${owned.length}</span></div>`;
-  }
-  document.getElementById('calcCollectionLines').innerHTML = collLines;
-  document.getElementById('calcTotalWorth').textContent    = collTotal.toLocaleString() + ' Dust';
-  document.getElementById('dustWorth').textContent         = collTotal.toLocaleString();
-
-  let basketTotal = 0, termLines = '', hasItems = false;
-  for (const [i, qty] of Object.entries(basketQty)) {
-    if (!qty) continue;
-    hasItems = true;
-    const s = TERMINAL[i], sub = qty * s.cost;
-    basketTotal += sub;
-    termLines += `<div class="calc-line"><span class="cl">${esc(s.name)} ×${qty}</span><span class="cr">${sub.toLocaleString()} Dust</span></div>`;
-  }
-  if (!hasItems) termLines = '<div class="calc-empty">Nothing in basket — add services on the Terminal tab.</div>';
-  document.getElementById('calcTerminalLines').innerHTML = termLines;
-  document.getElementById('calcTerminalTotal').textContent = basketTotal.toLocaleString() + ' Dust';
-  document.getElementById('dustBasket').textContent        = basketTotal.toLocaleString();
-
-  const affEl = document.getElementById('affordNote');
-  if (hasItems && myDust > 0) {
-    affEl.style.display = 'block';
-    if (myDust >= basketTotal) {
-      affEl.className   = 'afford-note can';
-      affEl.textContent = `✅ You can afford this! ${(myDust-basketTotal).toLocaleString()} Dust remaining after purchase.`;
-      document.getElementById('calcTerminalTotal').className = 'ct-val ok';
-    } else {
-      affEl.className   = 'afford-note cannot';
-      affEl.textContent = `❌ You need ${(basketTotal-myDust).toLocaleString()} more Dust to afford this basket.`;
-      document.getElementById('calcTerminalTotal').className = 'ct-val over';
-    }
-  } else {
-    affEl.style.display = 'none';
-    document.getElementById('calcTerminalTotal').className = 'ct-val';
-  }
-}
-
-/* ════════════════════════════════════════════════════════════
-   Extraction Dust Calculator (standalone)
-════════════════════════════════════════════════════════════ */
-function populateEcSprite() {
-  const sel = document.getElementById('ecSprite');
-  if (!sel) return;
-  const names = Object.keys(SPRITE_DIR).sort();
-  sel.innerHTML = names.map(n => `<option value="${esc(n)}">${esc(n)}</option>`).join('');
-  onEcSpriteChange();
-}
-
-function onEcSpriteChange() {
-  const spriteName = document.getElementById('ecSprite')?.value;
-  const sprite     = SPRITE_DIR[spriteName];
-  if (!sprite) return;
-
-  // Populate variants from the sprite's actual available variants (image-backed)
-  const varSel  = document.getElementById('ecVariant');
-  const variants = (sprite.variants || []).map(v => v.variant);
-  varSel.innerHTML = variants.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join('');
-
-  // Populate levels 1..max_level
-  const lvlSel  = document.getElementById('ecLevel');
-  const maxLvl  = sprite.max_level || 5;
-  let lh = '';
-  for (let i = 1; i <= maxLvl; i++) lh += `<option value="${i}">${i}</option>`;
-  lvlSel.innerHTML = lh;
-  // Default to max level
-  lvlSel.value = String(maxLvl);
-}
-
-function addEcEntry() {
-  const spriteName = document.getElementById('ecSprite')?.value;
-  const variant    = document.getElementById('ecVariant')?.value;
-  const level      = parseInt(document.getElementById('ecLevel')?.value || '1');
-  const sprite     = SPRITE_DIR[spriteName];
-  if (!sprite || !variant) return;
-
-  const rarity   = sprite.rarity;
-  const maxLevel = sprite.max_level || 5;
-  const variantInfo = (sprite.variants || []).find(v => v.variant === variant);
-  const cost     = variantInfo ? variantInfo.cost : 0;
-
-  calcEntries.push({ spriteName, variant, rarity, level, maxLevel, cost });
-  renderEcEntries();
-}
-
-function removeEcEntry(idx) {
-  calcEntries.splice(idx, 1);
-  renderEcEntries();
-}
-
-function clearEcEntries() {
-  calcEntries = [];
-  renderEcEntries();
-}
-
-function renderEcEntries() {
-  const wrap  = document.getElementById('ecTableWrap');
-  const tots  = document.getElementById('ecTotals');
-  if (!wrap) return;
-
-  if (!calcEntries.length) {
-    wrap.innerHTML = '<div class="ec-empty">No sprites added yet. Use the controls above to build your extraction list.</div>';
-    if (tots) tots.style.display = 'none';
-    return;
-  }
-
-  let totalBase = 0, totalGummy = 0;
-  let rows = '';
-  calcEntries.forEach((e, i) => {
-    const base     = (EXTRACTION_BASE[e.rarity] || {})[e.level] || 0;
-    const withGum  = Math.round(base * 1.20);
-    totalBase  += base;
-    totalGummy += withGum;
-    const icon = RARITY_ICONS[e.rarity] || '';
-    rows += `<tr>
-      <td><b class="ec-sprite-name">${esc(e.spriteName)}</b>
-          <span class="ec-variant-sub">${icon} ${esc(e.variant)}</span></td>
-      <td><span class="ec-lvl-label">Lv ${e.level}</span></td>
-      <td class="ec-base">${base.toLocaleString()} Dust</td>
-      <td class="ec-gummy">${withGum.toLocaleString()} Dust
-          <span class="ec-gummy-delta">(+${(withGum-base).toLocaleString()})</span></td>
-      <td><button class="ec-rm" onclick="removeEcEntry(${i})">✕</button></td>
-    </tr>`;
-  });
-
-  wrap.innerHTML = `<table class="ec-table">
-    <thead><tr>
-      <th>SPRITE / VARIANT</th>
-      <th>LEVEL</th>
-      <th>BASE YIELD</th>
-      <th>WITH GUMMY (+20%)</th>
-      <th></th>
-    </tr></thead>
-    <tbody>${rows}</tbody>
-  </table>`;
-
-  if (tots) {
-    tots.style.display = 'grid';
-    const diff = totalGummy - totalBase;
-    document.getElementById('ecTotalBase').textContent  = totalBase.toLocaleString()  + ' Dust';
-    document.getElementById('ecTotalGummy').textContent = totalGummy.toLocaleString() + ' Dust';
-    document.getElementById('ecTotalDiff').textContent  = `+${diff.toLocaleString()} Dust extra with Gummy`;
-  }
-}
-
-const EXPORT_ICONS = {
-  mastered: '👑',
-  owned:    '✅',
-  lost:     '👻',
-  missing:  '❌',
-  unavailable: '🚫',
-};
-const EXPORT_HEADER_VARIANTS = ["Normal","Gold","Gummy","Galaxy","Holofoil","Gem","Cube","Quack"];
-const EXPORT_VARIANTS = EXPORT_HEADER_VARIANTS;
-const EXPORT_SPRITE_ORDER = [
-  "Water Sprite", "Earth Sprite", "Fire Sprite", "Fishy Sprite", "Air Sprite",
-  "Duck Sprite", "Ghost Sprite", "Demon Sprite", "King Sprite", "Aura Sprite",
-  "Striker Sprite", "Dream Sprite", "Punk Sprite", "Boss Sprite", "Seven Sprite",
-  "Batman Sprite", "Grim Reaper Sprite", "Zero Point Sprite", "Burnt Peanut Sprite",
-  "Vini Jr. Sprite", "Pollo Sprite", "Peeky Peely", "Lootin' Llama",
-  "John Wick", "Iron Mouse"
-];
-
-function buildExportText() {
-  const ownedCount = allRows.filter(r => r.owned).length;
-  const totalCount = allRows.length;
-
-  const rowsByName = {};
-  allRows.forEach(row => {
-    rowsByName[row.name] = rowsByName[row.name] || {};
-    rowsByName[row.name][row.variant] = row;
-  });
-
-  const headerLine = `|${EXPORT_HEADER_VARIANTS.join('|')}|`;
-
-  const rows = EXPORT_SPRITE_ORDER.map(name => {
-    const spriteInfo = SPRITE_DIR[name];
-    const variantMap = rowsByName[name] || {};
-    let displayName = name.replace(/\s+Sprite$/, '');
-    if (displayName === 'Zero Point') displayName = 'ZP';
-    if (displayName === 'Grim Reaper') displayName = 'Grim';
-    if (displayName === 'Burnt Peanut') displayName = 'Peanut';
-    if (displayName === 'Peeky Peely') displayName = 'Peely';
-    if (displayName === "Lootin' Llama") displayName = 'Llama';
-    const availableVariants = spriteInfo ? (spriteInfo.variants || []).map(v => v.variant) : [];
-
-    const cells = EXPORT_HEADER_VARIANTS.map(variant => {
-      if (!availableVariants.includes(variant)) return `${EXPORT_ICONS.unavailable} `;
-      const row = variantMap[variant];
-      if (!row) return `${EXPORT_ICONS.unavailable} `;
-      if (!row.owned) return `${EXPORT_ICONS.missing} `;
-      if (row.mastered && row.summoned) {
-        return row.level > 1 ? `${EXPORT_ICONS.mastered}${row.level}` : `${EXPORT_ICONS.mastered} `;
-      }
-      if (row.summoned) {
-        return row.level > 1 ? `${EXPORT_ICONS.owned}${row.level}` : `${EXPORT_ICONS.owned} `;
-      }
-      return row.level > 1 ? `${EXPORT_ICONS.lost}${row.level}` : `${EXPORT_ICONS.lost} `;
-    });
-
-    return `${displayName}|${cells.join('|')}|`;
-  });
-
-  // Pad names so the checklist columns align, with just one space after the longest name
-  const maxNameLen = Math.max(0, ...EXPORT_SPRITE_ORDER.map(name => {
-    let displayName = name.replace(/\s+Sprite$/, '');
-    if (displayName === 'Zero Point') displayName = 'ZP';
-    if (displayName === 'Grim Reaper') displayName = 'Grim';
-    if (displayName === 'Burnt Peanut') displayName = 'Peanut';
-    if (displayName === 'Peeky Peely') displayName = 'Peely';
-    if (displayName === "Lootin' Llama") displayName = 'Llama';
-    return displayName.length;
-  }));
-  const paddedRows = rows.map(row => {
-    const parts = row.split('|');
-    if (parts.length > 0) {
-      parts[0] = parts[0].padEnd(maxNameLen + 1);
-    }
-    return parts.join('|');
-  });
-
-  const lines = [
-    'Sprite Collection Checklist',
-    '',
-    'Legend: 👑 Mastered (summoned) | ✅ Owned (summoned) | 👻 Lost / Indexed',
-    'Missing: ❌ | Not available: 🚫 | Digit after icon = level (2–5)',
-    '',
-    headerLine,
-    ...paddedRows,
-    '',
-    `Total: ${ownedCount}/${totalCount} collected`,
-  ];
-
-  return '```\n' + lines.join('\n') + '\n```';
-}
-
-async function loadExportImage(url) {
-  if (!url) return null;
-  return new Promise(resolve => {
-    const img = new Image();
-    img.onload = () => resolve(img);
-    img.onerror = () => resolve(null);
-    img.src = url;
-  });
-}
-
-function drawExportPlaceholder(ctx, x, y, width, height, label, subtitle) {
-  ctx.fillStyle = '#1e293b';
-  ctx.fillRect(x, y, width, height);
-  ctx.strokeStyle = '#64748b';
-  ctx.lineWidth = 1;
-  ctx.strokeRect(x, y, width, height);
-  ctx.fillStyle = '#e2e8f0';
-  ctx.font = '700 13px Inter, Arial, sans-serif';
-  ctx.fillText(label, x + 8, y + 8);
-  ctx.font = '500 10px Inter, Arial, sans-serif';
-  ctx.fillStyle = '#94a3b8';
-  ctx.fillText(subtitle, x + 8, y + 26);
-}
-
-async function downloadExportImage() {
-  const rows = applySort(allRows);
-  const grouped = {};
-  for (const row of rows) {
-    grouped[row.name] = grouped[row.name] || [];
-    grouped[row.name].push(row);
-  }
-  const spriteGroups = Object.keys(grouped).map(name => ({
-    name,
-    variants: grouped[name].sort((a,b) => VARIANT_ORDER[a.variant] - VARIANT_ORDER[b.variant])
-  }));
-
-  const titleLines = ['FORTNITE COLLECTION TRACKER', 'SPRITE LOCKER CHECKLIST'];
-  const padding = 28;
-  const titleFont = '700 32px Inter, Arial, sans-serif';
-  const headingFont = '600 18px Inter, Arial, sans-serif';
-  const labelFont = '600 14px Inter, Arial, sans-serif';
-  const infoFont = '500 12px Inter, Arial, sans-serif';
-  const cardWidth = 104;
-  const cardHeight = 42;
-  const cardGap = 10;
-  const rowHeight = cardHeight + 40;
-
-  const measureCanvas = document.createElement('canvas');
-  const measureCtx = measureCanvas.getContext('2d');
-  measureCtx.font = titleFont;
-  const titleWidth = Math.max(...titleLines.map(line => measureCtx.measureText(line).width));
-  measureCtx.font = headingFont;
-  const nameWidth = Math.max(...spriteGroups.map(group => measureCtx.measureText(group.name.replace(/\s+Sprite$/, '')).width), 240);
-  const variantWidth = EXPORT_VARIANTS.length * cardWidth + (EXPORT_VARIANTS.length - 1) * cardGap;
-  const width = Math.min(1400, Math.max(titleWidth, nameWidth + variantWidth + padding * 3, 940));
-  const height = Math.min(10000, padding * 2 + titleLines.length * 42 + spriteGroups.length * rowHeight + 30);
-
-  const canvas = document.createElement('canvas');
-  canvas.width = width;
-  canvas.height = height;
-  const ctx = canvas.getContext('2d');
-
-  ctx.fillStyle = '#0f172a';
-  ctx.fillRect(0, 0, width, height);
-
-  const gradient = ctx.createLinearGradient(0, 0, width, height);
-  gradient.addColorStop(0, '#1d4ed8');
-  gradient.addColorStop(1, '#7c3aed');
-  ctx.fillStyle = gradient;
-  ctx.globalAlpha = 0.18;
-  ctx.fillRect(0, 0, width, height);
-  ctx.globalAlpha = 1;
-
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'top';
-  let y = padding;
-
-  ctx.fillStyle = '#ffffff';
-  ctx.font = titleFont;
-  titleLines.forEach(line => {
-    ctx.fillText(line, padding, y);
-    y += 38;
-  });
-
-  ctx.font = infoFont;
-  ctx.fillStyle = '#c7d2fe';
-  ctx.fillText(`Generated ${new Date().toLocaleDateString()} • ${spriteGroups.length} sprites`, padding, y + 2);
-  y += 36;
-
-  ctx.font = headingFont;
-  for (const group of spriteGroups) {
-    const groupName = group.name.replace(/\s+Sprite$/, '');
-    ctx.fillStyle = '#ffffff';
-    ctx.fillText(groupName, padding, y);
-    const blockX = padding + nameWidth + 18;
-    const blockY = y - 4;
-
-    for (let index = 0; index < EXPORT_VARIANTS.length; index++) {
-      const variantName = EXPORT_VARIANTS[index];
-      const variantRow = group.variants.find(v => v.variant === variantName);
-      const available = variantRow && variantRow.available !== false;
-      const owned = variantRow && variantRow.owned;
-      const mastered = variantRow && variantRow.mastered;
-      const x = blockX + index * (cardWidth + cardGap);
-      const yCard = blockY + 28;
-      const imageUrl = variantRow ? (variantRow.images?.[variantName] || variantRow.image || '') : '';
-
-      if (available && imageUrl) {
-        const img = await loadExportImage(imageUrl);
-        if (img) {
-          ctx.save();
-          ctx.beginPath();
-          ctx.roundRect(x, yCard, cardWidth, cardHeight, 6);
-          ctx.clip();
-          ctx.drawImage(img, x, yCard, cardWidth, cardHeight);
-          ctx.restore();
-        } else {
-          drawExportPlaceholder(ctx, x, yCard, cardWidth, cardHeight, variantName, 'No image');
-        }
-      } else {
-        const label = available ? (variantName === 'Gem' || variantName === 'Quack' ? variantName : variantName) : 'N/A';
-        const subtitle = available ? (variantName === 'Gem' || variantName === 'Quack' ? 'Placeholder' : 'No image') : 'Unavailable';
-        drawExportPlaceholder(ctx, x, yCard, cardWidth, cardHeight, label, subtitle);
-      }
-
-      ctx.strokeStyle = available ? '#ffffff33' : '#ffffff22';
-      ctx.lineWidth = 1;
-      ctx.strokeRect(x, yCard, cardWidth, cardHeight);
-
-      if (available) {
-        ctx.fillStyle = '#ffffff';
-        ctx.font = '700 12px Inter, Arial, sans-serif';
-        const icon = owned ? (mastered ? '👑' : '✅') : '❌';
-        ctx.fillText(icon, x + 6, yCard + 6);
-      }
-    }
-
-    y += rowHeight;
-  }
-
-  const link = document.createElement('a');
-  link.download = 'sprite-locker-checklist.png';
-  link.href = canvas.toDataURL('image/png');
-  link.click();
-}
-
-async function startExport() {
-  const type = document.querySelector('input[name="exportType"]:checked')?.value || 'text';
-  closeExportModal();
-
-  if (type === 'image') {
-    await downloadExportImage();
-    showToast('Collection image download started.', 'ok');
-    return;
-  }
-
-  if (type === 'list') {
-    const text = buildSpriteListText();
-    const copied = await copyTextToClipboard(text);
-    showToast(copied ? `Copied sprite list to clipboard` : 'Copy failed. Please select and copy the text manually.', copied ? 'ok' : 'err');
-    return;
-  }
-
-  const text = buildExportText();
-  const copied = await copyTextToClipboard(text);
-  showToast(copied ? 'Collection checklist copied to clipboard.' : 'Copy failed. Please select and copy the text manually.', copied ? 'ok' : 'err');
-}
-
-function downloadTextFile(text, filename) {
-  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
-
-function showToast(msg, type='ok') {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.className = `show ${type}`;
-  setTimeout(() => { t.className = ''; }, 2800);
-}
-async function copyTextToClipboard(text) {
-  try {
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      await navigator.clipboard.writeText(text);
-      return true;
-    }
-  } catch (e) {}
-
-  const ta = document.createElement('textarea');
-  ta.value = text;
-  ta.setAttribute('readonly', '');
-  ta.style.position = 'fixed';
-  ta.style.left = '-9999px';
-  document.body.appendChild(ta);
-  ta.select();
-  try {
-    document.execCommand('copy');
-    return true;
-  } catch (e) {
-    return false;
-  } finally {
-    document.body.removeChild(ta);
-  }
-}
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-}
-function jsAttr(s) {
-  return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-}
-function safeId(k)    { return k.replace(/[^a-zA-Z0-9]/g,'_'); }
-
-function openExportModal() {
-  document
-      .getElementById("exportModal")
-      .classList.add("show");
-}
-function closeExportModal() {
-    document
-        .getElementById("exportModal")
-        .classList.remove("show");
-}
-function populateSpriteCheckboxes() {
-  const container = document.getElementById('spriteCheckboxes');
-  if (!container) return;
-  const grouped = {};
-  for (const r of allRows) {
-    if (!grouped[r.name]) grouped[r.name] = [];
-    grouped[r.name].push(r);
-  }
-  const names = Object.keys(grouped).sort();
-  container.innerHTML = names.map(name => {
-    const display = name.replace(/\s+Sprite$/, '');
-    const owned = grouped[name].some(v => v.owned);
-    return `<label style="display:flex; align-items:center; gap:6px; font-size:0.8rem; cursor:pointer; color:var(--text-secondary);">
-      <input type="checkbox" data-sprite="${esc(name)}" ${owned?'checked':'disabled'} style="accent-color:var(--accent);" />
-      ${esc(display)} ${owned ? '' : '(none owned)'}
-    </label>`;
-  }).join('');
-}
-function selectAllSprites() {
-  document.querySelectorAll('#spriteCheckboxes input[type="checkbox"]').forEach(cb => { if (!cb.disabled) cb.checked = true; });
-}
-function deselectAllSprites() {
-  document.querySelectorAll('#spriteCheckboxes input[type="checkbox"]').forEach(cb => { if (!cb.disabled) cb.checked = false; });
-}
-function buildSpriteListText() {
-  const checkboxes = document.querySelectorAll('#spriteCheckboxes input[type="checkbox"]:checked');
-  const selectedNames = new Set();
-  checkboxes.forEach(cb => { if (cb.dataset.sprite) selectedNames.add(cb.dataset.sprite); });
-  const rows = applySort(allRows).filter(r => selectedNames.has(r.name));
-  const grouped = {};
-  for (const r of rows) {
-    if (!grouped[r.name]) grouped[r.name] = [];
-    grouped[r.name].push(r);
-  }
-  const lines = [];
-  for (const [name, variants] of Object.entries(grouped)) {
-    variants.sort((a, b) => VARIANT_ORDER[a.variant] - VARIANT_ORDER[b.variant]);
-    const owned = variants.filter(v => v.owned);
-    if (owned.length === 0) continue;
-    const display = name.replace(/\s+Sprite$/, '');
-    const parts = owned.map(v => {
-      const mark = v.mastered ? ' ★' : '';
-      const lvl = v.summoned ? ` Lv${v.level}` : ' Indexed';
-      return `${v.variant}${lvl}${mark}`;
-    });
-    lines.push(`${display}: ${parts.join(', ')}`);
-  }
-  return lines.join('\n');
-}
-
-document.addEventListener('change', (e) => {
-  if (e.target.name === 'exportType') {
-    const listOptions = document.getElementById('listOptions');
-    if (listOptions) {
-      listOptions.style.display = e.target.value === 'list' ? 'block' : 'none';
-    }
-  }
-});
-
-boot();
-</script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
 </html>
