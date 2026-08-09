@@ -220,6 +220,27 @@ function updateFilterButtons() {
   document.querySelectorAll('[data-filter]').forEach(b => {
     b.classList.toggle('active', b.dataset.filter === 'all' ? activeFilters.size === 0 : activeFilters.has(b.dataset.filter));
   });
+  updateFilterCount();
+}
+function updateFilterCount() {
+  const n = activeFilters.size + (rarityFilter ? 1 : 0);
+  const badge = document.getElementById('filterCount');
+  const btn   = document.getElementById('filtersBtn');
+  if (badge) { badge.textContent = n; badge.hidden = n === 0; }
+  if (btn)   btn.classList.toggle('has-filters', n > 0);
+}
+/* Mobile filter bottom-sheet */
+function toggleFilterSheet() {
+  const p = document.getElementById('filterPanel');
+  const b = document.getElementById('filterBackdrop');
+  const open = p.classList.toggle('open');
+  if (b) b.classList.toggle('open', open);
+  document.body.style.overflow = (open && window.innerWidth <= 900) ? 'hidden' : '';
+}
+function closeFilterSheet() {
+  document.getElementById('filterPanel')?.classList.remove('open');
+  document.getElementById('filterBackdrop')?.classList.remove('open');
+  document.body.style.overflow = '';
 }
 function setRarity(r, btn) {
   if (r === rarityFilter) {
@@ -228,12 +249,16 @@ function setRarity(r, btn) {
   rarityFilter = r || null;
   const sel = document.getElementById('raritySelect');
   if (sel) sel.value = r || '';
-  document.querySelectorAll('.rarity-filter').forEach(b => b.classList.remove('active-Rare','active-Epic','active-Legendary','active-Mythic'));
-  if (btn && r) btn.classList.add('active-' + r);
+  document.querySelectorAll('.rarity-filter').forEach(b => {
+    b.classList.remove('active-Rare','active-Epic','active-Legendary','active-Mythic','active');
+  });
+  if (btn && r) btn.classList.add('active-' + r, 'active');
+  updateFilterCount();
   render();
 }
 function setSort(mode, btn) {
   sortMode = mode;
+  document.querySelectorAll('.seg-btn').forEach(b => b.classList.toggle('active', b.dataset.sort === mode));
   render();
 }
 function setSearch(value) {
@@ -698,6 +723,7 @@ function refreshStats() {
   document.getElementById('sSummoned').textContent   = summ;
   document.getElementById('sUnsummoned').textContent = owned.length - summ;
   document.getElementById('dustWorth').textContent   = worth.toLocaleString();
+  const ab = document.getElementById('appbarWorth'); if (ab) ab.textContent = worth.toLocaleString();
 
   const dw = document.getElementById('dashWorth');      if (dw) dw.textContent = worth.toLocaleString() + ' Dust';
   const dwS = document.getElementById('dashWorthSub');  if (dwS) dwS.textContent = `${owned.length} / ${TOTAL_VARS} variants`;
@@ -718,10 +744,20 @@ function updateProgressBars(owned, mastered) {
   const mastPct = owned   ? Math.round(mastered / owned   * 100) : 0;
   document.getElementById('collProgFill').style.width  = collPct + '%';
   document.getElementById('mastProgFill').style.width  = mastPct + '%';
-  document.getElementById('collProgLabel').textContent = `COLLECTION: ${owned} / ${total} VARIANTS`;
-  document.getElementById('mastProgLabel').textContent = `MASTERED: ${mastered} / ${owned} OWNED`;
+  document.getElementById('collProgLabel').textContent = `${owned} / ${total} VARIANTS`;
+  document.getElementById('mastProgLabel').textContent = `${mastered} / ${owned} OWNED`;
   document.getElementById('collProgPct').textContent   = collPct + '%';
   document.getElementById('mastProgPct').textContent   = mastPct + '%';
+
+  // Completion ring on the dashboard hero
+  const arc = document.getElementById('collRingArc');
+  const pctEl = document.getElementById('collRingPct');
+  if (arc) {
+    const C = 2 * Math.PI * 52;               // r=52
+    arc.style.strokeDasharray  = C.toFixed(1);
+    arc.style.strokeDashoffset = (C * (1 - collPct / 100)).toFixed(1);
+  }
+  if (pctEl) pctEl.textContent = collPct + '%';
 }
 
 function computeStatus(level, mastered, summoned) {
