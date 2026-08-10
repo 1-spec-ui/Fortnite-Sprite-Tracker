@@ -151,7 +151,6 @@
     /* Softer card lift and subtle depth */
     .sprite-card {
       transition: transform 320ms cubic-bezier(.2,.9,.2,1), box-shadow 320ms var(--transition);
-      will-change: transform, box-shadow;
     }
     @media (hover: hover) {
       .sprite-card:hover { transform: translateY(-6px) scale(1.008); box-shadow: 0 34px 80px rgba(2,6,23,0.55); }
@@ -218,7 +217,6 @@
     .filter-icon-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(2,6,23,0.12); }
     .dash-tile { will-change: transform, box-shadow; }
     .dash-tile:hover { transform: translateY(-6px); box-shadow: 0 36px 100px rgba(2,6,23,0.42); }
-    .sprite-card { animation: microEnter 360ms cubic-bezier(.2,.9,.2,1) both; }
     .sm-variant-chip { transition: transform 220ms ease, box-shadow 220ms ease; }
     .sm-variant-chip:hover { transform: translateY(-6px) rotate(-0.3deg); }
     @media (prefers-reduced-motion: reduce) {
@@ -1101,20 +1099,7 @@
       flex-direction: column;
       transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition), filter var(--transition);
       box-shadow: var(--shadow);
-      animation: fadeIn 0.4s ease both;
-      will-change: transform;
     }
-    .sprite-card:nth-child(1)  { animation-delay: 0.02s; }
-    .sprite-card:nth-child(2)  { animation-delay: 0.04s; }
-    .sprite-card:nth-child(3)  { animation-delay: 0.06s; }
-    .sprite-card:nth-child(4)  { animation-delay: 0.08s; }
-    .sprite-card:nth-child(5)  { animation-delay: 0.10s; }
-    .sprite-card:nth-child(6)  { animation-delay: 0.12s; }
-    .sprite-card:nth-child(7)  { animation-delay: 0.14s; }
-    .sprite-card:nth-child(8)  { animation-delay: 0.16s; }
-    .sprite-card:nth-child(9)  { animation-delay: 0.18s; }
-    .sprite-card:nth-child(10) { animation-delay: 0.20s; }
-    .sprite-card:nth-child(n+11) { animation-delay: 0.22s; }
     .sprite-card::before {
       content: '';
       position: absolute; top: 0; left: 0; right: 0; height: 3px;
@@ -1156,11 +1141,10 @@
     }
      .card-media img {
        width: 100%; height: 100%; object-fit: cover; display: block;
-       transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
+       transition: opacity 0.25s ease;
        opacity: 0;
-       filter: blur(8px);
      }
-     .card-media img.loaded { opacity: 1; filter: blur(0); }
+     .card-media img.loaded { opacity: 1; }
     .card-media .placeholder {
       font-size: 2.2rem; font-weight: 800; color: #fff;
       text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
@@ -1267,7 +1251,7 @@
     .card-add-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
 
     /* ── Per-sprite subcategory ── */
-    .sprite-group { margin-bottom: 8px; animation: fadeIn 0.3s ease both; }
+    .sprite-group { margin-bottom: 8px; animation: fadeIn 0.3s ease both; content-visibility: auto; contain-intrinsic-size: auto 300px; }
     .sprite-group-head {
       display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
       margin: 22px 0 12px;
@@ -2560,6 +2544,7 @@ async function boot() {
   if (skeletonEl) skeletonEl.style.display = 'none';
 
   refreshStats();
+  initVirtualization();
   render();
   renderTerminal();
   populateEcSprite();
@@ -2644,12 +2629,12 @@ function switchTab(name, btn) {
   });
 }
 function setFilter(mode, btn) {
-  if (mode === 'all') { activeFilters.clear(); updateFilterButtons(); render(); return; }
+  if (mode === 'all') { activeFilters.clear(); updateFilterButtons(); scheduleRender(); return; }
   // "Not Owned" is fully exclusive — it can't stack with any other filter
   if (mode === 'unowned') {
     if (activeFilters.has('unowned')) activeFilters.delete('unowned');
     else { activeFilters.clear(); activeFilters.add('unowned'); }
-    updateFilterButtons(); render(); return;
+    updateFilterButtons(); scheduleRender(); return;
   }
   activeFilters.delete('unowned');   // any other filter clears Not Owned
   if (activeFilters.has(mode)) {
@@ -2660,8 +2645,8 @@ function setFilter(mode, btn) {
     [...activeFilters].forEach(f => { if (FILTER_GROUPS[f] === grp) activeFilters.delete(f); });
     activeFilters.add(mode);
   }
-  updateFilterButtons();
-  render();
+   updateFilterButtons();
+   scheduleRender();
 }
 function updateFilterButtons() {
   document.querySelectorAll('[data-filter]').forEach(b => {
@@ -2677,11 +2662,11 @@ function setRarity(r, btn) {
   if (sel) sel.value = r || '';
   document.querySelectorAll('.rarity-filter').forEach(b => b.classList.remove('active-Rare','active-Epic','active-Legendary','active-Mythic'));
   if (btn && r) btn.classList.add('active-' + r);
-  render();
+  scheduleRender();
 }
 function setSort(mode, btn) {
   sortMode = mode;
-  render();
+  scheduleRender();
 }
 function setSearch(value) {
   searchQuery = (value || '').trim().toLowerCase();
@@ -2690,7 +2675,7 @@ function setSearch(value) {
     const wrap = input.closest('.search-box');
     if (wrap) wrap.classList.toggle('has-value', !!(value && value.trim()));
   }
-  render();
+  scheduleRender();
 }
 function clearSearch() {
   searchQuery = '';
@@ -2700,7 +2685,7 @@ function clearSearch() {
     const wrap = input.closest('.search-box');
     if (wrap) wrap.classList.remove('has-value');
   }
-  render();
+  scheduleRender();
 }
 function matchesSearch(row, query) {
   const haystack = [
@@ -2734,8 +2719,93 @@ function applySort(rows) {
 }
 
 /* ════════════════════════════════════════════════════════════
-   Render collection
+   Render collection — virtualized
+   Only mounts cards for sprite groups in/near the viewport.
+   Uses IntersectionObserver for efficient visibility tracking.
 ════════════════════════════════════════════════════════════ */
+const CARD_ROW_HEIGHT = 240;
+const HEADER_HEIGHT = 48;
+const OVERSCAN = 1000;
+
+let groupElements = new Map();
+let visibilityObserver = null;
+let renderScheduled = false;
+
+function scheduleRender() {
+  if (renderScheduled) return;
+  renderScheduled = true;
+  requestAnimationFrame(() => {
+    renderScheduled = false;
+    try { render(); } catch (e) { console.error('[Collection] render failed:', e); }
+  });
+}
+
+function initVirtualization() {
+  if (visibilityObserver) return;
+  visibilityObserver = new IntersectionObserver((entries) => {
+    let needsUpdate = false;
+    entries.forEach(entry => {
+      const name = entry.target.dataset.group;
+      if (!name) return;
+      const groupData = groupElements.get(name);
+      if (!groupData) return;
+      if (entry.isIntersecting) {
+        if (!groupData.rendered) {
+          renderGroupCards(name);
+          needsUpdate = true;
+        }
+      } else {
+        const rect = entry.boundingClientRect;
+        const viewportHeight = window.innerHeight;
+        if (rect.top > viewportHeight + 2000 || rect.bottom < -2000) {
+          unmountGroupCards(name);
+        }
+      }
+    });
+    if (needsUpdate) {
+      requestAnimationFrame(attachImageListeners);
+    }
+  }, { rootMargin: `${OVERSCAN}px 0px`, threshold: 0 });
+}
+
+function getGroupHeight(cardCount) {
+  const rows = Math.ceil(cardCount / 2);
+  return HEADER_HEIGHT + rows * CARD_ROW_HEIGHT;
+}
+
+function renderGroupCards(name) {
+  const groupData = groupElements.get(name);
+  if (!groupData || groupData.rendered) return;
+  const { grid, cards } = groupData;
+  if (!grid || !cards || !cards.length) return;
+  grid.style.minHeight = '';
+  grid.innerHTML = cards.map(buildCard).join('');
+  groupData.rendered = true;
+}
+
+function unmountGroupCards(name) {
+  const groupData = groupElements.get(name);
+  if (!groupData || !groupData.rendered) return;
+  const { grid, cards } = groupData;
+  if (!grid || !cards) return;
+  grid.innerHTML = '';
+  grid.style.minHeight = getGroupHeight(cards.length) + 'px';
+  groupData.rendered = false;
+}
+
+function attachImageListeners() {
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.card-media img:not(.loaded)').forEach(img => {
+      if (img.complete) {
+        img.classList.add('loaded');
+      } else {
+        img.addEventListener('load', () => img.classList.add('loaded'), { once: true });
+        img.addEventListener('error', () => img.classList.add('loaded'), { once: true });
+      }
+    });
+  });
+}
+
 function render() {
   let rows = allRows;
   if (searchQuery) rows = rows.filter(r => matchesSearch(r, searchQuery));
@@ -2751,47 +2821,71 @@ function render() {
 
   if (!rows.length) {
     const msg = searchQuery
-      ? `<div class="center-msg">No sprites match “${esc(searchQuery)}”.</div>`
+      ? `<div class="center-msg">No sprites match "${esc(searchQuery)}".</div>`
       : '<div class="center-msg">No sprites match the current filter.</div>';
     document.getElementById('list').innerHTML = msg;
+    if (visibilityObserver) {
+      groupElements.forEach((data) => visibilityObserver.unobserve(data.el));
+      groupElements.clear();
+    }
     return;
   }
 
-  // Group into per-sprite subcategories
   const groups = {};
   for (const r of rows) (groups[r.name] = groups[r.name] || []).push(r);
-
   const names = orderGroups(groups);
-  let html = '';
-    for (const name of names) {
-      const g = groups[name];
-      g.sort((a, b) => VARIANT_ORDER[a.variant] - VARIANT_ORDER[b.variant]);
-      const rarity  = g[0].rarity;
-      const display = name.replace(/\s+Sprite$/, '');
-      const allOwned = g.every(r => r.owned);
-      const allMastered = g.every(r => r.mastered);
-      html += `<div class="sprite-group">
-        <div class="sprite-group-head">
-          <span class="sprite-group-name">${esc(display)}</span>
-          <span class="sprite-group-rar ${rarity}">${RARITY_ICONS[rarity]} ${rarity}</span>
-           <button class="group-add-btn" ${allOwned?'disabled':''} onclick="addSpriteVariants('${jsAttr(name)}')" title="Add all variants of this sprite to your collection">＋ Add All Variants</button>
-           <button class="group-master-btn" ${allMastered?'disabled':''} onclick="masterAllSpriteVariants('${jsAttr(name)}')" title="Add all variants and set them to Level 5 Mastered">★ Master All</button>
-        </div>
-        <div class="card-grid">${g.map(buildCard).join('')}</div>
-      </div>`;
-    }
-  document.getElementById('list').innerHTML = html;
 
-  // Trigger image load animations with blur-up effect
+  const listEl = document.getElementById('list');
+  if (visibilityObserver) {
+    groupElements.forEach((data) => visibilityObserver.unobserve(data.el));
+    groupElements.clear();
+  }
+  listEl.innerHTML = '';
+
+  const fragment = document.createDocumentFragment();
+  for (const name of names) {
+    const g = groups[name];
+    g.sort((a, b) => VARIANT_ORDER[a.variant] - VARIANT_ORDER[a.variant]);
+    const rarity = g[0].rarity;
+    const display = name.replace(/\s+Sprite$/, '');
+    const allOwned = g.every(r => r.owned);
+    const allMastered = g.every(r => r.mastered);
+
+    const groupEl = document.createElement('div');
+    groupEl.className = 'sprite-group';
+    groupEl.dataset.group = name;
+    const head = document.createElement('div');
+    head.className = 'sprite-group-head';
+    head.innerHTML = `
+      <span class="sprite-group-name">${esc(display)}</span>
+      <span class="sprite-group-rar ${rarity}">${RARITY_ICONS[rarity]} ${rarity}</span>
+       <button class="group-add-btn" ${allOwned?'disabled':''} onclick="addSpriteVariants('${jsAttr(name)}')" title="Add all variants of this sprite to your collection">＋ Add All Variants</button>
+       <button class="group-master-btn" ${allMastered?'disabled':''} onclick="masterAllSpriteVariants('${jsAttr(name)}')" title="Add all variants and set them to Level 5 Mastered">★ Master All</button>
+    `;
+    groupEl.appendChild(head);
+    const grid = document.createElement('div');
+    grid.className = 'card-grid';
+    const estimatedHeight = getGroupHeight(g.length);
+    grid.style.minHeight = estimatedHeight + 'px';
+    groupEl.appendChild(grid);
+    groupElements.set(name, { el: groupEl, grid, cards: g, rendered: false });
+    if (visibilityObserver) visibilityObserver.observe(groupEl);
+    fragment.appendChild(groupEl);
+  }
+
+  listEl.appendChild(fragment);
+
   requestAnimationFrame(() => {
-    document.querySelectorAll('.card-media img:not(.loaded)').forEach(img => {
-      if (img.complete) {
-        img.classList.add('loaded');
-      } else {
-        img.addEventListener('load', () => img.classList.add('loaded'), { once: true });
-        img.addEventListener('error', () => img.classList.add('loaded'), { once: true });
+    names.forEach(name => {
+      const groupData = groupElements.get(name);
+      if (groupData && !groupData.rendered) {
+        const rect = groupData.el.getBoundingClientRect();
+        if (rect.top < window.innerHeight + OVERSCAN && rect.bottom > -OVERSCAN) {
+          renderGroupCards(name);
+        }
       }
     });
+    attachImageListeners();
   });
 }
 
@@ -3132,8 +3226,7 @@ function upsert(key, level, summoned, mastered) {
   row.mastered = mastered;
   row.status   = computeStatus(level, mastered, summoned);
 
-  // Re-render so filters (e.g. a sprite leaving a "mastered" view) stay correct
-  render();
+  scheduleRender();
   refreshStats();
   renderCalculator();
 }
@@ -3145,7 +3238,7 @@ function remove(key) {
 
   const row = allRows.find(r => r.key === key);
   if (row) { row.owned=false; row.level=0; row.summoned=false; row.mastered=false; row.status=null; }
-  render();
+  scheduleRender();
   refreshStats();
   renderCalculator();
 }
@@ -3308,7 +3401,7 @@ function addSpriteVariants(spriteName) {
   allRows.forEach(r => {
     if (r.name === spriteName && !r.owned) { upsert(r.key, 1, false, false); added++; }
   });
-  render(); refreshStats(); renderCalculator();
+  scheduleRender(); refreshStats(); renderCalculator();
   if (added > 0) showToast(`Added all ${added} variant${added>1?'s':''} of ${spriteName.replace(/\s+Sprite$/, '')} to your collection.`, 'ok');
 }
 
@@ -3322,7 +3415,7 @@ function masterAllSpriteVariants(spriteName) {
       updated++;
     }
   });
-  render(); refreshStats(); renderCalculator();
+  scheduleRender(); refreshStats(); renderCalculator();
   if (updated > 0) showToast(`Mastered all ${updated} variants of ${spriteName.replace(/\s+Sprite$/, '')}.`, 'ok');
 }
 
@@ -3332,7 +3425,7 @@ async function addVariant(event, key) {
   const row = allRows.find(r => r.key === key);
   if (!row || row.owned) return;
   await upsert(key, 1, false, false);
-  render(); refreshStats(); renderCalculator();
+  scheduleRender(); refreshStats(); renderCalculator();
   showToast(`Added ${row.variant} ${row.name.replace(/\s+Sprite$/, '')} to collection.`, 'ok');
 }
 
