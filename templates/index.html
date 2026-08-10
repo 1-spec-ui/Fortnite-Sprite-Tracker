@@ -140,7 +140,7 @@
     }
 
     .tab-nav { display:flex; align-items:center; gap:12px; padding:8px 14px; max-width: 980px; margin: 12px auto; position: sticky; top: calc(18px + var(--safe-top)); z-index: 60; }
-    .tab-nav .nav-left, .tab-nav .nav-right { display:flex; align-items:center; gap:10px; }
+    .tab-nav .nav-right { display:flex; align-items:center; gap:10px; }
     .tab-nav .nav-center { display:flex; gap:8px; flex:1; justify-content:center; }
     .brand { display:inline-flex; align-items:center; gap:10px; border:none; background:transparent; color:var(--text-primary); font-weight:800; cursor:pointer; padding:6px 10px; border-radius:12px; }
     .brand .brand-mark { font-size:1.05rem; filter:drop-shadow(0 6px 18px rgba(34,211,238,0.07)); }
@@ -800,7 +800,7 @@
     .status-active          { background: var(--emerald-soft); border:1px solid rgba(16,185,129,0.28); color: var(--emerald); }
     .status-indexed         { background: rgba(148,163,184,0.10); border:1px solid rgba(148,163,184,0.22); color: var(--text-muted); }
     .s-unowned { font-size: 0.75rem; color: var(--text-muted); font-style: italic; }
-    .yield-hint { font-size: 0.72rem; color: var(--emerald); margin-top: 3px; white-space: nowrap; font-family: var(--mono); }
+    .yield-hint { font-size: 0.72rem; color: var(--emerald); margin-top: 3px; white-space: normal; font-family: var(--mono); line-height: 1.4; }
     .yield-hint.gummy-boost { color: var(--emerald); font-weight: 700; }
     .yield-hint.inactive { color: var(--text-muted); }
 
@@ -1032,8 +1032,6 @@
       .card-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
       .sprite-card.unowned { filter: grayscale(1) brightness(0.7) opacity(0.55); }
       .card-name { font-size: 0.84rem; }
-      .card-crown { width: 22px; height: 22px; font-size: 0.85rem; top: 6px; right: 6px; }
-      .card-check { width: 19px; height: 19px; font-size: 0.64rem; top: 6px; left: 6px; }
 
       .dash-tiles { grid-template-columns: repeat(2, 1fr); }
       .dash-panel, .dash-tile { padding: 14px; }
@@ -1161,43 +1159,12 @@
     }
     .card-lvl-badge.mast { color: var(--amber); border-color: rgba(245, 158, 11, 0.35); }
     .card-crown {
-      position: absolute; top: 8px; right: 8px;
-      width: 28px; height: 28px; border-radius: 8px;
-      background: rgba(15, 23, 42, 0.82);
-      backdrop-filter: blur(6px);
+      position: absolute; top: 6px; right: 6px;
+      width: 22px; height: 22px; border-radius: 6px;
+      background: rgba(245, 158, 11, 0.9);
       display: flex; align-items: center; justify-content: center;
-      font-size: 0.95rem;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
-      z-index: 2;
-    }
-    .card-check {
-      position: absolute; top: 8px; left: 8px;
-      width: 24px; height: 24px; border-radius: 50%;
-      background: var(--emerald-soft); border: 1px solid var(--emerald);
-      color: var(--emerald); font-size: 0.72rem; font-weight: 900;
-      display: flex; align-items: center; justify-content: center;
-      z-index: 2;
-    }
-    .card-status-icons {
-      position: absolute; top: 8px; left: 8px;
-      display: flex; gap: 4px; z-index: 2;
-    }
-    .card-status-icons .card-check { position: static; }
-    .card-summ-badge, .card-indexed-badge {
-      width: 24px; height: 24px; border-radius: 6px;
-      font-size: 0.68rem; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-    }
-    .card-summ-badge {
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #fff;
-    }
-    .card-indexed-badge {
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid var(--border);
-      color: var(--text-secondary);
+      font-size: 0.7rem; z-index: 2;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
     }
     .card-body { padding: 10px 11px 12px; display: flex; flex-direction: column; gap: 5px; flex: 1; }
     .card-name {
@@ -1779,8 +1746,8 @@
     .dust-sep { height: 34px; width: 1px; background: rgba(255,255,255,0.08); }
     .tab-nav-wrap { position: sticky; top: calc(var(--safe-top) + 20px); z-index: 40; margin-bottom: 24px; }
     .tab-nav {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      display: flex;
+      justify-content: center;
       gap: 12px;
       padding: 14px;
       background: rgba(7, 11, 20, 0.95);
@@ -1788,6 +1755,8 @@
       border-radius: 24px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.18);
     }
+    .tab-nav .nav-center { flex: 1; }
+    .tab-nav .nav-right { margin-left: auto; }
     .tab-btn {
       min-height: 50px;
       font-size: 0.92rem;
@@ -1956,12 +1925,7 @@
     .card-status { gap: 8px; padding: 12px 14px; border-radius: 18px; background: rgba(255,255,255,0.04); color: var(--text-secondary); font-size: 0.82rem; }
     .card-status.status-active { background: linear-gradient(90deg, rgba(16,185,129,0.06), rgba(6,182,212,0.04)); border:1px solid rgba(16,185,129,0.12); }
     .card-status.status-indexed { background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04); }
-    .card-status-icons { position: absolute; top: 16px; left: 16px; display: flex; gap: 8px; z-index: 2; }
-    .card-crown { top: 16px; right: 16px; }
-    .card-check, .card-summ-badge, .card-indexed-badge { min-width: 30px; min-height: 30px; border-radius: 14px; padding: 0 10px; font-size: 0.75rem; }
-    .card-check { background: linear-gradient(135deg, rgba(34,197,94,0.9), rgba(56,189,248,0.8)); }
-    .card-summ-badge { background: linear-gradient(135deg, rgba(34,197,94,0.95), rgba(56,189,248,0.8)); }
-    .card-indexed-badge { background: rgba(255,255,255,0.08); color: var(--text-secondary); }
+    .card-crown { position: absolute; top: 12px; right: 12px; width: 28px; height: 28px; border-radius: 8px; background: rgba(245, 158, 11, 0.9); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; z-index: 2; box-shadow: 0 2px 8px rgba(0,0,0,0.25); }
     .card-toggle, .card-add-btn { border-radius: 18px; min-height: 46px; gap: 8px; }
     .card-toggle.summoned { background: linear-gradient(90deg, rgba(16,185,129,0.9), rgba(6,182,212,0.9)); color: #02121a; box-shadow: 0 8px 24px rgba(6,182,212,0.16); }
     .card-toggle.summoned svg { filter: drop-shadow(0 6px 12px rgba(6,182,212,0.12)); }
@@ -2081,11 +2045,6 @@
   </section>
 
   <nav class="tab-nav glass" role="navigation" aria-label="Primary navigation">
-    <div class="nav-left">
-      <button class="brand" onclick="switchTab('dashboard', document.querySelector('[data-tab=\'dashboard\']'))" aria-label="Home">
-        <span class="brand-mark">✨</span>
-      </button>
-    </div>
     <div class="nav-center" role="tablist">
       <button class="tab-btn active" data-tab="dashboard" onclick="switchTab('dashboard',this)" role="tab">📊 Dashboard</button>
       <button class="tab-btn" data-tab="collection" onclick="switchTab('collection',this)" role="tab">📋 Collection</button>
@@ -2926,17 +2885,9 @@ function buildCard(row) {
     pips += `<span class="pip ${lit?'lit':''} ${mastPip?'mast':''}"></span>`;
   }
 
-  const crown = (owned && row.mastered) ? `<div class="card-crown" title="Mastered">👑</div>` : '';
-  const check = owned ? `<div class="card-check" title="Collected">✓</div>` : '';
-  const summBadge = (owned && row.summoned) ? `<div class="card-summ-badge" title="Summoned">⚡</div>` : '';
-  const indexedBadge = (owned && !row.summoned) ? `<div class="card-indexed-badge" title="Indexed">📦</div>` : '';
-  const statusIcons = owned ? `<div class="card-status-icons">${check}${summBadge}${indexedBadge}</div>` : '';
   const cls   = ['sprite-card', owned ? (row.summoned ? 'summoned' : 'indexed') : 'unowned', (owned&&row.mastered)?'is-mastered':''].filter(Boolean).join(' ');
   const lvlText = owned ? `Lv ${row.level}` : '—';
-
-  const statusHtml = owned && row.status
-    ? `<div class="card-status ${row.status.cls}"><span>${row.status.icon}</span><span>${esc(row.status.text)}</span></div>`
-    : `<div class="card-status unowned">Not collected</div>`;
+  const crown = (owned && row.mastered) ? `<div class="card-crown" title="Mastered">👑</div>` : '';
 
   const addBtn = owned ? '' : `<button type="button" class="card-add-btn" onclick="addVariant(event,'${jsAttr(key)}')" title="Add ${esc(row.variant)} ${esc(displayName)} to your collection">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
@@ -2949,7 +2900,7 @@ function buildCard(row) {
   </button>` : '';
 
   return `<div class="${cls}" onclick="openCard('${jsAttr(key)}')">
-    <div class="card-media">${media}${crown}${statusIcons}</div>
+    <div class="card-media">${media}${crown}</div>
     <div class="card-body">
       <div class="card-name" title="${esc(displayName)}">${esc(displayName)}</div>
       <span class="v-chip v-${esc(row.variant)} card-variant">${variantIcon(row.variant)} ${esc(row.variant)}</span>
@@ -2958,7 +2909,6 @@ function buildCard(row) {
         <div class="card-lvl">${lvlText}</div>
       </div>
       <div class="card-cost">💨 ${row.cost.toLocaleString()} Dust</div>
-      ${statusHtml}
       ${addBtn}
       ${summonToggle}
     </div>
@@ -3164,15 +3114,15 @@ function buildYieldHtml(row) {
   const yld     = computeYield(row);
   const isGummy = row.variant === 'Gummy';
   let cls = 'yield-hint';
-  let txt = `📤 Est. Yield: ${yld.toLocaleString()} Dust`;
+  let txt = `📤 ${yld.toLocaleString()} Dust`;
   if (!row.summoned) {
     cls = 'yield-hint inactive';
-    txt = `📤 Indexed yield: ${yld.toLocaleString()} Dust (Lv 1)`;
+    txt = `📤 ${yld.toLocaleString()} Dust (Indexed)`;
   } else if (modalGummyOverride === true || (modalGummyOverride === null && gummySummoned() && !isGummy)) {
     const boosted = Math.round(yld * 1.20);
     const delta = boosted - yld;
     cls = 'yield-hint gummy-boost';
-    txt = `📤 Est. Yield: ${yld.toLocaleString()} Dust + ${delta.toLocaleString()} Dust (20%) = ${boosted.toLocaleString()} Dust`;
+    txt = `📤 ${boosted.toLocaleString()} Dust (+${delta.toLocaleString()} bonus)`;
   }
   return `<div class="${cls}">${txt}</div>`;
 }
