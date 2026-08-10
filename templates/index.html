@@ -420,6 +420,63 @@
     .prog-fill.mastered::after { background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%); background-size: 200% 100%; animation: shimmer 2s ease-in-out infinite; }
     .prog-pct { font-size: 0.8rem; color: var(--text-secondary); min-width: 80px; text-align: right; font-family: var(--mono); font-weight: 600; }
 
+    /* ── Milestones ── */
+    .perfect-milestone {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px; border-radius: 16px;
+      background: linear-gradient(135deg, rgba(245,158,11,0.12), rgba(251,191,36,0.08));
+      border: 1px solid rgba(245,158,11,0.25);
+      box-shadow: 0 0 20px rgba(245,158,11,0.08);
+      animation: milestoneIn 0.6s cubic-bezier(.2,.9,.2,1) both;
+    }
+    .perfect-milestone.collection-milestone { margin-top: 10px; }
+    .perfect-milestone.inactive { opacity: 0.6; filter: grayscale(0.4); }
+    .perfect-badge { font-size: 1.5rem; filter: drop-shadow(0 0 6px rgba(245,158,11,0.4)); }
+    .perfect-text { display: flex; flex-direction: column; gap: 2px; }
+    .perfect-text strong { font-size: 0.82rem; font-weight: 800; color: var(--amber); letter-spacing: 0.04em; }
+    .perfect-text span { font-size: 0.72rem; color: var(--text-secondary); }
+    .max-dust-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 10px; border-radius: 999px;
+      background: linear-gradient(135deg, rgba(56,189,248,0.2), rgba(74,222,128,0.15));
+      border: 1px solid rgba(56,189,248,0.3);
+      color: var(--cyan); font-size: 0.68rem; font-weight: 800;
+      letter-spacing: 0.06em;
+      animation: maxDustIn 0.5s cubic-bezier(.2,.9,.2,1) both;
+    }
+    .max-dust-badge.inactive { opacity: 0.6; filter: grayscale(0.4); }
+    @keyframes milestoneIn {
+      from { opacity: 0; transform: translateY(8px) scale(0.96); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes maxDustIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    @keyframes milestonePulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(245,158,11,0.08); }
+      50%      { box-shadow: 0 0 32px rgba(245,158,11,0.18); }
+    }
+    @keyframes maxDustShimmer {
+      0%   { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .perfect-milestone.celebrate { animation: milestonePulse 1.2s ease-in-out 1; }
+    .max-dust-badge.celebrate { animation: maxDustShimmer 1.5s ease-in-out 1; }
+    @media (prefers-reduced-motion: reduce) {
+      .perfect-milestone, .max-dust-badge { animation: none !important; }
+      .perfect-milestone.celebrate, .max-dust-badge.celebrate { animation: none !important; }
+    }
+
+    /* ── Settings ── */
+    .settings-section { display: flex; flex-direction: column; gap: 0; }
+    .settings-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .settings-sep { height: 1px; background: var(--border-soft); margin: 16px 0; }
+    @media (max-width: 640px) {
+      .settings-row { flex-direction: column; align-items: flex-start; }
+      .settings-row button { width: 100%; }
+    }
+
     /* ── Tabs ── */
     .tab-nav-wrap {
       position: sticky; top: 0; z-index: 100;
@@ -2044,6 +2101,7 @@
         <span class="dust-label">💨 MY SPRITE DUST</span>
         <input id="myDustInput" type="number" min="0" placeholder="0" oninput="onDustChange()" />
         <span class="dust-unit">Dust</span>
+        <span id="maxDustBadge" class="max-dust-badge" style="display:none" aria-label="Maximum Sprite Dust reached">MAX</span>
         <div class="dust-sep"></div>
         <div class="dust-stat">Collection Worth: <b id="dustWorth">0</b> Dust</div>
         <div class="dust-sep"></div>
@@ -2058,6 +2116,7 @@
       <button class="tab-btn" data-tab="collection" onclick="switchTab('collection',this)" role="tab">📋 Collection</button>
       <button class="tab-btn" data-tab="terminal" onclick="switchTab('terminal',this)" role="tab">🏪 Terminal</button>
       <button class="tab-btn" data-tab="calculator" onclick="switchTab('calculator',this)" role="tab">🧮 Calculator</button>
+      <button class="tab-btn" data-tab="settings" onclick="switchTab('settings',this)" role="tab">⚙️ Settings</button>
     </div>
     <div class="nav-right">
       <button class="filter-icon-btn export-btn" onclick="openExportModal()" title="Export Collection">📤</button>
@@ -2076,6 +2135,14 @@
         <b>Level buttons 2–5 are only active when a sprite is Summoned.</b>
         Sprites that are owned but not summoned are indexed at Level 1 in-game.
       </span>
+    </div>
+
+    <div id="collectionMilestone" class="perfect-milestone collection-milestone" style="display:none" role="status" aria-live="polite">
+      <span class="perfect-badge">🏆</span>
+      <div class="perfect-text">
+        <strong>PERFECT COLLECTION</strong>
+        <span>Every available Sprite mastered at maximum level.</span>
+      </div>
     </div>
 
     <div class="filter-sort-bar">
@@ -2217,6 +2284,13 @@
             <div class="prog-track"><div class="prog-fill mastered" id="mastProgFill" style="width:0%"></div></div>
             <span class="prog-pct" id="mastProgPct">0%</span>
           </div>
+          <div id="perfectMilestone" class="perfect-milestone" style="display:none" role="status" aria-live="polite">
+            <span class="perfect-badge">🏆</span>
+            <div class="perfect-text">
+              <strong>PERFECT COLLECTION</strong>
+              <span>Every available Sprite mastered at maximum level.</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -2333,13 +2407,42 @@
         <div class="ec-total-box gummy">
           <span class="ec-total-lbl">TOTAL — WITH GUMMY (+20%)</span>
           <span class="ec-total-val gummy-v" id="ecTotalGummy">0 Dust</span>
-          <div class="ec-gummy-delta" style="margin-top:3px" id="ecTotalDiff"></div>
+         <div class="ec-gummy-delta" style="margin-top:3px" id="ecTotalDiff"></div>
+         </div>
+       </div>
+     </div>
+   </div>
+</div>
+
+<div id="tab-settings" class="tab-panel">
+  <div class="dash-panel" style="max-width: 640px; margin: 0 auto;">
+    <h3>⚙️ Settings</h3>
+    <div class="settings-section">
+      <div class="settings-row">
+        <div>
+          <strong>Reset Achievement Milestones</strong>
+          <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">
+            Clear your earned Perfect Collection and Max Dust milestone badges and celebrations.
+          </p>
         </div>
+        <button class="filter-btn" style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4); color: #fca5a5;"
+                onclick="openResetMilestonesModal()">Reset Milestones</button>
+      </div>
+      <div class="settings-sep"></div>
+      <div class="settings-row">
+        <div>
+          <strong>Clear All Saved Data</strong>
+          <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">
+            Permanently delete your entire collection, dust amount, terminal basket, and milestone progress from this browser.
+          </p>
+        </div>
+        <button class="filter-btn" style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4); color: #fca5a5;"
+                onclick="openClearAllModal()">Clear All Data</button>
       </div>
     </div>
   </div>
-
 </div>
+
 <div id="exportModal" class="modal-backdrop">
   <div class="modal-card">
     <div class="modal-title">
@@ -2370,6 +2473,34 @@
   <div class="modal-card" id="spriteModalCard"></div>
 </div>
 
+<div id="confirmResetMilestones" class="modal-backdrop" onclick="if(event.target===this)closeConfirmResetMilestones()">
+  <div class="modal-card" style="max-width: 420px;">
+    <div class="modal-title">Reset Achievement Milestones?</div>
+    <div class="modal-subtitle">
+      This will clear your earned <b>Perfect Collection</b> and <b>Max Dust</b> milestone badges and allow the celebration animations to play again when you re-earn them.
+    </div>
+    <div class="modal-buttons">
+      <button class="filter-btn" onclick="closeConfirmResetMilestones()">Cancel</button>
+      <button class="filter-btn active" style="background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.5); color: #fca5a5;"
+              onclick="confirmResetMilestones()">Reset Milestones</button>
+    </div>
+  </div>
+</div>
+
+<div id="confirmClearAll" class="modal-backdrop" onclick="if(event.target===this)closeClearAllModal()">
+  <div class="modal-card" style="max-width: 420px;">
+    <div class="modal-title">Clear All Saved Data?</div>
+    <div class="modal-subtitle">
+      This will <b>permanently delete</b> your entire collection, Sprite Dust amount, terminal basket, and milestone progress from this browser. This action cannot be undone.
+    </div>
+    <div class="modal-buttons">
+      <button class="filter-btn" onclick="closeClearAllModal()">Cancel</button>
+      <button class="filter-btn active" style="background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.5); color: #fca5a5;"
+              onclick="confirmClearAll()">Delete Everything</button>
+    </div>
+  </div>
+</div>
+
 <nav class="mobile-nav">
   <button class="mnav-btn active" data-tab="dashboard" onclick="switchTab('dashboard',this)">
     <span class="mnav-icon">📊</span><span>Dashboard</span>
@@ -2382,6 +2513,9 @@
   </button>
   <button class="mnav-btn" data-tab="calculator" onclick="switchTab('calculator',this)">
     <span class="mnav-icon">🧮</span><span>Calc</span>
+  </button>
+  <button class="mnav-btn" data-tab="settings" onclick="switchTab('settings',this)">
+    <span class="mnav-icon">⚙️</span><span>Settings</span>
   </button>
 </nav>
 <div id="toast"></div>
@@ -2417,6 +2551,95 @@ const FILTER_GROUPS = {
 let searchQuery  = '';
 let myDust       = 0;
 
+// Milestone state — one-time celebration flags stored in localStorage
+const MILESTONE_KEY = 'spriteMilestones';
+let perfectCelebrationPlayed = false;
+let maxDustCelebrationPlayed = false;
+
+function loadMilestoneFlags() {
+  try {
+    const flags = JSON.parse(localStorage.getItem(MILESTONE_KEY) || '{}');
+    perfectCelebrationPlayed = !!flags.perfect;
+    maxDustCelebrationPlayed = !!flags.maxDust;
+  } catch (e) { /* ignore */ }
+}
+
+function saveMilestoneFlag(name) {
+  try {
+    const flags = JSON.parse(localStorage.getItem(MILESTONE_KEY) || '{}');
+    flags[name] = true;
+    localStorage.setItem(MILESTONE_KEY, JSON.stringify(flags));
+  } catch (e) { /* ignore */ }
+}
+
+function resetMilestoneFlag(name) {
+  try {
+    const flags = JSON.parse(localStorage.getItem(MILESTONE_KEY) || '{}');
+    delete flags[name];
+    localStorage.setItem(MILESTONE_KEY, JSON.stringify(flags));
+  } catch (e) { /* ignore */ }
+}
+
+function isPerfectCollection() {
+  if (!allRows.length) return false;
+  return allRows.every(r => r.owned && r.level === (r.max_level || 5) && r.mastered);
+}
+
+function checkMilestones(force) {
+  if (!allRows.length) return;
+  const perfect = isPerfectCollection();
+  const maxDust = myDust >= MAX_DUST_CAP;
+
+  const perfectEl = document.getElementById('perfectMilestone');
+  const collectionMilestoneEl = document.getElementById('collectionMilestone');
+  const maxDustBadge = document.getElementById('maxDustBadge');
+
+  if (perfect && allRows.some(r => r.owned)) {
+    if (perfectEl) { perfectEl.style.display = 'flex'; perfectEl.classList.remove('inactive'); }
+    if (collectionMilestoneEl) { collectionMilestoneEl.style.display = 'flex'; collectionMilestoneEl.classList.remove('inactive'); }
+    if (!perfectCelebrationPlayed) {
+      saveMilestoneFlag('perfect');
+      perfectCelebrationPlayed = true;
+      if (force) playPerfectCelebration();
+    }
+  } else if (perfectCelebrationPlayed && allRows.some(r => r.owned)) {
+    if (perfectEl) { perfectEl.style.display = 'flex'; perfectEl.classList.add('inactive'); }
+    if (collectionMilestoneEl) { collectionMilestoneEl.style.display = 'flex'; collectionMilestoneEl.classList.add('inactive'); }
+  } else {
+    if (perfectEl) perfectEl.style.display = 'none';
+    if (collectionMilestoneEl) collectionMilestoneEl.style.display = 'none';
+  }
+
+  if (maxDust) {
+    if (maxDustBadge) { maxDustBadge.style.display = 'inline-flex'; maxDustBadge.classList.remove('inactive'); }
+    if (!maxDustCelebrationPlayed) {
+      saveMilestoneFlag('maxDust');
+      maxDustCelebrationPlayed = true;
+      if (force) playMaxDustCelebration();
+    }
+  } else if (maxDustCelebrationPlayed && myDust > 0) {
+    if (maxDustBadge) { maxDustBadge.style.display = 'inline-flex'; maxDustBadge.classList.add('inactive'); }
+  } else {
+    if (maxDustBadge) maxDustBadge.style.display = 'none';
+  }
+}
+
+function playPerfectCelebration() {
+  requestAnimationFrame(() => {
+    const el = document.getElementById('perfectMilestone');
+    const collEl = document.getElementById('collectionMilestone');
+    if (el) { el.classList.remove('inactive'); el.classList.add('celebrate'); setTimeout(() => el.classList.remove('celebrate'), 1500); }
+    if (collEl) { collEl.classList.remove('inactive'); collEl.classList.add('celebrate'); setTimeout(() => collEl.classList.remove('celebrate'), 1500); }
+  });
+}
+
+function playMaxDustCelebration() {
+  requestAnimationFrame(() => {
+    const el = document.getElementById('maxDustBadge');
+    if (el) { el.classList.remove('inactive'); el.classList.add('celebrate'); setTimeout(() => el.classList.remove('celebrate'), 1500); }
+  });
+}
+
 const ALL_VARIANTS = ["Normal","Gold","Gummy","Galaxy","Holofoil","Gem","Cube","Quack"];
 const VARIANT_COLORS = {
   Normal: '#94a3b8',
@@ -2428,6 +2651,7 @@ const VARIANT_COLORS = {
   Gem: '#22c55e',
   Quack: '#f97316',
 };
+const MAX_DUST_CAP = 200000;
 const VARIANT_ORDER = {
   Normal: 0,
   Gold: 1,
@@ -2503,6 +2727,8 @@ async function boot() {
 
   allRows         = buildAllRows();
 
+  loadMilestoneFlags();
+
   if (listEl) listEl.style.display = 'block';
   if (skeletonEl) skeletonEl.style.display = 'none';
 
@@ -2512,6 +2738,7 @@ async function boot() {
   renderTerminal();
   populateEcSprite();
   renderCalculator();
+  checkMilestones(true);
 }
 
 /* ── Local collection persistence ──
@@ -2578,6 +2805,7 @@ function onDustChange() {
   myDust = parseInt(document.getElementById('myDustInput').value)||0;
   localStorage.setItem('myDust', myDust);
   renderCalculator();
+  checkMilestones();
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -3222,6 +3450,7 @@ function refreshStats() {
   updateProgressBars(owned.length, mast);
   if (variantProgressOpen) renderVariantProgress();
   if (perVariantProgressOpen) renderPerVariantProgress();
+  checkMilestones();
 }
 
 function updateProgressBars(owned, mastered) {
@@ -4033,6 +4262,44 @@ function closeExportModal() {
     document
         .getElementById("exportModal")
         .classList.remove("show");
+}
+function openResetMilestonesModal() {
+  document.getElementById('confirmResetMilestones').classList.add('show');
+}
+function closeConfirmResetMilestones() {
+  document.getElementById('confirmResetMilestones').classList.remove('show');
+}
+function confirmResetMilestones() {
+  localStorage.removeItem(MILESTONE_KEY);
+  perfectCelebrationPlayed = false;
+  maxDustCelebrationPlayed = false;
+  closeConfirmResetMilestones();
+  checkMilestones(true);
+  showToast('Milestones reset. You can now earn them again.');
+}
+function openClearAllModal() {
+  document.getElementById('confirmClearAll').classList.add('show');
+}
+function closeClearAllModal() {
+  document.getElementById('confirmClearAll').classList.remove('show');
+}
+function confirmClearAll() {
+  localStorage.removeItem(COL_KEY);
+  localStorage.removeItem('myDust');
+  localStorage.removeItem('basket');
+  localStorage.removeItem(MILESTONE_KEY);
+  perfectCelebrationPlayed = false;
+  maxDustCelebrationPlayed = false;
+  myDust = 0;
+  basketQty = {};
+  allRows = buildAllRows();
+  closeClearAllModal();
+  refreshStats();
+  render();
+  renderTerminal();
+  renderCalculator();
+  checkMilestones(true);
+  showToast('All saved data has been permanently deleted.');
 }
 function populateSpriteCheckboxes() {
   const container = document.getElementById('spriteCheckboxes');
