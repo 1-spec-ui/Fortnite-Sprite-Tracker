@@ -110,6 +110,45 @@
       --glass-elevation: 0 20px 50px rgba(2,6,23,0.5);
       --glass-radius: 20px;
     }
+    [data-theme="light"] {
+      --bg-root: #f8fafc;
+      --bg-primary: #f1f5f9;
+      --bg-secondary: #e2e8f0;
+      --bg-elevated: #ffffff;
+      --bg-surface: #ffffff;
+      --bg-surface-hover: #f8fafc;
+      --bg-inset: #e2e8f0;
+      --surface: rgba(255, 255, 255, 0.92);
+      --surface-elevated: rgba(255, 255, 255, 0.96);
+      --surface-glass: rgba(255, 255, 255, 0.85);
+      --surface-glass-hover: rgba(248, 250, 252, 0.9);
+      --border: rgba(148, 163, 184, 0.25);
+      --border-subtle: rgba(148, 163, 184, 0.18);
+      --border-strong: rgba(148, 163, 184, 0.35);
+      --border-glow: rgba(6, 182, 212, 0.35);
+      --border-gold: rgba(245, 158, 11, 0.4);
+      --border-emerald: rgba(16, 185, 129, 0.4);
+      --text-primary: #0f172a;
+      --text-secondary: #334155;
+      --text-muted: #64748b;
+      --text-faint: #94a3b8;
+      --accent: #0891b2;
+      --accent-hover: #06b6d4;
+      --accent-soft: rgba(8, 145, 178, 0.12);
+      --accent-glow: rgba(8, 145, 178, 0.25);
+      --accent-glow-strong: rgba(8, 145, 178, 0.4);
+      --glass-strong: rgba(0, 0, 0, 0.04);
+      --glass-soft-bg: rgba(255, 255, 255, 0.6);
+      --glass-edge: rgba(0, 0, 0, 0.08);
+      --glass-elevation: 0 20px 50px rgba(0, 0, 0, 0.08);
+      --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.06);
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.08);
+      --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.1);
+      --shadow-glow: 0 0 24px rgba(8, 145, 178, 0.1);
+      --shadow-gold: 0 0 24px rgba(245, 158, 11, 0.12);
+    }
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     /* Reusable glass utility classes */
@@ -241,7 +280,7 @@
     body::before {
       content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
       background:
-        radial-gradient(ellipse 80% 50% at 20% -10%, rgba(6, 182, 212, 0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 80% 50% at 20% -10%, var(--accent-glow) 0%, transparent 60%),
         radial-gradient(ellipse 60% 40% at 90% 110%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
         radial-gradient(ellipse 40% 30% at 50% 50%, rgba(59, 130, 246, 0.03) 0%, transparent 60%);
       animation: bgShift 20s ease-in-out infinite alternate;
@@ -276,7 +315,7 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      filter: drop-shadow(0 0 14px rgba(6, 182, 212, 0.18));
+      filter: drop-shadow(0 0 14px var(--accent-glow));
     }
     header p, .app-header p {
       color: var(--text-secondary); font-size: 0.88rem; font-weight: 500;
@@ -454,9 +493,9 @@
     .tab-btn.active {
       color: var(--text-primary);
       background: var(--accent-soft);
-      box-shadow: inset 0 0 0 1px rgba(6, 182, 212, 0.22), 0 1px 2px rgba(0,0,0,0.2);
+      box-shadow: inset 0 0 0 1px var(--accent-glow), 0 1px 2px rgba(0,0,0,0.2);
     }
-    .tab-btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+    .tab-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     .tab-panel { display: none; padding-top: 20px; animation: fadeIn 0.25s ease both; }
     .tab-panel.active { display: block; }
 
@@ -581,8 +620,8 @@
       min-height: 44px;
     }
     .search-box:focus-within {
-      border-color: var(--cyan);
-      box-shadow: 0 0 0 3px var(--cyan-soft);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
     }
     .search-box input {
       flex: 1; border: none; outline: none; background: transparent;
@@ -869,11 +908,11 @@
     .ec-field { display:flex; flex-direction:column; gap:8px; margin-bottom:14px; }
     .ec-field-label { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase; font-weight: 700; }
     .ec-input { width:100%; min-height:48px; border-radius:18px; border:1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); color: var(--text-primary); padding: 12px 14px; font-size: 0.95rem; transition: border-color var(--transition), box-shadow var(--transition); }
-    .ec-input:focus { outline:none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(6,182,212,0.12); }
+    .ec-input:focus { outline:none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
     .ec-sprite-list { display:grid; gap:10px; max-height: 320px; overflow-y:auto; padding-right:4px; }
     .ec-sprite-item { display:flex; gap:12px; width:100%; border-radius:18px; background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:12px; text-align:left; color: var(--text-primary); transition: transform var(--transition), border-color var(--transition), background var(--transition); }
-    .ec-sprite-item:hover, .ec-sprite-item:focus-visible { transform: translateY(-1px); border-color: rgba(6,182,212,0.25); background: rgba(6,182,212,0.1); }
-    .ec-sprite-item.active { border-color: rgba(6,182,212,0.35); background: rgba(6,182,212,0.14); }
+    .ec-sprite-item:hover, .ec-sprite-item:focus-visible { transform: translateY(-1px); border-color: var(--accent-glow); background: var(--accent-soft); }
+    .ec-sprite-item.active { border-color: var(--accent-glow-strong); background: var(--accent-soft); }
     .ec-sprite-item button { all: unset; width: 100%; text-align: left; cursor: pointer; display: contents; }
     .ec-sprite-thumb { width: 60px; min-width: 60px; height: 60px; border-radius: 18px; overflow:hidden; background: rgba(255,255,255,0.06); display:grid; place-items:center; }
     .ec-sprite-thumb img { width:100%; height:100%; object-fit:cover; }
@@ -892,7 +931,7 @@
     .ec-chip-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap:12px; }
     .ec-variant-chip { cursor:pointer; border-radius:18px; border:1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02); color: var(--text-secondary); padding: 14px 14px; font-weight: 800; transition: transform var(--transition), box-shadow var(--transition), background var(--transition); box-shadow: 0 8px 22px rgba(2,6,23,0.18); }
     .ec-variant-chip:hover, .ec-level-button:hover { transform: translateY(-3px); box-shadow: 0 18px 48px rgba(2,6,23,0.28); }
-    .ec-variant-chip.active { background: linear-gradient(90deg, rgba(6,182,212,0.08), rgba(34,197,94,0.06)); border-color: rgba(6,182,212,0.18); color: var(--text-primary); transform: translateY(-6px); box-shadow: 0 28px 72px rgba(6,182,212,0.12); }
+    .ec-variant-chip.active { background: linear-gradient(90deg, var(--accent-soft), rgba(34,197,94,0.06)); border-color: var(--accent-glow); color: var(--text-primary); transform: translateY(-6px); box-shadow: 0 28px 72px var(--accent-glow); }
     .ec-level-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); gap:10px; }
     .ec-level-button { cursor:pointer; min-height:48px; border-radius:16px; border:1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: var(--text-secondary); font-weight:700; transition: all var(--transition); }
     .ec-level-button.active { background: rgba(245,158,11,0.16); border-color: rgba(245,158,11,0.28); color: var(--text-primary); }
@@ -900,7 +939,7 @@
     .ec-action-btn { min-height:50px; border-radius:16px; width:100%; font-weight:700; }
     .ec-action-btn:focus-visible { outline:none; box-shadow: var(--focus-ring); }
     .ec-result-panel { margin-top:22px; }
-    .ec-result-card { border-radius:20px; background: linear-gradient(180deg, rgba(6,14,28,0.96), rgba(4,10,20,0.98)); border:1px solid rgba(6, 182, 212, 0.12); padding:18px; box-shadow: 0 24px 80px rgba(2,6,23,0.5); animation: fadeIn 0.22s ease both; }
+    .ec-result-card { border-radius:20px; background: linear-gradient(180deg, rgba(6,14,28,0.96), rgba(4,10,20,0.98)); border:1px solid var(--accent-glow); padding:18px; box-shadow: 0 24px 80px rgba(2,6,23,0.5); animation: fadeIn 0.22s ease both; }
     .ec-result-header { display:flex; justify-content:space-between; gap:16px; align-items:start; flex-wrap:wrap; margin-bottom:16px; }
     .ec-result-title { font-size:0.95rem; font-weight:800; color: var(--text-primary); }
     .ec-result-sub { color: var(--text-secondary); font-size:0.82rem; line-height:1.5; max-width:540px; }
@@ -1417,9 +1456,9 @@
     .lvl-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--text); background: var(--accent-soft); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(2,6,23,0.18); }
     .lvl-btn:active:not(:disabled) { transform: scale(0.96); }
     .lvl-btn:disabled { cursor: default; opacity: 0.28; }
-    .lvl-btn.lit { background: linear-gradient(90deg, rgba(6,182,212,0.06), rgba(34,197,94,0.04)); border-color: rgba(6,182,212,0.16); color: var(--accent); box-shadow: 0 18px 48px rgba(6,182,212,0.08); }
+    .lvl-btn.lit { background: linear-gradient(90deg, var(--accent-soft), rgba(34,197,94,0.04)); border-color: var(--accent-glow); color: var(--accent); box-shadow: 0 18px 48px var(--accent-glow); }
     .lvl-btn.hidden-btn { visibility: hidden; pointer-events: none; }
-    .lvl-btn:focus-visible { outline: 3px solid rgba(6,182,212,0.12); outline-offset: 2px; }
+    .lvl-btn:focus-visible { outline: 3px solid var(--accent-soft); outline-offset: 2px; }
 
     /* ===========================================
        DASHBOARD TAB
@@ -1446,7 +1485,7 @@
       content: ''; position: absolute; top: 12px; left: 16px; right: 16px; height: 4px; border-radius: 8px;
       opacity: 0.85;
     }
-    .dash-tile.accent::before { background: linear-gradient(90deg, rgba(6,182,212,0.18), rgba(34,197,94,0.12)); }
+    .dash-tile.accent::before { background: linear-gradient(90deg, var(--accent-glow), rgba(34,197,94,0.12)); }
     .dash-tile.amber::before  { background: linear-gradient(90deg, rgba(245,158,11,0.16), rgba(252,211,77,0.12)); }
     .dash-tile.emerald::before { background: linear-gradient(90deg, rgba(16,185,129,0.14), rgba(52,211,153,0.1)); }
     @media (hover: hover) {
@@ -1456,7 +1495,7 @@
     .dash-tile .dt-label { font-size: 0.66rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); font-weight: 800; }
     .dash-tile .dt-value { font-family: var(--mono); font-size: 1.8rem; font-weight: 900; color: var(--text); letter-spacing:-0.01em; }
     .dash-tile .dt-sub { font-size: 0.76rem; color: var(--text-secondary); opacity: 0.95; }
-    .dash-tile:focus-within, .dash-tile:focus { outline: 3px solid rgba(6,182,212,0.08); outline-offset: 4px; }
+    .dash-tile:focus-within, .dash-tile:focus { outline: 3px solid var(--accent-soft); outline-offset: 4px; }
     .dash-tile.accent .dt-value { color: var(--accent); }
     .dash-tile.amber  .dt-value { color: var(--amber); }
     .dash-tile.emerald .dt-value { color: var(--emerald); }
@@ -1895,7 +1934,7 @@
 
     /* Default subtle states */
     .sprite-card.indexed { border-color: rgba(148,163,184,0.10); box-shadow: 0 18px 48px rgba(2,6,23,0.14); }
-    .sprite-card.summoned { border: 1px solid rgba(6,182,212,0.18); box-shadow: 0 32px 90px rgba(6,182,212,0.10); }
+    .sprite-card.summoned { border: 1px solid var(--accent-glow); box-shadow: 0 32px 90px var(--accent-glow); }
 
     /* Rarity-based indexed glows (soft) */
     .sprite-card.rarity-rare.indexed { border-color: rgba(59,130,246,0.14); box-shadow: 0 18px 48px rgba(59,130,246,0.06); }
@@ -1931,12 +1970,12 @@
     .card-lvl { font-size: 0.84rem; color: var(--text-muted); }
     .card-cost { color: var(--gold); font-family: var(--mono); }
     .card-status { gap: 8px; padding: 12px 14px; border-radius: 18px; background: rgba(255,255,255,0.04); color: var(--text-secondary); font-size: 0.82rem; }
-    .card-status.status-active { background: linear-gradient(90deg, rgba(16,185,129,0.06), rgba(6,182,212,0.04)); border:1px solid rgba(16,185,129,0.12); }
+    .card-status.status-active { background: linear-gradient(90deg, rgba(16,185,129,0.06), var(--accent-soft)); border:1px solid rgba(16,185,129,0.12); }
     .card-status.status-indexed { background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04); }
     .card-crown { position: absolute; top: 12px; right: 12px; width: 28px; height: 28px; border-radius: 8px; background: rgba(245, 158, 11, 0.9); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; z-index: 2; box-shadow: 0 2px 8px rgba(0,0,0,0.25); }
     .card-toggle, .card-add-btn { border-radius: 18px; min-height: 46px; gap: 8px; }
-    .card-toggle.summoned { background: linear-gradient(90deg, rgba(16,185,129,0.9), rgba(6,182,212,0.9)); color: #02121a; box-shadow: 0 8px 24px rgba(6,182,212,0.16); }
-    .card-toggle.summoned svg { filter: drop-shadow(0 6px 12px rgba(6,182,212,0.12)); }
+    .card-toggle.summoned { background: linear-gradient(90deg, rgba(16,185,129,0.9), var(--accent)); color: #02121a; box-shadow: 0 8px 24px var(--accent-glow); }
+    .card-toggle.summoned svg { filter: drop-shadow(0 6px 12px var(--accent-glow-strong)); }
     .card-add-btn { color: var(--accent-strong); border-color: rgba(34,197,94,0.2); background: rgba(34,197,94,0.08); }
     .card-toggle.summoned { background: rgba(34,197,94,0.12); color: var(--accent-strong); border-color: rgba(34,197,94,0.25); }
     .card-toggle:hover, .card-add-btn:hover { background: rgba(56,189,248,0.12); }
@@ -2030,6 +2069,30 @@
       .mobile-nav { bottom: 0; }
       .sprite-card { min-height: 260px; }
     }
+
+    /* ── Settings ── */
+    .settings-section { margin-bottom: 18px; }
+    .settings-section-title { font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+    .settings-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--border-subtle); }
+    .settings-row:last-child { border-bottom: none; }
+    .settings-label { font-size: 0.88rem; color: var(--text-secondary); font-weight: 500; }
+    .settings-sep { height: 1px; background: var(--border-soft); margin: 16px 0; }
+    .settings-select { background: var(--bg-elevated); border: 1px solid var(--border-soft); border-radius: var(--radius-sm); padding: 6px 28px 6px 10px; color: var(--text-secondary); font-size: 0.82rem; font-weight: 600; cursor: pointer; outline: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 8px center; transition: border-color var(--transition-fast), box-shadow var(--transition-fast); font-family: inherit; }
+    .settings-select:hover { border-color: var(--border); color: var(--text); }
+    .settings-select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .settings-color { width: 32px; height: 32px; border: 1px solid var(--border-soft); border-radius: 50%; cursor: pointer; background: transparent; padding: 0; }
+    .settings-color::-webkit-color-swatch-wrapper { padding: 0; }
+    .settings-color::-webkit-color-swatch { border: none; border-radius: 50%; }
+    .toggle { position: relative; display: inline-block; width: 44px; height: 24px; flex-shrink: 0; }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-elevated); border: 1px solid var(--border-soft); border-radius: 24px; transition: all 0.2s; }
+    .toggle-slider::before { position: absolute; content: ""; height: 18px; width: 18px; left: 2px; bottom: 2px; background: var(--text-muted); border-radius: 50%; transition: all 0.2s; }
+    .toggle input:checked + .toggle-slider { background: var(--accent-soft); border-color: var(--accent); }
+    .toggle input:checked + .toggle-slider::before { transform: translateX(20px); background: var(--accent); }
+    @media (max-width: 640px) {
+      .settings-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .settings-select { width: 100%; }
+    }
   </style>
 </head>
 <body>
@@ -2058,6 +2121,7 @@
       <button class="tab-btn" data-tab="collection" onclick="switchTab('collection',this)" role="tab">📋 Collection</button>
       <button class="tab-btn" data-tab="terminal" onclick="switchTab('terminal',this)" role="tab">🏪 Terminal</button>
       <button class="tab-btn" data-tab="calculator" onclick="switchTab('calculator',this)" role="tab">🧮 Calculator</button>
+      <button class="tab-btn" data-tab="settings" onclick="switchTab('settings',this)" role="tab">⚙️ Settings</button>
     </div>
     <div class="nav-right">
       <button class="filter-icon-btn export-btn" onclick="openExportModal()" title="Export Collection">📤</button>
@@ -2339,7 +2403,171 @@
     </div>
   </div>
 
+  <div id="tab-settings" class="tab-panel">
+    <div class="dash-panel" style="max-width: 720px; margin: 0 auto;">
+       <h3>⚙️ Settings</h3>
+
+       <div class="settings-section">
+         <div class="settings-section-title">Appearance</div>
+         <div class="settings-row">
+           <div class="settings-label">Accent Color</div>
+           <input type="color" class="settings-color" data-setting="accentColor" value="#06b6d4" onchange="updateSetting('accentColor', this.value)" />
+         </div>
+         <div class="settings-row">
+          <div class="settings-label">Animations</div>
+          <label class="toggle"><input type="checkbox" data-setting="animations" checked onchange="updateSetting('animations', this.checked)"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="settings-row">
+          <div class="settings-label">Glow Effects</div>
+          <label class="toggle"><input type="checkbox" data-setting="glowEffects" checked onchange="updateSetting('glowEffects', this.checked)"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="settings-row">
+          <div class="settings-label">Compact Mode</div>
+          <label class="toggle"><input type="checkbox" data-setting="compactMode" onchange="updateSetting('compactMode', this.checked)"><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+
+      <div class="settings-sep"></div>
+
+      <div class="settings-section">
+        <div class="settings-section-title">Tracker</div>
+        <div class="settings-row">
+          <div class="settings-label">Default Sort</div>
+          <select class="settings-select" data-setting="defaultSort" onchange="updateSetting('defaultSort', this.value)">
+            <option value="default">Default</option>
+            <option value="lvl-desc">Level High to Low</option>
+            <option value="lvl-asc">Level Low to High</option>
+            <option value="mastered">Mastered First</option>
+          </select>
+        </div>
+        <div class="settings-row">
+          <div class="settings-label">Default Filter</div>
+          <select class="settings-select" data-setting="defaultFilter" onchange="updateSetting('defaultFilter', this.value)">
+            <option value="all">All</option>
+            <option value="owned">Owned</option>
+            <option value="unowned">Not Owned</option>
+            <option value="mastered">Mastered</option>
+            <option value="summoned">Summoned</option>
+          </select>
+        </div>
+        <div class="settings-row">
+          <div class="settings-label">Show Progress</div>
+          <label class="toggle"><input type="checkbox" data-setting="showProgress" checked onchange="updateSetting('showProgress', this.checked)"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="settings-row">
+          <div class="settings-label">Show Mastery</div>
+          <label class="toggle"><input type="checkbox" data-setting="showMastery" checked onchange="updateSetting('showMastery', this.checked)"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="settings-row">
+          <div class="settings-label">Hide Completed</div>
+          <label class="toggle"><input type="checkbox" data-setting="hideCompleted" onchange="updateSetting('hideCompleted', this.checked)"><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+
+      <div class="settings-sep"></div>
+
+      <div class="settings-section">
+        <div class="settings-section-title">Notifications</div>
+        <div class="settings-row">
+          <div class="settings-label">Mastery</div>
+          <label class="toggle"><input type="checkbox" data-setting="notifyMastery" checked onchange="updateSetting('notifyMastery', this.checked)"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="settings-row">
+          <div class="settings-label">Milestones</div>
+          <label class="toggle"><input type="checkbox" data-setting="notifyMilestones" checked onchange="updateSetting('notifyMilestones', this.checked)"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="settings-row">
+          <div class="settings-label">Perfect Collection</div>
+          <label class="toggle"><input type="checkbox" data-setting="notifyPerfect" checked onchange="updateSetting('notifyPerfect', this.checked)"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="settings-row">
+          <div class="settings-label">Max Dust</div>
+          <label class="toggle"><input type="checkbox" data-setting="notifyMaxDust" checked onchange="updateSetting('notifyMaxDust', this.checked)"><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+
+      <div class="settings-sep"></div>
+
+      <div class="settings-section">
+        <div class="settings-section-title">Collection</div>
+        <div class="settings-row">
+          <div class="settings-label">Export Collection</div>
+          <button class="filter-btn" onclick="openExportModal()">Export</button>
+        </div>
+        <div class="settings-row">
+          <div class="settings-label">Import Collection</div>
+          <label class="filter-btn" style="cursor:pointer">
+            Import
+            <input type="file" accept=".json" style="display:none" onchange="importCollection(event)" />
+          </label>
+        </div>
+        <div class="settings-row">
+          <div class="settings-label">Reset Collection</div>
+          <button class="filter-btn" style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4); color: #fca5a5;" onclick="openClearAllModal()">Reset</button>
+        </div>
+      </div>
+
+      <div class="settings-sep"></div>
+
+      <div class="settings-section">
+        <div class="settings-section-title">Performance</div>
+        <div class="settings-row">
+          <div class="settings-label">Performance Mode</div>
+          <label class="toggle"><input type="checkbox" data-setting="performanceMode" onchange="updateSetting('performanceMode', this.checked)"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="settings-row">
+          <div class="settings-label">Reduced Motion</div>
+          <label class="toggle"><input type="checkbox" data-setting="reducedMotion" onchange="updateSetting('reducedMotion', this.checked)"><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+
+      <div class="settings-sep"></div>
+
+      <div class="settings-section">
+        <div class="settings-section-title">Advanced</div>
+        <div class="settings-row">
+          <div class="settings-label">Clear Cache</div>
+          <button class="filter-btn" style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4); color: #fca5a5;" onclick="clearCache()">Clear Cache</button>
+        </div>
+        <div class="settings-row">
+          <div class="settings-label">Reset Settings</div>
+          <button class="filter-btn" style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4); color: #fca5a5;" onclick="resetSettings()">Reset Settings</button>
+        </div>
+        <div class="settings-row">
+          <div class="settings-label">Reset All Data</div>
+          <button class="filter-btn" style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4); color: #fca5a5;" onclick="openClearAllModal()">Reset All Data</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<div id="confirmResetMilestones" class="modal-backdrop" onclick="if(event.target===this)closeConfirmResetMilestones()">
+  <div class="modal-card" style="max-width: 420px;">
+    <div class="modal-title">Reset Achievement Milestones?</div>
+    <div class="modal-subtitle">
+      This will clear your earned <b>Perfect Collection</b> and <b>Max Dust</b> milestone badges and allow the celebration animations to play again when you re-earn them.
+    </div>
+    <div class="modal-buttons">
+      <button class="filter-btn" onclick="closeConfirmResetMilestones()">Cancel</button>
+      <button class="filter-btn active" style="background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.5); color: #fca5a5;" onclick="confirmResetMilestones()">Reset Milestones</button>
+    </div>
+  </div>
+</div>
+
+<div id="confirmClearAll" class="modal-backdrop" onclick="if(event.target===this)closeClearAllModal()">
+  <div class="modal-card" style="max-width: 420px;">
+    <div class="modal-title">Clear All Saved Data?</div>
+    <div class="modal-subtitle">
+      This will <b>permanently delete</b> your entire collection, Sprite Dust amount, terminal basket, and milestone progress from this browser. This action cannot be undone.
+    </div>
+    <div class="modal-buttons">
+      <button class="filter-btn" onclick="closeClearAllModal()">Cancel</button>
+      <button class="filter-btn active" style="background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.5); color: #fca5a5;" onclick="confirmClearAll()">Delete Everything</button>
+    </div>
+  </div>
+</div>
+
 <div id="exportModal" class="modal-backdrop">
   <div class="modal-card">
     <div class="modal-title">
@@ -2382,6 +2610,9 @@
   </button>
   <button class="mnav-btn" data-tab="calculator" onclick="switchTab('calculator',this)">
     <span class="mnav-icon">🧮</span><span>Calc</span>
+  </button>
+  <button class="mnav-btn" data-tab="settings" onclick="switchTab('settings',this)">
+    <span class="mnav-icon">⚙️</span><span>Settings</span>
   </button>
 </nav>
 <div id="toast"></div>
@@ -2503,6 +2734,9 @@ async function boot() {
 
   allRows         = buildAllRows();
 
+  loadSettings();
+  loadMilestoneFlags();
+
   if (listEl) listEl.style.display = 'block';
   if (skeletonEl) skeletonEl.style.display = 'none';
 
@@ -2512,6 +2746,7 @@ async function boot() {
   renderTerminal();
   populateEcSprite();
   renderCalculator();
+  checkMilestones(true);
 }
 
 /* ── Local collection persistence ──
@@ -2578,6 +2813,7 @@ function onDustChange() {
   myDust = parseInt(document.getElementById('myDustInput').value)||0;
   localStorage.setItem('myDust', myDust);
   renderCalculator();
+  checkMilestones();
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -3222,6 +3458,7 @@ function refreshStats() {
   updateProgressBars(owned.length, mast);
   if (variantProgressOpen) renderVariantProgress();
   if (perVariantProgressOpen) renderPerVariantProgress();
+  checkMilestones();
 }
 
 function updateProgressBars(owned, mastered) {
@@ -4092,6 +4329,277 @@ document.addEventListener('change', (e) => {
     }
   }
 });
+
+/* ════════════════════════════════════════════════════════════
+   Milestones
+═══════════════════════════════════════════════════════════ */
+const MILESTONE_KEY = 'spriteMilestones';
+const MAX_DUST_CAP = 200000;
+let perfectCelebrationPlayed = false;
+let maxDustCelebrationPlayed = false;
+
+function loadMilestoneFlags() {
+  try {
+    const flags = JSON.parse(localStorage.getItem(MILESTONE_KEY) || '{}');
+    perfectCelebrationPlayed = !!flags.perfect;
+    maxDustCelebrationPlayed = !!flags.maxDust;
+  } catch (e) { /* ignore */ }
+}
+
+function saveMilestoneFlag(name) {
+  try {
+    const flags = JSON.parse(localStorage.getItem(MILESTONE_KEY) || '{}');
+    flags[name] = true;
+    localStorage.setItem(MILESTONE_KEY, JSON.stringify(flags));
+  } catch (e) { /* ignore */ }
+}
+
+function resetMilestoneFlag(name) {
+  try {
+    const flags = JSON.parse(localStorage.getItem(MILESTONE_KEY) || '{}');
+    delete flags[name];
+    localStorage.setItem(MILESTONE_KEY, JSON.stringify(flags));
+  } catch (e) { /* ignore */ }
+}
+
+function isPerfectCollection() {
+  if (!allRows.length) return false;
+  return allRows.every(r => r.owned && r.level === (r.max_level || 5) && r.mastered);
+}
+
+function checkMilestones(force) {
+  if (!allRows.length) return;
+  const perfect = isPerfectCollection();
+  const maxDust = myDust >= MAX_DUST_CAP;
+
+  const perfectEl = document.getElementById('perfectMilestone');
+  const collectionMilestoneEl = document.getElementById('collectionMilestone');
+  const maxDustBadge = document.getElementById('maxDustBadge');
+
+  if (perfect && allRows.some(r => r.owned)) {
+    if (perfectEl) { perfectEl.style.display = 'flex'; perfectEl.classList.remove('inactive'); }
+    if (collectionMilestoneEl) { collectionMilestoneEl.style.display = 'flex'; collectionMilestoneEl.classList.remove('inactive'); }
+    if (!perfectCelebrationPlayed) {
+      saveMilestoneFlag('perfect');
+      perfectCelebrationPlayed = true;
+      if (force) playPerfectCelebration();
+    }
+  } else if (perfectCelebrationPlayed && allRows.some(r => r.owned)) {
+    if (perfectEl) { perfectEl.style.display = 'flex'; perfectEl.classList.add('inactive'); }
+    if (collectionMilestoneEl) { collectionMilestoneEl.style.display = 'flex'; collectionMilestoneEl.classList.add('inactive'); }
+  } else {
+    if (perfectEl) perfectEl.style.display = 'none';
+    if (collectionMilestoneEl) collectionMilestoneEl.style.display = 'none';
+  }
+
+  if (maxDust) {
+    if (maxDustBadge) { maxDustBadge.style.display = 'inline-flex'; maxDustBadge.classList.remove('inactive'); }
+    if (!maxDustCelebrationPlayed) {
+      saveMilestoneFlag('maxDust');
+      maxDustCelebrationPlayed = true;
+      if (force) playMaxDustCelebration();
+    }
+  } else if (maxDustCelebrationPlayed && myDust > 0) {
+    if (maxDustBadge) { maxDustBadge.style.display = 'inline-flex'; maxDustBadge.classList.add('inactive'); }
+  } else {
+    if (maxDustBadge) maxDustBadge.style.display = 'none';
+  }
+}
+
+function playPerfectCelebration() {
+  requestAnimationFrame(() => {
+    const el = document.getElementById('perfectMilestone');
+    const collEl = document.getElementById('collectionMilestone');
+    if (el) { el.classList.remove('inactive'); el.classList.add('celebrate'); setTimeout(() => el.classList.remove('celebrate'), 1500); }
+    if (collEl) { collEl.classList.remove('inactive'); collEl.classList.add('celebrate'); setTimeout(() => collEl.classList.remove('celebrate'), 1500); }
+  });
+}
+
+function playMaxDustCelebration() {
+  requestAnimationFrame(() => {
+    const el = document.getElementById('maxDustBadge');
+    if (el) { el.classList.remove('inactive'); el.classList.add('celebrate'); setTimeout(() => el.classList.remove('celebrate'), 1500); }
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
+   Confirmations
+═══════════════════════════════════════════════════════════ */
+function openResetMilestonesModal() {
+  document.getElementById('confirmResetMilestones').classList.add('show');
+}
+function closeConfirmResetMilestones() {
+  document.getElementById('confirmResetMilestones').classList.remove('show');
+}
+function confirmResetMilestones() {
+  localStorage.removeItem(MILESTONE_KEY);
+  perfectCelebrationPlayed = false;
+  maxDustCelebrationPlayed = false;
+  closeConfirmResetMilestones();
+  checkMilestones(true);
+  showToast('Milestones reset. You can now earn them again.', 'ok');
+}
+function openClearAllModal() {
+  document.getElementById('confirmClearAll').classList.add('show');
+}
+function closeClearAllModal() {
+  document.getElementById('confirmClearAll').classList.remove('show');
+}
+function confirmClearAll() {
+  localStorage.removeItem(COL_KEY);
+  localStorage.removeItem('myDust');
+  localStorage.removeItem('basket');
+  localStorage.removeItem(MILESTONE_KEY);
+  perfectCelebrationPlayed = false;
+  maxDustCelebrationPlayed = false;
+  myDust = 0;
+  basketQty = {};
+  allRows = buildAllRows();
+  closeClearAllModal();
+  refreshStats();
+  render();
+  renderTerminal();
+  renderCalculator();
+  checkMilestones(true);
+  showToast('All saved data has been permanently deleted.', 'ok');
+}
+
+/* ════════════════════════════════════════════════════════════
+   Settings
+═══════════════════════════════════════════════════════════ */
+const SETTINGS_KEY = 'spriteSettings';
+const DEFAULT_SETTINGS = {
+  accentColor: '#06b6d4',
+  animations: true,
+  glowEffects: true,
+  compactMode: false,
+  defaultSort: 'default',
+  defaultFilter: 'all',
+  showProgress: true,
+  showMastery: true,
+  hideCompleted: false,
+  notifyMastery: true,
+  notifyMilestones: true,
+  notifyPerfect: true,
+  notifyMaxDust: true,
+  performanceMode: false,
+  reducedMotion: false,
+};
+let settings = { ...DEFAULT_SETTINGS };
+
+function loadSettings() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}');
+    settings = { ...DEFAULT_SETTINGS, ...saved };
+  } catch (e) {
+    settings = { ...DEFAULT_SETTINGS };
+  }
+  applySettings();
+}
+
+function saveSettings() {
+  try {
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+  } catch (e) { /* ignore */ }
+}
+
+function applySettings() {
+  document.querySelectorAll('[data-setting]').forEach(el => {
+    const key = el.dataset.setting;
+    if (!(key in settings)) return;
+    const val = settings[key];
+    if (el.type === 'checkbox') {
+      el.checked = !!val;
+    } else if (el.tagName === 'SELECT' || el.tagName === 'INPUT') {
+      el.value = val;
+    }
+  });
+  if (settings.accentColor) {
+    document.documentElement.style.setProperty('--accent', settings.accentColor);
+    const soft = settings.accentColor + '22';
+    document.documentElement.style.setProperty('--accent-soft', soft);
+    document.documentElement.style.setProperty('--accent-glow', settings.accentColor + '40');
+    document.documentElement.style.setProperty('--accent-glow-strong', settings.accentColor + '66');
+    document.documentElement.style.setProperty('--focus-ring', `0 0 0 3px ${soft}, 0 0 0 1px ${settings.accentColor}`);
+  }
+  if (settings.reducedMotion) {
+    document.documentElement.style.setProperty('--transition', '0ms');
+    document.documentElement.style.setProperty('--transition-fast', '0ms');
+  } else {
+    document.documentElement.style.setProperty('--transition', '180ms');
+    document.documentElement.style.setProperty('--transition-fast', '120ms');
+  }
+  if (settings.performanceMode) {
+    document.body.classList.add('performance-mode');
+  } else {
+    document.body.classList.remove('performance-mode');
+  }
+}
+
+function updateSetting(key, value) {
+  settings[key] = value;
+  saveSettings();
+  applySettings();
+  if (key === 'defaultSort') {
+    sortMode = value;
+    scheduleRender();
+  }
+  if (key === 'showProgress') {
+    const progPanel = document.getElementById('progressPanel');
+    if (progPanel) progPanel.style.display = value ? 'block' : 'none';
+  }
+  if (key === 'showMastery') {
+    document.querySelectorAll('.mast-label, .card-crown, .pip.mast').forEach(el => {
+      el.style.display = value ? '' : 'none';
+    });
+  }
+}
+
+function importCollection(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (data.collection) {
+        localStorage.setItem(COL_KEY, JSON.stringify(data.collection));
+      }
+      if (data.dust !== undefined) {
+        myDust = data.dust;
+        localStorage.setItem('myDust', myDust);
+        const input = document.getElementById('myDustInput');
+        if (input) input.value = myDust;
+      }
+      allRows = buildAllRows();
+      refreshStats();
+      render();
+      renderTerminal();
+      renderCalculator();
+      checkMilestones(true);
+      showToast('Collection imported successfully.', 'ok');
+    } catch (err) {
+      showToast('Import failed. Invalid file format.', 'err');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function clearCache() {
+  if ('caches' in window) {
+    caches.keys().then(names => { names.forEach(name => caches.delete(name)); });
+  }
+  showToast('Cache cleared.', 'ok');
+}
+
+function resetSettings() {
+  if (!confirm('Reset all settings to defaults? This will not affect your collection or milestones.')) return;
+  localStorage.removeItem(SETTINGS_KEY);
+  settings = { ...DEFAULT_SETTINGS };
+  applySettings();
+  showToast('Settings reset to defaults.', 'ok');
+}
 
 boot();
 </script>
