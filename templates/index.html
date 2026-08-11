@@ -1179,8 +1179,11 @@
      .completionist-card .cc-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; margin-bottom: 6px; }
      .completionist-card .cc-value { font-family: var(--mono); font-size: 1.6rem; font-weight: 900; color: var(--text); }
      .completionist-card .cc-sub { font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px; }
-     .completionist-card.perfect { border-color: var(--gold); box-shadow: 0 0 24px rgba(245,158,11,0.12); }
-     .completionist-card.perfect .cc-value { color: var(--gold); }
+    .completionist-card.perfect { border-color: var(--gold); box-shadow: 0 0 24px rgba(245,158,11,0.12); }
+    .completionist-card.perfect .cc-value { color: var(--gold); }
+    .completionist-card .cc-action { margin-top: 10px; padding: 6px 14px; border-radius: 999px; background: var(--accent-soft); border: 1px solid var(--accent); color: var(--accent); font-weight: 700; font-size: 0.78rem; cursor: pointer; }
+    .completionist-card .cc-action:hover { background: var(--accent); color: #fff; }
+    .completionist-card .cc-done { margin-top: 10px; font-size: 0.82rem; font-weight: 700; color: var(--emerald); }
      .completionist-header { text-align: center; padding: 20px; margin-bottom: 16px; border-radius: var(--radius); background: var(--glass); border: 1px solid var(--glass-border); }
      .completionist-header h2 { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.02em; }
      .completionist-header .perfect-badge { font-size: 2rem; margin-top: 8px; }
@@ -2274,7 +2277,6 @@
       <button class="tab-btn" data-tab="terminal" onclick="switchTab('terminal',this)" role="tab">🏪 Terminal</button>
       <button class="tab-btn" data-tab="calculator" onclick="switchTab('calculator',this)" role="tab">🧮 Calculator</button>
       <button class="tab-btn" data-tab="achievements" onclick="switchTab('achievements',this)" role="tab">🏆 Achievements</button>
-      <button class="tab-btn" data-tab="completionist" onclick="switchTab('completionist',this)" role="tab">👑 Completionist</button>
       <button class="tab-btn" data-tab="settings" onclick="switchTab('settings',this)" role="tab">⚙️ Settings</button>
     </div>
     <div class="nav-right">
@@ -2599,6 +2601,8 @@
     <div class="dash-panel" style="max-width: 960px; margin: 0 auto;">
       <h3>🏆 Achievements</h3>
       <div id="achievementsGrid" class="achievements-grid"></div>
+      <h3 style="margin-top:28px;">👑 Perfect Collection Progress</h3>
+      <div id="achievementsCompletionist" class="completionist-grid"></div>
     </div>
   </div>
 
@@ -2756,17 +2760,7 @@
   </div>
 
   <!-- ══ STATISTICS TAB ══════════════════════════════════════════ -->
-  <div id="tab-completionist" class="tab-panel">
-    <div class="dash-grid">
-      <div class="dash-panel" style="max-width: 720px; margin: 0 auto;">
-        <h3>👑 PERFECT COLLECTION PROGRESS</h3>
-        <div id="completionistContent"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="confirmResetMilestones" class="modal-backdrop" onclick="if(event.target===this)closeConfirmResetMilestones()">
+  <div id="confirmResetMilestones" class="modal-backdrop" onclick="if(event.target===this)closeConfirmResetMilestones()">
   <div class="modal-card" style="max-width: 420px;">
     <div class="modal-title">Reset Achievement Milestones?</div>
     <div class="modal-subtitle">
@@ -2837,9 +2831,6 @@
   </button>
   <button class="mnav-btn" data-tab="achievements" onclick="switchTab('achievements',this)">
     <span class="mnav-icon">🏆</span><span>Achievements</span>
-  </button>
-  <button class="mnav-btn" data-tab="completionist" onclick="switchTab('completionist',this)">
-    <span class="mnav-icon">👑</span><span>Complete</span>
   </button>
   <button class="mnav-btn" data-tab="settings" onclick="switchTab('settings',this)">
     <span class="mnav-icon">⚙️</span><span>Settings</span>
@@ -3807,6 +3798,7 @@ function addSpriteVariants(spriteName) {
 /* Add every variant of a single sprite and set them all to max level + mastered */
 function masterAllSpriteVariants(spriteName) {
   let updated = 0;
+  suppressMasteryCelebrations = true;
   allRows.forEach(r => {
     if (r.name === spriteName) {
       const maxLevel = r.max_level || 5;
@@ -3814,6 +3806,7 @@ function masterAllSpriteVariants(spriteName) {
       updated++;
     }
   });
+  suppressMasteryCelebrations = false;
   scheduleRender(); refreshStats(); renderCalculator();
   if (updated > 0) showToast(`Mastered all ${updated} variants of ${spriteName.replace(/\s+Sprite$/, '')}.`, 'ok');
 }
@@ -4826,6 +4819,7 @@ function saveCelebrations() {
 }
 let celebrationQueue = [];
 let celebrationBusy = false;
+let suppressMasteryCelebrations = false;
 
 function showCelebration(message, type) {
   celebrationQueue.push({ message, type });
@@ -4858,7 +4852,7 @@ function checkCelebrations() {
   }
   if (s.notifyAchievements && celebrationFlags.lastMasteredCount !== undefined) {
     const mastCount = owned.filter(r => r.mastered).length;
-    if (mastCount > celebrationFlags.lastMasteredCount) {
+    if (mastCount > celebrationFlags.lastMasteredCount && !suppressMasteryCelebrations) {
       showCelebration('✨ Sprite Mastered!', 'mastered');
     }
     celebrationFlags.lastMasteredCount = mastCount;
@@ -5304,7 +5298,7 @@ function renderRarityCards() {
    Completionist Mode
 ════════════════════════════════════════════════════════════ */
 function renderCompletionist() {
-  const container = document.getElementById('completionistContent');
+  const container = document.getElementById('achievementsCompletionist');
   if (!container) return;
   const total = allRows.length;
   const summoned = allRows.filter(r => r.summoned).length;
@@ -5313,16 +5307,35 @@ function renderCompletionist() {
   const dustMax = myDust >= MAX_DUST_CAP;
   const perfect = isPerfectCollection();
 
+  const notSummoned = total - summoned;
+  const notMaxLevel = total - maxLevel;
+  const notMastered = total - mastered;
+
+  const makeCard = (label, have, need, filter, btnLabel) => {
+    const pct = total ? Math.round((have / total) * 100) : 0;
+    const done = have === total && total > 0;
+    return `<div class="completionist-card ${done ? 'perfect' : ''}">
+      <div class="cc-label">${label}</div>
+      <div class="cc-value">${have} / ${total}</div>
+      <div class="cc-sub">${pct}%</div>
+      ${!done ? `<button class="cc-action" onclick="goToRecommendation('${filter}', '')">${btnLabel} (${need})</button>` : '<div class="cc-done">✓ Complete</div>'}
+    </div>`;
+  };
+
   container.innerHTML = `
     <div class="completionist-header ${perfect ? 'perfect' : ''}">
       <h2>👑 PERFECT COLLECTION PROGRESS</h2>
       ${perfect ? '<div class="perfect-badge">👑 PERFECT COLLECTION 👑</div>' : ''}
     </div>
     <div class="completionist-grid">
-      <div class="completionist-card"><div class="cc-label">Summoned</div><div class="cc-value">${summoned} / ${total}</div><div class="cc-sub">${total ? Math.round(summoned / total * 100) : 0}%</div></div>
-      <div class="completionist-card"><div class="cc-label">Max Level</div><div class="cc-value">${maxLevel} / ${total}</div><div class="cc-sub">${total ? Math.round(maxLevel / total * 100) : 0}%</div></div>
-      <div class="completionist-card"><div class="cc-label">Mastered</div><div class="cc-value">${mastered} / ${total}</div><div class="cc-sub">${total ? Math.round(mastered / total * 100) : 0}%</div></div>
-      <div class="completionist-card ${dustMax ? 'perfect' : ''}"><div class="cc-label">Sprite Dust</div><div class="cc-value">${dustMax ? 'MAX' : myDust.toLocaleString()}</div><div class="cc-sub">${dustMax ? 'Maximum reached!' : `of ${MAX_DUST_CAP.toLocaleString()} max`}</div></div>
+      ${makeCard('Summoned', summoned, notSummoned, 'indexed', 'Summon')}
+      ${makeCard('Max Level', maxLevel, notMaxLevel, 'notmaxlevel', 'Level Up')}
+      ${makeCard('Mastered', mastered, notMastered, 'notmastered', 'Master')}
+      <div class="completionist-card ${dustMax ? 'perfect' : ''}">
+        <div class="cc-label">Sprite Dust</div>
+        <div class="cc-value">${dustMax ? 'MAX' : myDust.toLocaleString()}</div>
+        <div class="cc-sub">${dustMax ? 'Maximum reached!' : `of ${MAX_DUST_CAP.toLocaleString()} max`}</div>
+      </div>
     </div>
   `;
 }
@@ -5356,7 +5369,6 @@ function refreshStats() {
   renderRarityCards();
   renderRecommendations();
   renderStatistics();
-  renderCompletionist();
   renderHistory();
   checkMilestones();
   checkAchievements();
@@ -5373,13 +5385,15 @@ function switchTab(name, btn) {
   document.querySelectorAll('.tab-btn, .mnav-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.tab === name);
   });
-  if (name === 'achievements') renderAchievements();
+  if (name === 'achievements') {
+    renderAchievements();
+    renderCompletionist();
+  }
   if (name === 'dashboard') {
     renderWhatsLeft();
     renderRarityCards();
     renderRecommendations();
     renderStatistics();
-    renderCompletionist();
     if (dashHistoryOpen) setTimeout(renderHistory, 100);
   }
 }
