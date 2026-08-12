@@ -1626,6 +1626,8 @@
     .achievement-desc { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 6px; }
     .achievement-meta { font-size: 0.72rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.03em; }
     .achievement-card.unlocked .achievement-meta { color: var(--accent); }
+    .achievement-category { margin-bottom: 18px; }
+    .achievement-category-title { font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle); }
     .stats-overview { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-bottom: 14px; }
     .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; text-align: center; }
     .stat-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 700; margin-bottom: 6px; }
@@ -2924,15 +2926,21 @@ let EXTRACTION_BASE = {
 ════════════════════════════════════════════════════════════ */
 const ACHIEVEMENT_KEY = 'spriteAchievements';
 const ACHIEVEMENTS = [
-  { id: 'first_summon', name: 'First Summon', desc: 'Summon your first Sprite.', icon: '🏃', req: () => allRows.some(r => r.summoned) },
-  { id: 'getting_started', name: 'Getting Started', desc: 'Reach 25% overall collection progress.', icon: '🌱', req: () => { const pct = getCollectionPct(); return pct >= 25; } },
-  { id: 'halfway_there', name: 'Halfway There', desc: 'Reach 50% overall collection progress.', icon: '🌿', req: () => { const pct = getCollectionPct(); return pct >= 50; } },
-  { id: 'completionist', name: 'Completionist', desc: 'Reach 100% overall collection progress.', icon: '🏁', req: () => { const pct = getCollectionPct(); return pct >= 100; } },
-  { id: 'master_collector', name: 'Master Collector', desc: 'Master every owned Sprite.', icon: '👑', req: () => { const owned = allRows.filter(r => r.owned); return owned.length > 0 && owned.every(r => r.mastered); } },
-  { id: 'dust_hoarder', name: 'Dust Hoarder', desc: 'Reach the maximum Sprite Dust amount.', icon: '💨', req: () => myDust >= 200000 },
-  { id: 'rare_collector', name: 'Rare Collector', desc: 'Complete all Rare Sprites.', icon: '💧', req: () => isRarityComplete('Rare') },
-  { id: 'legendary_collector', name: 'Legendary Collector', desc: 'Complete all Legendary Sprites.', icon: '🔥', req: () => isRarityComplete('Legendary') },
-  { id: 'ultimate_collector', name: 'Ultimate Collector', desc: 'Achieve a Perfect Collection.', icon: '🌟', req: () => isPerfectCollection() },
+  { id: 'first_summon', name: 'First Summon', desc: 'Summon your first Sprite.', icon: '🏃', category: 'Collection Progress', req: () => allRows.some(r => r.summoned) },
+  { id: 'getting_started', name: 'Getting Started', desc: 'Reach 25% overall collection progress.', icon: '🌱', category: 'Collection Progress', req: () => { const pct = getCollectionPct(); return pct >= 25; } },
+  { id: 'halfway_there', name: 'Halfway There', desc: 'Reach 50% overall collection progress.', icon: '🌿', category: 'Collection Progress', req: () => { const pct = getCollectionPct(); return pct >= 50; } },
+  { id: 'completionist', name: 'Completionist', desc: 'Reach 100% overall collection progress.', icon: '🏁', category: 'Collection Progress', req: () => { const pct = getCollectionPct(); return pct >= 100; } },
+  { id: 'master_collector', name: 'Master Collector', desc: 'Collect every Sprite variant.', icon: '👑', category: 'Collection Progress', req: () => allRows.length > 0 && allRows.every(r => r.owned) },
+  { id: 'dust_hoarder', name: 'Dust Hoarder', desc: 'Reach the maximum Sprite Dust amount.', icon: '💨', category: 'Dust', req: () => myDust >= 200000 },
+  { id: 'rare_collector', name: 'Rare Collector', desc: 'Collect all Rare Sprites.', icon: '💧', category: 'Rarity Collection', req: () => isRarityCollected('Rare') },
+  { id: 'epic_collector', name: 'Epic Collector', desc: 'Collect all Epic Sprites.', icon: '🟣', category: 'Rarity Collection', req: () => isRarityCollected('Epic') },
+  { id: 'legendary_collector', name: 'Legendary Collector', desc: 'Collect all Legendary Sprites.', icon: '🔥', category: 'Rarity Collection', req: () => isRarityCollected('Legendary') },
+  { id: 'mythic_collector', name: 'Mythic Collector', desc: 'Collect all Mythic Sprites.', icon: '🟡', category: 'Rarity Collection', req: () => isRarityCollected('Mythic') },
+  { id: 'rare_master', name: 'Rare Master', desc: 'Master all Rare Sprites.', icon: '💎', category: 'Rarity Mastery', req: () => isRarityMastered('Rare') },
+  { id: 'epic_master', name: 'Epic Master', desc: 'Master all Epic Sprites.', icon: '🔮', category: 'Rarity Mastery', req: () => isRarityMastered('Epic') },
+  { id: 'legendary_master', name: 'Legendary Master', desc: 'Master all Legendary Sprites.', icon: '⚡', category: 'Rarity Mastery', req: () => isRarityMastered('Legendary') },
+  { id: 'mythic_master', name: 'Mythic Master', desc: 'Master all Mythic Sprites.', icon: '👾', category: 'Rarity Mastery', req: () => isRarityMastered('Mythic') },
+  { id: 'ultimate_collector', name: 'Ultimate Collector', desc: 'Achieve a Perfect Collection.', icon: '🌟', category: 'Ultimate', req: () => isPerfectCollection() },
 ];
 let achievementState = {};
 
@@ -2951,6 +2959,16 @@ function isRarityComplete(rarity) {
   const group = allRows.filter(r => r.rarity === rarity);
   if (!group.length) return false;
   return group.every(r => r.owned && r.summoned && r.level === (r.max_level || 5) && r.mastered);
+}
+function isRarityCollected(rarity) {
+  const group = allRows.filter(r => r.rarity === rarity);
+  if (!group.length) return false;
+  return group.every(r => r.owned);
+}
+function isRarityMastered(rarity) {
+  const group = allRows.filter(r => r.rarity === rarity);
+  if (!group.length) return false;
+  return group.every(r => r.owned && r.mastered);
 }
 function checkAchievements(force) {
   if (!allRows.length) return;
@@ -2971,18 +2989,34 @@ function checkAchievements(force) {
 function renderAchievements() {
   const grid = document.getElementById('achievementsGrid');
   if (!grid) return;
-  grid.innerHTML = ACHIEVEMENTS.map(a => {
-    const unlocked = !!achievementState[a.id];
-    const dateStr = achievementState[a.id]?.date ? new Date(achievementState[a.id].date).toLocaleDateString() : '';
-    return `<div class="achievement-card ${unlocked ? 'unlocked' : 'locked'}">
-      <div class="achievement-icon">${a.icon}</div>
-      <div class="achievement-info">
-        <div class="achievement-name">${a.name}</div>
-        <div class="achievement-desc">${a.desc}</div>
-        <div class="achievement-meta">${unlocked ? 'Unlocked ' + dateStr : 'Locked'}</div>
+  const groups = {};
+  for (const a of ACHIEVEMENTS) {
+    (groups[a.category] = groups[a.category] || []).push(a);
+  }
+  const categoryOrder = ['Collection Progress', 'Dust', 'Rarity Collection', 'Rarity Mastery', 'Ultimate'];
+  let html = '';
+  for (const cat of categoryOrder) {
+    const items = groups[cat];
+    if (!items || !items.length) continue;
+    html += `<div class="achievement-category">
+      <div class="achievement-category-title">${cat}</div>
+      <div class="achievements-grid">
+        ${items.map(a => {
+          const unlocked = !!achievementState[a.id];
+          const dateStr = achievementState[a.id]?.date ? new Date(achievementState[a.id].date).toLocaleDateString() : '';
+          return `<div class="achievement-card ${unlocked ? 'unlocked' : 'locked'}">
+            <div class="achievement-icon">${a.icon}</div>
+            <div class="achievement-info">
+              <div class="achievement-name">${a.name}</div>
+              <div class="achievement-desc">${a.desc}</div>
+              <div class="achievement-meta">${unlocked ? 'Unlocked ' + dateStr : 'Locked'}</div>
+            </div>
+          </div>`;
+        }).join('')}
       </div>
     </div>`;
-  }).join('');
+  }
+  grid.innerHTML = html;
 }
 
 /* Compute extraction yield for a row.
