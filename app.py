@@ -1,7 +1,7 @@
 import re
 from pathlib import Path
 
-from flask import Flask, render_template, jsonify, url_for
+from flask import Flask, render_template, jsonify, url_for, send_from_directory
 
 app = Flask(__name__)
 
@@ -500,6 +500,16 @@ def get_directory():
         "total_variants":   _total_variants(),
         "extraction_base":  EXTRACTION_BASE,
     })
+
+
+@app.route("/manifest.json")
+def manifest():
+    return send_from_directory(".", "manifest.json", mimetype="application/json")
+
+
+@app.route("/sw.js")
+def service_worker():
+    return send_from_directory(".", "sw.js", mimetype="application/javascript")
 
 
 if __name__ == "__main__":

@@ -9,6 +9,9 @@
   <meta name="google-site-verification" content="UYIDwo7XeaPs0bodKqiDjrncljF5trsb8mo9kGOb_Rc" />
   <meta name="google-site-verification" content="7cQuDoP0scRps-kvOYTqDkBZBIfDc8UDk3TePAEfjI4" />
   <title>Fortnite Sprite Tracker</title>
+  <link rel="manifest" href="/manifest.json">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <meta name="theme-color" content="#06080f" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap');
 
@@ -109,6 +112,45 @@
       --glass-edge: rgba(255,255,255,0.04);
       --glass-elevation: 0 20px 50px rgba(2,6,23,0.5);
       --glass-radius: 20px;
+    }
+    [data-theme="light"] {
+      --bg-root: #f8fafc;
+      --bg-primary: #f1f5f9;
+      --bg-secondary: #e2e8f0;
+      --bg-elevated: #ffffff;
+      --bg-surface: #ffffff;
+      --bg-surface-hover: #f8fafc;
+      --bg-inset: #e2e8f0;
+      --surface: rgba(255, 255, 255, 0.92);
+      --surface-elevated: rgba(255, 255, 255, 0.96);
+      --surface-glass: rgba(255, 255, 255, 0.85);
+      --surface-glass-hover: rgba(248, 250, 252, 0.9);
+      --border: rgba(148, 163, 184, 0.25);
+      --border-subtle: rgba(148, 163, 184, 0.18);
+      --border-strong: rgba(148, 163, 184, 0.35);
+      --border-glow: rgba(6, 182, 212, 0.35);
+      --border-gold: rgba(245, 158, 11, 0.4);
+      --border-emerald: rgba(16, 185, 129, 0.4);
+      --text-primary: #0f172a;
+      --text-secondary: #334155;
+      --text-muted: #64748b;
+      --text-faint: #94a3b8;
+      --accent: #0891b2;
+      --accent-hover: #06b6d4;
+      --accent-soft: rgba(8, 145, 178, 0.12);
+      --accent-glow: rgba(8, 145, 178, 0.25);
+      --accent-glow-strong: rgba(8, 145, 178, 0.4);
+      --glass-strong: rgba(0, 0, 0, 0.04);
+      --glass-soft-bg: rgba(255, 255, 255, 0.6);
+      --glass-edge: rgba(0, 0, 0, 0.08);
+      --glass-elevation: 0 20px 50px rgba(0, 0, 0, 0.08);
+      --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.06);
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.08);
+      --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.1);
+      --shadow-glow: 0 0 24px rgba(8, 145, 178, 0.1);
+      --shadow-gold: 0 0 24px rgba(245, 158, 11, 0.12);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -241,7 +283,7 @@
     body::before {
       content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
       background:
-        radial-gradient(ellipse 80% 50% at 20% -10%, rgba(6, 182, 212, 0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 80% 50% at 20% -10%, var(--accent-glow) 0%, transparent 60%),
         radial-gradient(ellipse 60% 40% at 90% 110%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
         radial-gradient(ellipse 40% 30% at 50% 50%, rgba(59, 130, 246, 0.03) 0%, transparent 60%);
       animation: bgShift 20s ease-in-out infinite alternate;
@@ -276,7 +318,7 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      filter: drop-shadow(0 0 14px rgba(6, 182, 212, 0.18));
+      filter: drop-shadow(0 0 14px var(--accent-glow));
     }
     header p, .app-header p {
       color: var(--text-secondary); font-size: 0.88rem; font-weight: 500;
@@ -511,9 +553,9 @@
     .tab-btn.active {
       color: var(--text-primary);
       background: var(--accent-soft);
-      box-shadow: inset 0 0 0 1px rgba(6, 182, 212, 0.22), 0 1px 2px rgba(0,0,0,0.2);
+      box-shadow: inset 0 0 0 1px var(--accent-glow), 0 1px 2px rgba(0,0,0,0.2);
     }
-    .tab-btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+    .tab-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     .tab-panel { display: none; padding-top: 20px; animation: fadeIn 0.25s ease both; }
     .tab-panel.active { display: block; }
 
@@ -638,8 +680,8 @@
       min-height: 44px;
     }
     .search-box:focus-within {
-      border-color: var(--cyan);
-      box-shadow: 0 0 0 3px var(--cyan-soft);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
     }
     .search-box input {
       flex: 1; border: none; outline: none; background: transparent;
@@ -926,11 +968,11 @@
     .ec-field { display:flex; flex-direction:column; gap:8px; margin-bottom:14px; }
     .ec-field-label { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase; font-weight: 700; }
     .ec-input { width:100%; min-height:48px; border-radius:18px; border:1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); color: var(--text-primary); padding: 12px 14px; font-size: 0.95rem; transition: border-color var(--transition), box-shadow var(--transition); }
-    .ec-input:focus { outline:none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(6,182,212,0.12); }
+    .ec-input:focus { outline:none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
     .ec-sprite-list { display:grid; gap:10px; max-height: 320px; overflow-y:auto; padding-right:4px; }
     .ec-sprite-item { display:flex; gap:12px; width:100%; border-radius:18px; background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:12px; text-align:left; color: var(--text-primary); transition: transform var(--transition), border-color var(--transition), background var(--transition); }
-    .ec-sprite-item:hover, .ec-sprite-item:focus-visible { transform: translateY(-1px); border-color: rgba(6,182,212,0.25); background: rgba(6,182,212,0.1); }
-    .ec-sprite-item.active { border-color: rgba(6,182,212,0.35); background: rgba(6,182,212,0.14); }
+    .ec-sprite-item:hover, .ec-sprite-item:focus-visible { transform: translateY(-1px); border-color: var(--accent-glow); background: var(--accent-soft); }
+    .ec-sprite-item.active { border-color: var(--accent-glow-strong); background: var(--accent-soft); }
     .ec-sprite-item button { all: unset; width: 100%; text-align: left; cursor: pointer; display: contents; }
     .ec-sprite-thumb { width: 60px; min-width: 60px; height: 60px; border-radius: 18px; overflow:hidden; background: rgba(255,255,255,0.06); display:grid; place-items:center; }
     .ec-sprite-thumb img { width:100%; height:100%; object-fit:cover; }
@@ -949,7 +991,7 @@
     .ec-chip-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap:12px; }
     .ec-variant-chip { cursor:pointer; border-radius:18px; border:1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02); color: var(--text-secondary); padding: 14px 14px; font-weight: 800; transition: transform var(--transition), box-shadow var(--transition), background var(--transition); box-shadow: 0 8px 22px rgba(2,6,23,0.18); }
     .ec-variant-chip:hover, .ec-level-button:hover { transform: translateY(-3px); box-shadow: 0 18px 48px rgba(2,6,23,0.28); }
-    .ec-variant-chip.active { background: linear-gradient(90deg, rgba(6,182,212,0.08), rgba(34,197,94,0.06)); border-color: rgba(6,182,212,0.18); color: var(--text-primary); transform: translateY(-6px); box-shadow: 0 28px 72px rgba(6,182,212,0.12); }
+    .ec-variant-chip.active { background: linear-gradient(90deg, var(--accent-soft), rgba(34,197,94,0.06)); border-color: var(--accent-glow); color: var(--text-primary); transform: translateY(-6px); box-shadow: 0 28px 72px var(--accent-glow); }
     .ec-level-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); gap:10px; }
     .ec-level-button { cursor:pointer; min-height:48px; border-radius:16px; border:1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: var(--text-secondary); font-weight:700; transition: all var(--transition); }
     .ec-level-button.active { background: rgba(245,158,11,0.16); border-color: rgba(245,158,11,0.28); color: var(--text-primary); }
@@ -957,7 +999,7 @@
     .ec-action-btn { min-height:50px; border-radius:16px; width:100%; font-weight:700; }
     .ec-action-btn:focus-visible { outline:none; box-shadow: var(--focus-ring); }
     .ec-result-panel { margin-top:22px; }
-    .ec-result-card { border-radius:20px; background: linear-gradient(180deg, rgba(6,14,28,0.96), rgba(4,10,20,0.98)); border:1px solid rgba(6, 182, 212, 0.12); padding:18px; box-shadow: 0 24px 80px rgba(2,6,23,0.5); animation: fadeIn 0.22s ease both; }
+    .ec-result-card { border-radius:20px; background: linear-gradient(180deg, rgba(6,14,28,0.96), rgba(4,10,20,0.98)); border:1px solid var(--accent-glow); padding:18px; box-shadow: 0 24px 80px rgba(2,6,23,0.5); animation: fadeIn 0.22s ease both; }
     .ec-result-header { display:flex; justify-content:space-between; gap:16px; align-items:start; flex-wrap:wrap; margin-bottom:16px; }
     .ec-result-title { font-size:0.95rem; font-weight:800; color: var(--text-primary); }
     .ec-result-sub { color: var(--text-secondary); font-size:0.82rem; line-height:1.5; max-width:540px; }
@@ -1096,40 +1138,136 @@
       .prog-label { min-width: unset; font-size: 0.66rem; }
       .prog-pct { text-align: left; }
 
-       .sprite-modal .modal-card { width: 100%; max-width: 100vw; max-height: 85dvh; height: auto; border-radius: var(--radius-lg) var(--radius-lg) 0 0; padding: 20px 16px calc(32px + env(safe-area-inset-bottom)); border-bottom: none; animation: slideUp 0.32s cubic-bezier(0.22, 1, 0.36, 1) both; }
-       .sm-header { gap: 12px; }
-       .sm-thumb { width: 62px; height: 62px; border-radius: 14px; }
-       .sm-title { font-size: 1.05rem; }
-       .sprite-modal .modal-card::before {
-         content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
-         width: 36px; height: 4px; border-radius: 2px; background: var(--surface-2);
-         z-index: 5; flex-shrink: 0;
-       }
-       .modal-close { top: 12px; right: 12px; }
+     .sprite-modal .modal-card { width: 100%; max-width: 100vw; max-height: 85dvh; height: auto; border-radius: var(--radius-lg) var(--radius-lg) 0 0; padding: 20px 16px calc(32px + env(safe-area-inset-bottom)); border-bottom: none; animation: slideUp 0.32s cubic-bezier(0.22, 1, 0.36, 1) both; }
+        .sm-header { gap: 12px; }
+        .sm-thumb { width: 62px; height: 62px; border-radius: 14px; }
+        .sm-title { font-size: 1.05rem; }
+        .sprite-modal .modal-card::before {
+          content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+          width: 36px; height: 4px; border-radius: 2px; background: var(--surface-2);
+          z-index: 5; flex-shrink: 0;
+        }
+        .modal-close { top: 12px; right: 12px; }
 
-      .mobile-nav {
-        display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 500;
-        background: rgba(15,23,42,0.96); backdrop-filter: blur(8px);
-        border-top: 1px solid var(--border); padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
-      }
-      .mnav-btn {
-        flex: 1; border: none; background: none; cursor: pointer;
-        display: flex; flex-direction: column; align-items: center; gap: 3px;
-        padding: 8px 2px; color: var(--text-muted); font-size: 0.6rem; font-weight: 600;
-        transition: color 0.15s, transform 0.15s;
-        position: relative;
-      }
-      .mnav-btn::before {
-        content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-        width: 0; height: 2px; background: var(--accent); border-radius: 1px;
-        transition: width 0.2s ease;
-      }
-      .mnav-btn .mnav-icon { font-size: 1.2rem; line-height: 1; transition: transform 0.15s; }
-      .mnav-btn.active { color: var(--accent); }
-      .mnav-btn.active::before { width: 24px; }
-      .mnav-btn.active .mnav-icon { transform: translateY(-1px); }
-      .mnav-btn:active { transform: scale(0.9); }
-    }
+       .mobile-nav {
+         display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 500;
+         background: rgba(15,23,42,0.96); backdrop-filter: blur(8px);
+         border-top: 1px solid var(--border); padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+       }
+       .mnav-btn {
+         flex: 1; border: none; background: none; cursor: pointer;
+         display: flex; flex-direction: column; align-items: center; gap: 3px;
+         padding: 8px 2px; color: var(--text-muted); font-size: 0.6rem; font-weight: 600;
+         transition: color 0.15s, transform 0.15s;
+         position: relative;
+       }
+       .mnav-btn::before {
+         content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+         width: 0; height: 2px; background: var(--accent); border-radius: 1px;
+         transition: width 0.2s ease;
+       }
+       .mnav-btn .mnav-icon { font-size: 1.2rem; line-height: 1; transition: transform 0.15s; }
+       .mnav-btn.active { color: var(--accent); }
+       .mnav-btn.active::before { width: 24px; }
+       .mnav-btn.active .mnav-icon { transform: translateY(-1px); }
+       .mnav-btn:active { transform: scale(0.9); }
+     }
+
+     /* ===========================================
+        NEW FEATURES CSS
+     =========================================== */
+
+     /* Statistics tab */
+     .stat-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 16px 18px; }
+     .stat-card h4 { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; margin-bottom: 10px; }
+     .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border-subtle); }
+     .stat-row:last-child { border-bottom: none; }
+     .stat-row .stat-k { font-size: 0.88rem; color: var(--text-secondary); }
+     .stat-row .stat-v { font-family: var(--mono); font-size: 0.95rem; color: var(--text); font-weight: 700; }
+     .rarity-stat-row { margin-bottom: 12px; }
+     .rarity-stat-row:last-child { margin-bottom: 0; }
+     .rarity-stat-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+     .rarity-stat-name { font-size: 0.82rem; font-weight: 700; }
+     .rarity-stat-pct { font-family: var(--mono); font-size: 0.82rem; color: var(--text-muted); }
+     .rarity-stat-track { height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; }
+     .rarity-stat-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+     .rarity-stat-fill.Rare { background: var(--rarity-rare); }
+     .rarity-stat-fill.Epic { background: var(--rarity-epic); }
+     .rarity-stat-fill.Legendary { background: var(--rarity-legendary); }
+     .rarity-stat-fill.Mythic { background: var(--rarity-mythic); }
+     .rarity-stat-complete { border-color: var(--gold) !important; box-shadow: 0 0 16px rgba(245,158,11,0.12); }
+     .rarity-stat-complete .rarity-stat-name { color: var(--gold); }
+     .rarity-stat-complete .rarity-stat-fill { background: linear-gradient(90deg, var(--gold), #fcd34d) !important; }
+
+     /* Dashboard next steps & recommendations */
+     .dash-action-card { background: var(--glass); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 16px 18px; backdrop-filter: blur(8px); }
+     .dash-action-card h3 { font-size: 0.74rem; color: var(--text-secondary); letter-spacing: 0.05em; text-transform: uppercase; font-weight: 700; margin-bottom: 12px; }
+     .dash-action-btn { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 10px 14px; margin-bottom: 8px; border-radius: var(--radius-sm); border: 1px solid var(--border-soft); background: var(--surface); color: var(--text-secondary); font-size: 0.84rem; font-weight: 600; cursor: pointer; transition: all var(--transition-fast); text-align: left; font-family: inherit; }
+     .dash-action-btn:hover { border-color: var(--accent); color: var(--text); background: var(--accent-soft); }
+     .dash-action-btn:last-child { margin-bottom: 0; }
+     .dash-action-btn .action-count { font-family: var(--mono); font-size: 0.9rem; color: var(--accent); font-weight: 700; }
+     .dash-action-btn.done { opacity: 0.6; cursor: default; }
+     .dash-action-btn.done:hover { border-color: var(--border-soft); color: var(--text-secondary); background: var(--surface); }
+     .dash-action-btn.done .action-count { color: var(--emerald); }
+
+     /* Rarity completion cards on dashboard */
+     .rarity-card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+     .rarity-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 14px 16px; transition: all var(--transition-fast); }
+     .rarity-card.complete { border-color: var(--gold); box-shadow: 0 0 20px rgba(245,158,11,0.1); }
+     .rarity-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+     .rarity-card-name { font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
+     .rarity-card-name.Rare { color: var(--rarity-rare); }
+     .rarity-card-name.Epic { color: var(--rarity-epic); }
+     .rarity-card-name.Legendary { color: var(--rarity-legendary); }
+     .rarity-card-name.Mythic { color: var(--rarity-mythic); }
+     .rarity-card-pct { font-family: var(--mono); font-size: 0.82rem; color: var(--text-muted); }
+     .rarity-card-bar { height: 6px; background: var(--surface-2); border-radius: 3px; overflow: hidden; margin-bottom: 6px; }
+     .rarity-card-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
+     .rarity-card-fill.Rare { background: var(--rarity-rare); }
+     .rarity-card-fill.Epic { background: var(--rarity-epic); }
+     .rarity-card-fill.Legendary { background: var(--rarity-legendary); }
+     .rarity-card-fill.Mythic { background: var(--rarity-mythic); }
+     .rarity-card-sub { font-size: 0.76rem; color: var(--text-muted); }
+     .rarity-card-trophy { font-size: 0.78rem; color: var(--gold); font-weight: 700; }
+
+     /* Completionist tab */
+     .completionist-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+     .completionist-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 16px; text-align: center; }
+     .completionist-card .cc-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; margin-bottom: 6px; }
+     .completionist-card .cc-value { font-family: var(--mono); font-size: 1.6rem; font-weight: 900; color: var(--text); }
+     .completionist-card .cc-sub { font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px; }
+    .completionist-card.perfect { border-color: var(--gold); box-shadow: 0 0 24px rgba(245,158,11,0.12); }
+    .completionist-card.perfect .cc-value { color: var(--gold); }
+    .completionist-card .cc-action { margin-top: 10px; padding: 6px 14px; border-radius: 999px; background: var(--accent-soft); border: 1px solid var(--accent); color: var(--accent); font-weight: 700; font-size: 0.78rem; cursor: pointer; }
+    .completionist-card .cc-action:hover { background: var(--accent); color: #fff; }
+    .completionist-card .cc-done { margin-top: 10px; font-size: 0.82rem; font-weight: 700; color: var(--emerald); }
+     .completionist-header { text-align: center; padding: 20px; margin-bottom: 16px; border-radius: var(--radius); background: var(--glass); border: 1px solid var(--glass-border); }
+     .completionist-header h2 { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.02em; }
+     .completionist-header .perfect-badge { font-size: 2rem; margin-top: 8px; }
+
+     /* History tab */
+     .history-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+     .history-table th { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); }
+     .history-table td { padding: 8px 10px; border-bottom: 1px solid var(--border-subtle); color: var(--text-secondary); }
+     .history-table tr:last-child td { border-bottom: none; }
+     .history-table tr:hover td { background: rgba(59,130,246,0.04); }
+
+     /* Celebration */
+     .celebration-toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); padding: 14px 24px; border-radius: var(--radius); font-weight: 700; font-size: 1rem; z-index: 10001; opacity: 0; transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); pointer-events: none; max-width: 90vw; text-align: center; box-shadow: var(--shadow-xl); }
+     .celebration-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); animation: celebrationIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+     .celebration-toast.mastered { background: rgba(245,158,11,0.18); border: 1px solid rgba(245,158,11,0.4); color: var(--gold); }
+     .celebration-toast.rarity { background: rgba(139,92,246,0.18); border: 1px solid rgba(139,92,246,0.4); color: var(--epic); }
+     .celebration-toast.collection { background: rgba(6,182,212,0.18); border: 1px solid rgba(6,182,212,0.4); color: var(--accent); }
+     .celebration-toast.perfect { background: linear-gradient(135deg, rgba(245,158,11,0.22), rgba(244,63,94,0.18)); border: 1px solid rgba(245,158,11,0.5); color: var(--gold); }
+     @keyframes celebrationIn {
+       from { opacity: 0; transform: translateX(-50%) translateY(-20px) scale(0.9); }
+       to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+     }
+
+     @media (max-width: 640px) {
+       .completionist-grid { grid-template-columns: 1fr; }
+       .rarity-card-grid { grid-template-columns: 1fr 1fr; }
+     }
 
     /* ===========================================
        COLLECTION — CARD GRID
@@ -1474,9 +1612,9 @@
     .lvl-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--text); background: var(--accent-soft); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(2,6,23,0.18); }
     .lvl-btn:active:not(:disabled) { transform: scale(0.96); }
     .lvl-btn:disabled { cursor: default; opacity: 0.28; }
-    .lvl-btn.lit { background: linear-gradient(90deg, rgba(6,182,212,0.06), rgba(34,197,94,0.04)); border-color: rgba(6,182,212,0.16); color: var(--accent); box-shadow: 0 18px 48px rgba(6,182,212,0.08); }
+    .lvl-btn.lit { background: linear-gradient(90deg, var(--accent-soft), rgba(34,197,94,0.04)); border-color: var(--accent-glow); color: var(--accent); box-shadow: 0 18px 48px var(--accent-glow); }
     .lvl-btn.hidden-btn { visibility: hidden; pointer-events: none; }
-    .lvl-btn:focus-visible { outline: 3px solid rgba(6,182,212,0.12); outline-offset: 2px; }
+    .lvl-btn:focus-visible { outline: 3px solid var(--accent-soft); outline-offset: 2px; }
 
     /* ===========================================
        DASHBOARD TAB
@@ -1503,7 +1641,7 @@
       content: ''; position: absolute; top: 12px; left: 16px; right: 16px; height: 4px; border-radius: 8px;
       opacity: 0.85;
     }
-    .dash-tile.accent::before { background: linear-gradient(90deg, rgba(6,182,212,0.18), rgba(34,197,94,0.12)); }
+    .dash-tile.accent::before { background: linear-gradient(90deg, var(--accent-glow), rgba(34,197,94,0.12)); }
     .dash-tile.amber::before  { background: linear-gradient(90deg, rgba(245,158,11,0.16), rgba(252,211,77,0.12)); }
     .dash-tile.emerald::before { background: linear-gradient(90deg, rgba(16,185,129,0.14), rgba(52,211,153,0.1)); }
     @media (hover: hover) {
@@ -1513,7 +1651,7 @@
     .dash-tile .dt-label { font-size: 0.66rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); font-weight: 800; }
     .dash-tile .dt-value { font-family: var(--mono); font-size: 1.8rem; font-weight: 900; color: var(--text); letter-spacing:-0.01em; }
     .dash-tile .dt-sub { font-size: 0.76rem; color: var(--text-secondary); opacity: 0.95; }
-    .dash-tile:focus-within, .dash-tile:focus { outline: 3px solid rgba(6,182,212,0.08); outline-offset: 4px; }
+    .dash-tile:focus-within, .dash-tile:focus { outline: 3px solid var(--accent-soft); outline-offset: 4px; }
     .dash-tile.accent .dt-value { color: var(--accent); }
     .dash-tile.amber  .dt-value { color: var(--amber); }
     .dash-tile.emerald .dt-value { color: var(--emerald); }
@@ -1528,6 +1666,62 @@
     }
     .dash-panel h3 { font-size: 0.74rem; color: var(--text-secondary); letter-spacing: 0.05em; text-transform: uppercase; font-weight: 700; margin-bottom: 14px; }
     .dash-panel .stats-bar { margin-bottom: 0; }
+    .achievements-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+    .achievement-card {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 16px 18px; border-radius: var(--radius);
+      background: var(--surface); border: 1px solid var(--border);
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+    }
+    .achievement-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+    .achievement-card.locked { opacity: 0.55; filter: grayscale(0.35); }
+    .achievement-card.unlocked { border-color: var(--accent-glow); box-shadow: 0 0 0 1px var(--accent-glow), var(--shadow-lg); }
+    .achievement-icon { font-size: 2rem; flex-shrink: 0; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 14px; background: var(--accent-soft); }
+    .achievement-card.unlocked .achievement-icon { background: var(--accent-soft); }
+    .achievement-info { flex: 1; min-width: 0; }
+    .achievement-name { font-weight: 800; font-size: 0.95rem; color: var(--text-primary); margin-bottom: 4px; }
+    .achievement-desc { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 6px; }
+    .achievement-meta { font-size: 0.72rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.03em; }
+    .achievement-card.unlocked .achievement-meta { color: var(--accent); }
+    .stats-overview { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-bottom: 14px; }
+    .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; text-align: center; }
+    .stat-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 700; margin-bottom: 6px; }
+    .stat-value { font-size: 1.6rem; font-weight: 900; color: var(--text); }
+    .rarity-stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+    .rarity-stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
+    .rarity-stat-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .rarity-stat-name { font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    .rarity-stat-pct { font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); }
+    .rarity-stat-bar { height: 8px; border-radius: 999px; background: var(--surface-hover); overflow: hidden; margin-bottom: 6px; }
+    .rarity-stat-fill { height: 100%; border-radius: 999px; transition: width 0.4s ease; }
+    .rarity-stat-count { font-size: 0.78rem; color: var(--text-muted); }
+    .rarity-stat-card.complete { border-color: var(--accent-glow); box-shadow: 0 0 0 1px var(--accent-glow); }
+    .rarity-stat-card.complete .rarity-stat-name { color: var(--accent); }
+    .history-list { max-height: 360px; overflow-y: auto; }
+    .history-entry { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-bottom: 1px solid var(--border-subtle); }
+    .history-entry:last-child { border-bottom: none; }
+    .history-date { font-size: 0.82rem; color: var(--text-secondary); font-weight: 600; }
+    .history-values { font-size: 0.78rem; color: var(--text-muted); }
+    .completionist-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; text-align: center; }
+    .comp-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; }
+    .comp-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 700; margin-bottom: 6px; }
+    .comp-value { font-size: 1.4rem; font-weight: 900; color: var(--text); }
+    .comp-value.perfect { color: var(--accent); }
+    .comp-perfect { grid-column: 1 / -1; padding: 28px; border-color: var(--accent-glow); background: linear-gradient(180deg, var(--accent-soft), transparent); }
+    .comp-perfect .comp-value { font-size: 1.8rem; }
+    .whats-next-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 14px; }
+    .whats-next-title { font-weight: 800; font-size: 0.9rem; margin-bottom: 10px; color: var(--text-primary); }
+    .whats-next-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border-subtle); }
+    .whats-next-item:last-child { border-bottom: none; }
+    .whats-next-btn { background: none; border: none; color: var(--accent); font-weight: 700; cursor: pointer; font-size: 0.85rem; padding: 4px 8px; border-radius: 8px; }
+    .whats-next-btn:hover { background: var(--accent-soft); }
+    .whats-next-empty { color: var(--text-muted); font-size: 0.85rem; }
+    .rarity-completion-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .rarity-completion-label { font-weight: 800; font-size: 0.8rem; width: 90px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .rarity-completion-track { flex: 1; height: 10px; border-radius: 999px; background: var(--surface-hover); overflow: hidden; }
+    .rarity-completion-fill { height: 100%; border-radius: 999px; transition: width 0.4s ease; }
+    .rarity-completion-pct { font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); width: 40px; text-align: right; }
+    .rarity-complete-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: var(--accent-soft); border: 1px solid var(--accent-glow); color: var(--accent); font-weight: 800; font-size: 0.78rem; margin-top: 6px; }
     .dash-expand-btn {
       width: 100%; padding: 12px 18px; border-radius: var(--radius);
       background: var(--accent-soft); border: 1px solid var(--accent); color: var(--accent);
@@ -1952,7 +2146,7 @@
 
     /* Default subtle states */
     .sprite-card.indexed { border-color: rgba(148,163,184,0.10); box-shadow: 0 18px 48px rgba(2,6,23,0.14); }
-    .sprite-card.summoned { border: 1px solid rgba(6,182,212,0.18); box-shadow: 0 32px 90px rgba(6,182,212,0.10); }
+    .sprite-card.summoned { border: 1px solid var(--accent-glow); box-shadow: 0 32px 90px var(--accent-glow); }
 
     /* Rarity-based indexed glows (soft) */
     .sprite-card.rarity-rare.indexed { border-color: rgba(59,130,246,0.14); box-shadow: 0 18px 48px rgba(59,130,246,0.06); }
@@ -1988,12 +2182,12 @@
     .card-lvl { font-size: 0.84rem; color: var(--text-muted); }
     .card-cost { color: var(--gold); font-family: var(--mono); }
     .card-status { gap: 8px; padding: 12px 14px; border-radius: 18px; background: rgba(255,255,255,0.04); color: var(--text-secondary); font-size: 0.82rem; }
-    .card-status.status-active { background: linear-gradient(90deg, rgba(16,185,129,0.06), rgba(6,182,212,0.04)); border:1px solid rgba(16,185,129,0.12); }
+    .card-status.status-active { background: linear-gradient(90deg, rgba(16,185,129,0.06), var(--accent-soft)); border:1px solid rgba(16,185,129,0.12); }
     .card-status.status-indexed { background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04); }
     .card-crown { position: absolute; top: 12px; right: 12px; width: 28px; height: 28px; border-radius: 8px; background: rgba(245, 158, 11, 0.9); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; z-index: 2; box-shadow: 0 2px 8px rgba(0,0,0,0.25); }
     .card-toggle, .card-add-btn { border-radius: 18px; min-height: 46px; gap: 8px; }
-    .card-toggle.summoned { background: linear-gradient(90deg, rgba(16,185,129,0.9), rgba(6,182,212,0.9)); color: #02121a; box-shadow: 0 8px 24px rgba(6,182,212,0.16); }
-    .card-toggle.summoned svg { filter: drop-shadow(0 6px 12px rgba(6,182,212,0.12)); }
+    .card-toggle.summoned { background: linear-gradient(90deg, rgba(16,185,129,0.9), var(--accent)); color: #02121a; box-shadow: 0 8px 24px var(--accent-glow); }
+    .card-toggle.summoned svg { filter: drop-shadow(0 6px 12px var(--accent-glow-strong)); }
     .card-add-btn { color: var(--accent-strong); border-color: rgba(34,197,94,0.2); background: rgba(34,197,94,0.08); }
     .card-toggle.summoned { background: rgba(34,197,94,0.12); color: var(--accent-strong); border-color: rgba(34,197,94,0.25); }
     .card-toggle:hover, .card-add-btn:hover { background: rgba(56,189,248,0.12); }
@@ -2086,6 +2280,30 @@
       .tab-nav { display: none; }
       .mobile-nav { bottom: 0; }
       .sprite-card { min-height: 260px; }
+    }
+
+    /* ── Settings ── */
+    .settings-section { margin-bottom: 18px; }
+    .settings-section-title { font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+    .settings-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--border-subtle); }
+    .settings-row:last-child { border-bottom: none; }
+    .settings-label { font-size: 0.88rem; color: var(--text-secondary); font-weight: 500; }
+    .settings-sep { height: 1px; background: var(--border-soft); margin: 16px 0; }
+    .settings-select { background: var(--bg-elevated); border: 1px solid var(--border-soft); border-radius: var(--radius-sm); padding: 6px 28px 6px 10px; color: var(--text-secondary); font-size: 0.82rem; font-weight: 600; cursor: pointer; outline: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 8px center; transition: border-color var(--transition-fast), box-shadow var(--transition-fast); font-family: inherit; }
+    .settings-select:hover { border-color: var(--border); color: var(--text); }
+    .settings-select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .settings-color { width: 32px; height: 32px; border: 1px solid var(--border-soft); border-radius: 50%; cursor: pointer; background: transparent; padding: 0; }
+    .settings-color::-webkit-color-swatch-wrapper { padding: 0; }
+    .settings-color::-webkit-color-swatch { border: none; border-radius: 50%; }
+    .toggle { position: relative; display: inline-block; width: 44px; height: 24px; flex-shrink: 0; }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-elevated); border: 1px solid var(--border-soft); border-radius: 24px; transition: all 0.2s; }
+    .toggle-slider::before { position: absolute; content: ""; height: 18px; width: 18px; left: 2px; bottom: 2px; background: var(--text-muted); border-radius: 50%; transition: all 0.2s; }
+    .toggle input:checked + .toggle-slider { background: var(--accent-soft); border-color: var(--accent); }
+    .toggle input:checked + .toggle-slider::before { transform: translateX(20px); background: var(--accent); }
+    @media (max-width: 640px) {
+      .settings-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .settings-select { width: 100%; }
     }
   </style>
 </head>
@@ -2271,6 +2489,12 @@
         </div>
       </div>
 
+      <div id="whatsLeftPanel"></div>
+
+      <div id="rarityCardsPanel"></div>
+
+      <div id="recommendationsPanel"></div>
+
       <div class="dash-panel">
         <h3>📈 PROGRESS</h3>
         <div class="progress-section">
@@ -2318,6 +2542,38 @@
       <div class="dash-panel" id="perVariantProgressPanel" style="display:none">
         <h3>📈 PER-VARIANT TYPE PROGRESS</h3>
         <div id="perVariantProgressContent"></div>
+      </div>
+
+      <button class="dash-expand-btn" id="dashStatsToggle" onclick="toggleDashStats()">
+        📈 Statistics
+      </button>
+      <div class="dash-panel" id="dashStatsPanel" style="display:none">
+        <div class="stats-overview">
+          <div class="stat-card"><div class="stat-label">Total Sprites</div><div class="stat-value" id="dashStatTotal">0</div></div>
+          <div class="stat-card"><div class="stat-label">Summoned</div><div class="stat-value" id="dashStatSummoned">0</div></div>
+          <div class="stat-card"><div class="stat-label">Max Level</div><div class="stat-value" id="dashStatMaxLevel">0</div></div>
+          <div class="stat-card"><div class="stat-label">Mastered</div><div class="stat-value" id="dashStatMastered">0</div></div>
+          <div class="stat-card"><div class="stat-label">Completion</div><div class="stat-value" id="dashStatCompletion">0%</div></div>
+        </div>
+        <h4 style="margin-top:18px; margin-bottom:10px; color: var(--text-secondary); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em;">By Rarity</h4>
+        <div id="dashRarityStats" class="rarity-stats-grid"></div>
+        <h4 style="margin-top:18px; margin-bottom:10px; color: var(--text-secondary); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em;">Progress Statistics</h4>
+        <div class="stats-overview">
+          <div class="stat-card"><div class="stat-label">Total Levels Gained</div><div class="stat-value" id="dashStatLevels">0</div></div>
+          <div class="stat-card"><div class="stat-label">Total Mastery</div><div class="stat-value" id="dashStatMasteryTotal">0</div></div>
+          <div class="stat-card"><div class="stat-label">Dust Earned</div><div class="stat-value" id="dashStatDustEarned">0</div></div>
+          <div class="stat-card"><div class="stat-label">Current Dust</div><div class="stat-value" id="dashStatDustCurrent">0</div></div>
+          <div class="stat-card"><div class="stat-label">Max Dust</div><div class="stat-value" id="dashStatDustMax">200,000</div></div>
+          <div class="stat-card"><div class="stat-label">Incomplete</div><div class="stat-value" id="dashStatIncomplete">0</div></div>
+        </div>
+      </div>
+
+      <button class="dash-expand-btn" id="dashHistoryToggle" onclick="toggleDashHistory()">
+        📅 Progress History
+      </button>
+      <div class="dash-panel" id="dashHistoryPanel" style="display:none">
+        <div style="position:relative; height: 260px; margin-bottom: 14px;"><canvas id="dashHistoryChart"></canvas></div>
+        <div id="dashHistoryList" class="history-list"></div>
       </div>
 
     </div>
@@ -2521,6 +2777,12 @@
 <div id="toast"></div>
 
 <script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
+</script>
+
+<script>
 /* ════════════════════════════════════════════════════════════
    State
    The collection lives entirely in this browser's localStorage,
@@ -2685,6 +2947,72 @@ let EXTRACTION_BASE = {
   Mythic:    {1:2000,2:3000, 3:4500, 4:6000, 5:8000},
 };
 
+/* ════════════════════════════════════════════════════════════
+   Achievements
+════════════════════════════════════════════════════════════ */
+const ACHIEVEMENT_KEY = 'spriteAchievements';
+const ACHIEVEMENTS = [
+  { id: 'first_summon', name: 'First Summon', desc: 'Summon your first Sprite.', icon: '🏃', req: () => allRows.some(r => r.summoned) },
+  { id: 'getting_started', name: 'Getting Started', desc: 'Reach 25% overall collection progress.', icon: '🌱', req: () => { const pct = getCollectionPct(); return pct >= 25; } },
+  { id: 'halfway_there', name: 'Halfway There', desc: 'Reach 50% overall collection progress.', icon: '🌿', req: () => { const pct = getCollectionPct(); return pct >= 50; } },
+  { id: 'completionist', name: 'Completionist', desc: 'Reach 100% overall collection progress.', icon: '🏁', req: () => { const pct = getCollectionPct(); return pct >= 100; } },
+  { id: 'master_collector', name: 'Master Collector', desc: 'Master every owned Sprite.', icon: '👑', req: () => { const owned = allRows.filter(r => r.owned); return owned.length > 0 && owned.every(r => r.mastered); } },
+  { id: 'dust_hoarder', name: 'Dust Hoarder', desc: 'Reach the maximum Sprite Dust amount.', icon: '💨', req: () => myDust >= 200000 },
+  { id: 'rare_collector', name: 'Rare Collector', desc: 'Complete all Rare Sprites.', icon: '💧', req: () => isRarityComplete('Rare') },
+  { id: 'legendary_collector', name: 'Legendary Collector', desc: 'Complete all Legendary Sprites.', icon: '🔥', req: () => isRarityComplete('Legendary') },
+  { id: 'ultimate_collector', name: 'Ultimate Collector', desc: 'Achieve a Perfect Collection.', icon: '🌟', req: () => isPerfectCollection() },
+];
+let achievementState = {};
+
+function loadAchievements() {
+  try { achievementState = JSON.parse(localStorage.getItem(ACHIEVEMENT_KEY) || '{}'); }
+  catch (e) { achievementState = {}; }
+}
+function saveAchievements() {
+  try { localStorage.setItem(ACHIEVEMENT_KEY, JSON.stringify(achievementState)); } catch (e) {}
+}
+function getCollectionPct() {
+  const owned = allRows.filter(r => r.owned).length;
+  return TOTAL_VARS ? Math.round(owned / TOTAL_VARS * 100) : 0;
+}
+function isRarityComplete(rarity) {
+  const group = allRows.filter(r => r.rarity === rarity);
+  if (!group.length) return false;
+  return group.every(r => r.owned && r.summoned && r.level === (r.max_level || 5) && r.mastered);
+}
+function checkAchievements(force) {
+  if (!allRows.length) return;
+  let changed = false;
+  for (const a of ACHIEVEMENTS) {
+    const was = !!achievementState[a.id];
+    const now = a.req();
+    if (now && !was) {
+      achievementState[a.id] = { unlocked: true, date: new Date().toISOString() };
+      changed = true;
+    }
+  }
+  if (changed) {
+    saveAchievements();
+    renderAchievements();
+  }
+}
+function renderAchievements() {
+  const grid = document.getElementById('achievementsGrid');
+  if (!grid) return;
+  grid.innerHTML = ACHIEVEMENTS.map(a => {
+    const unlocked = !!achievementState[a.id];
+    const dateStr = achievementState[a.id]?.date ? new Date(achievementState[a.id].date).toLocaleDateString() : '';
+    return `<div class="achievement-card ${unlocked ? 'unlocked' : 'locked'}">
+      <div class="achievement-icon">${a.icon}</div>
+      <div class="achievement-info">
+        <div class="achievement-name">${a.name}</div>
+        <div class="achievement-desc">${a.desc}</div>
+        <div class="achievement-meta">${unlocked ? 'Unlocked ' + dateStr : 'Locked'}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
 /* Compute extraction yield for a row.
    Rules:
    - Level used = sprite's current level when summoned, else 1 (indexed).
@@ -2811,14 +3139,6 @@ function onDustChange() {
 /* ════════════════════════════════════════════════════════════
    Tabs / Filters / Sort
 ════════════════════════════════════════════════════════════ */
-function switchTab(name, btn) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  const targetPanel = document.getElementById('tab-'+name);
-  if (targetPanel) targetPanel.classList.add('active');
-  document.querySelectorAll('.tab-btn, .mnav-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.tab === name);
-  });
-}
 function setFilter(mode, btn) {
   if (mode === 'all') { activeFilters.clear(); updateFilterButtons(); scheduleRender(); return; }
   // "Not Owned" is fully exclusive — it can't stack with any other filter
@@ -2828,6 +3148,7 @@ function setFilter(mode, btn) {
     updateFilterButtons(); scheduleRender(); return;
   }
   activeFilters.delete('unowned');   // any other filter clears Not Owned
+  activeFilters.delete('notmaxlevel'); // clear special filter
   if (activeFilters.has(mode)) {
     activeFilters.delete(mode);            // toggle off
   } else {
@@ -2838,7 +3159,7 @@ function setFilter(mode, btn) {
   }
    updateFilterButtons();
    scheduleRender();
-}
+ }
 function updateFilterButtons() {
   document.querySelectorAll('[data-filter]').forEach(b => {
     b.classList.toggle('active', b.dataset.filter === 'all' ? activeFilters.size === 0 : activeFilters.has(b.dataset.filter));
@@ -2994,89 +3315,6 @@ function attachImageListeners() {
         img.addEventListener('error', () => img.classList.add('loaded'), { once: true });
       }
     });
-  });
-}
-
-function render() {
-  let rows = allRows;
-  if (searchQuery) rows = rows.filter(r => matchesSearch(r, searchQuery));
-  if (rarityFilter)             rows = rows.filter(r => r.rarity === rarityFilter);
-  for (const f of activeFilters) {
-    if (f === 'owned')       rows = rows.filter(r => r.owned);
-    else if (f === 'unowned')     rows = rows.filter(r => !r.owned);
-    else if (f === 'mastered')   rows = rows.filter(r => r.owned && r.mastered);
-    else if (f === 'notmastered') rows = rows.filter(r => r.owned && !r.mastered);
-    else if (f === 'summoned')   rows = rows.filter(r => r.owned && r.summoned);
-    else if (f === 'indexed')     rows = rows.filter(r => r.owned && !r.summoned);
-  }
-
-  if (!rows.length) {
-    const msg = searchQuery
-      ? `<div class="center-msg">No sprites match "${esc(searchQuery)}".</div>`
-      : '<div class="center-msg">No sprites match the current filter.</div>';
-    document.getElementById('list').innerHTML = msg;
-    if (visibilityObserver) {
-      groupElements.forEach((data) => visibilityObserver.unobserve(data.el));
-      groupElements.clear();
-    }
-    return;
-  }
-
-  const groups = {};
-  for (const r of rows) (groups[r.name] = groups[r.name] || []).push(r);
-  const names = orderGroups(groups);
-
-  const listEl = document.getElementById('list');
-  if (visibilityObserver) {
-    groupElements.forEach((data) => visibilityObserver.unobserve(data.el));
-    groupElements.clear();
-  }
-  listEl.innerHTML = '';
-
-  const fragment = document.createDocumentFragment();
-  for (const name of names) {
-    const g = groups[name];
-    g.sort((a, b) => VARIANT_ORDER[a.variant] - VARIANT_ORDER[a.variant]);
-    const rarity = g[0].rarity;
-    const display = name.replace(/\s+Sprite$/, '');
-    const allOwned = g.every(r => r.owned);
-    const allMastered = g.every(r => r.mastered);
-
-    const groupEl = document.createElement('div');
-    groupEl.className = 'sprite-group';
-    groupEl.dataset.group = name;
-    const head = document.createElement('div');
-    head.className = 'sprite-group-head';
-    head.innerHTML = `
-      <span class="sprite-group-name">${esc(display)}</span>
-      <span class="sprite-group-rar ${rarity}">${RARITY_ICONS[rarity]} ${rarity}</span>
-       <button class="group-add-btn" ${allOwned?'disabled':''} onclick="addSpriteVariants('${jsAttr(name)}')" title="Add all variants of this sprite to your collection">＋ Add All Variants</button>
-       <button class="group-master-btn" ${allMastered?'disabled':''} onclick="masterAllSpriteVariants('${jsAttr(name)}')" title="Add all variants and set them to Level 5 Mastered">★ Master All</button>
-    `;
-    groupEl.appendChild(head);
-    const grid = document.createElement('div');
-    grid.className = 'card-grid';
-    const estimatedHeight = getGroupHeight(g.length);
-    grid.style.minHeight = estimatedHeight + 'px';
-    groupEl.appendChild(grid);
-    groupElements.set(name, { el: groupEl, grid, cards: g, rendered: false });
-    if (visibilityObserver) visibilityObserver.observe(groupEl);
-    fragment.appendChild(groupEl);
-  }
-
-  listEl.appendChild(fragment);
-
-  requestAnimationFrame(() => {
-    names.forEach(name => {
-      const groupData = groupElements.get(name);
-      if (groupData && !groupData.rendered) {
-        const rect = groupData.el.getBoundingClientRect();
-        if (rect.top < window.innerHeight + OVERSCAN && rect.bottom > -OVERSCAN) {
-          renderGroupCards(name);
-        }
-      }
-    });
-    attachImageListeners();
   });
 }
 
@@ -3428,31 +3666,6 @@ function remove(key) {
 /* ════════════════════════════════════════════════════════════
    Refresh helpers
 ════════════════════════════════════════════════════════════ */
-function refreshStats() {
-  const owned = allRows.filter(r => r.owned);
-  const mast  = owned.filter(r => r.mastered).length;
-  const summ  = owned.filter(r => r.summoned).length;
-  const worth = owned.reduce((s, r) => s + r.cost, 0);
-  document.getElementById('sTotal').textContent      = owned.length;
-  document.getElementById('sMastered').textContent   = mast;
-  document.getElementById('sSummoned').textContent   = summ;
-  document.getElementById('sUnsummoned').textContent = owned.length - summ;
-  document.getElementById('dustWorth').textContent   = worth.toLocaleString();
-
-  const dw = document.getElementById('dashWorth');      if (dw) dw.textContent = worth.toLocaleString() + ' Dust';
-  const dwS = document.getElementById('dashWorthSub');  if (dwS) dwS.textContent = `${owned.length} / ${TOTAL_VARS} variants`;
-  const dO = document.getElementById('dashOwned');      if (dO) dO.textContent = owned.length;
-  const dM = document.getElementById('dashMast');       if (dM) dM.textContent = mast;
-  const dMs = document.getElementById('dashMastSub');   if (dMs) dMs.textContent = `${mast} / ${owned.length} owned`;
-  const dS = document.getElementById('dashSumm');       if (dS) dS.textContent = summ;
-  const dU = document.getElementById('dashUnsumm');     if (dU) dU.textContent = `${owned.length - summ} not summoned`;
-
-  updateProgressBars(owned.length, mast);
-  if (variantProgressOpen) renderVariantProgress();
-  if (perVariantProgressOpen) renderPerVariantProgress();
-  checkMilestones();
-}
-
 function updateProgressBars(owned, mastered) {
   const total   = TOTAL_VARS;
   const collPct = total   ? Math.round(owned   / total   * 100) : 0;
@@ -3541,6 +3754,26 @@ function togglePerVariantProgress() {
   if (perVariantProgressOpen) renderPerVariantProgress();
 }
 
+let dashStatsOpen = false;
+function toggleDashStats() {
+  dashStatsOpen = !dashStatsOpen;
+  const btn    = document.getElementById('dashStatsToggle');
+  const panel  = document.getElementById('dashStatsPanel');
+  btn.classList.toggle('open', dashStatsOpen);
+  if (panel) panel.style.display = dashStatsOpen ? 'block' : 'none';
+  if (dashStatsOpen) renderStatistics();
+}
+
+let dashHistoryOpen = false;
+function toggleDashHistory() {
+  dashHistoryOpen = !dashHistoryOpen;
+  const btn    = document.getElementById('dashHistoryToggle');
+  const panel  = document.getElementById('dashHistoryPanel');
+  btn.classList.toggle('open', dashHistoryOpen);
+  if (panel) panel.style.display = dashHistoryOpen ? 'block' : 'none';
+  if (dashHistoryOpen) setTimeout(renderHistory, 100);
+}
+
 function renderPerVariantProgress() {
   const container = document.getElementById('perVariantProgressContent');
   if (!container) return;
@@ -3591,6 +3824,7 @@ function addSpriteVariants(spriteName) {
 /* Add every variant of a single sprite and set them all to max level + mastered */
 function masterAllSpriteVariants(spriteName) {
   let updated = 0;
+  suppressMasteryCelebrations = true;
   allRows.forEach(r => {
     if (r.name === spriteName) {
       const maxLevel = r.max_level || 5;
@@ -3598,6 +3832,7 @@ function masterAllSpriteVariants(spriteName) {
       updated++;
     }
   });
+  suppressMasteryCelebrations = false;
   scheduleRender(); refreshStats(); renderCalculator();
   if (updated > 0) showToast(`Mastered all ${updated} variants of ${spriteName.replace(/\s+Sprite$/, '')}.`, 'ok');
 }
@@ -4359,6 +4594,986 @@ document.addEventListener('change', (e) => {
     }
   }
 });
+
+/* ════════════════════════════════════════════════════════════
+   Milestones
+═══════════════════════════════════════════════════════════ */
+const MILESTONE_KEY = 'spriteMilestones';
+const MAX_DUST_CAP = 200000;
+let perfectCelebrationPlayed = false;
+let maxDustCelebrationPlayed = false;
+
+function loadMilestoneFlags() {
+  try {
+    const flags = JSON.parse(localStorage.getItem(MILESTONE_KEY) || '{}');
+    perfectCelebrationPlayed = !!flags.perfect;
+    maxDustCelebrationPlayed = !!flags.maxDust;
+  } catch (e) { /* ignore */ }
+}
+
+function saveMilestoneFlag(name) {
+  try {
+    const flags = JSON.parse(localStorage.getItem(MILESTONE_KEY) || '{}');
+    flags[name] = true;
+    localStorage.setItem(MILESTONE_KEY, JSON.stringify(flags));
+  } catch (e) { /* ignore */ }
+}
+
+function resetMilestoneFlag(name) {
+  try {
+    const flags = JSON.parse(localStorage.getItem(MILESTONE_KEY) || '{}');
+    delete flags[name];
+    localStorage.setItem(MILESTONE_KEY, JSON.stringify(flags));
+  } catch (e) { /* ignore */ }
+}
+
+function isPerfectCollection() {
+  if (!allRows.length) return false;
+  return allRows.every(r => r.owned && r.level === (r.max_level || 5) && r.mastered);
+}
+
+function checkMilestones(force) {
+  if (!allRows.length) return;
+  const perfect = isPerfectCollection();
+  const maxDust = myDust >= MAX_DUST_CAP;
+
+  const perfectEl = document.getElementById('perfectMilestone');
+  const collectionMilestoneEl = document.getElementById('collectionMilestone');
+  const maxDustBadge = document.getElementById('maxDustBadge');
+
+  if (perfect && allRows.some(r => r.owned)) {
+    if (perfectEl) { perfectEl.style.display = 'flex'; perfectEl.classList.remove('inactive'); }
+    if (collectionMilestoneEl) { collectionMilestoneEl.style.display = 'flex'; collectionMilestoneEl.classList.remove('inactive'); }
+    if (!perfectCelebrationPlayed) {
+      saveMilestoneFlag('perfect');
+      perfectCelebrationPlayed = true;
+      if (force) playPerfectCelebration();
+    }
+  } else if (perfectCelebrationPlayed && allRows.some(r => r.owned)) {
+    if (perfectEl) { perfectEl.style.display = 'flex'; perfectEl.classList.add('inactive'); }
+    if (collectionMilestoneEl) { collectionMilestoneEl.style.display = 'flex'; collectionMilestoneEl.classList.add('inactive'); }
+  } else {
+    if (perfectEl) perfectEl.style.display = 'none';
+    if (collectionMilestoneEl) collectionMilestoneEl.style.display = 'none';
+  }
+
+  if (maxDust) {
+    if (maxDustBadge) { maxDustBadge.style.display = 'inline-flex'; maxDustBadge.classList.remove('inactive'); }
+    if (!maxDustCelebrationPlayed) {
+      saveMilestoneFlag('maxDust');
+      maxDustCelebrationPlayed = true;
+      if (force) playMaxDustCelebration();
+    }
+  } else if (maxDustCelebrationPlayed && myDust > 0) {
+    if (maxDustBadge) { maxDustBadge.style.display = 'inline-flex'; maxDustBadge.classList.add('inactive'); }
+  } else {
+    if (maxDustBadge) maxDustBadge.style.display = 'none';
+  }
+}
+
+function playPerfectCelebration() {
+  requestAnimationFrame(() => {
+    const el = document.getElementById('perfectMilestone');
+    const collEl = document.getElementById('collectionMilestone');
+    if (el) { el.classList.remove('inactive'); el.classList.add('celebrate'); setTimeout(() => el.classList.remove('celebrate'), 1500); }
+    if (collEl) { collEl.classList.remove('inactive'); collEl.classList.add('celebrate'); setTimeout(() => collEl.classList.remove('celebrate'), 1500); }
+  });
+}
+
+function playMaxDustCelebration() {
+  requestAnimationFrame(() => {
+    const el = document.getElementById('maxDustBadge');
+    if (el) { el.classList.remove('inactive'); el.classList.add('celebrate'); setTimeout(() => el.classList.remove('celebrate'), 1500); }
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
+   Confirmations
+═══════════════════════════════════════════════════════════ */
+function openResetMilestonesModal() {
+  document.getElementById('confirmResetMilestones').classList.add('show');
+}
+function closeConfirmResetMilestones() {
+  document.getElementById('confirmResetMilestones').classList.remove('show');
+}
+function confirmResetMilestones() {
+  localStorage.removeItem(MILESTONE_KEY);
+  perfectCelebrationPlayed = false;
+  maxDustCelebrationPlayed = false;
+  closeConfirmResetMilestones();
+  checkMilestones(true);
+  showToast('Milestones reset. You can now earn them again.', 'ok');
+}
+function openClearAllModal() {
+  document.getElementById('confirmClearAll').classList.add('show');
+}
+function closeClearAllModal() {
+  document.getElementById('confirmClearAll').classList.remove('show');
+}
+/* ════════════════════════════════════════════════════════════
+   Settings
+════════════════════════════════════════════════════════════ */
+const SETTINGS_KEY = 'spriteSettings';
+const DEFAULT_SETTINGS = {
+  accentColor: '#06b6d4',
+  animations: true,
+  glowEffects: true,
+  compactMode: false,
+  defaultSort: 'default',
+  defaultFilter: 'all',
+  showProgress: true,
+  showMastery: true,
+  hideCompleted: false,
+  notifyAchievements: true,
+  notifyRarity: true,
+  notifyCollection: true,
+  notifyPerfect: true,
+  notifyMastery: true,
+  notifyMilestones: true,
+  notifyMaxDust: true,
+  performanceMode: false,
+  reducedMotion: false,
+};
+let settings = { ...DEFAULT_SETTINGS };
+
+function loadSettings() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}');
+    settings = { ...DEFAULT_SETTINGS, ...saved };
+  } catch (e) {
+    settings = { ...DEFAULT_SETTINGS };
+  }
+  applySettings();
+}
+
+function saveSettings() {
+  try {
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+  } catch (e) { /* ignore */ }
+}
+
+function applySettings() {
+  document.querySelectorAll('[data-setting]').forEach(el => {
+    const key = el.dataset.setting;
+    if (!(key in settings)) return;
+    const val = settings[key];
+    if (el.type === 'checkbox') {
+      el.checked = !!val;
+    } else if (el.tagName === 'SELECT' || el.tagName === 'INPUT') {
+      el.value = val;
+    }
+  });
+  if (settings.accentColor) {
+    document.documentElement.style.setProperty('--accent', settings.accentColor);
+    const soft = settings.accentColor + '22';
+    document.documentElement.style.setProperty('--accent-soft', soft);
+    document.documentElement.style.setProperty('--accent-glow', settings.accentColor + '40');
+    document.documentElement.style.setProperty('--accent-glow-strong', settings.accentColor + '66');
+    document.documentElement.style.setProperty('--focus-ring', `0 0 0 3px ${soft}, 0 0 0 1px ${settings.accentColor}`);
+  }
+  if (settings.reducedMotion) {
+    document.documentElement.style.setProperty('--transition', '0ms');
+    document.documentElement.style.setProperty('--transition-fast', '0ms');
+  } else {
+    document.documentElement.style.setProperty('--transition', '180ms');
+    document.documentElement.style.setProperty('--transition-fast', '120ms');
+  }
+  if (settings.performanceMode) {
+    document.body.classList.add('performance-mode');
+  } else {
+    document.body.classList.remove('performance-mode');
+  }
+}
+
+function updateSetting(key, value) {
+  settings[key] = value;
+  saveSettings();
+  applySettings();
+  if (key === 'defaultSort') {
+    sortMode = value;
+    scheduleRender();
+  }
+  if (key === 'showProgress') {
+    const progPanel = document.getElementById('progressPanel');
+    if (progPanel) progPanel.style.display = value ? 'block' : 'none';
+  }
+  if (key === 'showMastery') {
+    document.querySelectorAll('.mast-label, .card-crown, .pip.mast').forEach(el => {
+      el.style.display = value ? '' : 'none';
+    });
+  }
+}
+
+function resetAccentColor() {
+  const input = document.querySelector('[data-setting="accentColor"]');
+  if (input) input.value = DEFAULT_SETTINGS.accentColor;
+  updateSetting('accentColor', DEFAULT_SETTINGS.accentColor);
+}
+
+function importCollection(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (data.collection) {
+        localStorage.setItem(COL_KEY, JSON.stringify(data.collection));
+      }
+      if (data.dust !== undefined) {
+        myDust = data.dust;
+        localStorage.setItem('myDust', myDust);
+        const input = document.getElementById('myDustInput');
+        if (input) input.value = myDust;
+      }
+      if (data.achievements) {
+        localStorage.setItem(ACHIEVEMENT_KEY, JSON.stringify(data.achievements));
+        loadAchievements();
+      }
+      if (data.history) {
+        localStorage.setItem(HISTORY_KEY, JSON.stringify(data.history));
+      }
+      if (data.celebrations) {
+        localStorage.setItem(CELEBRATION_KEY, JSON.stringify(data.celebrations));
+        loadCelebrations();
+      }
+      allRows = buildAllRows();
+      refreshStats();
+      render();
+      renderTerminal();
+      renderCalculator();
+      checkMilestones(true);
+      checkAchievements(true);
+      showToast('Collection imported successfully.', 'ok');
+    } catch (err) {
+      showToast('Import failed. Invalid file format.', 'err');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function clearCache() {
+  if ('caches' in window) {
+    caches.keys().then(names => { names.forEach(name => caches.delete(name)); });
+  }
+  showToast('Cache cleared.', 'ok');
+}
+
+function resetSettings() {
+  if (!confirm('Reset all settings to defaults? This will not affect your collection or milestones.')) return;
+  localStorage.removeItem(SETTINGS_KEY);
+  settings = { ...DEFAULT_SETTINGS };
+  applySettings();
+  showToast('Settings reset to defaults.', 'ok');
+}
+
+/* ════════════════════════════════════════════════════════════
+   Celebration System
+════════════════════════════════════════════════════════════ */
+const CELEBRATION_KEY = 'spriteCelebrations';
+let celebrationFlags = {};
+
+function loadCelebrations() {
+  try { celebrationFlags = JSON.parse(localStorage.getItem(CELEBRATION_KEY) || '{}'); }
+  catch (e) { celebrationFlags = {}; }
+}
+function saveCelebrations() {
+  try { localStorage.setItem(CELEBRATION_KEY, JSON.stringify(celebrationFlags)); } catch (e) {}
+}
+let celebrationQueue = [];
+let celebrationBusy = false;
+let suppressMasteryCelebrations = false;
+
+function showCelebration(message, type) {
+  celebrationQueue.push({ message, type });
+  if (!celebrationBusy) processCelebrationQueue();
+}
+
+function processCelebrationQueue() {
+  if (celebrationBusy || !celebrationQueue.length) return;
+  celebrationBusy = true;
+  const { message, type } = celebrationQueue.shift();
+  const el = document.createElement('div');
+  el.className = `celebration-toast ${type}`;
+  el.textContent = message;
+  document.body.appendChild(el);
+  requestAnimationFrame(() => el.classList.add('show'));
+  setTimeout(() => {
+    el.classList.remove('show');
+    setTimeout(() => { el.remove(); celebrationBusy = false; processCelebrationQueue(); }, 400);
+  }, 3200);
+}
+function checkCelebrations() {
+  if (!allRows.length) return;
+  const s = settings;
+  const owned = allRows.filter(r => r.owned);
+  if (!owned.length) return;
+
+  // Mastery celebration
+  if (s.notifyAchievements && !celebrationFlags.lastMasteredCount) {
+    celebrationFlags.lastMasteredCount = owned.filter(r => r.mastered).length;
+  }
+  if (s.notifyAchievements && celebrationFlags.lastMasteredCount !== undefined) {
+    const mastCount = owned.filter(r => r.mastered).length;
+    if (mastCount > celebrationFlags.lastMasteredCount && !suppressMasteryCelebrations) {
+      showCelebration('✨ Sprite Mastered!', 'mastered');
+    }
+    celebrationFlags.lastMasteredCount = mastCount;
+  }
+
+  // Rarity completion
+  if (s.notifyRarity) {
+    for (const rar of RARITY_ORDER) {
+      const key = 'rarity_' + rar;
+      const isComplete = isRarityComplete(rar);
+      if (isComplete && !celebrationFlags[key]) {
+        celebrationFlags[key] = true;
+        showCelebration(`🏆 All ${rar} Sprites Completed!`, 'rarity');
+      } else if (!isComplete) {
+        celebrationFlags[key] = false;
+      }
+    }
+  }
+
+  // Collection completion
+  const collPct = getCollectionPct();
+  if (s.notifyCollection && collPct >= 100 && !celebrationFlags.collection100) {
+    celebrationFlags.collection100 = true;
+    showCelebration('🌟 COLLECTION COMPLETE 🌟', 'collection');
+  } else if (collPct < 100) {
+    celebrationFlags.collection100 = false;
+  }
+
+  // Perfect collection
+  if (s.notifyPerfect && isPerfectCollection() && !celebrationFlags.perfect) {
+    celebrationFlags.perfect = true;
+    showCelebration('👑 PERFECT COLLECTION 👑', 'perfect');
+  } else if (!isPerfectCollection()) {
+    celebrationFlags.perfect = false;
+  }
+
+  saveCelebrations();
+}
+
+/* ════════════════════════════════════════════════════════════
+   Advanced Search Parser
+════════════════════════════════════════════════════════════ */
+function parseAdvancedSearch(query) {
+  const text = (query || '').trim().toLowerCase();
+  if (!text) return { text: '', filters: {} };
+  const filters = { mastered: null, rarity: null, summoned: null, level: null, levelOp: null };
+  let remaining = text;
+  const re = /(mastered\s*:\s*(true|false))|(rarity\s*:\s*(rare|epic|legendary|mythic))|(summoned\s*:\s*(true|false))|(level\s*(>=|<=|>|<|:)\s*(\d+))/gi;
+  let m;
+  while ((m = re.exec(remaining)) !== null) {
+    const token = m[0];
+    if (m[1]) filters.mastered = m[2] === 'true';
+    else if (m[3]) filters.rarity = m[4].charAt(0).toUpperCase() + m[4].slice(1);
+    else if (m[5]) filters.summoned = m[6] === 'true';
+    else if (m[7]) {
+      filters.levelOp = m[8] || ':';
+      filters.level = parseInt(m[9]);
+    }
+    remaining = remaining.replace(token, ' ');
+  }
+  return { text: remaining.trim(), filters };
+}
+
+function matchesAdvancedSearch(row, parsed) {
+  const { text, filters } = parsed;
+  if (text && !matchesSearch(row, text)) return false;
+  if (filters.mastered !== null && row.owned && row.mastered !== filters.mastered) return false;
+  if (filters.rarity && row.rarity !== filters.rarity) return false;
+  if (filters.summoned !== null && row.owned && row.summoned !== filters.summoned) return false;
+  if (filters.level !== null && row.owned) {
+    const lvl = row.level;
+    if (filters.levelOp === '>=' && lvl < filters.level) return false;
+    if (filters.levelOp === '<=' && lvl > filters.level) return false;
+    if (filters.levelOp === '>' && lvl <= filters.level) return false;
+    if (filters.levelOp === '<' && lvl >= filters.level) return false;
+    if ((filters.levelOp === ':' || filters.levelOp === '=') && lvl !== filters.level) return false;
+  }
+  return true;
+}
+
+function setSearch(value) {
+  searchQuery = value || '';
+  const input = document.getElementById('spriteSearch');
+  if (input) {
+    const wrap = input.closest('.search-box');
+    if (wrap) wrap.classList.toggle('has-value', !!(value && value.trim()));
+  }
+  scheduleRender();
+}
+
+function render() {
+  let rows = allRows;
+  const parsed = parseAdvancedSearch(searchQuery);
+  if (searchQuery) rows = rows.filter(r => matchesAdvancedSearch(r, parsed));
+  if (rarityFilter)             rows = rows.filter(r => r.rarity === rarityFilter);
+  for (const f of activeFilters) {
+    if (f === 'owned')       rows = rows.filter(r => r.owned);
+    else if (f === 'unowned')     rows = rows.filter(r => !r.owned);
+    else if (f === 'mastered')   rows = rows.filter(r => r.owned && r.mastered);
+    else if (f === 'notmastered') rows = rows.filter(r => r.owned && !r.mastered);
+    else if (f === 'summoned')   rows = rows.filter(r => r.owned && r.summoned);
+    else if (f === 'indexed')     rows = rows.filter(r => r.owned && !r.summoned);
+    else if (f === 'notmaxlevel') rows = rows.filter(r => r.owned && r.level < (r.max_level || 5));
+  }
+
+  if (!rows.length) {
+    const msg = searchQuery
+      ? `<div class="center-msg">No sprites match "${esc(searchQuery)}".</div>`
+      : '<div class="center-msg">No sprites match the current filter.</div>';
+    document.getElementById('list').innerHTML = msg;
+    if (visibilityObserver) {
+      groupElements.forEach((data) => visibilityObserver.unobserve(data.el));
+      groupElements.clear();
+    }
+    return;
+  }
+
+  const groups = {};
+  for (const r of rows) (groups[r.name] = groups[r.name] || []).push(r);
+  const names = orderGroups(groups);
+
+  const listEl = document.getElementById('list');
+  if (visibilityObserver) {
+    groupElements.forEach((data) => visibilityObserver.unobserve(data.el));
+    groupElements.clear();
+  }
+  listEl.innerHTML = '';
+
+  const fragment = document.createDocumentFragment();
+  for (const name of names) {
+    const g = groups[name];
+    g.sort((a, b) => VARIANT_ORDER[a.variant] - VARIANT_ORDER[b.variant]);
+    const rarity = g[0].rarity;
+    const display = name.replace(/\s+Sprite$/, '');
+    const allOwned = g.every(r => r.owned);
+    const allMastered = g.every(r => r.mastered);
+
+    const groupEl = document.createElement('div');
+    groupEl.className = 'sprite-group';
+    groupEl.dataset.group = name;
+    const head = document.createElement('div');
+    head.className = 'sprite-group-head';
+    head.innerHTML = `
+      <span class="sprite-group-name">${esc(display)}</span>
+      <span class="sprite-group-rar ${rarity}">${RARITY_ICONS[rarity]} ${rarity}</span>
+       <button class="group-add-btn" ${allOwned?'disabled':''} onclick="addSpriteVariants('${jsAttr(name)}')" title="Add all variants of this sprite to your collection">＋ Add All Variants</button>
+       <button class="group-master-btn" ${allMastered?'disabled':''} onclick="masterAllSpriteVariants('${jsAttr(name)}')" title="Add all variants and set them to Level 5 Mastered">★ Master All</button>
+    `;
+    groupEl.appendChild(head);
+    const grid = document.createElement('div');
+    grid.className = 'card-grid';
+    const estimatedHeight = getGroupHeight(g.length);
+    grid.style.minHeight = estimatedHeight + 'px';
+    groupEl.appendChild(grid);
+    groupElements.set(name, { el: groupEl, grid, cards: g, rendered: false });
+    if (visibilityObserver) visibilityObserver.observe(groupEl);
+    fragment.appendChild(groupEl);
+  }
+
+  listEl.appendChild(fragment);
+
+  requestAnimationFrame(() => {
+    names.forEach(name => {
+      const groupData = groupElements.get(name);
+      if (groupData && !groupData.rendered) {
+        const rect = groupData.el.getBoundingClientRect();
+        if (rect.top < window.innerHeight + OVERSCAN && rect.bottom > -OVERSCAN) {
+          renderGroupCards(name);
+        }
+      }
+    });
+    attachImageListeners();
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
+   Progress History
+════════════════════════════════════════════════════════════ */
+const HISTORY_KEY = 'spriteHistory';
+const MAX_HISTORY = 200;
+
+function loadHistory() {
+  try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); }
+  catch (e) { return []; }
+}
+function saveHistory(hist) {
+  try { localStorage.setItem(HISTORY_KEY, JSON.stringify(hist.slice(-MAX_HISTORY))); } catch (e) {}
+}
+function recordHistorySnapshot() {
+  const owned = allRows.filter(r => r.owned);
+  const mastered = owned.filter(r => r.mastered).length;
+  const summoned = owned.filter(r => r.summoned).length;
+  const dust = myDust;
+  const collPct = getCollectionPct();
+  const snapshot = { date: new Date().toISOString(), owned: owned.length, mastered, summoned, dust, collectionPct: collPct };
+  const hist = loadHistory();
+  const last = hist[hist.length - 1];
+  if (!last || last.owned !== snapshot.owned || last.mastered !== snapshot.mastered || last.summoned !== snapshot.summoned || last.dust !== snapshot.dust) {
+    hist.push(snapshot);
+    saveHistory(hist);
+  }
+}
+
+function renderHistory() {
+  if (!dashHistoryOpen) return;
+  const hist = loadHistory();
+  const listEl = document.getElementById('dashHistoryList');
+  if (!listEl) return;
+  const canvas = document.getElementById('dashHistoryChart');
+  if (!canvas) return;
+  if (!hist.length) {
+    listEl.innerHTML = '<div class="center-msg" style="padding:30px 10px">No history recorded yet. Change your collection to start tracking.</div>';
+    if (window.Chart) { const chart = Chart.getChart(canvas); if (chart) chart.destroy(); }
+    return;
+  }
+  listEl.innerHTML = '<table class="history-table"><thead><tr><th>Date</th><th>Owned</th><th>Mastered</th><th>Summoned</th><th>Dust</th><th>Completion</th></tr></thead><tbody>' +
+    hist.slice().reverse().map(h => `<tr><td>${new Date(h.date).toLocaleDateString()} ${new Date(h.date).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</td><td>${h.owned}</td><td>${h.mastered}</td><td>${h.summoned}</td><td>${h.dust.toLocaleString()}</td><td>${h.collectionPct}%</td></tr>`).join('') +
+    '</tbody></table>';
+
+  const data = hist.slice(-50);
+  if (data.length < 2) {
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#64748b';
+    ctx.font = '14px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('Need at least 2 data points to draw chart.', canvas.width / (window.devicePixelRatio || 1), 130);
+    if (window.Chart) { const chart = Chart.getChart(canvas); if (chart) chart.destroy(); }
+    return;
+  }
+  if (window.Chart) { const chart = Chart.getChart(canvas); if (chart) chart.destroy(); }
+  new Chart(canvas, {
+    type: 'line',
+    data: {
+      labels: data.map(h => new Date(h.date).toLocaleDateString()),
+      datasets: [{
+        label: 'Collection %',
+        data: data.map(h => h.collectionPct),
+        borderColor: '#06b6d4',
+        backgroundColor: 'rgba(6,182,212,0.08)',
+        fill: true,
+        tension: 0.3,
+        pointRadius: 3,
+        pointBackgroundColor: '#06b6d4',
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } },
+      scales: {
+        y: { beginAtZero: true, max: 100, ticks: { color: '#64748b', font: { size: 11 } }, grid: { color: 'rgba(255,255,255,0.04)' } },
+        x: { ticks: { color: '#64748b', font: { size: 10 }, maxRotation: 0, autoSkip: true, maxTicksLimit: 8 }, grid: { display: false } }
+      }
+    }
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
+   Statistics Tab
+════════════════════════════════════════════════════════════ */
+function renderStatistics() {
+  const owned = allRows.filter(r => r.owned);
+  const mast = owned.filter(r => r.mastered).length;
+  const summ = owned.filter(r => r.summoned).length;
+  const totalLevels = owned.reduce((s, r) => s + r.level, 0);
+  const totalDust = myDust;
+  const incomplete = allRows.length - owned.length;
+
+  const overview = document.getElementById('dashStatTotal');
+  if (overview) {
+    document.getElementById('dashStatTotal').textContent = TOTAL_VARS;
+    document.getElementById('dashStatSummoned').textContent = summ;
+    document.getElementById('dashStatMaxLevel').textContent = owned.filter(r => r.level === (r.max_level || 5)).length;
+    document.getElementById('dashStatMastered').textContent = mast;
+    document.getElementById('dashStatCompletion').textContent = getCollectionPct() + '%';
+  }
+
+  const byRarity = document.getElementById('dashRarityStats');
+  if (byRarity) {
+    let html = '';
+    for (const rar of RARITY_ORDER) {
+      const group = allRows.filter(r => r.rarity === rar);
+      const total = group.length;
+      const ownedCount = group.filter(r => r.owned).length;
+      const pct = total ? Math.round((ownedCount / total) * 100) : 0;
+      const isComplete = ownedCount === total && total > 0;
+      html += `<div class="rarity-stat-card ${isComplete ? 'complete' : ''}">
+        <div class="rarity-stat-header"><span class="rarity-stat-name ${rar}">${rar}</span><span class="rarity-stat-pct">${ownedCount} / ${total} (${pct}%)</span></div>
+        <div class="rarity-stat-bar"><div class="rarity-stat-fill ${rar}" style="width:${pct}%"></div></div>
+        ${isComplete ? '<div class="rarity-stat-trophy">🏆 COMPLETE</div>' : ''}
+      </div>`;
+    }
+    byRarity.innerHTML = html;
+  }
+
+  const progress = document.getElementById('dashStatLevels');
+  if (progress) {
+    document.getElementById('dashStatLevels').textContent = totalLevels;
+    document.getElementById('dashStatMasteryTotal').textContent = mast;
+    document.getElementById('dashStatDustEarned').textContent = totalDust.toLocaleString();
+    document.getElementById('dashStatDustCurrent').textContent = totalDust.toLocaleString();
+    document.getElementById('dashStatDustMax').textContent = MAX_DUST_CAP.toLocaleString();
+    document.getElementById('dashStatIncomplete').textContent = incomplete;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+   Dashboard: What's Left
+════════════════════════════════════════════════════════════ */
+function renderWhatsLeft() {
+  const owned = allRows.filter(r => r.owned);
+  const needLevel = owned.filter(r => r.level < (r.max_level || 5)).length;
+  const notMastered = owned.filter(r => !r.mastered).length;
+  const notSummoned = owned.filter(r => !r.summoned).length;
+
+  const panel = document.getElementById('whatsLeftPanel');
+  if (!panel) return;
+
+  const makeBtn = (label, count, filter, allDoneLabel) => {
+    if (count === 0) return `<button class="dash-action-btn done" disabled><span>${allDoneLabel}</span><span class="action-count">✓</span></button>`;
+    return `<button class="dash-action-btn" onclick="applyFilterAndSwitch('${filter}')"><span>${label}</span><span class="action-count">${count}</span></button>`;
+  };
+
+  panel.innerHTML = `
+    <h3>🎯 YOUR NEXT STEPS</h3>
+    ${makeBtn('Sprites need leveling', needLevel, 'notmaxlevel', '✓ All Sprites at Max Level')}
+    ${makeBtn('Sprites aren\'t mastered', notMastered, 'notmastered', '✓ All Sprites Mastered')}
+    ${makeBtn('Sprites haven\'t been summoned', notSummoned, 'indexed', '✓ All Sprites Summoned')}
+  `;
+}
+
+function applyFilterAndSwitch(filterMode) {
+  activeFilters.clear();
+  rarityFilter = null;
+  const sel = document.getElementById('raritySelect');
+  if (sel) sel.value = '';
+  if (filterMode === 'notmastered') activeFilters.add('notmastered');
+  else if (filterMode === 'indexed') { activeFilters.add('indexed'); }
+  else if (filterMode === 'notmaxlevel') { activeFilters.add('notmaxlevel'); }
+  else if (filterMode === 'owned') { activeFilters.add('owned'); }
+  updateFilterButtons();
+  switchTab('collection', document.querySelector('[data-tab="collection"]'));
+  scheduleRender();
+}
+
+/* ════════════════════════════════════════════════════════════
+   Dashboard: Smart Recommendations
+════════════════════════════════════════════════════════════ */
+function renderRecommendations() {
+  const container = document.getElementById('recommendationsPanel');
+  if (!container) return;
+
+  const owned = allRows.filter(r => r.owned);
+  if (!owned.length && allRows.length) {
+    container.innerHTML = '<h3>💡 RECOMMENDED NEXT</h3><div class="dash-action-card"><button class="dash-action-btn" onclick="switchTab(\'collection\', document.querySelector(\'[data-tab=collection]\'))"><span>Start your collection</span><span class="action-count">→</span></button></div>';
+    return;
+  }
+  if (!allRows.length) { container.innerHTML = ''; return; }
+
+  let rec = null;
+
+  // 1. Nearly completed rarity
+  for (const rar of RARITY_ORDER) {
+    const group = allRows.filter(r => r.rarity === rar);
+    const total = group.length;
+    const ownedCount = group.filter(r => r.owned).length;
+    const pct = total ? Math.round((ownedCount / total) * 100) : 0;
+    if (pct >= 80 && pct < 100) { rec = { text: `Complete your ${rar} collection (${pct}%)`, filter: 'rarity', value: rar }; break; }
+  }
+
+  // 2. Close to mastery
+  if (!rec) {
+    const closeToMast = owned.filter(r => !r.mastered && r.level === (r.max_level || 5));
+    if (closeToMast.length) { rec = { text: `Mark ${closeToMast.length} sprite(s) as mastered`, filter: 'notmastered', value: null }; }
+  }
+
+  // 3. Close to max level
+  if (!rec) {
+    const closeToLvl = owned.filter(r => r.level < (r.max_level || 5) && r.level >= 3);
+    if (closeToLvl.length) { rec = { text: `Level up ${closeToLvl.length} sprite(s)`, filter: 'notmaxlevel', value: null }; }
+  }
+
+  // 4. Unsummoned
+  if (!rec) {
+    const unsummoned = owned.filter(r => !r.summoned);
+    if (unsummoned.length) { rec = { text: `Summon ${unsummoned.length} sprite(s)`, filter: 'indexed', value: null }; }
+  }
+
+  // 5. Overall milestones
+  if (!rec) {
+    const pct = getCollectionPct();
+    if (pct < 100) { rec = { text: `Reach ${Math.min(pct + 25, 100)}% collection completion`, filter: 'all', value: null }; }
+  }
+
+  if (!rec) {
+    container.innerHTML = '<h3>💡 RECOMMENDED NEXT</h3><div class="dash-action-card"><button class="dash-action-btn done" disabled><span>✓ You\'re all caught up!</span><span class="action-count">🎉</span></button></div>';
+    return;
+  }
+
+  container.innerHTML = `<h3>💡 RECOMMENDED NEXT</h3><div class="dash-action-card">
+    <button class="dash-action-btn" onclick="goToRecommendation('${rec.filter}', '${rec.value || ''}')"><span>${rec.text}</span><span class="action-count">→</span></button>
+  </div>`;
+}
+
+function goToRecommendation(filterMode, value) {
+  activeFilters.clear();
+  rarityFilter = null;
+  const sel = document.getElementById('raritySelect');
+  if (sel) sel.value = '';
+  if (filterMode === 'rarity' && value) { setRarity(value, null); }
+  else if (filterMode === 'notmastered') activeFilters.add('notmastered');
+  else if (filterMode === 'indexed') activeFilters.add('indexed');
+  else if (filterMode === 'notmaxlevel') activeFilters.add('notmaxlevel');
+  else if (filterMode === 'owned') activeFilters.add('owned');
+  else if (filterMode === 'all') { /* show all */ }
+  updateFilterButtons();
+  switchTab('collection', document.querySelector('[data-tab="collection"]'));
+  scheduleRender();
+}
+
+function renderRarityCards() {
+  const container = document.getElementById('rarityCardsPanel');
+  if (!container) return;
+  let html = '<h3>🔷 RARITY COMPLETION</h3><div class="rarity-card-grid">';
+  for (const rar of RARITY_ORDER) {
+    const group = allRows.filter(r => r.rarity === rar);
+    const total = group.length;
+    const ownedCount = group.filter(r => r.owned).length;
+    const pct = total ? Math.round((ownedCount / total) * 100) : 0;
+    const isComplete = ownedCount === total && total > 0;
+    html += `<div class="rarity-card ${isComplete ? 'complete' : ''}">
+      <div class="rarity-card-header"><span class="rarity-card-name ${rar}">${rar}</span><span class="rarity-card-pct">${pct}%</span></div>
+      <div class="rarity-card-bar"><div class="rarity-card-fill ${rar}" style="width:${pct}%"></div></div>
+      <div class="rarity-card-sub">${ownedCount} / ${total}${isComplete ? ' 🏆 COMPLETE' : ''}</div>
+    </div>`;
+  }
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+/* ════════════════════════════════════════════════════════════
+   Completionist Mode
+════════════════════════════════════════════════════════════ */
+function renderCompletionist() {
+  const container = document.getElementById('achievementsCompletionist');
+  if (!container) return;
+  const total = allRows.length;
+  const summoned = allRows.filter(r => r.summoned).length;
+  const maxLevel = allRows.filter(r => r.level === (r.max_level || 5)).length;
+  const mastered = allRows.filter(r => r.mastered).length;
+  const dustMax = myDust >= MAX_DUST_CAP;
+  const perfect = isPerfectCollection();
+
+  const notSummoned = total - summoned;
+  const notMaxLevel = total - maxLevel;
+  const notMastered = total - mastered;
+
+  const makeCard = (label, have, need, filter, btnLabel) => {
+    const pct = total ? Math.round((have / total) * 100) : 0;
+    const done = have === total && total > 0;
+    return `<div class="completionist-card ${done ? 'perfect' : ''}">
+      <div class="cc-label">${label}</div>
+      <div class="cc-value">${have} / ${total}</div>
+      <div class="cc-sub">${pct}%</div>
+      ${!done ? `<button class="cc-action" onclick="goToRecommendation('${filter}', '')">${btnLabel} (${need})</button>` : '<div class="cc-done">✓ Complete</div>'}
+    </div>`;
+  };
+
+  container.innerHTML = `
+    <div class="completionist-header ${perfect ? 'perfect' : ''}">
+      <h2>👑 PERFECT COLLECTION PROGRESS</h2>
+      ${perfect ? '<div class="perfect-badge">👑 PERFECT COLLECTION 👑</div>' : ''}
+    </div>
+    <div class="completionist-grid">
+      ${makeCard('Summoned', summoned, notSummoned, 'indexed', 'Summon')}
+      ${makeCard('Max Level', maxLevel, notMaxLevel, 'notmaxlevel', 'Level Up')}
+      ${makeCard('Mastered', mastered, notMastered, 'notmastered', 'Master')}
+      <div class="completionist-card ${dustMax ? 'perfect' : ''}">
+        <div class="cc-label">Sprite Dust</div>
+        <div class="cc-value">${dustMax ? 'MAX' : myDust.toLocaleString()}</div>
+        <div class="cc-sub">${dustMax ? 'Maximum reached!' : `of ${MAX_DUST_CAP.toLocaleString()} max`}</div>
+      </div>
+    </div>
+  `;
+}
+
+/* ════════════════════════════════════════════════════════════
+   Enhanced refreshStats
+════════════════════════════════════════════════════════════ */
+function refreshStats() {
+  const owned = allRows.filter(r => r.owned);
+  const mast  = owned.filter(r => r.mastered).length;
+  const summ  = owned.filter(r => r.summoned).length;
+  const worth = owned.reduce((s, r) => s + r.cost, 0);
+  document.getElementById('sTotal').textContent      = owned.length;
+  document.getElementById('sMastered').textContent   = mast;
+  document.getElementById('sSummoned').textContent   = summ;
+  document.getElementById('sUnsummoned').textContent = owned.length - summ;
+  document.getElementById('dustWorth').textContent   = worth.toLocaleString();
+
+  const dw = document.getElementById('dashWorth');      if (dw) dw.textContent = worth.toLocaleString() + ' Dust';
+  const dwS = document.getElementById('dashWorthSub');  if (dwS) dwS.textContent = `${owned.length} / ${TOTAL_VARS} variants`;
+  const dO = document.getElementById('dashOwned');      if (dO) dO.textContent = owned.length;
+  const dM = document.getElementById('dashMast');       if (dM) dM.textContent = mast;
+  const dMs = document.getElementById('dashMastSub');   if (dMs) dMs.textContent = `${mast} / ${owned.length} owned`;
+  const dS = document.getElementById('dashSumm');       if (dS) dS.textContent = summ;
+  const dU = document.getElementById('dashUnsumm');     if (dU) dU.textContent = `${owned.length - summ} not summoned`;
+
+  updateProgressBars(owned.length, mast);
+  if (variantProgressOpen) renderVariantProgress();
+  if (perVariantProgressOpen) renderPerVariantProgress();
+  renderWhatsLeft();
+  renderRarityCards();
+  renderRecommendations();
+  renderStatistics();
+  renderHistory();
+  checkMilestones();
+  checkAchievements();
+  checkCelebrations();
+}
+
+/* ════════════════════════════════════════════════════════════
+   Enhanced switchTab
+════════════════════════════════════════════════════════════ */
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  const targetPanel = document.getElementById('tab-'+name);
+  if (targetPanel) targetPanel.classList.add('active');
+  document.querySelectorAll('.tab-btn, .mnav-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === name);
+  });
+  if (name === 'achievements') {
+    renderAchievements();
+    renderCompletionist();
+  }
+  if (name === 'dashboard') {
+    renderWhatsLeft();
+    renderRarityCards();
+    renderRecommendations();
+    renderStatistics();
+    if (dashHistoryOpen) setTimeout(renderHistory, 100);
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+   Enhanced upsert with history tracking
+════════════════════════════════════════════════════════════ */
+function upsert(key, level, summoned, mastered) {
+  const row = allRows.find(r => r.key === key);
+  if (!row) return;
+  const maxLevel = row.max_level || 5;
+  if (!summoned) level = 1;
+  if (level === 5 && maxLevel === 5) mastered = true;
+
+  const wasMastered = row.owned && row.mastered;
+
+  const coll = loadCollection();
+  coll[key] = { level, summoned, mastered };
+  saveCollection(coll);
+
+  row.owned    = true;
+  row.level    = level;
+  row.summoned = summoned;
+  row.mastered = mastered;
+  row.status   = computeStatus(level, mastered, summoned);
+
+  scheduleRender();
+  refreshStats();
+  renderCalculator();
+  recordHistorySnapshot();
+}
+
+function remove(key) {
+  const coll = loadCollection();
+  delete coll[key];
+  saveCollection(coll);
+
+  const row = allRows.find(r => r.key === key);
+  if (row) { row.owned=false; row.level=0; row.summoned=false; row.mastered=false; row.status=null; }
+  scheduleRender();
+  refreshStats();
+  renderCalculator();
+  recordHistorySnapshot();
+}
+
+/* ════════════════════════════════════════════════════════════
+   Enhanced clear all
+════════════════════════════════════════════════════════════ */
+function confirmClearAll() {
+  localStorage.removeItem(COL_KEY);
+  localStorage.removeItem('myDust');
+  localStorage.removeItem('basket');
+  localStorage.removeItem(MILESTONE_KEY);
+  localStorage.removeItem(CELEBRATION_KEY);
+  localStorage.removeItem(HISTORY_KEY);
+  localStorage.removeItem(ACHIEVEMENT_KEY);
+  localStorage.removeItem(SETTINGS_KEY);
+  perfectCelebrationPlayed = false;
+  maxDustCelebrationPlayed = false;
+  celebrationFlags = {};
+  achievementState = {};
+  settings = { ...DEFAULT_SETTINGS };
+  myDust = 0;
+  basketQty = {};
+  allRows = buildAllRows();
+  closeClearAllModal();
+  refreshStats();
+  render();
+  renderTerminal();
+  renderCalculator();
+  checkMilestones(true);
+  showToast('All saved data has been permanently deleted.', 'ok');
+}
+
+/* ════════════════════════════════════════════════════════════
+   Boot with history init
+════════════════════════════════════════════════════════════ */
+async function boot() {
+  const listEl = document.getElementById('list');
+  const skeletonEl = document.getElementById('loadingSkeleton');
+  if (listEl) listEl.style.display = 'none';
+  if (skeletonEl) skeletonEl.style.display = 'block';
+
+  const saved = localStorage.getItem('myDust');
+  if (saved) { myDust = parseInt(saved)||0; document.getElementById('myDustInput').value = myDust; }
+  const sb = localStorage.getItem('basket');
+  if (sb) { try { basketQty = JSON.parse(sb); } catch(e){} }
+
+  const dirRes = await fetch('/api/directory');
+  const dir    = await dirRes.json();
+
+  TERMINAL        = dir.terminal;
+  VPERKS          = dir.variant_perks;
+  SPRITE_DIR      = dir.sprites || {};
+  TOTAL_VARS      = dir.total_variants || 61;
+  if (dir.extraction_base) EXTRACTION_BASE = dir.extraction_base;
+
+  allRows         = buildAllRows();
+
+  loadSettings();
+  loadMilestoneFlags();
+  loadAchievements();
+  loadCelebrations();
+
+  if (listEl) listEl.style.display = 'block';
+  if (skeletonEl) skeletonEl.style.display = 'none';
+
+  refreshStats();
+  initVirtualization();
+  render();
+  renderTerminal();
+  populateEcSprite();
+  renderCalculator();
+  checkMilestones(true);
+  recordHistorySnapshot();
+}
 
 boot();
 </script>
