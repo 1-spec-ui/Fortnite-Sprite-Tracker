@@ -5005,7 +5005,7 @@ function render() {
   }
 
   let groups, names;
-  if (sortMode === 'lvl-desc' || sortMode === 'lvl-asc') {
+  if (sortMode === 'lvl-desc' || sortMode === 'lvl-asc' || sortMode === 'mastered') {
     groups = {};
     for (const r of rows) {
       groups[r.key] = [r];
@@ -5027,10 +5027,10 @@ function render() {
   const fragment = document.createDocumentFragment();
   for (const name of names) {
     const g = groups[name];
-    if (sortMode !== 'lvl-desc' && sortMode !== 'lvl-asc') {
+    if (sortMode !== 'lvl-desc' && sortMode !== 'lvl-asc' && sortMode !== 'mastered') {
       g.sort((a, b) => VARIANT_ORDER[a.variant] - VARIANT_ORDER[b.variant]);
     }
-    const isSingleCard = g.length === 1 && (sortMode === 'lvl-desc' || sortMode === 'lvl-asc');
+    const isSingleCard = g.length === 1 && (sortMode === 'lvl-desc' || sortMode === 'lvl-asc' || sortMode === 'mastered');
     const rarity = g[0].rarity;
     const display = name.replace(/\s+Sprite$/, '');
     const allOwned = g.every(r => r.owned);
