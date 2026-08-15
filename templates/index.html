@@ -3288,9 +3288,10 @@ function initVirtualization() {
   }, { rootMargin: `${OVERSCAN}px 0px`, threshold: 0 });
 }
 
-function getGroupHeight(cardCount) {
+function getGroupHeight(cardCount, hasHeader) {
+  const header = hasHeader ? HEADER_HEIGHT : 0;
   const rows = Math.ceil(cardCount / 2);
-  return HEADER_HEIGHT + rows * CARD_ROW_HEIGHT;
+  return header + rows * CARD_ROW_HEIGHT;
 }
 
 function renderGroupCards(name) {
@@ -3309,7 +3310,7 @@ function unmountGroupCards(name) {
   const { grid, cards } = groupData;
   if (!grid || !cards) return;
   grid.innerHTML = '';
-  grid.style.minHeight = getGroupHeight(cards.length) + 'px';
+  grid.style.minHeight = getGroupHeight(cards.length, groupData.hasHeader) + 'px';
   groupData.rendered = false;
 }
 
@@ -3330,8 +3331,7 @@ function attachImageListeners() {
 function orderGroups(groups) {
   const names = Object.keys(groups);
   if (sortMode === 'lvl-desc' || sortMode === 'lvl-asc') {
-    const dir = sortMode === 'lvl-desc' ? -1 : 1;
-    return names.sort((a, b) => dir * (groupMaxLvl(groups[b]) - groupMaxLvl(groups[a])) || a.localeCompare(b));
+    return names;
   }
   if (sortMode === 'mastered') {
     return names.sort((a, b) =>
@@ -3344,7 +3344,6 @@ function orderGroups(groups) {
     RARITY_ORDER.indexOf(groups[a][0].rarity) - RARITY_ORDER.indexOf(groups[b][0].rarity) ||
     a.localeCompare(b));
 }
-function groupMaxLvl(g)  { return Math.max(0, ...g.map(r => r.owned ? r.level : 0)); }
 function groupHasMast(g) { return g.some(r => r.mastered) ? 1 : 0; }
 
 function buildCard(row) {
@@ -4991,6 +4990,7 @@ function render() {
     else if (f === 'indexed')     rows = rows.filter(r => r.owned && !r.summoned);
     else if (f === 'notmaxlevel') rows = rows.filter(r => r.owned && r.level < (r.max_level || 5));
   }
+  rows = applySort(rows);
 
   if (!rows.length) {
     const msg = searchQuery
@@ -5004,9 +5004,18 @@ function render() {
     return;
   }
 
-  const groups = {};
-  for (const r of rows) (groups[r.name] = groups[r.name] || []).push(r);
-  const names = orderGroups(groups);
+  let groups, names;
+  if (sortMode === 'lvl-desc' || sortMode === 'lvl-asc') {
+    groups = {};
+    for (const r of rows) {
+      groups[r.key] = [r];
+    }
+    names = Object.keys(groups);
+  } else {
+    groups = {};
+    for (const r of rows) (groups[r.name] = groups[r.name] || []).push(r);
+    names = orderGroups(groups);
+  }
 
   const listEl = document.getElementById('list');
   if (visibilityObserver) {
@@ -5018,7 +5027,10 @@ function render() {
   const fragment = document.createDocumentFragment();
   for (const name of names) {
     const g = groups[name];
-    g.sort((a, b) => VARIANT_ORDER[a.variant] - VARIANT_ORDER[b.variant]);
+    if (sortMode !== 'lvl-desc' && sortMode !== 'lvl-asc') {
+      g.sort((a, b) => VARIANT_ORDER[a.variant] - VARIANT_ORDER[b.variant]);
+    }
+    const isSingleCard = g.length === 1 && (sortMode === 'lvl-desc' || sortMode === 'lvl-asc');
     const rarity = g[0].rarity;
     const display = name.replace(/\s+Sprite$/, '');
     const allOwned = g.every(r => r.owned);
@@ -5027,21 +5039,23 @@ function render() {
     const groupEl = document.createElement('div');
     groupEl.className = 'sprite-group';
     groupEl.dataset.group = name;
-    const head = document.createElement('div');
-    head.className = 'sprite-group-head';
-    head.innerHTML = `
-      <span class="sprite-group-name">${esc(display)}</span>
-      <span class="sprite-group-rar ${rarity}">${RARITY_ICONS[rarity]} ${rarity}</span>
-       <button class="group-add-btn" ${allOwned?'disabled':''} onclick="addSpriteVariants('${jsAttr(name)}')" title="Add all variants of this sprite to your collection">＋ Add All Variants</button>
-       <button class="group-master-btn" ${allMastered?'disabled':''} onclick="masterAllSpriteVariants('${jsAttr(name)}')" title="Add all variants and set them to Level 5 Mastered">★ Master All</button>
-    `;
-    groupEl.appendChild(head);
+    if (!isSingleCard) {
+      const head = document.createElement('div');
+      head.className = 'sprite-group-head';
+      head.innerHTML = `
+        <span class="sprite-group-name">${esc(display)}</span>
+        <span class="sprite-group-rar ${rarity}">${RARITY_ICONS[rarity]} ${rarity}</span>
+         <button class="group-add-btn" ${allOwned?'disabled':''} onclick="addSpriteVariants('${jsAttr(name)}')" title="Add all variants of this sprite to your collection">＋ Add All Variants</button>
+         <button class="group-master-btn" ${allMastered?'disabled':''} onclick="masterAllSpriteVariants('${jsAttr(name)}')" title="Add all variants and set them to Level 5 Mastered">★ Master All</button>
+      `;
+      groupEl.appendChild(head);
+    }
     const grid = document.createElement('div');
     grid.className = 'card-grid';
-    const estimatedHeight = getGroupHeight(g.length);
+    const estimatedHeight = getGroupHeight(g.length, !isSingleCard);
     grid.style.minHeight = estimatedHeight + 'px';
     groupEl.appendChild(grid);
-    groupElements.set(name, { el: groupEl, grid, cards: g, rendered: false });
+    groupElements.set(name, { el: groupEl, grid, cards: g, rendered: false, hasHeader: !isSingleCard });
     if (visibilityObserver) visibilityObserver.observe(groupEl);
     fragment.appendChild(groupEl);
   }
