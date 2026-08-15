@@ -575,6 +575,10 @@
       .filter-group-label { display: block; }
       .filter-group-btns { justify-content: stretch; }
       .filter-icon-btn { flex: 1; }
+      .export-btn-mobile { display: inline-flex; }
+      .sort-group { justify-content: center; }
+      .sort-btns { justify-content: center; width: auto; }
+      .sort-btns .sort-icon-btn { flex: 0 0 auto; }
     }
     .rarity-dropdown select {
       background: var(--bg-inset);
@@ -1764,6 +1768,7 @@
     .filter-btn.active:hover, .btn-primary:hover { background: var(--accent); color: #fff; }
     .filter-btn:focus-visible, .btn-secondary:focus-visible, .btn-primary:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
     .export-btn { margin-left: auto; }
+    .export-btn-mobile { display: none; }
 
     /* ── Toast ── */
     #toast {
@@ -2380,6 +2385,7 @@
           <button class="filter-icon-btn sort-icon-btn" data-sort="lvl-desc" onclick="setSort('lvl-desc',this)" title="Level high to low">↓</button>
           <button class="filter-icon-btn sort-icon-btn" data-sort="lvl-asc" onclick="setSort('lvl-asc',this)" title="Level low to high">↑</button>
           <button class="filter-icon-btn sort-icon-btn active" data-sort="default" onclick="setSort('default',this)" title="Default sort">⇅</button>
+          <button class="filter-icon-btn export-btn-mobile" onclick="openExportModal()" title="Export Collection">📤</button>
         </div>
       </div>
     </div>
