@@ -1770,9 +1770,9 @@
     .export-btn { margin-left: auto; }
     .export-btn-mobile { display: none; }
     @media (max-width: 768px) {
-      .export-btn-mobile { display: inline-flex; }
-      .sort-group { justify-content: center; }
-      .sort-btns { justify-content: center; }
+      .export-btn-mobile { display: inline-flex; margin-left: auto; }
+      .sort-group { justify-content: flex-start; }
+      .sort-btns { justify-content: flex-start; }
       .sort-btns .sort-icon-btn { flex: 0 0 auto; }
       .sort-label { display: none; }
     }
@@ -2392,8 +2392,8 @@
           <button class="filter-icon-btn sort-icon-btn" data-sort="lvl-desc" onclick="setSort('lvl-desc',this)" title="Level high to low">↓</button>
           <button class="filter-icon-btn sort-icon-btn" data-sort="lvl-asc" onclick="setSort('lvl-asc',this)" title="Level low to high">↑</button>
           <button class="filter-icon-btn sort-icon-btn active" data-sort="default" onclick="setSort('default',this)" title="Default sort">⇅</button>
-          <button class="filter-icon-btn export-btn-mobile" onclick="openExportModal()" title="Export Collection">📤</button>
         </div>
+        <button class="filter-icon-btn export-btn-mobile" onclick="openExportModal()" title="Export Collection">📤</button>
       </div>
     </div>
 
