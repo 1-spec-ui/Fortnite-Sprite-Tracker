@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sprite-tracker-v1';
+const CACHE_NAME = 'sprite-tracker-v2';
 const ASSETS = [
   '/',
   '/static/css/style.css',

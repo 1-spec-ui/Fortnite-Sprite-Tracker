@@ -565,7 +565,7 @@
     .filter-mobile { display: none; }
     .rarity-dropdown { display: none; }
 
-    @media (max-width: 640px) {
+    @media (max-width: 768px) {
       .filter-sort-bar { padding: 8px; gap: 8px; }
       .filter-desktop { display: none; }
       .filter-mobile { display: flex; flex-direction: column; gap: 8px; }
@@ -613,7 +613,7 @@
       .filter-scroll {
         display: flex; gap: 6px; flex-wrap: wrap; align-items: center; flex: 1;
       }
-      @media (max-width: 640px) {
+      @media (max-width: 768px) {
         .filter-sort-bar { padding: 8px; }
         .filter-icon-btn { min-width: 40px; min-height: 40px; font-size: 0.78rem; padding: 0 10px; }
         .sort-label { display: none; }
@@ -1769,6 +1769,13 @@
     .filter-btn:focus-visible, .btn-secondary:focus-visible, .btn-primary:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
     .export-btn { margin-left: auto; }
     .export-btn-mobile { display: none; }
+    @media (max-width: 768px) {
+      .export-btn-mobile { display: inline-flex; }
+      .sort-group { justify-content: center; }
+      .sort-btns { justify-content: center; }
+      .sort-btns .sort-icon-btn { flex: 0 0 auto; }
+      .sort-label { display: none; }
+    }
 
     /* ── Toast ── */
     #toast {
